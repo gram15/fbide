@@ -13,8 +13,8 @@ foreground=16777215
 background=12632256
 foreground=16777215
 [brace]
-background=12632256
-foreground=0
+background=0
+foreground=12632256
 fontstyle=0
 [badbrace]
 background=0
