@@ -44,8 +44,8 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     //--------------------------------------------------------------------------
     
     CB_CurrentLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,30),wxSize(148,13));
-    CB_CurrentLine->SetTitle(wxT("Highlight currentline"));
-    CB_CurrentLine->SetValue(Parent->Prefs.CurrentLine);
+    CB_CurrentLine->SetTitle(wxT("Show line numbers"));
+    CB_CurrentLine->SetValue(Parent->Prefs.LineNumber);
     
     
     st20=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(10,5),wxSize(90,13),wxST_NO_AUTORESIZE);
@@ -280,7 +280,7 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Parent->Keyword[OldKWSelect]    = TA_Keywords->GetValue();
     Parent->SavekwFile( Parent->SyntaxFile );
     
-    Parent->Prefs.CurrentLine       = CB_CurrentLine->GetValue();
+    Parent->Prefs.LineNumber        = CB_CurrentLine->GetValue();
     Parent->Prefs.BraceHighlight    = CB_HiLightBraces->GetValue();
     Parent->Prefs.SyntaxHighlight   = CB_SyntaxHiLight->GetValue();
     Parent->Prefs.LongLine          = CB_LongLine->GetValue();
