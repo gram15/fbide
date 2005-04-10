@@ -54,11 +54,14 @@ public:
                 word == "elseif" || word == "select" || word=="with");
     }
     
+    inline bool IsEndDeIndentWord ( wxString word ) {
+        return (word == "if"   || word == "sub"     || word == "asm"    || 
+                word == "type" || word == "union"   || word == "enum"   || 
+                word == "with" || word == "select"  || word == "function");
+    }
+    
     inline bool IsDeIndentWord ( wxString word ) {
-        return (word == "if" || word == "next" || word=="sub" ||
-                word == "asm" || word == "type" || word=="union" ||
-                word == "enum" || word == "function" || word=="select" ||
-                word == "with" || word == "loop" || word=="wend" );
+        return (word == "next" || word == "loop" || word == "wend");
     }
     
     inline wxString ClearCmdLine ( wxString cmdline ) {
@@ -79,7 +82,7 @@ public:
     }
     
     inline wxString GetLastKw ( wxString cmdline ) {
-        return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true));
+        return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true) - 1);
     }
     
 //   ~FB_Edit ();
