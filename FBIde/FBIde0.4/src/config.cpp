@@ -231,8 +231,8 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
     Theme.Write("foreground",                   (long)Style.SelectFgColour);
     
     Theme.SetPath("/brace");
-    Theme.Write("background",                   (long)Style.BraceFgColour);
-    Theme.Write("foreground",                   (long)Style.BraceBgColour);
+    Theme.Write("background",                   (long)Style.BraceBgColour);
+    Theme.Write("foreground",                   (long)Style.BraceFgColour);
     Theme.Write("fontstyle",                    (long)Style.BraceFontStyle);
     
     Theme.SetPath("/badbrace");

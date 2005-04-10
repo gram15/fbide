@@ -38,7 +38,49 @@ public:
     void LoadSTCSettings    (  );
     void LoadSTCTheme       (  );
     
+    void OnCharAdded  		( wxStyledTextEvent &event );
+	void OnUpdateUI		    ( wxStyledTextEvent &event );
+    static bool IsBrace     ( wxChar brace );
+    void OnMarginClick      ( wxStyledTextEvent &event );
+        
     wxString    DocumentName;
+    int braceLoc;
+    
+    inline bool IsIndentWord ( wxString word ) {
+        return  (word == "if" || word == "for" || word=="sub" ||
+                word == "asm" || word == "type" || word=="union" ||
+                word == "enum" || word == "function" || word=="case" ||
+                word == "else" || word == "do" || word=="while" ||
+                word == "elseif" || word == "select" || word=="with");
+    }
+    
+    inline bool IsDeIndentWord ( wxString word ) {
+        return (word == "if" || word == "next" || word=="sub" ||
+                word == "asm" || word == "type" || word=="union" ||
+                word == "enum" || word == "function" || word=="select" ||
+                word == "with" || word == "loop" || word=="wend" );
+    }
+    
+    inline wxString ClearCmdLine ( wxString cmdline ) {
+        cmdline = cmdline.Trim(false);
+        cmdline = cmdline.Lower();
+        bool instring =false;
+        wxString temp;
+        for (unsigned int i=0; i < cmdline.Len(); i++) {
+            if (cmdline[i] == '\"') instring = !instring;
+            else if (cmdline[i] == '\'' && !instring) break;
+            temp << cmdline[i];
+        }
+        return temp.Trim(true);
+    }
+    
+    inline wxString GetFirstKw ( wxString cmdline ) {
+        return cmdline.Left(cmdline.Find(' '));
+    }
+    
+    inline wxString GetLastKw ( wxString cmdline ) {
+        return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true));
+    }
     
 //   ~FB_Edit ();
 private:

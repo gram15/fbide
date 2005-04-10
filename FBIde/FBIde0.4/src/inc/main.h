@@ -225,7 +225,8 @@ public:
     void OnSelectLine       ( wxCommandEvent& event );
     void OnIndentInc        ( wxCommandEvent& event );
     void OnIndentDecr       ( wxCommandEvent& event );
-    
+    void OnComment          ( wxCommandEvent& event );
+    void OnUncomment        ( wxCommandEvent& event );    
 
     //Searchmenu and related stuff
     void OnFind             ( wxCommandEvent& event );
@@ -280,7 +281,6 @@ public:
     
     void OnAbout        ( wxCommandEvent& event );
     
-    wxListBox* CreatewxListBox( const wxString& value );
     FB_Edit * NewSTCPage( wxString InitFile, bool select = false );
     void ChangeNBPage   ( wxNotebookEvent& event );
     
@@ -334,6 +334,8 @@ enum
 	Menu_SelectLine,
 	Menu_IndentIncrease,
 	Menu_IndentDecrease,
+	Menu_Comment,
+	Menu_UnComment,
 
 	//Search:
 	Menu_Find,

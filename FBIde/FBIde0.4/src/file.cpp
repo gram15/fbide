@@ -136,6 +136,7 @@ int MyFrame::Proceed   	(void) {
 
 
 bool MyFrame::SaveFile (wxString FileName) {
+    
     if (FileName==""||FileName==FBUNNAMED) {
         wxFileDialog dlg (this,
             _T("Save file"),

@@ -25,6 +25,7 @@
 
 void MyFrame::OnMenuUndo (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (!stc->CanUndo()) return;
     stc->Undo ();
     stc->EnsureCaretVisible();
@@ -33,6 +34,7 @@ void MyFrame::OnMenuUndo (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnMenuRedo(wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (!stc->CanRedo()) return;
     stc->Redo ();
     stc->EnsureCaretVisible();
@@ -41,6 +43,7 @@ void MyFrame::OnMenuRedo(wxCommandEvent& WXUNUSED(event))
  
 void MyFrame::OnMenuCut(wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if ((stc->GetSelectionEnd()-stc->GetSelectionStart() <= 0)) return;
     stc->Cut ();
     stc->EnsureCaretVisible();
@@ -49,6 +52,7 @@ void MyFrame::OnMenuCut(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnMenuCopy(wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (stc->GetSelectionEnd()-stc->GetSelectionStart() <= 0) return;
     stc->Copy ();
     return;
@@ -56,6 +60,7 @@ void MyFrame::OnMenuCopy(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnMenuPaste(wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (!stc->CanPaste()) return;
     stc->Paste ();
     stc->EnsureCaretVisible();
@@ -64,12 +69,14 @@ void MyFrame::OnMenuPaste(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnSelectAll (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     stc->SetSelection (0, stc->GetTextLength ());
     return;
 }
 
 void MyFrame::OnSelectLine (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     int lineStart = stc->PositionFromLine (stc->GetCurrentLine());
     int lineEnd = stc->PositionFromLine (stc->GetCurrentLine() + 1);
     stc->SetSelection (lineStart, lineEnd);
@@ -78,13 +85,59 @@ void MyFrame::OnSelectLine (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnIndentInc (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
 	stc->CmdKeyExecute (wxSTC_CMD_TAB);
     return;
 }
 
 void MyFrame::OnIndentDecr (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     stc->CmdKeyExecute (wxSTC_CMD_BACKTAB);
+    return;
+}
+
+
+void MyFrame::OnComment ( wxCommandEvent& WXUNUSED(event) )
+{
+    if (stc==0) return;
+    int lineStart = stc->LineFromPosition (stc->GetSelectionStart());
+    int lineEnd = stc->LineFromPosition (stc->GetSelectionEnd());
+
+    stc->BeginUndoAction();
+        for(;lineStart <= lineEnd; lineStart++) {
+            stc->InsertText(stc->PositionFromLine(lineStart),"\'");
+        }
+    stc->EndUndoAction();
+    return;
+}
+
+
+void MyFrame::OnUncomment ( wxCommandEvent& WXUNUSED(event) )
+{
+
+    if (stc==0) return;
+    int lineStart = stc->LineFromPosition (stc->GetSelectionStart());
+    int lineEnd = stc->LineFromPosition (stc->GetSelectionEnd());
+    int x = 0;
+    wxString Temp;
+
+    stc->BeginUndoAction();
+        for(;lineStart <= lineEnd; lineStart++) {
+            Temp = stc->GetLine(lineStart);
+            Temp = Temp.Lower();
+            Temp = Temp.Trim(false);
+            Temp = Temp.Trim(true);
+            Temp+= " ";
+            x = stc->PositionFromLine(lineStart) + stc->GetLineIndentation(lineStart);
+            if (Temp.Left(4) == "rem "||Temp.Left(4) == "rem\t")
+                ReplaceText(x, x+3, "");
+            else if (Temp.Left(1) == "\'")
+                ReplaceText(x, x+1, "");
+        }
+    stc->EndUndoAction();
+    return;
+
     return;
 }
 
