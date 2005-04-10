@@ -24,6 +24,10 @@
 #include "inc/main.h"
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
+    EVT_STC_MARGINCLICK (-1,                FB_Edit::OnMarginClick)
+    
+    EVT_STC_CHARADDED   (-1,                FB_Edit::OnCharAdded)
+    EVT_STC_UPDATEUI    (-1,                FB_Edit::OnUpdateUI)
 END_EVENT_TABLE()
 
 FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id,
@@ -35,6 +39,7 @@ FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id
     
     Parent = ParentFrame;
     DocumentName = FileToLoad;
+    braceLoc = -1;
 }
 
 
@@ -189,4 +194,55 @@ void FB_Edit::LoadSTCTheme       (  ) {
     }
     return;
 }
+
+//Stc events
+void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
+
+    if (Parent->Prefs.BraceHighlight) {
+      if (IsBrace(GetCharAt(GetCurrentPos()))) {
+        braceLoc = BraceMatch(GetCurrentPos());
+
+        if (braceLoc != -1) 
+            BraceHighlight(GetCurrentPos(), braceLoc);
+        else {
+            BraceBadLight(GetCurrentPos());
+            braceLoc = GetCurrentPos();
+        }
+      }
+      else {
+        if (braceLoc != -1) {
+            BraceHighlight(-1, -1);
+            braceLoc = -1;
+        }
+      }
+   }
+
+   wxString pos;
+   pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
+               GetColumn(GetCurrentPos()) + 1);
+   Parent->SetStatusText(pos, 1);
+}
+
+inline bool FB_Edit::IsBrace(wxChar brace)
+{
+    return brace == '{' || brace == '}' ||
+           brace == '[' || brace == ']' ||
+           brace == '(' || brace == ')';
+}
+
+void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
+    return;
+}
+
+void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
+    if (event.GetMargin() == 2) {
+        int lineClick = LineFromPosition (event.GetPosition());
+        int levelClick = GetFoldLevel (lineClick);
+        if ((levelClick & wxSTC_FOLDLEVELHEADERFLAG) > 0) {
+            ToggleFold (lineClick);
+        }
+    }
+}
+
+
 

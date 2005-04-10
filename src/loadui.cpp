@@ -27,19 +27,15 @@
 //Load menu's
 void MyFrame::LoadUI () {
 
-    //FBNotebook = new wxNotebook( this, -1 );
-    FBNotebook = NULL;
-
     LoadToolBar();
-    
     LoadMenu();
     LoadStatusBar();
 
-    Show(true);
     FB_App->SetTopWindow(this);
     FBNotebook = new wxNotebook( this, -1 );
     FBNotebook->Hide();
-    
+
+    Show(true);    
     return;
 }
 
@@ -82,6 +78,9 @@ void MyFrame::LoadMenu () {
     FB_Edit->Append (Menu_IndentIncrease, _("&Indent increase\tTab"), _("Indent selected text to right"));
     FB_Edit->Append (Menu_IndentDecrease, _("Indent reduce\tShift+Tab"), _("Deindent selected text to left"));
 
+    FB_Edit->AppendSeparator();
+    FB_Edit->Append (Menu_Comment,      _("Comment block \tCtrl+."), _("Comments out selected text"));
+    FB_Edit->Append (Menu_UnComment,    _("UnComment block\tCtrl+M"), _("Uncomments selected text"));
 
 
     // Search menu
@@ -197,17 +196,6 @@ void MyFrame::LoadStatusBar () {
 }
 
 
-
-wxListBox* MyFrame::CreatewxListBox( const wxString& value )
-{
-    wxListBox* pCtrl = 
-        
-        new wxListBox (this, wxID_ANY);
-   
-    return pCtrl;
-}
-
-
 FB_Edit * MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
     
     if ( InitFile == "" ) InitFile = FBUNNAMED;
@@ -220,7 +208,8 @@ FB_Edit * MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
     stcPage->LoadSTCSettings();
     stcPage->LoadSTCTheme();
     stcPage->Refresh();
-
+    stcPage->CreateDocument();
+    
     if ( InitFile != FBUNNAMED ) {
         stcPage->LoadFile(Document);        //Load file
         stcPage->ConvertEOLs(0);         	//Set windows end of lines
@@ -233,7 +222,9 @@ FB_Edit * MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
         InitFile = InitFile <<  " " << ( FBNotebook->GetSelection() + 1 );
     
     FBNotebook->SetPageText(FBNotebook->GetSelection(), InitFile);
-    return stcPage;    
+    return stcPage;
+
+    return stc;
 }
 
 
@@ -242,7 +233,8 @@ void MyFrame::ChangeNBPage   ( wxNotebookEvent& WXUNUSED(event)) {
     stc = (FB_Edit *) FBNotebook->GetCurrentPage();
     stc->LoadSTCSettings();
     stc->LoadSTCTheme();
-    
+
+    return;
 }
 
 
