@@ -188,10 +188,16 @@ void FB_Edit::LoadSTCTheme       (  ) {
     SetProperty (_T("fold.comment"), "1");
     SetProperty (_T("fold.compact"), "1");
     SetProperty (_T("fold.preprocessor"), "1");
+    
     if (Prefs->FolderMargin) {
         SetMarginWidth (2, 14);
         SetMarginSensitive (2, 1);
     }
+    else {
+        SetMarginWidth (2, 0);
+        SetMarginSensitive (2, 0);        
+    }
+    
     return;
 }
 
@@ -230,9 +236,82 @@ inline bool FB_Edit::IsBrace(wxChar brace)
            brace == '(' || brace == ')';
 }
 
+
+
 void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
-    return;
+    
+    if (!Parent->Prefs.AutoIndent) return;
+
+    char        key     = event.GetKey();
+    int         cLine   = GetCurrentLine();
+    int         lineInd = GetLineIndentation(cLine - 1);
+    int         plineind= GetLineIndentation(cLine - 2);
+    int         TabSize = Parent->Prefs.TabSize;
+    if (key!='\n') return;
+
+    //Previous line
+    wxString    TempCL  = ClearCmdLine(GetLine(cLine - 1));
+    wxString    clfkw   = GetFirstKw(TempCL);
+    wxString    cllkw   = GetLastKw(TempCL);
+
+    //Line before previous
+    wxString    TempPL  = ClearCmdLine(GetLine(cLine - 2));
+    wxString    plfkw   = GetFirstKw(TempPL);
+    wxString    pllkw   = GetLastKw(TempPL);
+    
+    
+    if (lineInd>0) {
+        if ( clfkw == "end" && IsEndDeIndentWord(cllkw) ) {
+            if (cllkw!=plfkw) { 
+                if (cllkw == "select" && plfkw == "case") lineInd = plineind;
+                else if (plineind<=lineInd) lineInd -= TabSize; 
+            }
+            else if (plfkw == "if" && pllkw!="then") {
+                if (plineind<=lineInd) lineInd -= TabSize; }
+            else lineInd = plineind;
+        }
+        
+        else if (clfkw != pllkw) {
+            if (( clfkw == "next" && plfkw != "for")||
+                ( clfkw == "loop" && plfkw != "do")||
+                ( clfkw == "wend" && plfkw != "while")) {
+                    if (plineind<=lineInd) lineInd -= TabSize;
+                }
+            else if (( clfkw == "next" && plfkw == "for")||
+                 ( clfkw == "loop" && plfkw == "do")||
+                 ( clfkw == "wend" && plfkw == "while"))
+                lineInd = plineind;
+            else if ( clfkw == "case" ) {
+                if (plfkw == "case" || plfkw == "select") { lineInd = plineind; }
+                else  { if (plineind<=lineInd) lineInd -= TabSize; } }
+            else if ( clfkw == "else" || clfkw == "elseif" ) {
+                if ((plfkw == "if" && pllkw == "then") ||
+                    (plfkw == "elseif")) { lineInd = plineind; } 
+                else   { if (plineind<=lineInd) lineInd -= TabSize; } }
+                
+        }
+        SetLineIndentation (cLine-1, lineInd);
+    }
+    
+    if (IsIndentWord(clfkw)) {
+        if      (clfkw == "if") {
+            if (cllkw == "then") lineInd += TabSize;
+        }
+        else if (clfkw == "do") {
+            if (cllkw != "loop") lineInd += TabSize;
+        }
+        else if (clfkw == "while") {
+            if (cllkw != "wend") lineInd += TabSize;
+        }
+        else  lineInd += TabSize;
+    }
+    
+    SetLineIndentation (cLine, lineInd);
+    GotoPos(PositionFromLine (cLine) + lineInd);
+    
 }
+
+
 
 void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
     if (event.GetMargin() == 2) {

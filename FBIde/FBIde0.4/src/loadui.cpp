@@ -79,8 +79,8 @@ void MyFrame::LoadMenu () {
     FB_Edit->Append (Menu_IndentDecrease, _("Indent reduce\tShift+Tab"), _("Deindent selected text to left"));
 
     FB_Edit->AppendSeparator();
-    FB_Edit->Append (Menu_Comment,      _("Comment block \tCtrl+."), _("Comments out selected text"));
-    FB_Edit->Append (Menu_UnComment,    _("UnComment block\tCtrl+M"), _("Uncomments selected text"));
+    FB_Edit->Append (Menu_Comment,      _("Comment block \tCtrl+M"), _("Comments out selected text"));
+    FB_Edit->Append (Menu_UnComment,    _("UnComment block\tCtrl+Shift+M"), _("Uncomments selected text"));
 
 
     // Search menu
