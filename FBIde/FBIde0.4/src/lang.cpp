@@ -23,4 +23,20 @@
 
 #include "inc/main.h"
 
-void 
+void MyFrame::OpenLangFile( wxString FileName ){
+
+     wxFileInputStream FileINIIS( EditorPath + "ide\\lang\\" + FileName + ".fbl" );
+     wxFileConfig FileINI(FileINIIS);
+          
+     FileINI.SetPath("/menus");
+     Language.MenuFile   = FileINI.Read("MenuFile",   "");
+     Language.MenuEdit   = FileINI.Read("MenuEdit",   "");
+     Language.MenuSearch = FileINI.Read("MenuSearch", "");
+     Language.MenuView   = FileINI.Read("MenuView",   "");
+     Language.MenuTools  = FileINI.Read("MenuTools",  "");
+     Language.MenuRun    = FileINI.Read("MenuRun",    "");
+     Language.MenuHelp   = FileINI.Read("MenuHelp",   "");
+     
+     return;               
+}
+               
