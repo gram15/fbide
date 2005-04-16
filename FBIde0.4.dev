@@ -1,7 +1,7 @@
 [Project]
 FileName=FBIde0.4.dev
 Name=FBIde0.4
-UnitCount=14
+UnitCount=15
 Type=0
 Ver=1
 ObjFiles=
@@ -43,7 +43,7 @@ BuildCmd=
 Major=0
 Minor=4
 Release=0
-Build=1046
+Build=1047
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -178,6 +178,16 @@ BuildCmd=
 
 [Unit14]
 FileName=src\configdiag.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit15]
+FileName=src\lang.cpp
 CompileCpp=1
 Folder=src
 Compile=1
