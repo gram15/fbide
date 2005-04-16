@@ -1,0 +1,8 @@
+[menus]
+MenuFile="&Fail"
+MenuEdit="&Redigeeri"
+MenuSearch="&Otsi"
+MenuView="&Vaatle"
+MenuTools="&Seaded"
+MenuRun="&Käivita"
+MenuHelp="&Abi"
