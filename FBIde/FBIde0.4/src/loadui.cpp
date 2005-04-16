@@ -123,7 +123,7 @@ void MyFrame::LoadMenu () {
 
 
     //Implement menus
-    MenuBar->Append(FB_File,  _T("&File"));
+    MenuBar->Append(FB_File,  _T(FBIdeLanguage.MenuFile));
     MenuBar->Append(FB_Edit,  _T("&Edit"));
     MenuBar->Append(FB_Search,_T("&Search"));
     MenuBar->Append(FB_View,  _T("&View"));

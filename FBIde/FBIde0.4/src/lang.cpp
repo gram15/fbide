@@ -17,7 +17,7 @@
 * along with this program; if not, write to the Free Software
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
-* Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
+* Contact e-mail: Indrek Triipus <madedog@gmail.com>
 * Program URL   : http://www.hot.ee/fbide
 */
 
