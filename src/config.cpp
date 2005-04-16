@@ -49,7 +49,8 @@ void MyFrame::LoadSettings() {
     Prefs.CurrentLine       = PrefsINI.Read("lightcursorline",  b);
     Prefs.TabSize           = PrefsINI.Read("tabsize",          3l);
     Prefs.EdgeColumn        = PrefsINI.Read("edgecolumn",       80L);
-
+    Prefs.Language          = PrefsINI.Read("language",         "English");
+    
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
     if (CompilerPath == "") CompilerPath = EditorPath + "fbc.exe";
@@ -77,7 +78,8 @@ void MyFrame::LoadSettings() {
         Move(winx, winy);
         SetClientSize(winw, winh);
     }
-        
+    
+    OpenLangFile(Prefs.Language);
     return;
 }
 

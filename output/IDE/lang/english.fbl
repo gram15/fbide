@@ -1,0 +1,8 @@
+[menus]
+MenuFile="&File"
+MenuEdit="&Edit"
+MenuSearch="&Search"
+MenuView="&View"
+MenuTools="&Tools"
+MenuRun="&Run"
+MenuHelp="&Help"

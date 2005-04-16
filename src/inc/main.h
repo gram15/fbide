@@ -72,9 +72,8 @@
 
 typedef unsigned int uint;
 
-//------------------------------------------------------------------------------
 //The language file structure
-struct FBIdeLangFile{
+struct LangInfo {
        //Menu bar captions
        wxString MenuFile;
        wxString MenuEdit;
@@ -163,8 +162,7 @@ struct FBIdeLangFile{
        //Help menu
        wxString HelpAbout;
        wxString HelpAboutDesc;
-       };
-//------------------------------------------------------------------------------
+};
 
 struct CommonInfo {
     bool SyntaxHighlight;
@@ -181,6 +179,7 @@ struct CommonInfo {
     bool CurrentLine;
     int  TabSize;
     int  EdgeColumn;
+    wxString Language;
 };
 
 
@@ -295,6 +294,7 @@ public:
     void LoadMenu           (  );
     void LoadToolBar        (  );
     void LoadStatusBar      (  );
+    void OpenLangFile (wxString FileName );
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );
@@ -394,7 +394,7 @@ public:
     wxString Document, CompiledFile, EditorPath;
     CommonInfo Prefs;
     StyleInfo  Style; 
-    FBIdeLangFile FBIdeLanguage;
+    LangInfo Language;
     wxTextFile LangFile;
     
     wxString Keyword[KWGROUPS + 1];
@@ -457,6 +457,7 @@ enum
 	Menu_CompParam,
 	Menu_ShowExitCode
 };
+
 
 #include "configdiag.h"
 #include "fbedit.h"

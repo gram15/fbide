@@ -123,13 +123,13 @@ void MyFrame::LoadMenu () {
 
 
     //Implement menus
-    MenuBar->Append(FB_File,  _T(FBIdeLanguage.MenuFile));
-    MenuBar->Append(FB_Edit,  _T("&Edit"));
-    MenuBar->Append(FB_Search,_T("&Search"));
-    MenuBar->Append(FB_View,  _T("&View"));
-    MenuBar->Append(FB_Tools, _T("&Tools"));
-    MenuBar->Append(FB_Run,   _T("&Run"));
-    MenuBar->Append(HelpMenu, _T("&Help"));
+    MenuBar->Append(FB_File,  _T(Language.MenuFile));
+    MenuBar->Append(FB_Edit,  _T(Language.MenuEdit));
+    MenuBar->Append(FB_Search,_T(Language.MenuSearch));
+    MenuBar->Append(FB_View,  _T(Language.MenuView));
+    MenuBar->Append(FB_Tools, _T(Language.MenuTools));
+    MenuBar->Append(FB_Run,   _T(Language.MenuRun));
+    MenuBar->Append(HelpMenu, _T(Language.MenuHelp));
     
     SetMenuBar(MenuBar);
     return;
