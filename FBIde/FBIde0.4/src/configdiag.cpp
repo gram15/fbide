@@ -43,6 +43,9 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     CD_Keywords=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
     CD_Notebook->AddPage((wxNotebookPage *)CD_Keywords,"Keywords",false);
     
+    CD_Compiler=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Compiler,"Compiler",false);
+    
     //--------------------------------------------------------------------------
     
     CB_CurrentLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,30),wxSize(148,13));
@@ -91,31 +94,37 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     TB_Width->SetValue(Parent->Prefs.EdgeColumn);
     
     lno21=new wxStaticLine(CD_Settings,-1,wxPoint(10,20),wxSize(360,2));
-    lno31=new wxStaticLine(CD_Settings,-1,wxPoint(10,155),wxSize(360,2));
     
-    st33=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(10,140),wxSize(105,13),wxST_NO_AUTORESIZE);
+
+
+    // compile page
+    st33=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,5),wxSize(105,13),wxST_NO_AUTORESIZE);
     st33->SetLabel(wxT("Compiler Settings"));
+    lno31=new wxStaticLine(CD_Compiler,-1,wxPoint(10,20),wxSize(360,2));
+
+    st37=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,30),wxSize(70,13),wxST_NO_AUTORESIZE);
+    st37->SetLabel(wxT("Compiler path"));
+    
+    TB_CompilerPath=new wxTextCtrl(CD_Compiler,-1,wxT(""),wxPoint(85,28),wxSize(250,21));
+    TB_CompilerPath->SetValue(Parent->CompilerPath);
+
+    But_GetCompilerPath=new wxButton(CD_Compiler, CDID_GetCompPath,wxT(""),wxPoint(340,30),wxSize(30,20));
+    But_GetCompilerPath->SetLabel(wxT("..."));
+    
+    //Compiler command
+    st41=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,60),wxSize(70,13),wxST_NO_AUTORESIZE);
+    st41->SetLabel(wxT("Command"));
+    
+    CompilerCommand=new wxTextCtrl(CD_Compiler,-1,wxT(""),wxPoint(85,58),wxSize(250,21));
+    CompilerCommand->SetValue(Parent->CMDPrototype);
+    
+//////////////////////////////////////////////////
 
     
     st34=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,110),wxSize(95,13),wxST_NO_AUTORESIZE);
     st34->SetLabel(wxT("Rightmargin Width"));
     
     //Compiler path
-    st37=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(15,168),wxSize(70,13),wxST_NO_AUTORESIZE);
-    st37->SetLabel(wxT("Compiler path"));
-    
-    TB_CompilerPath=new wxTextCtrl(CD_Settings,-1,wxT(""),wxPoint(85,165),wxSize(250,21));
-    TB_CompilerPath->SetValue(Parent->CompilerPath);
-
-    But_GetCompilerPath=new wxButton(CD_Settings, CDID_GetCompPath,wxT(""),wxPoint(340,165),wxSize(30,20));
-    But_GetCompilerPath->SetLabel(wxT("..."));
-    
-    //Compiler command
-    st41=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(15,198),wxSize(70,13),wxST_NO_AUTORESIZE);
-    st41->SetLabel(wxT("Command"));
-    
-    CompilerCommand=new wxTextCtrl(CD_Settings,-1,wxT(""),wxPoint(85,195),wxSize(250,21));
-    CompilerCommand->SetValue(Parent->CMDPrototype);
     
     //Tab Size
     st43=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,130),wxSize(45,13),wxST_NO_AUTORESIZE);
@@ -673,5 +682,6 @@ ConfigDialog::~ConfigDialog   (  ) {
     delete CD_Settings;
     delete CD_Theme;
     delete CD_Keywords;
+    delete CD_Compiler;
     delete CD_Notebook;
 }
