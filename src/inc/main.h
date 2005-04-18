@@ -49,6 +49,9 @@ typedef unsigned int uint;
 
 //The language file structure
 struct LangInfo {
+       //General stuff
+       wxString WelcomeMessage;
+       
        //Menu bar captions
        wxString MenuFile;
        wxString MenuEdit;
@@ -95,7 +98,11 @@ struct LangInfo {
        wxString EditIndentIncreaseDesc;
        wxString EditIndentDecrease;
        wxString EditIndentDecreaseDesc;
-       
+       wxString EditComment;
+       wxString EditCommentDesc;
+       wxString EditUnComment;
+       wxString EditUnCommentDesc;
+              
        //Search menu
        wxString SearchFind;
        wxString SearchFindDesc;
