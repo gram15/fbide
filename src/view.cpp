@@ -23,9 +23,15 @@
 
 #include "inc/main.h"
 #include "inc/configdiag.h"
+#include "inc/fbedit.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, "FBIde settings");
     dlg.ShowModal();
+    if (stc==0) return;
+    stc->Freeze();
+    stc->LoadSTCSettings();
+    stc->LoadSTCTheme();
+    stc->Thaw();
     return;
 }

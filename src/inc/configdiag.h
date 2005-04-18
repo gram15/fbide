@@ -87,6 +87,7 @@ public:
     wxNotebook *CD_Notebook;;
     wxPanel *CD_Settings;
     wxPanel *CD_Theme;
+    wxPanel *CD_Compiler;
     wxCheckBox *CB_CurrentLine;
     wxCheckBox *CB_HiLightBraces;
     wxCheckBox *CB_SyntaxHiLight;
