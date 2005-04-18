@@ -78,16 +78,36 @@ void MyFrame::OnSaveAll (wxCommandEvent& WXUNUSED(event)) {
 void MyFrame::OnCloseFile (wxCommandEvent& WXUNUSED(event)) {
 
     if (stc==0) return;
-    if(Proceed()==0) return;
+    int index = FBNotebook->GetSelection();
+    Buffer* buff = bufferList[index];
     
-    FBNotebook->DeletePage(FBNotebook->GetSelection());
-    if (FBNotebook->GetPageCount()!=0)
-        stc = (FB_Edit *) FBNotebook->GetCurrentPage();
-    else {
-        stc = NULL;
+    if (buff->GetModified())
+    {
+        wxString message = wxString::Format(_("The file '%s' has been modified.\n"
+            "Would you like to save the changes?"),
+            wxFileNameFromPath(buff->GetFileName()).c_str());
+
+        int closeDialog = wxMessageBox(message, _("File Modified"),
+            wxYES_NO | wxCANCEL | wxICON_EXCLAMATION, GetParent());
+
+        if (closeDialog == wxYES)
+            SaveFile(buff->GetFileName());
+
+        else if (closeDialog == wxCANCEL)
+            return;
+    }
+    
+    OldTabSelected = -1;
+    FBNotebook->RemovePage(index);
+    bufferList.RemoveBuffer(index);
+    if (bufferList.GetBufferCount() == 0) {
+        delete stc;
+        stc = 0;
         FBNotebook->Hide();
     }
-
+    else {
+        SetSTCPage(FBNotebook->GetSelection());
+    }
 }
     
 
