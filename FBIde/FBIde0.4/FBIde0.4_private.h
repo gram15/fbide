@@ -5,11 +5,11 @@
 #define FBIDE0_4_PRIVATE_H
 
 /* VERSION DEFINITIONS */
-#define VER_STRING	"0.4.0.1079"
+#define VER_STRING	"0.4.0.1158"
 #define VER_MAJOR	0
 #define VER_MINOR	4
 #define VER_RELEASE	0
-#define VER_BUILD	1079
+#define VER_BUILD	1158
 #define COMPANY_NAME	""
 #define FILE_VERSION	"0.4"
 #define FILE_DESCRIPTION	"IDE for FreeBasic compiler"

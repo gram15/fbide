@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001000001100
+CompilerSettings=0000000001001001001000
 
 [Unit1]
 FileName=src\main.cpp
@@ -43,7 +43,7 @@ BuildCmd=
 Major=0
 Minor=4
 Release=0
-Build=1154
+Build=1158
 LanguageID=1033
 CharsetID=1252
 CompanyName=

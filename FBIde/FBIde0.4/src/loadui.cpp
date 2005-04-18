@@ -22,7 +22,7 @@
 */
 
 #include "inc/main.h"
-#include "inc/tabctrl.h"
+//#include "inc/tabctrl.h"
 #include "inc/fbedit.h"
 
 //------------------------------------------------------------------------------
@@ -194,7 +194,7 @@ void MyFrame::LoadToolBar () {
 // Load Statusbar
 void MyFrame::LoadStatusBar () {
     CreateStatusBar(2);
-    SetStatusText(_T("Welcome to FBIde!"));
+    SetStatusText(_T(Language.WelcomeMessage));
     return;
 }
 

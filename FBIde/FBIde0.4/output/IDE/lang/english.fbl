@@ -1,3 +1,6 @@
+[general]
+WelcomeMessage="Welcome to FBIde!"
+
 [menus]
 MenuFile="&File"
 MenuEdit="&Edit"

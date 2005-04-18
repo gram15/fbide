@@ -32,10 +32,14 @@ void MyFrame::OpenLangFile( wxString FileName ){
      //And then open it as an INI file
      wxFileConfig FileINI(FileINIIS);
           
+
+     //First the key to "general"
+     FileINI.SetPath("/general");     
+     //And begin =D
+     Language.WelcomeMessage = FileINI.Read("WelcomeMessage", "");
+     
      //Lets set the key to "menus"
      FileINI.SetPath("/menus");
-     
-     //And begin =D
      Language.MenuFile   = FileINI.Read("MenuFile",   "");
      Language.MenuEdit   = FileINI.Read("MenuEdit",   "");
      Language.MenuSearch = FileINI.Read("MenuSearch", "");
