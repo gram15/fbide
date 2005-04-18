@@ -50,79 +50,79 @@ void MyFrame::LoadMenu () {
     
     //File
     wxMenu *FB_File = new wxMenu;
-    FB_File->Append (Menu_New, _T("&New ..\tCtrl+N"), _T("Open new empty document"));
-    FB_File->Append (Menu_Open, _T("&Open ..\tCtrl+O"), _T("Open new document"));
-    FB_File->Append (Menu_Save,	_T("&Save\tCtrl+S"), _T("Save current file"));
-    FB_File->Append (Menu_SaveAS, _T("Save &as ..\tCtrl+Shift+S"), _T("Save current file under new name"));
-    FB_File->Append (Menu_SaveAll, _T("Save all"), _T("Save all opened files"));
-    FB_File->Append (Menu_Close, _T("Close\tCtrl+F4"), _T("Close current file"));
+    FB_File->Append (Menu_New, _T(Language.FileNew), _T(Language.FileNewDesc));
+    FB_File->Append (Menu_Open, _T(Language.FileOpen), _T(Language.FileOpenDesc));
+    FB_File->Append (Menu_Save,	_T(Language.FileSave), _T(Language.FileSaveDesc));
+    FB_File->Append (Menu_SaveAS, _T(Language.FileSaveas), _T(Language.FileSaveasDesc));
+    FB_File->Append (Menu_SaveAll, _T(Language.FileSaveall), _T(Language.FileSaveallDesc));
+    FB_File->Append (Menu_Close, _T(Language.FileClose), _T(Language.FileCloseDesc));
 
     FB_File->AppendSeparator();
-    FB_File->Append (Menu_NewEditor, _T("New &window \tShift+Ctrl+N"), _T("Open new editor window"));
-    FB_File->Append (Menu_Quit, _T("&Quit\tCtrl+Q"), _T("Quit FBIde"));
+    FB_File->Append (Menu_NewEditor, _T(Language.FileNewWindow), _T(Language.FileNewWindowDesc));
+    FB_File->Append (Menu_Quit, _T(Language.FileQuit), _T(Language.FileQuitDesc));
 
 
 
    // Edit menu
     wxMenu *FB_Edit = new wxMenu;
-    FB_Edit->Append (Menu_Undo, 	_("&Undo\tCtrl+Z"), _("Undo last action"));
-    FB_Edit->Append (Menu_Redo, 	_("&Redo\tCtrl+Shift+Z"), _("Redo last action"));
+    FB_Edit->Append (Menu_Undo, 	_(Language.EditUndo), _(Language.EditUndoDesc));
+    FB_Edit->Append (Menu_Redo, 	_(Language.EditRedo), _(Language.EditRedoDesc));
     FB_Edit->AppendSeparator();
     
-    FB_Edit->Append (Menu_Cut, 		_("Cu&t\tCtrl+X"), _("Cut selected text and copy to clipboard"));
-    FB_Edit->Append (Menu_Copy, 	_("&Copy\tCtrl+C"), _("Copy selected text to clipboard"));
-    FB_Edit->Append (Menu_Paste, 	_("&Paste\tCtrl+V"), _("Paste from clipboard"));
+    FB_Edit->Append (Menu_Cut, 		_(Language.EditCut), _(Language.EditCutDesc));
+    FB_Edit->Append (Menu_Copy, 	_(Language.EditCopy), _(Language.EditCopyDesc));
+    FB_Edit->Append (Menu_Paste, 	_(Language.EditPaste), _(Language.EditPasteDesc));
     FB_Edit->AppendSeparator();
 
-    FB_Edit->Append (Menu_SelectAll,	_("&Select all\tCtrl+A"), _("Select whole document"));
-    FB_Edit->Append (Menu_SelectLine,	_("Select &line\tCtrl+L"), _("Select current line"));
+    FB_Edit->Append (Menu_SelectAll,	_(Language.EditSelectall), _(Language.EditSelectallDesc));
+    FB_Edit->Append (Menu_SelectLine,	_(Language.EditSelectline), _(Language.EditSelectlineDesc));
     FB_Edit->AppendSeparator();
 
-    FB_Edit->Append (Menu_IndentIncrease, _("&Indent increase\tTab"), _("Indent selected text to right"));
-    FB_Edit->Append (Menu_IndentDecrease, _("Indent reduce\tShift+Tab"), _("Deindent selected text to left"));
+    FB_Edit->Append (Menu_IndentIncrease, _(Language.EditIndentIncrease), _(Language.EditIndentIncreaseDesc));
+    FB_Edit->Append (Menu_IndentDecrease, _(Language.EditIndentDecrease), _(Language.EditIndentDecreaseDesc));
 
     FB_Edit->AppendSeparator();
-    FB_Edit->Append (Menu_Comment,      _("Comment block \tCtrl+M"), _("Comments out selected text"));
-    FB_Edit->Append (Menu_UnComment,    _("UnComment block\tCtrl+Shift+M"), _("Uncomments selected text"));
+    FB_Edit->Append (Menu_Comment,      _(Language.EditComment), _(Language.EditCommentDesc));
+    FB_Edit->Append (Menu_UnComment,    _(Language.EditUnComment), _(Language.EditUnCommentDesc));
 
 
     // Search menu
     wxMenu *FB_Search = new wxMenu;
-    FB_Search->Append (Menu_Find,	  _("Find \tCtrl+F"), _("Find in the document"));
-    FB_Search->Append (Menu_FindNext, _("Find Next \tF3"), _("Repeat lest search"));
-    FB_Search->Append (Menu_Replace,  _("Replace \tCtrl+R"), _("Replace text in the document"));
-    FB_Search->Append (Menu_GotoLine, _("Goto line...\tCtrl+G"), _("Goyo to the line in document"));
+    FB_Search->Append (Menu_Find,	  _(Language.SearchFind), _(Language.SearchFindDesc));
+    FB_Search->Append (Menu_FindNext, _(Language.SearchFindnext), _(Language.SearchFindnextDesc));
+    FB_Search->Append (Menu_Replace,  _(Language.SearchReplace), _(Language.SearchReplaceDesc));
+    FB_Search->Append (Menu_GotoLine, _(Language.SearchGotoline), _(Language.SearchGotolineDesc));
 
 
 
     // View menu
     wxMenu *FB_View = new wxMenu;
-    FB_View->Append          (Menu_Settings, _("Settings"), _("Set editor settings"));
+    FB_View->Append          (Menu_Settings, _(Language.ViewSettings), _(Language.ViewSettingsDesc));
 
 
     //Tools
     wxMenu *FB_Tools = new wxMenu;
-    FB_Tools->Append (Menu_Subs, _("Subs... \tF2"), _("Open sub, function browser"));
-    FB_Tools->Append (Menu_Converter, _("Converter"), _("Converts source code to BB or html format"));
+    FB_Tools->Append (Menu_Subs, _(Language.ToolsSubs), _(Language.ToolsSubsDesc));
+    FB_Tools->Append (Menu_Converter, _(Language.ToolsConverter), _(Language.ToolsConverterDesc));
 
 
 
     //Run menu
     wxMenu *FB_Run = new wxMenu;
-    FB_Run->Append (Menu_Compile,       _("Compile\tCtrl+F9"), _("Compile current file"));
-    FB_Run->Append (Menu_CompileAndRun, _("Compile && Run\tF9"), _("Compile and run current file"));
-    FB_Run->Append (Menu_Run,           _("Run\tShift+Ctrl+F9"), _("Run previously compiled file"));
-    FB_Run->Append (Menu_QuickRun,      _("Quick Run\tF5"), _("Run program without saving (uses temp file)"));
-    FB_Run->Append (Menu_CmdPromt,      _("CMD Prompt\tF8"), _("Open command prompt"));
-    FB_Run->Append (Menu_Parameters,    _("&Parameters..."), _("Set parameters to pass to your program"));
-    FB_Run->Append (Menu_CompParam,     _("&Compiler Parameters..."), _("Set compiler parameter list prototype"));
-    FB_Run->AppendCheckItem (Menu_ShowExitCode, _("&Show exit code"), _("Show\'s program exit code."));
+    FB_Run->Append (Menu_Compile,       _(Language.RunCompile), _(Language.RunCompileDesc));
+    FB_Run->Append (Menu_CompileAndRun, _(Language.RunCompileandrun), _(Language.RunCompileandrunDesc));
+    FB_Run->Append (Menu_Run,           _(Language.RunRun), _(Language.RunRunDesc));
+    FB_Run->Append (Menu_QuickRun,      _(Language.RunQuickrun), _(Language.RunQuickrunDesc));
+    FB_Run->Append (Menu_CmdPromt,      _(Language.RunCmdprompt), _(Language.RunCmdpromptDesc));
+    FB_Run->Append (Menu_Parameters,    _(Language.RunParameters), _(Language.RunParametersDesc));
+    FB_Run->Append (Menu_CompParam,     _(Language.RunCompparam), _(Language.RunCompparamDesc));
+    FB_Run->AppendCheckItem (Menu_ShowExitCode, _(Language.RunShowexitcode), _(Language.RunShowexitcodeDesc));
 	FB_Run->Check  (Menu_ShowExitCode,  Prefs.ShowExitCode);
 
 
     //Help
     wxMenu *HelpMenu = new wxMenu;
-    HelpMenu->Append(Menu_About,   _T("&About...\tF1"),    _T("Show about dialog"));
+    HelpMenu->Append(Menu_About,   _T(Language.HelpAbout),    _T(Language.HelpAboutDesc));
 
 
     //Implement menus
