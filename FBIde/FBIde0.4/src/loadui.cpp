@@ -206,28 +206,30 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
     Buffer* buff;
     
     if (stc==NULL) {
+        OldTabSelected = -1;
         stc = new FB_Edit( this, FBNotebook, -1, "" );
         stc->Freeze();
         stc->LoadSTCSettings();
         stc->LoadSTCTheme();
         buff = bufferList.AddFileBuffer("", "");
-        FBNotebook->Refresh();
-        FBNotebook->Show();
         doc = stc->GetDocPointer();
         buff->SetDocument(doc);
         stc->AddRefDocument(doc);
         stc->SetDocPointer(doc);
         FBNotebook->AddPage( stc, wxFileNameFromPath(InitFile), true );
+        FBNotebook->Refresh();
+        FBNotebook->Show();
     }
     else {
         stc->Freeze();
         buff = bufferList.AddFileBuffer("", "");
-        SaveDocumentStatus(OldTabSelected);
+        SaveDocumentStatus(FBNotebook->GetSelection());
         doc = stc->CreateDocument();
         buff->SetDocument(doc);
         stc->AddRefDocument(doc);
         stc->SetDocPointer(doc);
-        FBNotebook->InsertPage(FBNotebook->GetPageCount(), stc, wxFileNameFromPath(InitFile), true, -1);
+        OldTabSelected = -1;
+        FBNotebook->InsertPage(FBNotebook->GetPageCount(), stc, wxFileNameFromPath(InitFile), true);
     }
     
     if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
@@ -235,7 +237,6 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
     buff->SetFileName(InitFile);
     buff->SetModified(false);
     buff->UpdateModTime();    
-    OldTabSelected = FBNotebook->GetSelection();
     stc->SetBuffer(buff);
     stc->SetFocus();
     stc->Thaw();
@@ -249,12 +250,27 @@ void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
 }
 
 void MyFrame::ChangeNBPage   ( wxNotebookEvent& event) {
-
+    if (OldTabSelected==-1) {
+        OldTabSelected = 0 ;
+        return;
+    }
     if (stc==0) return;
     int index = event.GetSelection();
-    if (index==OldTabSelected) return;
-    SaveDocumentStatus(event.GetOldSelection());
-    OldTabSelected = event.GetSelection();
+    if (FBNotebook->GetPageCount()>1) SaveDocumentStatus(event.GetOldSelection());
+    SetSTCPage ( index );
+    return;
+}
+
+
+void MyFrame::SaveDocumentStatus ( int docID ) {
+    Buffer* buff = bufferList.GetBuffer(docID);
+    buff->SetPositions(stc->GetSelectionStart(), stc->GetSelectionEnd());
+    buff->SetLine(stc->GetFirstVisibleLine());
+    buff->SetCaretPos(stc->GetCurrentPos());
+}
+
+void MyFrame::SetSTCPage ( int index ) {
+    if (stc == 0) return;
     
     Buffer* buff = bufferList.GetBuffer(index);
     void* doc = buff->GetDocument();
@@ -268,16 +284,6 @@ void MyFrame::ChangeNBPage   ( wxNotebookEvent& event) {
     stc->SetFocus();
     stc->SetBuffer(buff);
     stc->Thaw();
-    
-    return;
-}
-
-
-void MyFrame::SaveDocumentStatus ( int docID ) {
-    Buffer* buff = bufferList.GetBuffer(docID);
-    buff->SetPositions(stc->GetSelectionStart(), stc->GetSelectionEnd());
-    buff->SetLine(stc->GetFirstVisibleLine());
-    buff->SetCaretPos(stc->GetCurrentPos());
 }
 
 

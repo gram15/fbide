@@ -307,10 +307,6 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Parent->CMDPrototype            = CompilerCommand->GetValue();
     
     Parent->Style = Style;
-//    if (Parent->stc) {
-//        Parent->stc->LoadSTCSettings();
-//        Parent->stc->LoadSTCTheme();
-//    }
     
     Close(true);
     return;

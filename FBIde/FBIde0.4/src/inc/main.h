@@ -283,6 +283,7 @@ public:
     void LoadStatusBar      (  );
     void OpenLangFile (wxString FileName );
     void SaveDocumentStatus ( int docID );
+    void SetSTCPage         ( int index );
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );

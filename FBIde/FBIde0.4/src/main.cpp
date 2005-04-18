@@ -107,9 +107,6 @@ void MyFrame::OnClose 	(wxCloseEvent &event) {
     if (Proceed() == 0) return;
     
     if (FBNotebook)     delete FBNotebook;
-    if (FB_Toolbar)     delete FB_Toolbar;
-    if (FindData)       delete FindData;
-    if (ReplaceData)    delete ReplaceData;
 
     SaveSettings();
     event.Skip();
