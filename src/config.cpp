@@ -21,7 +21,12 @@
 * Program URL   : http://www.hot.ee/fbide
 */
 
+
+//#include <wx/wxprec.h>
+
 #include "inc/main.h"
+#include <wx/fileconf.h>
+#include <wx/wfstream.h>
 
 void MyFrame::LoadSettings() {
     

@@ -22,6 +22,8 @@
 */
 
 #include "inc/main.h"
+#include "inc/fbedit.h"
+
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
     EVT_STC_MARGINCLICK (-1,                FB_Edit::OnMarginClick)

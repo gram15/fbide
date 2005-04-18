@@ -21,7 +21,9 @@
 * Program URL   : http://www.hot.ee/fbide
 */
 
+
 #include "inc/main.h"
+#include "inc/fbedit.h"
 
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -60,6 +62,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     
     EVT_MENU(Menu_Settings,             MyFrame::OnSettings)
     
+    EVT_NOTEBOOK_PAGE_CHANGING(-1,      MyFrame::ChangingNBPage)
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
     
 END_EVENT_TABLE()
@@ -103,14 +106,11 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 void MyFrame::OnClose 	(wxCloseEvent &event) {
     if (Proceed() == 0) return;
     
-    if (FBNotebook) {
-        if (FBNotebook->GetPageCount())
-            FBNotebook->DeleteAllPages();
-        delete FBNotebook;
-    }
-    if (FB_Toolbar) delete FB_Toolbar;
-    if (FindData)   delete FindData;
-    if (ReplaceData) delete ReplaceData;
+    if (FBNotebook)     delete FBNotebook;
+    if (FB_Toolbar)     delete FB_Toolbar;
+    if (FindData)       delete FindData;
+    if (ReplaceData)    delete ReplaceData;
+
     SaveSettings();
     event.Skip();
 }

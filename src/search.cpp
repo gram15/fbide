@@ -21,7 +21,9 @@
 * Program URL   : http://www.hot.ee/fbide
 */
 
+
 #include "inc/main.h"
+#include "inc/fbedit.h"
 
 void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event))
 {

@@ -22,6 +22,7 @@
 */
 
 #include "inc/main.h"
+#include "inc/configdiag.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, "FBIde settings");

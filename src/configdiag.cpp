@@ -1,5 +1,7 @@
 
+
 #include "inc/main.h"
+#include "inc/configdiag.h"
 
 BEGIN_EVENT_TABLE( ConfigDialog, wxDialog)
     EVT_BUTTON(CDID_OK,             ConfigDialog::Button_OK)
@@ -296,10 +298,10 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Parent->CMDPrototype            = CompilerCommand->GetValue();
     
     Parent->Style = Style;
-    if (Parent->stc) {
-        Parent->stc->LoadSTCSettings();
-        Parent->stc->LoadSTCTheme();
-    }
+//    if (Parent->stc) {
+//        Parent->stc->LoadSTCSettings();
+//        Parent->stc->LoadSTCTheme();
+//    }
     
     Close(true);
     return;
