@@ -24,6 +24,10 @@
 #ifndef _STCEDIT_H_
 #define _STCEDIT_H_
 
+
+#include <wx/stc/stc.h>
+
+
 class FB_Edit: public wxStyledTextCtrl {
 public:
     FB_Edit ( MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id = -1,
@@ -34,6 +38,7 @@ public:
            );
     
     MyFrame * Parent;
+    Buffer* buff;
     
     void LoadSTCSettings    (  );
     void LoadSTCTheme       (  );
@@ -83,6 +88,10 @@ public:
     
     inline wxString GetLastKw ( wxString cmdline ) {
         return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true) - 1);
+    }
+    
+    void SetBuffer ( Buffer* buff ) {
+        this->buff = buff;
     }
     
 //   ~FB_Edit ();

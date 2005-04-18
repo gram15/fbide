@@ -24,42 +24,17 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "wx/wxprec.h"
-#include "wx/wx.h"
-#include "wx/fileconf.h"
-#include "wx/wfstream.h"
-#include "wx/file.h"
-#include "wx/filename.h"
-#include "wx/fdrepdlg.h"
-#include "wx/notebook.h"
-#include "wx/panel.h"
-#include <wx/sizer.h>
-#include <wx/checkbox.h>
-#include <wx/spinctrl.h>
-#include <wx/stattext.h>
-#include <wx/statline.h>
-#include <wx/button.h>
-#include <wx/textctrl.h>
-#include <wx/listbox.h>
-#include <wx/combobox.h>
+//#include <wx/wxprec.h>
+#include <wx/wx.h>
+#include <wx/file.h>
+#include <wx/filename.h>
+#include <wx/fdrepdlg.h>
+#include <wx/notebook.h>
 #include <wx/settings.h>
 #include <wx/dialog.h>
-#include "wx/colordlg.h"
-#include "wx/filesys.h"
-
-// STC header
-#include "wx/stc/stc.h"
-
-//// fl headers
-//#include "wx/fl/controlbar.h"    // core API
-//#include "wx/fl/barhintspl.h"    // bevel for bars with "X"s and grooves
-//#include "wx/fl/rowdragpl.h"     // NC-look with draggable rows
-//#include "wx/fl/cbcustom.h"      // customization plugin
-//#include "wx/fl/hintanimpl.h"
-//#include "wx/fl/gcupdatesmgr.h"  // smooth d&d
-//#include "wx/fl/antiflickpl.h"   // double-buffered repaint of decorations
-//#include "wx/fl/dyntbar.h"       // auto-layout toolbar
-//#include "wx/fl/dyntbarhnd.h"    // control-bar dimension handler for it
+#include <wx/colordlg.h>
+#include <wx/filesys.h>
+#include <wx/datetime.h>
 
 
 #include "../../FBIde0.4_private.h"
@@ -278,6 +253,11 @@ public:
 };
 
 class FB_Edit;
+//class BufferList;
+//class Buffer;
+
+#include "buffer.h"
+#include "bufferlist.h"
 
 class MyFrame : public wxFrame
 {
@@ -295,6 +275,7 @@ public:
     void LoadToolBar        (  );
     void LoadStatusBar      (  );
     void OpenLangFile (wxString FileName );
+    void SaveDocumentStatus ( int docID );
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );
@@ -375,8 +356,9 @@ public:
     
     void OnAbout        ( wxCommandEvent& event );
     
-    FB_Edit * NewSTCPage( wxString InitFile, bool select = false );
-    void ChangeNBPage   ( wxNotebookEvent& event );
+    void NewSTCPage         ( wxString InitFile, bool select = false );
+    void ChangeNBPage       ( wxNotebookEvent& event );
+    void ChangingNBPage     ( wxNotebookEvent& event );
     
     //Pointers
     MyApp               * FB_App;
@@ -395,11 +377,13 @@ public:
     CommonInfo Prefs;
     StyleInfo  Style; 
     LangInfo Language;
-    wxTextFile LangFile;
     
     wxString Keyword[KWGROUPS + 1];
     
     wxColourData colr;
+    BufferList bufferList;
+    int lastTabCreated;
+    int OldTabSelected;
     
 private:
     DECLARE_EVENT_TABLE()
@@ -457,10 +441,5 @@ enum
 	Menu_CompParam,
 	Menu_ShowExitCode
 };
-
-
-#include "configdiag.h"
-#include "fbedit.h"
-
 
 #endif

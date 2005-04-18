@@ -22,6 +22,8 @@
 */
 
 #include "inc/main.h"
+#include "inc/tabctrl.h"
+#include "inc/fbedit.h"
 
 //------------------------------------------------------------------------------
 //Load menu's
@@ -34,6 +36,7 @@ void MyFrame::LoadUI () {
     FB_App->SetTopWindow(this);
     FBNotebook = new wxNotebook( this, -1 );
     FBNotebook->Hide();
+    stc=0;
 
     Show(true);    
     return;
@@ -196,45 +199,85 @@ void MyFrame::LoadStatusBar () {
 }
 
 
-FB_Edit * MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
+void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
     
+    void* doc;
     if ( InitFile == "" ) InitFile = FBUNNAMED;
+    Buffer* buff;
     
-    if (stc==NULL)
+    if (stc==NULL) {
+        stc = new FB_Edit( this, FBNotebook, -1, "" );
+        stc->Freeze();
+        stc->LoadSTCSettings();
+        stc->LoadSTCTheme();
+        buff = bufferList.AddFileBuffer("", "");
+        FBNotebook->Refresh();
         FBNotebook->Show();
-    
-    FB_Edit * stcPage = new FB_Edit( this, FBNotebook, -1, InitFile );
-    FBNotebook->AddPage( stcPage, "", select );
-    stcPage->LoadSTCSettings();
-    stcPage->LoadSTCTheme();
-    stcPage->Refresh();
-    stcPage->CreateDocument();
-    
-    if ( InitFile != FBUNNAMED ) {
-        stcPage->LoadFile(Document);        //Load file
-        stcPage->ConvertEOLs(0);         	//Set windows end of lines
-        stcPage->GotoPos(0);             	//Goto to the beginning of the file.
-        stcPage->EnsureCaretVisible();      //Ensure that everything is visible
-        wxFileName w(InitFile);             //Format filename
-        InitFile = w.GetFullName();
+        doc = stc->GetDocPointer();
+        buff->SetDocument(doc);
+        stc->AddRefDocument(doc);
+        stc->SetDocPointer(doc);
+        FBNotebook->AddPage( stc, wxFileNameFromPath(InitFile), true );
     }
-    else
-        InitFile = InitFile <<  " " << ( FBNotebook->GetSelection() + 1 );
+    else {
+        stc->Freeze();
+        buff = bufferList.AddFileBuffer("", "");
+        SaveDocumentStatus(OldTabSelected);
+        doc = stc->CreateDocument();
+        buff->SetDocument(doc);
+        stc->AddRefDocument(doc);
+        stc->SetDocPointer(doc);
+        FBNotebook->InsertPage(FBNotebook->GetPageCount(), stc, wxFileNameFromPath(InitFile), true, -1);
+    }
     
-    FBNotebook->SetPageText(FBNotebook->GetSelection(), InitFile);
-    return stcPage;
+    if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
 
-    return stc;
+    buff->SetFileName(InitFile);
+    buff->SetModified(false);
+    buff->UpdateModTime();    
+    OldTabSelected = FBNotebook->GetSelection();
+    stc->SetBuffer(buff);
+    stc->SetFocus();
+    stc->Thaw();
+
+    return;
+}
+
+void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
+    stc->Freeze();
+    return;
+}
+
+void MyFrame::ChangeNBPage   ( wxNotebookEvent& event) {
+
+    if (stc==0) return;
+    int index = event.GetSelection();
+    if (index==OldTabSelected) return;
+    SaveDocumentStatus(event.GetOldSelection());
+    OldTabSelected = event.GetSelection();
+    
+    Buffer* buff = bufferList.GetBuffer(index);
+    void* doc = buff->GetDocument();
+    stc->AddRefDocument(doc);
+    stc->SetDocPointer(doc);
+
+    stc->ScrollToLine(buff->GetLine());
+    stc->SetCurrentPos(buff->GetCaretPos());
+    stc->SetSelectionStart(buff->GetSelectionStart());
+    stc->SetSelectionEnd(buff->GetSelectionEnd());
+    stc->SetFocus();
+    stc->SetBuffer(buff);
+    stc->Thaw();
+    
+    return;
 }
 
 
-void MyFrame::ChangeNBPage   ( wxNotebookEvent& WXUNUSED(event)) {
-    
-    stc = (FB_Edit *) FBNotebook->GetCurrentPage();
-    stc->LoadSTCSettings();
-    stc->LoadSTCTheme();
-
-    return;
+void MyFrame::SaveDocumentStatus ( int docID ) {
+    Buffer* buff = bufferList.GetBuffer(docID);
+    buff->SetPositions(stc->GetSelectionStart(), stc->GetSelectionEnd());
+    buff->SetLine(stc->GetFirstVisibleLine());
+    buff->SetCaretPos(stc->GetCurrentPos());
 }
 
 

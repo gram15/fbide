@@ -24,6 +24,18 @@
 #ifndef _CONFDIAG_H_
 #define _CONFDIAG_H_
 
+#include <wx/panel.h>
+#include <wx/sizer.h>
+#include <wx/checkbox.h>
+#include <wx/spinctrl.h>
+#include <wx/stattext.h>
+#include <wx/statline.h>
+#include <wx/button.h>
+#include <wx/textctrl.h>
+#include <wx/listbox.h>
+#include <wx/combobox.h>
+#include <wx/textfile.h>
+
 enum ConfigENUMS {
     CDID_OK,
     CDID_Cancel,

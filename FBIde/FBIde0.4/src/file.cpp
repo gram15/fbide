@@ -22,9 +22,10 @@
 */
 
 #include "inc/main.h"
+#include "inc/fbedit.h"
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
-    stc = NewSTCPage("", true);
+    NewSTCPage("", true);
     return;
 }
 
@@ -42,7 +43,7 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
     wxFileName w(dlg.GetPath());    //Format filename
     w.Normalize();
     Document = w.GetFullPath();
-    stc = NewSTCPage(Document, true);
+    NewSTCPage(Document, true);
 
     return;
 }

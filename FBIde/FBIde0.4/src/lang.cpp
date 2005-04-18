@@ -22,6 +22,8 @@
 */
 
 #include "inc/main.h"
+#include <wx/fileconf.h>
+#include <wx/wfstream.h>
 
 void MyFrame::OpenLangFile( wxString FileName ){
 
