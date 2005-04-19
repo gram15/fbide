@@ -32,11 +32,23 @@ void MyFrame::OpenLangFile( wxString FileName ){
      //And then open it as an INI file
      wxFileConfig FileINI(FileINIIS);
           
-
      //First the key to "general"
      FileINI.SetPath("/general");     
-     //And begin =D
+     
+     wxString temp;
+     for (int i=0; i<RowCount; i++){
+         temp="";
+         temp<<i;
+         Lang[i] = FileINI.Read(temp,"");
+     }
+         
+     
+     /*//And begin =D
      Language.WelcomeMessage = FileINI.Read("WelcomeMessage", "");
+     
+     //Configuration Dialog stuff
+     FileINI.SetPath("/configdialog");
+     Language.ConfigTitle = FileINI.Read("ConfigTitle", "");
      
      //Lets set the key to "menus"
      FileINI.SetPath("/menus");
@@ -123,7 +135,7 @@ void MyFrame::OpenLangFile( wxString FileName ){
      Language.RunShowexitcodeDesc  = FileINI.Read("RunShowexitcodeDesc", "");
      
      Language.HelpAbout     = FileINI.Read("HelpAbout",     "");
-     Language.HelpAboutDesc = FileINI.Read("HelpAboutDesc", "");
+     Language.HelpAboutDesc = FileINI.Read("HelpAboutDesc", "");*/
      
      return;               
 }

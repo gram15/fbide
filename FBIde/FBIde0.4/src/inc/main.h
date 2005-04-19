@@ -51,7 +51,75 @@ typedef unsigned int uint;
 struct LangInfo {
        //General stuff
        wxString WelcomeMessage;
+       wxString OKBtn;
+       wxString CancelBtn;
        
+       //Configuration Dialog
+       wxString ConfigTitle;
+       wxString GeneralTab;
+       wxString ThemeTab;
+       wxString KeywordsTab;
+       wxString CompilerTab;
+       //General
+       wxString ShowLineNumbers;
+       wxString EditorSettings;
+       wxString HiLightMatchingBraces;
+       wxString UseSyntaxHi;
+       wxString ShRightMargin;
+       wxString ShLineEnd;
+       wxString ShWhtspc;
+       wxString ShIndGuides;
+       wxString FoldMargin;
+       wxString AutoIndent;
+       wxString RightMarginWidth;
+       wxString TabSize;
+       //Compile
+       wxString CompilerSettings;
+       wxString CompilerPath;
+       wxString BrowseBtn;
+       wxString CompilerCommand;
+       //Themes
+       wxString ThemesComments;
+       wxString ThemesNumbers;
+       wxString ThemesStringClosed;
+       wxString ThemesPreprocessor;
+       wxString ThemesOperator;
+       wxString ThemesIdentifier;
+       wxString ThemesDate;
+       wxString ThemesStringOpen;
+       wxString ThemesKeywords;
+       wxString ThemesCaret;
+       wxString ThemesLineNumbers;
+       wxString ThemesTextSelect;
+       wxString ThemesBraceMatch;
+       wxString ThemesBraceMismatch;
+       wxString ThemesEditor;
+       wxString ThemesFontstyleBold;
+       wxString ThemesFontstyleItalic;
+       wxString ThemesFontstyleUnderline;
+       wxString ThemesSaveTheme;
+       wxString ThemesTheme;
+       wxString ThemesCreateNew;
+       wxString ThemesColors;
+       wxString ThemesType;
+       wxString ThemesFgColor;
+       wxString ThemesBgColor;
+       wxString ThemesFontstyle;
+       wxString ThemesFont;
+       wxString ThemesFontsize;
+       
+       wxString EnterThemeName;
+       wxString Parameters;
+       wxString Theme;
+       wxString AlreadyExists;
+       
+       
+       //Keywords
+       wxString Keywords;
+       wxString SelectKeywordGroup;
+       wxString Group;
+
+
        //Menu bar captions
        wxString MenuFile;
        wxString MenuEdit;
@@ -385,6 +453,8 @@ public:
     CommonInfo Prefs;
     StyleInfo  Style; 
     LangInfo Language;
+    int RowCount = 200;
+    wxString Lang[RowCount];
     
     wxString Keyword[KWGROUPS + 1];
     

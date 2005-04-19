@@ -26,7 +26,7 @@
 #include "inc/fbedit.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
-    ConfigDialog dlg(this, -1, "FBIde settings");
+    ConfigDialog dlg(this, -1, Language.ConfigTitle);
     dlg.ShowModal();
     if (stc==0) return;
     stc->Freeze();
