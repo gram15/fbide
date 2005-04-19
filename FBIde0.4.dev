@@ -43,7 +43,11 @@ BuildCmd=
 Major=0
 Minor=4
 Release=0
-Build=1170
+<<<<<<< FBIde0.4.dev
+Build=1160
+=======
+Build=1173
+>>>>>>> 1.9
 LanguageID=1033
 CharsetID=1252
 CompanyName=

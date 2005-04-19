@@ -32,10 +32,10 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     Create(parent,id,title,wxDefaultPosition, wxSize(405, 330), style, name);
     
     CD_Notebook=new wxNotebook(this,-1,wxPoint(5,4),wxSize(390,265));
-    CD_Notebook->SetTitle(wxT("Settings"));
+    //CD_Notebook->SetTitle(wxT("Settings"));
     
     CD_Settings=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings,"General",false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings,Language.GeneralTab,false);
     
     CD_Theme=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
     CD_Notebook->AddPage((wxNotebookPage *)CD_Theme,"Theme",false);
