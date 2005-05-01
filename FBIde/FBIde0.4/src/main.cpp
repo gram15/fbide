@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 
@@ -35,7 +35,8 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_Save,                 MyFrame::OnSave)
     EVT_MENU(Menu_SaveAS,               MyFrame::OnSaveAs)
     EVT_MENU(Menu_SaveAll,              MyFrame::OnSaveAll)
-    EVT_MENU(Menu_Close,                MyFrame::OnCloseFile)
+    EVT_MENU(Menu_Close,                MyFrame::OnCloseFile_)
+    EVT_MENU(Menu_CloseAll,             MyFrame::OnCloseAll_)
     EVT_MENU(Menu_NewEditor,            MyFrame::OnNewWindow)
 
     EVT_MENU(Menu_Undo,                 MyFrame::OnMenuUndo)
@@ -61,6 +62,15 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_FIND_REPLACE_ALL(-1,            MyFrame::MenuReplaceAll)
     
     EVT_MENU(Menu_Settings,             MyFrame::OnSettings)
+    EVT_MENU(Menu_Result,               MyFrame::OnResult)
+    
+    EVT_MENU(Menu_Compile,              MyFrame::OnCompile)
+    EVT_MENU(Menu_CompileAndRun,        MyFrame::OnCompileAndRun)
+    EVT_MENU(Menu_Run,                  MyFrame::OnRun)
+    EVT_MENU(Menu_QuickRun,             MyFrame::OnQuickRun)
+    EVT_MENU(Menu_CmdPromt,             MyFrame::OnCmdPromt)
+    EVT_MENU(Menu_Parameters,           MyFrame::OnParameters)
+    EVT_MENU(Menu_ShowExitCode,         MyFrame::OnShowExitCode)
     
     EVT_NOTEBOOK_PAGE_CHANGING(-1,      MyFrame::ChangingNBPage)
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
@@ -76,7 +86,7 @@ bool MyApp::OnInit()
 {
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
-    MyFrame *frame = new MyFrame(this, _T(PRODUCT_NAME));
+    MyFrame *frame = new MyFrame(this, GetAppName());
     frame->Show(true);
     return true;
 }
@@ -93,6 +103,8 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     LoadSettings();
     LoadkwFile ( SyntaxFile );
     Style = LoadThemeFile( ThemeFile );
+    ProcessIsRunning = false;
+    IsTemp           = false;
     
     FindData        = new wxFindReplaceData(wxFR_DOWN);
     ReplaceData     = new wxFindReplaceData(wxFR_DOWN);
@@ -100,13 +112,22 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     ReplaceDialog   = NULL;
 
     LoadUI();
+    if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);
 
 }
 
 void MyFrame::OnClose 	(wxCloseEvent &event) {
-    if (Proceed() == 0) return;
     
-    if (FBNotebook)     delete FBNotebook;
+    if (bufferList.GetModifiedCount()) {
+        int result = wxMessageBox("Save changes?", "Save before exit?", wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
+        if (result==wxCANCEL) return;
+        if (result==wxYES) {
+            OnCloseAll ();
+            if (stc) return;
+        }
+    }
+    
+    if (FBCodePanel)     delete FBCodePanel;
 
     SaveSettings();
     event.Skip();

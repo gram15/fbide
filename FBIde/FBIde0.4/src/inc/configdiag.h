@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #ifndef _CONFDIAG_H_

@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #include "inc/main.h"
@@ -102,14 +102,17 @@ void MyFrame::OnIndentDecr (wxCommandEvent& WXUNUSED(event))
 void MyFrame::OnComment ( wxCommandEvent& WXUNUSED(event) )
 {
     if (stc==0) return;
-    int lineStart = stc->LineFromPosition (stc->GetSelectionStart());
-    int lineEnd = stc->LineFromPosition (stc->GetSelectionEnd());
+    int SelStart    = stc->GetSelectionStart();
+    int SelEnd      = stc->GetSelectionEnd();
+    int lineStart   = stc->LineFromPosition (SelStart);
+    int lineEnd     = stc->LineFromPosition (SelEnd);
 
     stc->BeginUndoAction();
         for(;lineStart <= lineEnd; lineStart++) {
             stc->InsertText(stc->PositionFromLine(lineStart),"\'");
         }
     stc->EndUndoAction();
+    
     return;
 }
 

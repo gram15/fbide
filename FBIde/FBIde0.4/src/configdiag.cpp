@@ -1,3 +1,25 @@
+/*
+* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* FreeBasic compiler.
+* Copyright (C) 2005  Albert Varaksin
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
+* Program URL   : http://fbide.sourceforge.net
+*/
 
 
 #include "inc/main.h"
@@ -35,7 +57,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     //CD_Notebook->SetTitle(wxT("Settings"));
     
     CD_Settings=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings,Language.GeneralTab,false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings, "General" ,false);
     
     CD_Theme=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
     CD_Notebook->AddPage((wxNotebookPage *)CD_Theme,"Theme",false);
@@ -624,56 +646,6 @@ void ConfigDialog::KeywordSelect          ( wxCommandEvent& event ) {
 
 
 ConfigDialog::~ConfigDialog   (  ) {
-    delete CB_CurrentLine;
-    delete CB_HiLightBraces;
-    delete CB_SyntaxHiLight;
-    delete CB_LongLine;
-    delete CB_LineEndings;
-    delete CB_WhiteSpaces;
-    delete CB_IndentGuides;
-    delete TB_Width;
-    delete CB_FoldMargin;
-    delete st20;
-    delete lno21;
-    delete CB_AutoIndent;
-    delete But_OK;
-    delete But_Cancel;
-    delete lno31;
-    delete st33;
-    delete st34;
-    delete TB_CompilerPath;
-    delete st37;
-    delete But_GetCompilerPath;
-    delete st41;
-    delete CompilerCommand;
-    delete st43;
-    delete spc44;
-    delete LB_Types;
-    delete But_Foreground;
-    delete But_Background;
-    delete CB_Bold;
-    delete CB_Italic;
-    delete CB_Underlined;
-    delete But_SaveTheme;
-    delete CB_Themes;
-    delete st58;
-    delete st59;
-    delete lno60;
-    delete st61;
-    delete st62;
-    delete st63;
-    delete st64;
-    delete lno65;
-    delete lnv66;
-    delete st67;
-    delete cmb69;
-    delete st70;
-    delete spc71;
-    delete lno74;
-    delete st75;
-    delete CB_KeywordGroup;
-    delete st77;
-    delete TA_Keywords;
  
     delete CD_Settings;
     delete CD_Theme;

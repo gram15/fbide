@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #include "inc/main.h"
@@ -26,10 +26,13 @@
 
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
+
     EVT_STC_MARGINCLICK (-1,                FB_Edit::OnMarginClick)
     
     EVT_STC_CHARADDED   (-1,                FB_Edit::OnCharAdded)
     EVT_STC_UPDATEUI    (-1,                FB_Edit::OnUpdateUI)
+    EVT_STC_MODIFIED    (-1,                FB_Edit::OnModified)
+    
 END_EVENT_TABLE()
 
 FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id,
@@ -40,8 +43,8 @@ FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id
    			: wxStyledTextCtrl (parentNotebook, id, pos, size, style) {
     
     Parent = ParentFrame;
-    DocumentName = FileToLoad;
     braceLoc = -1;
+    buff = 0;
 }
 
 
@@ -59,7 +62,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetEOLMode(0);
     
     SetIndentationGuides (Prefs->IndentGuide);
-    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0000"));
+    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0001"));
     SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin: 0);
     SetMarginWidth (1,0);
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
@@ -204,6 +207,13 @@ void FB_Edit::LoadSTCTheme       (  ) {
 }
 
 //Stc events
+void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
+    if(buff!=0) {
+        if(GetLength()==0) { Parent->SetModified(-1, false); }
+        else if(GetModify()!=buff->GetModified()) { Parent->SetModified(-1, !buff->GetModified()); }
+   }
+}
+    
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
 
     if (Parent->Prefs.BraceHighlight) {

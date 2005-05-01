@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Indrek Triipus <madedog@gmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #include "inc/main.h"
@@ -28,8 +28,9 @@
 void MyFrame::OpenLangFile( wxString FileName ){
      
      //First lets select the file we are going to use...
-     wxFileInputStream FileINIIS( EditorPath + "ide\\lang\\" + FileName + ".fbl" );
+     wxFFileInputStream FileINIIS( EditorPath + "ide/lang/" + FileName + ".fbl" );
      //And then open it as an INI file
+
      wxFileConfig FileINI(FileINIIS);
           
      //First the key to "general"
@@ -43,7 +44,7 @@ void MyFrame::OpenLangFile( wxString FileName ){
      }
          
      
-     /*//And begin =D
+     //And begin =D
      Language.WelcomeMessage = FileINI.Read("WelcomeMessage", "");
      
      //Configuration Dialog stuff
@@ -135,7 +136,7 @@ void MyFrame::OpenLangFile( wxString FileName ){
      Language.RunShowexitcodeDesc  = FileINI.Read("RunShowexitcodeDesc", "");
      
      Language.HelpAbout     = FileINI.Read("HelpAbout",     "");
-     Language.HelpAboutDesc = FileINI.Read("HelpAboutDesc", "");*/
+     Language.HelpAboutDesc = FileINI.Read("HelpAboutDesc", "");
      
      return;               
 }

@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #ifndef MAIN_H
@@ -35,6 +35,8 @@
 #include <wx/colordlg.h>
 #include <wx/filesys.h>
 #include <wx/datetime.h>
+#include <wx/splitter.h>
+#include <wx/listctrl.h>
 
 
 #include "../../FBIde0.4_private.h"
@@ -349,9 +351,12 @@ public:
     void LoadMenu           (  );
     void LoadToolBar        (  );
     void LoadStatusBar      (  );
-    void OpenLangFile (wxString FileName );
+    void OpenLangFile       ( wxString FileName );
     void SaveDocumentStatus ( int docID );
     void SetSTCPage         ( int index );
+    void SetModified        ( int index, bool status );
+    void AddListItem        ( int Linenr, int ErrorNr, wxString FileName, wxString Message );
+    
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );
@@ -359,11 +364,15 @@ public:
     void OnSave             ( wxCommandEvent& event );
     void OnSaveAs           ( wxCommandEvent& event );
     void OnSaveAll          ( wxCommandEvent& event );
-    void OnCloseFile        ( wxCommandEvent& event );
+    void OnCloseFile_       ( wxCommandEvent& event );
+    void OnCloseFile        (  );
+    void OnCloseAll_        ( wxCommandEvent& event );
+    void OnCloseAll         (  );
     void OnQuit             ( wxCommandEvent& event );
     void OnNewWindow        ( wxCommandEvent& event );
-    int  Proceed   	        ( void );
-    bool SaveFile           ( wxString FileName );
+    bool SaveFile           ( Buffer* buff, bool SaveAS = false );
+    void CloseFile          ( int index );
+    int  Proceed            ( void );
     
     
     //Editmenu-events and related stuff
@@ -406,16 +415,20 @@ public:
     
     
     //View menu stuff
-    void OnDisplayEOL 		( wxCommandEvent &event );
-	void OnIndentGuide 		( wxCommandEvent &event );
-	void OnLineNumber 		( wxCommandEvent &event );
-	void OnLongLineOn 		( wxCommandEvent &event );
-	void OnWhiteSpace 		( wxCommandEvent &event );
-	void OnSyntaxHighLight 	( wxCommandEvent &event );
-	void OnAutoIndent		( wxCommandEvent &event );
-	void OnBraceHighLight   ( wxCommandEvent &event );
-	void OnFolderMargin     ( wxCommandEvent &event );
     void OnSettings         ( wxCommandEvent &event );
+    void OnResult           ( wxCommandEvent &event );
+    
+    //Run menu stuff
+    void OnCompile 	        ( wxCommandEvent &event );
+    void OnCompileAndRun 	( wxCommandEvent &event );
+    void OnRun              ( wxCommandEvent &event );
+    void OnQuickRun         ( wxCommandEvent &event );
+    void OnCmdPromt         ( wxCommandEvent &event );
+    void OnParameters       ( wxCommandEvent &event );
+    void OnShowExitCode     ( wxCommandEvent &event );
+    int  Compile            ( wxString FileName = "" );
+    void Run                ( wxString FileName = "" );
+    wxString GetCompileData ( wxString FileName = "" );
 	
 	
 
@@ -444,16 +457,33 @@ public:
     wxPanel             * FBCodePanel;
     wxPanel             * FBProjectPanel;
     wxPanel             * FBConsolePanel;
+    wxSizer             * s_Code;
+    wxSizer             * s_Project;
+    wxSizer             * s_Console;
+    wxSplitterWindow    * s_MainArea;
+    wxListCtrl          * FBConsole;
+    
+    wxMenu              * HelpMenu;
+    wxMenu              * FB_Run;
+    wxMenu              * FB_Tools;
+    wxMenu              * FB_View;
+    wxMenu              * FB_Search;
+    wxMenu              * _FB_Edit;
+    wxMenu              * FB_File;
+    wxMenuBar           * MenuBar;
     
     bool                IDE_Modified;
     int                 braceLoc;
+    bool                ProcessIsRunning;
+    bool                IsTemp;
     
     wxString CompilerPath, SyntaxFile, CMDPrototype, ThemeFile;
-    wxString Document, CompiledFile, EditorPath;
-    CommonInfo Prefs;
-    StyleInfo  Style; 
-    LangInfo Language;
-    int RowCount = 200;
+    wxString Document, CompiledFile, EditorPath, ParameterList;
+    wxString CurFolder;
+    CommonInfo  Prefs;
+    StyleInfo   Style; 
+    LangInfo    Language;
+    #define     RowCount    200
     wxString Lang[RowCount];
     
     wxString Keyword[KWGROUPS + 1];
@@ -480,6 +510,7 @@ enum
     Menu_SaveAS,
     Menu_SaveAll,
     Menu_Close,
+    Menu_CloseAll,
     Menu_FileHistory,
     
 	//EditMenu:
@@ -503,11 +534,12 @@ enum
 	Menu_FindPrevious,
 	
 	//ViewMenu:
-	Menu_Subs,
 	Menu_Settings,
+	Menu_Result,
 	
 	//Tools menu
     Menu_Converter,
+	Menu_Subs,
 
 	//RunMenu
 	Menu_Compile,
