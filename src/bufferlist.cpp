@@ -1,3 +1,26 @@
+/*
+* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* FreeBasic compiler.
+* Copyright (C) 2005  Albert Varaksin
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
+* Program URL   : http://fbide.sourceforge.net
+*/
+
 
 #include "inc/main.h"
 
@@ -129,10 +152,11 @@ void BufferList::RemoveBuffer(int index)
  * @param index The index of the buffer to set as modified.
  * @see BufferList::SetBufferUnModified(int index)
  */
-void BufferList::SetBufferModified(int index)
+void BufferList::SetBufferModified(int index, bool status)
 {
-    buffers[index]->SetModified(true);
-    modifiedCount++;
+    buffers[index]->SetModified(status);
+    if (status) modifiedCount++;
+    else modifiedCount--;
 }
 
 /**
@@ -149,4 +173,35 @@ void BufferList::SetBufferUnModified(int index)
 void BufferList::SetBuffer(int index, Buffer* buff) {
     buffers[index] = buff;
 }
+
+
+int BufferList::FileLoaded ( wxString FileName ) {
+    int counter = 0;
+    Buffer * buff;
+    wxString name;
+    FileName = FileName.Lower().Trim(true).Trim(false);
+    
+    while (counter < GetBufferCount()) {
+        buff = buffers[counter];
+        name = buff->GetFileName().Lower().Trim(true).Trim(false);
+        if (name==FileName) return counter;
+        counter ++;
+    }
+    return -1;
+}
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #include "inc/main.h"
@@ -29,9 +29,33 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, Language.ConfigTitle);
     dlg.ShowModal();
     if (stc==0) return;
+    SaveSettings();
     stc->Freeze();
-    stc->LoadSTCSettings();
     stc->LoadSTCTheme();
+    stc->LoadSTCSettings();
     stc->Thaw();
     return;
 }
+
+void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
+
+    if (FBConsole->IsShown()) {
+        FB_View->Check(Menu_Result, false);
+        FBConsole->Hide();
+        s_Code->Detach(s_Console);
+        s_Code->Layout();
+    }
+    else {
+        FB_View->Check(Menu_Result, true);
+        FBConsole->Show();
+        s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
+        s_Code->Layout();
+    }    
+    return;
+}
+
+
+
+
+
+

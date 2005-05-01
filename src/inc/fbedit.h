@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 #ifndef _STCEDIT_H_
@@ -47,6 +47,7 @@ public:
 	void OnUpdateUI		    ( wxStyledTextEvent &event );
     static bool IsBrace     ( wxChar brace );
     void OnMarginClick      ( wxStyledTextEvent &event );
+    void OnModified         ( wxStyledTextEvent &event );
         
     wxString    DocumentName;
     int braceLoc;
@@ -70,8 +71,7 @@ public:
     }
     
     inline wxString ClearCmdLine ( wxString cmdline ) {
-        cmdline = cmdline.Trim(false);
-        cmdline = cmdline.Lower();
+        cmdline = cmdline.Trim(false).Lower();
         bool instring =false;
         wxString temp;
         for (unsigned int i=0; i < cmdline.Len(); i++) {
@@ -90,7 +90,7 @@ public:
         return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true) - 1);
     }
     
-    void SetBuffer ( Buffer* buff ) {
+    inline void SetBuffer ( Buffer* buff ) {
         this->buff = buff;
     }
     

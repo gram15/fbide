@@ -18,7 +18,7 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 *
 * Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
-* Program URL   : http://www.hot.ee/fbide
+* Program URL   : http://fbide.sourceforge.net
 */
 
 
@@ -37,7 +37,7 @@ void MyFrame::LoadSettings() {
     wxFileConfig PrefsINI(PrefsINIIS);
     
     wxString Temp = PRODUCT_NAME;
-    SetTitle(Temp + " - " + Document);
+    SetTitle( Temp );
     
     bool b = false;
     PrefsINI.SetPath("/general");
@@ -84,6 +84,7 @@ void MyFrame::LoadSettings() {
         SetClientSize(winw, winh);
     }
     
+    PrefsINI.SetPath("/");
     OpenLangFile(Prefs.Language);
     return;
 }

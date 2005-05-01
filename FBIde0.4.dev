@@ -1,7 +1,7 @@
 [Project]
 FileName=FBIde0.4.dev
 Name=FBIde0.4
-UnitCount=19
+UnitCount=20
 Type=0
 Ver=1
 ObjFiles=
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001000001000
+CompilerSettings=0000000001001000001100
 
 [Unit1]
 FileName=src\main.cpp
@@ -44,10 +44,14 @@ Major=0
 Minor=4
 Release=0
 <<<<<<< FBIde0.4.dev
+Build=0
+=======
+<<<<<<< FBIde0.4.dev
 Build=1160
 =======
 Build=1173
 >>>>>>> 1.9
+>>>>>>> 1.10
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -59,7 +63,7 @@ LegalTrademarks=
 OriginalFilename=fbide.exe
 ProductName=FBIde
 ProductVersion=0.4
-AutoIncBuildNr=1
+AutoIncBuildNr=0
 
 [Unit2]
 FileName=src\inc\main.h
@@ -232,6 +236,16 @@ BuildCmd=
 
 [Unit18]
 FileName=src\bufferlist.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit20]
+FileName=src\run.cpp
 CompileCpp=1
 Folder=src
 Compile=1
