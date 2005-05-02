@@ -307,8 +307,8 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Oldselection=selection;
     Oldselection++;
     if (Oldselection>0) SaveSettings();
-    if (CB_Themes->GetSelection()!=0)
-        Parent->SaveThemeFile(Style, CB_Themes->GetValue());
+//    if (CB_Themes->GetSelection()!=0)
+//        Parent->SaveThemeFile(Style, CB_Themes->GetValue());
     
     Parent->Keyword[OldKWSelect]    = TA_Keywords->GetValue();
     Parent->SavekwFile( Parent->SyntaxFile );

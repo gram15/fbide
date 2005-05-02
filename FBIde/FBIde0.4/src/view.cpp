@@ -31,8 +31,9 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     if (stc==0) return;
     SaveSettings();
     stc->Freeze();
-    stc->LoadSTCTheme();
-    stc->LoadSTCSettings();
+        stc->StyleClearAll();
+        stc->LoadSTCTheme();
+        stc->LoadSTCSettings();
     stc->Thaw();
     return;
 }

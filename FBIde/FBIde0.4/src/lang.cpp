@@ -1,7 +1,7 @@
 /*
 * This file is part of FBIde, an open-source (cross-platform) IDE for 
 * FreeBasic compiler.
-* Copyright (C) 2005  Indrek Triipus
+* Copyright (C) 2005  Albert Varaksin
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
