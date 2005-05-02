@@ -24,6 +24,7 @@
 #include "inc/main.h"
 #include "inc/configdiag.h"
 #include "inc/fbedit.h"
+#include "inc/browser.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, Language.ConfigTitle);
@@ -37,6 +38,7 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     stc->Thaw();
     return;
 }
+
 
 void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
 
@@ -56,6 +58,14 @@ void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
 }
 
 
+void MyFrame::OnSubs (wxCommandEvent 	&WXUNUSED(event)) {
+    if (stc==0) return;
+
+    SFBrowser dlg(this, -1, "Sub/Function browser");
+    dlg.ShowModal();
+
+    return;
+}
 
 
 

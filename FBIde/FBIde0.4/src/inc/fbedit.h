@@ -86,6 +86,13 @@ public:
         return cmdline.Left(cmdline.Find(' '));
     }
     
+    inline wxString GetSecondKw ( wxString cmdline ) {
+        int sp = cmdline.Find(' ');
+        wxString Temp = cmdline.Mid(sp);
+        Temp.Trim(true).Trim(false);
+        return GetFirstKw( Temp );
+    }
+    
     inline wxString GetLastKw ( wxString cmdline ) {
         return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true) - 1);
     }
@@ -93,6 +100,7 @@ public:
     inline void SetBuffer ( Buffer* buff ) {
         this->buff = buff;
     }
+    
     
 //   ~FB_Edit ();
 private:

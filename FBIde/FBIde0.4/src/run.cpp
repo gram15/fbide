@@ -70,8 +70,24 @@ void MyFrame::OnGoToError ( wxListEvent& event ) {
     //int idx = event.GetData();
 
     if(event.GetText().Len()) {
-        //wxMessageBox(event.GetText());
         long data = event.GetIndex();
+        wxListItem list_item; 
+        list_item.SetId ( data ); 
+        list_item.SetColumn ( 1 ); 
+        list_item.SetMask ( wxLIST_MASK_TEXT ); 
+        FBConsole->GetItem ( list_item );
+        wxString File = list_item.GetText();
+
+        if ( wxFileNameFromPath(File).Lower()!="fbidetemp.bas") {
+            int result = bufferList.FileLoaded(File);
+            if (result != -1) {
+                if (FBNotebook->GetSelection()!=result) {
+                    FBNotebook->SetSelection(result);
+                }
+            }
+            else NewSTCPage(File, true);
+        }
+
         unsigned long LineNr = 0;
         FBConsole->GetItemText(data).ToULong(&LineNr);
         LineNr--;
@@ -80,7 +96,6 @@ void MyFrame::OnGoToError ( wxListEvent& event ) {
         if (stc->GetCurrentLine()!=(int)LineNr)
             stc->GotoLine((int)LineNr);
         stc->SetFocus();
-        
     }
 }
 
@@ -270,7 +285,6 @@ int  MyFrame::Compile            ( wxString FileName ) {
             s_Code->Layout();
         }
     }
-        
     return 0;
 }
 

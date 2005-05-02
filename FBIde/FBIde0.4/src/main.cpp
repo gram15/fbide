@@ -63,6 +63,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     
     EVT_MENU(Menu_Settings,             MyFrame::OnSettings)
     EVT_MENU(Menu_Result,               MyFrame::OnResult)
+    EVT_MENU(Menu_Subs,                 MyFrame::OnSubs)
     
     EVT_MENU(Menu_Compile,              MyFrame::OnCompile)
     EVT_MENU(Menu_CompileAndRun,        MyFrame::OnCompileAndRun)
