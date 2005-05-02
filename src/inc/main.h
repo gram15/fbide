@@ -418,6 +418,7 @@ public:
     //View menu stuff
     void OnSettings         ( wxCommandEvent &event );
     void OnResult           ( wxCommandEvent &event );
+    void OnSubs             ( wxCommandEvent &event );
     
     //Run menu stuff
     void OnCompile 	        ( wxCommandEvent &event );

@@ -51,6 +51,9 @@ void MyFrame::LoadUI () {
                                wxDefaultSize, 
                                wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
 
+    wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
+	FBConsole->SetFont(LbFont);
+
     wxListItem itemCol;
     itemCol.SetText(_T("Line"));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
@@ -167,7 +170,7 @@ void MyFrame::LoadMenu () {
 
     //Tools
     FB_Tools = new wxMenu;
-//    FB_Tools->Append (Menu_Subs, _(Language.ToolsSubs), _(Language.ToolsSubsDesc));
+    FB_Tools->Append (Menu_Subs, _(Language.ToolsSubs), _(Language.ToolsSubsDesc));
 //    FB_Tools->Append (Menu_Converter, _(Language.ToolsConverter), _(Language.ToolsConverterDesc));
 
 
