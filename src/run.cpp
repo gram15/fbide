@@ -47,8 +47,9 @@ protected:
 
 void MyFrame::AddListItem ( int Linenr, int ErrorNr, wxString FileName, wxString Message ) {
 
+    // FBConsole is a pointer to wxListCtrl control
+    
     Message=Message.Trim(true).Trim(false);
-    wxListItem itemCol;
     wxString lnr;
     if (Linenr!=-1)
         lnr << Linenr;
@@ -61,6 +62,26 @@ void MyFrame::AddListItem ( int Linenr, int ErrorNr, wxString FileName, wxString
         lnr << ErrorNr;
     FBConsole->SetItem(Itemcount, 2, lnr);
     FBConsole->SetItem(Itemcount, 3, Message);
+}
+
+
+void MyFrame::OnGoToError ( wxListEvent& event ) {
+    if (stc==0) return;
+    //int idx = event.GetData();
+
+    if(event.GetText().Len()) {
+        //wxMessageBox(event.GetText());
+        long data = event.GetIndex();
+        unsigned long LineNr = 0;
+        FBConsole->GetItemText(data).ToULong(&LineNr);
+        LineNr--;
+        if (stc->GetLineVisible((int)LineNr)==false)
+            stc->GotoLine(0);
+        if (stc->GetCurrentLine()!=(int)LineNr)
+            stc->GotoLine((int)LineNr);
+        stc->SetFocus();
+        
+    }
 }
 
 
@@ -97,19 +118,23 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     Buffer* buff = bufferList[index];
     
     wxString OldRunFileName = CompiledFile;
-    if (buff->GetFileName()==""||buff->GetFileName()==FBUNNAMED)
-        CurFolder = EditorPath.Right(EditorPath.Len()-2);
-    else
-        CurFolder = wxPathOnly(buff->GetFileName());
+    if (buff->GetFileName()==""||buff->GetFileName()==FBUNNAMED) {
+        wxFileName w(FB_App->argv[0]);
+        CurFolder = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+    }
+    else {
+        wxFileName w(buff->GetFileName());
+        CurFolder = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+    }
 
-    stc->SaveFile (CurFolder + "/FBIDETEMP.bas");
+    stc->SaveFile (CurFolder + "FBIDETEMP.bas");
     FBConsole->DeleteAllItems();
 
-    if (Compile(CurFolder + "/FBIDETEMP.bas")==0) Run();
+    if (Compile(CurFolder + "FBIDETEMP.bas")==0) Run();
     else {
-        wxRemoveFile(CurFolder + "/FBIDETEMP.bas");
-        wxRemoveFile(CurFolder + "/fbidetemp.asm");
-        wxRemoveFile(CurFolder + "/fbidetemp.o");
+        wxRemoveFile(CurFolder + "FBIDETEMP.bas");
+        wxRemoveFile(CurFolder + "fbidetemp.asm");
+        wxRemoveFile(CurFolder + "fbidetemp.o");
     }
 
     CompiledFile = OldRunFileName;
@@ -156,6 +181,7 @@ int  MyFrame::Compile            ( wxString FileName ) {
     
     wxArrayString output, erroutput;
     int answer = wxExecute(Temp, output, erroutput);
+    bool errline = false;
 
     if (answer!=0) {
         Temp="";
@@ -164,29 +190,56 @@ int  MyFrame::Compile            ( wxString FileName ) {
             for (unsigned int ii=0;ii<output.Count();ii++) {
                 Temp = output[ii];
                 for (unsigned int i=0; i<Temp.Len();i++) {
+                    NumTemp = "";
                     unsigned int x = 0;
                     if (Temp.Mid(i,1)=="(") {
                         for (x=i+1;x<Temp.Len();x++) {
-                   	        if (Temp.Mid(x,1)==")") break;
+                   	        if (Temp.Mid(x,1)==")") {
+                                errline = true;
+                                break;
+                            }
                             NumTemp+=Temp.Mid(x,1);
                         }
-                        NumTemp.ToULong(&LineNumber);
-                        FileName = Temp.Left(i);
-                        x+=10;
-                        NumTemp="";
-                        for (;x<Temp.Len();x++) {
-                   	        if (Temp.Mid(x,1)==":") break;
-                            NumTemp+=Temp.Mid(x,1);
+                        if (errline) {
+                            
+                            if (!NumTemp.IsNumber()) {
+                                errline = false;
+                                break;
+                            }
+                            NumTemp.ToULong(&LineNumber);
+                            FileName = Temp.Left(i);
+                            x+=10;
+                            NumTemp="";
+                            for (;x<Temp.Len();x++) {
+                   	            if (Temp.Mid(x,1)==":") break;
+                                NumTemp+=Temp.Mid(x,1);
+                            }
+                            if (x==Temp.Len()) {
+                                errline = false;
+                                break;
+                            }
+                            if (!NumTemp.IsNumber()) {
+                                errline = false;
+                                break;
+                            }
+                            NumTemp.ToULong(&errornr);
+                            Message = Temp.Mid(x+2);
+                            break;
                         }
-                        NumTemp.ToULong(&errornr);
-                        Message = Temp.Mid(x+2);
-                        break;
                     }
                 }
-                AddListItem(LineNumber, errornr, FileName, Message);
-                AddListItem(-1, -1, "", output[ii+2]);
-                AddListItem(-1, -1, "", output[ii+3]);
-                ii+=3;
+                if (errline) {
+                    AddListItem(LineNumber, errornr, FileName, Message);
+                    if ( output[ii+1].Len() )
+                        AddListItem(-1, -1, "", output[ii+1]);
+                    if ( output[ii+2].Len() )
+                        AddListItem(-1, -1, "", output[ii+2]);
+                    if ( output[ii+3].Len() )
+                        AddListItem(-1, -1, "", output[ii+3]);
+                    ii+=3;
+                }
+                else AddListItem(-1, -1, "", output[ii]);
+                errline = false;
             } //for
         } //end output.Count()
         
@@ -373,8 +426,8 @@ void MyProcess::OnTerminate(int pid, int status)
         wxMessageBox(Temp, "ExitCode");
     }
     if (m_parent->IsTemp) {
-         wxRemoveFile(m_parent->CurFolder + "/FBIDETEMP.bas");
-         wxRemoveFile(m_parent->CurFolder + "/FBIDETEMP.exe");
+         wxRemoveFile(m_parent->CurFolder + "FBIDETEMP.bas");
+         wxRemoveFile(m_parent->CurFolder + "FBIDETEMP.exe");
          m_parent->IsTemp=false;
     }
     m_parent->Raise();

@@ -72,8 +72,9 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_Parameters,           MyFrame::OnParameters)
     EVT_MENU(Menu_ShowExitCode,         MyFrame::OnShowExitCode)
     
-    EVT_NOTEBOOK_PAGE_CHANGING(-1,      MyFrame::ChangingNBPage)
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
+    
+    EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError) 
     
 END_EVENT_TABLE()
 
@@ -105,6 +106,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     Style = LoadThemeFile( ThemeFile );
     ProcessIsRunning = false;
     IsTemp           = false;
+    InitState        = false;
     
     FindData        = new wxFindReplaceData(wxFR_DOWN);
     ReplaceData     = new wxFindReplaceData(wxFR_DOWN);

@@ -312,7 +312,6 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
 }
 
 void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
-    stc->Freeze();
     return;
 }
 
@@ -341,22 +340,22 @@ void MyFrame::SaveDocumentStatus ( int docID ) {
 void MyFrame::SetSTCPage ( int index ) {
     if (stc == 0) return;
     
-    stc->SetBuffer( (Buffer *) 0 );
-    
-    Buffer* buff = bufferList.GetBuffer(index);
+    stc->Freeze();
+        stc->SetBuffer( (Buffer *) 0 );
         
-    void* doc = buff->GetDocument();
-    stc->AddRefDocument(doc);
-    stc->SetDocPointer(doc);
-
-    stc->ScrollToLine(buff->GetLine());
-    stc->SetCurrentPos(buff->GetCaretPos());
-    stc->SetSelectionStart(buff->GetSelectionStart());
-    stc->SetSelectionEnd(buff->GetSelectionEnd());
-    stc->SetFocus();
+        Buffer* buff = bufferList.GetBuffer(index);
+            
+        void* doc = buff->GetDocument();
+        stc->AddRefDocument(doc);
+        stc->SetDocPointer(doc);
     
-    stc->SetBuffer( (Buffer *) buff);
-    
+        stc->ScrollToLine(buff->GetLine());
+        stc->SetCurrentPos(buff->GetCaretPos());
+        stc->SetSelectionStart(buff->GetSelectionStart());
+        stc->SetSelectionEnd(buff->GetSelectionEnd());
+        stc->SetFocus();
+        
+        stc->SetBuffer( (Buffer *) buff);
     stc->Thaw();
 }
 

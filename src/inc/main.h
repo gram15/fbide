@@ -356,6 +356,7 @@ public:
     void SetSTCPage         ( int index );
     void SetModified        ( int index, bool status );
     void AddListItem        ( int Linenr, int ErrorNr, wxString FileName, wxString Message );
+    void OnGoToError        ( wxListEvent& event );
     
     
     //FileMenu-event and related stuff
@@ -476,6 +477,7 @@ public:
     int                 braceLoc;
     bool                ProcessIsRunning;
     bool                IsTemp;
+    bool                InitState;
     
     wxString CompilerPath, SyntaxFile, CMDPrototype, ThemeFile;
     wxString Document, CompiledFile, EditorPath, ParameterList;

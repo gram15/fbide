@@ -61,6 +61,8 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetEdgeColumn (Prefs->EdgeColumn);
     SetEOLMode(0);
     
+    SetViewEOL (Prefs->DisplayEOL);
+    
     SetIndentationGuides (Prefs->IndentGuide);
     int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0001"));
     SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin: 0);
@@ -234,11 +236,11 @@ void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
         }
       }
    }
-
-   wxString pos;
-   pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
-               GetColumn(GetCurrentPos()) + 1);
-   Parent->SetStatusText(pos, 1);
+    
+    wxString pos;
+    pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
+                GetColumn(GetCurrentPos()) + 1);
+    Parent->SetStatusText(pos, 1);
 }
 
 inline bool FB_Edit::IsBrace(wxChar brace)
@@ -314,6 +316,11 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
         }
         else if (clfkw == "while") {
             if (cllkw != "wend") lineInd += TabSize;
+        }
+        else if (clfkw == "type") {
+            if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
+                (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
+                lineInd += TabSize;
         }
         else  lineInd += TabSize;
     }

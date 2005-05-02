@@ -157,6 +157,9 @@ void MyFrame::CloseFile          ( int index ) {
     OldTabSelected = -1;
     FBNotebook->RemovePage(index);
     bufferList.RemoveBuffer(index);
+    
+    stc->ClearAll();
+    stc->ReleaseDocument( bufferList[index]->GetDocument() );
     if (bufferList.GetBufferCount() == 0) {
         delete stc;
         stc = 0;
