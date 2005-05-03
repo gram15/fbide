@@ -33,8 +33,7 @@ void MyFrame::OpenLangFile( wxString FileName ){
 
      wxFileConfig FileINI(FileINIIS);
           
-     //First the key to "general"
-     FileINI.SetPath("/general");     
+     FileINI.SetPath("/FBIde");     
      
      wxString temp;
      for (int i=0; i<RowCount; i++){
@@ -43,8 +42,8 @@ void MyFrame::OpenLangFile( wxString FileName ){
          Lang[i] = FileINI.Read(temp,"");
      }
          
-     
-     //And begin =D
+     //=========================================================================
+     /*//And begin =D
      Language.WelcomeMessage = FileINI.Read("WelcomeMessage", "");
      
      //Configuration Dialog stuff
@@ -137,7 +136,7 @@ void MyFrame::OpenLangFile( wxString FileName ){
      
      Language.HelpAbout     = FileINI.Read("HelpAbout",     "");
      Language.HelpAboutDesc = FileINI.Read("HelpAboutDesc", "");
-     
+     */
      return;               
 }
                

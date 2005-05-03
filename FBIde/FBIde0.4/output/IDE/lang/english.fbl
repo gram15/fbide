@@ -1,17 +1,128 @@
-[general]
+[FBIde]
+
+;Generic stuff
 1=Welcome to FBIde!
 2=OK
 3=Cancel
 
-[configdialog]
-1=FBIde Settings
 
-2=General
-3=Themes
-4=Keywords
-5=Compiler
+;Menus
+4=&File
+5=&Edit
+6=&Search
+7=&View
+8=&Tools
+9=&Run
+10=&Help
 
-6=
+11=&New ..\tCtrl+N
+12=Open new empty document
+13=&Open ..\tCtrl+O
+14=Open new document
+15=&Save\tCtrl+S
+16=Save current file
+17=Save &as ..\tCtrl+Shift+S
+18=Save current file under new name
+19=Save all
+20=Save all opened files
+21=Close\tCtrl+F4
+22=Close current file
+23=New &window \tShift+Ctrl+N
+24=Open new editor window
+25=&Quit\tCtrl+Q
+26=Quit FBIde
+
+27=&Undo\tCtrl+Z
+28=Undo last action
+29=&Redo\tCtrl+Shift+Z
+30=Redo last action
+31=Cu&t\tCtrl+X
+32=Cut selected text and copy to clipboard
+33=&Copy\tCtrl+C
+34=Copy selected text to clipboard
+35=&Paste\tCtrl+V
+36=Paste from clipboard
+37=&Select all\tCtrl+A
+38=Select whole document
+39=Select &line\tCtrl+L
+40=Select current line
+41=&Indent increase\tTab
+42=Indent selected text to right
+43=Indent reduce\tShift+Tab
+44=Deindent selected text to left
+45=Comment block \tCtrl+M
+46=Comments out selected text
+47=UnComment block\tCtrl+Shift+M
+48=Uncomments selected text
+
+49=Find \tCtrl+F
+50=Find in the document
+51=Find Next \tF3
+52=Repeat lest search
+53=Replace \tCtrl+R
+54=Replace text in the document
+55=Goto line...\tCtrl+G
+56=Goto to the line in document
+
+57=Settings
+58=Set editor settings
+59=View result window\tF4
+60=Shows table with console outputs
+61=Subs... \tF2
+62=Open sub, function browser
+
+63=Compile\tCtrl+F9
+64=Compile current file
+65=Compile && Run\tF9
+66=Compile and run current file
+67=Run\tShift+Ctrl+F9
+68=Run previously compiled file
+69=Quick Run\tF5
+70=Run program without saving (uses temp file)
+71=CMD Prompt\tF8
+72=Open command prompt
+73=&Parameters...
+74=Set parameters to pass to your program
+75=&Compiler Parameters...
+76=Set compiler parameter list prototype
+77=&Show exit code
+78=Show\'s program exit code.
+
+79=&About...\tF1
+80=Show about dialog
+
+81=Close All
+82=Close all opened files
+
+
+;Toolbar
+83=New file (Ctrl+N)
+84=Open file (Ctrl+O)
+85=Save file (Ctrl+S)
+86=Save all files
+87=Close current file
+
+88=Cut (Ctrl+X)
+89=Copy (Ctrl+C)
+90=Paste (Ctrl+V)
+
+91=Undo (Ctrl+Z)
+92=Redo (Ctrl+Shift+Z)
+
+93=Compile (Ctrl+F9)
+94=Run (Ctrl+Shift+F9)
+95=Compile and Run (F9)
+96=Quick run (F5)
+97=Open/Close outout window
+
+
+;FBIde Settings dialog box
+98=FBIde Settings
+99=General
+100=Themes
+101=Keywords
+102=Compiler
+
 
 ;General tab
 ShowLineNumbers=
@@ -77,87 +188,10 @@ Group=
 
 
 [menus]
-MenuFile="&File"
-MenuEdit="&Edit"
-MenuSearch="&Search"
-MenuView="&View"
-MenuTools="&Tools"
-MenuRun="&Run"
-MenuHelp="&Help"
 
-FileNew="&New ..\tCtrl+N"
-FileNewDesc="Open new empty document"
-FileOpen="&Open ..\tCtrl+O"
-FileOpenDesc="Open new document"
-FileSave="&Save\tCtrl+S"
-FileSaveDesc="Save current file"
-FileSaveas="Save &as ..\tCtrl+Shift+S"
-FileSaveasDesc="Save current file under new name"
-FileSaveall="Save all"
-FileSaveallDesc="Save all opened files"
-FileClose="Close\tCtrl+F4"
-FileCloseDesc="Close current file"
-FileNewWindow="New &window \tShift+Ctrl+N"
-FileNewWindowDesc="Open new editor window"
-FileQuit="&Quit\tCtrl+Q"
-FileQuitDesc="Quit FBIde"
        
-EditUndo="&Undo\tCtrl+Z"
-EditUndoDesc="Undo last action"
-EditRedo="&Redo\tCtrl+Shift+Z"
-EditRedoDesc="Redo last action"
-EditCut="Cu&t\tCtrl+X"
-EditCutDesc="Cut selected text and copy to clipboard"
-EditCopy="&Copy\tCtrl+C"
-EditCopyDesc="Copy selected text to clipboard"
-EditPaste="&Paste\tCtrl+V"
-EditPasteDesc="Paste from clipboard"
-EditSelectall="&Select all\tCtrl+A"
-EditSelectallDesc="Select whole document"
-EditSelectline="Select &line\tCtrl+L"
-EditSelectlineDesc="Select current line"
-EditIndentIncrease="&Indent increase\tTab"
-EditIndentIncreaseDesc="Indent selected text to right"
-EditIndentDecrease="Indent reduce\tShift+Tab"
-EditIndentDecreaseDesc="Deindent selected text to left"
-EditComment="Comment block \tCtrl+M"
-EditCommentDesc="Comments out selected text"
-EditUnComment="UnComment block\tCtrl+Shift+M"
-EditUnCommentDesc="Uncomments selected text"
+ToolsConverter=Converter
+ToolsConverterDesc=Converts source code to BB or html format
 
-SearchFind="Find \tCtrl+F"
-SearchFindDesc="Find in the document"
-SearchFindnext="Find Next \tF3"
-SearchFindnextDesc="Repeat lest search"
-SearchReplace="Replace \tCtrl+R"
-SearchReplaceDesc="Replace text in the document"
-SearchGotoline="Goto line...\tCtrl+G"
-SearchGotolineDesc="Goto to the line in document"
-       
-ViewSettings="Settings"
-ViewSettingsDesc="Set editor settings"
-       
-ToolsSubs="Subs... \tF2"
-ToolsSubsDesc="Open sub, function browser"
-ToolsConverter="Converter"
-ToolsConverterDesc="Converts source code to BB or html format"
-       
-RunCompile="Compile\tCtrl+F9"
-RunCompileDesc="Compile current file"
-RunCompileandrun="Compile && Run\tF9"
-RunCompileandrunDesc="Compile and run current file"
-RunRun="Run\tShift+Ctrl+F9"
-RunRunDesc="Run previously compiled file"
-RunQuickrun="Quick Run\tF5"
-RunQuickrunDesc="Run program without saving (uses temp file)"
-RunCmdprompt="CMD Prompt\tF8"
-RunCmdpromptDesc="Open command prompt"
-RunParameters="&Parameters..."
-RunParametersDesc="Set parameters to pass to your program"
-RunCompparam="&Compiler Parameters..."
-RunCompparamDesc="Set compiler parameter list prototype"
-RunShowexitcode="&Show exit code"
-RunShowexitcodeDesc="Show\'s program exit code."
-       
-HelpAbout="&About...\tF1"
-HelpAboutDesc="Show about dialog"
+HelpAbout=&About...\tF1
+HelpAboutDesc=Show about dialog

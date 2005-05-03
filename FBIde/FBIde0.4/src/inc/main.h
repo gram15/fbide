@@ -50,7 +50,7 @@
 typedef unsigned int uint;
 
 //The language file structure
-struct LangInfo {
+/*struct LangInfo {
        //General stuff
        wxString WelcomeMessage;
        wxString OKBtn;
@@ -214,7 +214,7 @@ struct LangInfo {
        //Help menu
        wxString HelpAbout;
        wxString HelpAboutDesc;
-};
+};*/
 
 struct CommonInfo {
     bool SyntaxHighlight;
@@ -485,7 +485,7 @@ public:
     wxString CurFolder;
     CommonInfo  Prefs;
     StyleInfo   Style; 
-    LangInfo    Language;
+    //LangInfo    Language;
     #define     RowCount    200
     wxString Lang[RowCount];
     
