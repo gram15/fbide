@@ -27,7 +27,7 @@
 #include "inc/browser.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
-    ConfigDialog dlg(this, -1, Language.ConfigTitle);
+    ConfigDialog dlg(this, -1, _(Lang[83]));
     dlg.ShowModal();
     if (stc==0) return;
     SaveSettings();
