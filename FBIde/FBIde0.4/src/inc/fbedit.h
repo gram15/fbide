@@ -48,9 +48,11 @@ public:
     static bool IsBrace     ( wxChar brace );
     void OnMarginClick      ( wxStyledTextEvent &event );
     void OnModified         ( wxStyledTextEvent &event );
+    void OnKey              ( wxStyledTextEvent &event );
         
     wxString    DocumentName;
     int braceLoc;
+    int ChangeTab;
     
     inline bool IsIndentWord ( wxString word ) {
         return  (word == "if" || word == "for" || word=="sub" ||
@@ -99,6 +101,11 @@ public:
     
     inline void SetBuffer ( Buffer* buff ) {
         this->buff = buff;
+    }
+    
+    inline bool FileExists ( wxString File ) {
+        wxFileName w(File);
+        return w.FileExists();
     }
     
     

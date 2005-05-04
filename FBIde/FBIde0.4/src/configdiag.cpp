@@ -57,16 +57,17 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     //CD_Notebook->SetTitle(wxT(_(Lang[98])));
     
     CD_Settings=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings, Parent->Lang[99],false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Settings, _(Parent->Lang[99]) ,false);
     
     CD_Theme=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Theme,Parent->Lang[100],false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Theme,_(Parent->Lang[100]),false);
     
     CD_Keywords=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Keywords,Parent->Lang[101],false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Keywords,_(Parent->Lang[101]),false);
     
     CD_Compiler=new wxPanel(CD_Notebook,-1,wxPoint(4,22),wxSize(382,234));
-    CD_Notebook->AddPage((wxNotebookPage *)CD_Compiler,Parent->Lang[102],false);
+    CD_Notebook->AddPage((wxNotebookPage *)CD_Compiler,_(Parent->Lang[102]),false);
+
     
     //--------------------------------------------------------------------------
     

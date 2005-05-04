@@ -23,6 +23,7 @@
 
 #include "inc/main.h"
 #include "inc/fbedit.h"
+#include <wx/file.h>
 
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
@@ -32,6 +33,7 @@ BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
     EVT_STC_CHARADDED   (-1,                FB_Edit::OnCharAdded)
     EVT_STC_UPDATEUI    (-1,                FB_Edit::OnUpdateUI)
     EVT_STC_MODIFIED    (-1,                FB_Edit::OnModified)
+    EVT_STC_HOTSPOT_CLICK(-1,               FB_Edit::OnKey)
     
 END_EVENT_TABLE()
 
@@ -45,6 +47,7 @@ FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id
     Parent = ParentFrame;
     braceLoc = -1;
     buff = 0;
+    ChangeTab = 0;
 }
 
 
@@ -70,6 +73,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
     SetViewWhiteSpace (Prefs->whiteSpace ? wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
     CmdKeyClear (wxSTC_KEY_TAB, 0);
+    StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
     
     return;
 }
@@ -241,6 +245,14 @@ void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
     pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
                 GetColumn(GetCurrentPos()) + 1);
     Parent->SetStatusText(pos, 1);
+    
+    if (ChangeTab) {
+        int temp = ChangeTab;
+        ChangeTab = 0;
+//        ScrollToLine(temp);
+        SetSelectionStart(temp);
+        SetSelectionEnd(temp);
+    }
 }
 
 inline bool FB_Edit::IsBrace(wxChar brace)
@@ -343,4 +355,59 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 }
 
 
+void FB_Edit::OnKey              ( wxStyledTextEvent &event ) {
+    event.Skip(true);
+    
+    if (!event.GetControl()) return;
+
+    ChangeTab = LineFromPosition(event.GetPosition());
+    wxString FileName = ClearCmdLine(GetLine(ChangeTab));
+    wxString fkw = GetFirstKw(FileName);
+
+    if (fkw!="#include") return;
+
+
+    FileName = FileName.Left(FileName.Len()-1);
+    FileName = FileName.Mid(FileName.Find('\"', true)+1);
+    wxFileName File(FileName);
+    
+    if (!File.HasVolume()) {
+        wxString FilePath = buff->GetFileName();
+        wxString FBCPath = Parent->CompilerPath;
+        if (FilePath==""||FilePath==FBUNNAMED)
+            FilePath="";
+            
+        wxFileName w(FilePath);
+        FilePath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+
+        w.Assign(FBCPath);
+        FBCPath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+        
+        if (FileName!="") {
+            if(FileExists(FilePath+FileName)) {
+                FileName=FilePath+FileName;
+            }
+            else if(FileExists(FBCPath+FileName)) {
+                FileName=FBCPath+FileName;
+            }
+            else if(FileExists(FBCPath+"lib\\"+FileName)) {
+                FileName=FBCPath+"lib\\"+FileName;
+            }
+            else FileName="";
+        }
+    }
+    
+    if(FileName!="") {
+        if(FileExists(FileName)) {
+            int result = Parent->bufferList.FileLoaded(FileName);
+            if (result != -1) Parent->FBNotebook->SetSelection(result);
+            else Parent->NewSTCPage(FileName, true);
+            CmdKeyExecute (wxSTC_CMD_HOME);
+            ChangeTab = 0;
+            return;
+        }
+
+    }
+    ChangeTab = 0;
+}
 

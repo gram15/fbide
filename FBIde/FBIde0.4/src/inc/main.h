@@ -38,6 +38,10 @@
 #include <wx/splitter.h>
 #include <wx/listctrl.h>
 
+#include <wx/image.h>
+#include <wx/splash.h>
+#include <wx/mediactrl.h>
+
 
 #include "../../FBIde0.4_private.h"
 #define FBUNNAMED       "Untitled"

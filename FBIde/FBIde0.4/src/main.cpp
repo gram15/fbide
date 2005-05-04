@@ -25,6 +25,7 @@
 #include "inc/main.h"
 #include "inc/fbedit.h"
 
+
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_CLOSE ( MyFrame::OnClose )
@@ -89,6 +90,21 @@ bool MyApp::OnInit()
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
     MyFrame *frame = new MyFrame(this, GetAppName());
+
+//    wxImage::AddHandler(new wxPNGHandler);
+//
+//    wxBitmap bitmap;
+//    if(bitmap.LoadFile(_T(frame->EditorPath+"\\ide\\splash.png"), wxBITMAP_TYPE_PNG))
+//    {
+//      new wxSplashScreen(bitmap,
+//          wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
+//          6000, frame, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+//          wxSIMPLE_BORDER|wxSTAY_ON_TOP);
+//    }
+//    wxYield();
+
+
+
     frame->Show(true);
     return true;
 }
