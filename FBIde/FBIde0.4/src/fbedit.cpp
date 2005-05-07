@@ -87,7 +87,6 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
     SetLexer (0);
     for (int Nr = 0; Nr < 15; Nr++) {
         StyleSetForeground (Nr, GetClr(Style->DefaultFgColour));
-        
         StyleSetBackground (Nr, GetClr(Style->DefaultBgColour));
         StyleSetBold (Nr, 0);
         StyleSetItalic (Nr, 0);
@@ -136,6 +135,10 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             }
             for (int Nr = 0; Nr < 4; Nr++)
                 SetKeyWords (Nr, Parent->Keyword[Nr+1]);
+            
+            StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
+            StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
+
         }
         else if(FileType == 1) {
             
@@ -150,6 +153,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
                 
             for (int i = 0; i < 10; i++ ) {
                 StyleSetFont (i, font);
+                StyleSetBackground(i, *wxWHITE);
             }
             
             StyleSetForeground (wxSTC_H_DEFAULT, *wxBLACK);
@@ -166,16 +170,19 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             StyleSetBold       (wxSTC_H_TAG, true);
             StyleSetBold       (wxSTC_H_ATTRIBUTE, true);
             SetKeyWords (0, "color font b i body style size pre");
-        }
             
+            StyleSetForeground (wxSTC_STYLE_DEFAULT,    *wxBLACK );
+            StyleSetBackground (wxSTC_STYLE_DEFAULT,    *wxWHITE );
+        }
     }
-    else
+    else {
         for (int Nr = 0; Nr < 4; Nr++)
             SetKeyWords (Nr, "");
+        StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
+        StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
+    }
     
     //   SetCaretLineBack("RED");
-    StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
-    StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
     StyleSetForeground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberFgColour));
     StyleSetBackground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberBgColour));
  

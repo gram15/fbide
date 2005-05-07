@@ -12,7 +12,7 @@ ResourceIncludes=C:\Dev\FBIde\FBIde0.4\rc
 MakeIncludes=
 Compiler=_@@__@@_
 CppCompiler=-D__WXMSW__ _@@_-mthreads _@@_-DNO_GCC_PRAGMA_@@_-Wall _@@_-fno-pcc-struct-return _@@_-O4 _@@_-Os _@@_-fno-rtti _@@_-fno-exceptions_@@_
-Linker=-Wl,--subsystem,windows _@@_-mthreads _@@_-mwindows  _@@_-lwxmsw25_stc_@@_-lwxmsw25_core_@@_-lwxbase25_@@_-lwsock32 _@@_-lcomctl32  _@@_-lole32 _@@_-loleaut32 _@@_-luuid_@@_
+Linker=-Wl,--subsystem,windows _@@_-mthreads _@@_-mwindows  _@@_-lwxmsw25_adv _@@_-lwxmsw25_stc_@@_-lwxmsw25_core_@@_-lwxbase25_@@_-lwsock32 _@@_-lcomctl32  _@@_-lole32 _@@_-loleaut32 _@@_-luuid_@@_-lwxpng _@@_-lwxzlib_@@_
 IsCpp=1
 Icon=
 ExeOutput=C:\Dev\FBIde\FBIde0.4\output
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001000001100
+CompilerSettings=0000000001001001001100
 
 [Unit1]
 FileName=src\main.cpp
@@ -253,6 +253,28 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+<<<<<<< FBIde0.4.dev
+
+[Unit21]
+FileName=src\inc\browser.h
+CompileCpp=1
+Folder=inc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit22]
+FileName=src\browser.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+=======
 
 [Unit21]
 FileName=src\browser.cpp
@@ -273,6 +295,7 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+>>>>>>> 1.12
 
 [Unit24]
 FileName=src\inc\format.h

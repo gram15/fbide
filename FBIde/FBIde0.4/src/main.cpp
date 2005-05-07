@@ -24,6 +24,8 @@
 
 #include "inc/main.h"
 #include "inc/fbedit.h"
+#include <wx/image.h>
+#include <wx/splash.h>
 
 
 //------------------------------------------------------------------------------
@@ -90,23 +92,8 @@ bool MyApp::OnInit()
 {
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
-    MyFrame *frame = new MyFrame(this, GetAppName());
+    new MyFrame(this, GetAppName());
 
-//    wxImage::AddHandler(new wxPNGHandler);
-//
-//    wxBitmap bitmap;
-//    if(bitmap.LoadFile(_T(frame->EditorPath+"\\ide\\splash.png"), wxBITMAP_TYPE_PNG))
-//    {
-//      new wxSplashScreen(bitmap,
-//          wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
-//          6000, frame, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-//          wxSIMPLE_BORDER|wxSTAY_ON_TOP);
-//    }
-//    wxYield();
-
-
-
-    frame->Show(true);
     return true;
 }
 
@@ -116,10 +103,26 @@ bool MyApp::OnInit()
 MyFrame::MyFrame(MyApp * App, const wxString& title)
        : wxFrame( 0, wxID_ANY, title )
 {
+    
+    
+//    App->wxYield();
+    
     FB_App = App;
     SetIcon(wxICON(sample));
     
     LoadSettings();
+
+    wxImage::AddHandler(new wxPNGHandler);
+
+    wxBitmap bitmap;
+    if(bitmap.LoadFile(_T(this->EditorPath+"\\ide\\splash.png"), wxBITMAP_TYPE_PNG))
+    {
+      new wxSplashScreen(bitmap,
+          wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
+          2000, this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+          wxSIMPLE_BORDER|wxSTAY_ON_TOP);
+    }
+
     LoadkwFile ( SyntaxFile );
     Style = LoadThemeFile( ThemeFile );
     ProcessIsRunning = false;
@@ -134,6 +137,8 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     CurrentFileType = 0;
     LoadUI();
     if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);
+    
+    Show();
 
 }
 
