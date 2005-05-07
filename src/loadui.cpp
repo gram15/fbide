@@ -99,7 +99,6 @@ void MyFrame::LoadUI () {
     FBNotebook->Hide();
     stc=0;
 
-    Show(true);    
     return;
 
 }
