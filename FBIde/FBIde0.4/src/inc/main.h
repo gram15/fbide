@@ -194,6 +194,7 @@ public:
     void SetModified        ( int index, bool status );
     void AddListItem        ( int Linenr, int ErrorNr, wxString FileName, wxString Message );
     void OnGoToError        ( wxListEvent& event );
+    void GoToError          ( int Linenr, wxString FileName );
     
     
     //FileMenu-event and related stuff

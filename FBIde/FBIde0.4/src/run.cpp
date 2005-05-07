@@ -77,26 +77,33 @@ void MyFrame::OnGoToError ( wxListEvent& event ) {
         list_item.SetMask ( wxLIST_MASK_TEXT ); 
         FBConsole->GetItem ( list_item );
         wxString File = list_item.GetText();
-
-        if ( wxFileNameFromPath(File).Lower()!="fbidetemp.bas") {
-            int result = bufferList.FileLoaded(File);
-            if (result != -1) {
-                if (FBNotebook->GetSelection()!=result) {
-                    FBNotebook->SetSelection(result);
-                }
-            }
-            else NewSTCPage(File, true);
-        }
-
+        
         unsigned long LineNr = 0;
+        
         FBConsole->GetItemText(data).ToULong(&LineNr);
         LineNr--;
-        if (stc->GetLineVisible((int)LineNr)==false)
-            stc->GotoLine(0);
-        if (stc->GetCurrentLine()!=(int)LineNr)
-            stc->GotoLine((int)LineNr);
-        stc->SetFocus();
+        
+        GoToError(LineNr, File);
+        
     }
+}
+
+
+void MyFrame::GoToError ( int Linenr, wxString FileName ) {
+    if ( wxFileNameFromPath(FileName).Lower()!="fbidetemp.bas") {
+        int result = bufferList.FileLoaded(FileName);
+        if (result != -1) {
+            if (FBNotebook->GetSelection()!=result) {
+                FBNotebook->SetSelection(result);
+            }
+        }
+        else NewSTCPage(FileName, true);
+    }
+
+    if (stc->GetCurrentLine()!=(int)Linenr)
+        stc->GotoLine((int)Linenr);
+    stc->SetFocus();
+    stc->EnsureCaretVisible();
 }
 
 
@@ -197,6 +204,9 @@ int  MyFrame::Compile            ( wxString FileName ) {
     wxArrayString output, erroutput;
     int answer = wxExecute(Temp, output, erroutput);
     bool errline = false;
+    
+    int FirstLine = 0;
+    wxString FirstFile;
 
     if (answer!=0) {
         Temp="";
@@ -216,7 +226,6 @@ int  MyFrame::Compile            ( wxString FileName ) {
                             NumTemp+=Temp.Mid(x,1);
                         }
                         if (errline) {
-                            
                             if (!NumTemp.IsNumber()) {
                                 errline = false;
                                 break;
@@ -244,6 +253,10 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     }
                 }
                 if (errline) {
+                    if (FirstFile=="") {
+                        FirstFile=FileName;
+                        FirstLine=LineNumber;
+                    }
                     AddListItem(LineNumber, errornr, FileName, Message);
                     if ( output[ii+1].Len() )
                         AddListItem(-1, -1, "", output[ii+1]);
@@ -270,6 +283,10 @@ int  MyFrame::Compile            ( wxString FileName ) {
             s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
             s_Code->Layout();
         }
+        
+        if (FirstFile!="") {
+            GoToError(FirstLine-1, FirstFile);
+        }
         return answer;
     }
     
@@ -284,7 +301,17 @@ int  MyFrame::Compile            ( wxString FileName ) {
             s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
             s_Code->Layout();
         }
+        
+        return 0;
     }
+    
+    if (FBConsole->IsShown()) {
+        FB_View->Check(Menu_Result, false);
+        FBConsole->Hide();
+        s_Code->Detach(s_Console);
+        s_Code->Layout();
+    }
+    
     return 0;
 }
 
