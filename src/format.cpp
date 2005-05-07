@@ -17,11 +17,11 @@ format::format(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoin
  Create(parent,id,title,pos,size,style,name);
 
  if((pos==wxDefaultPosition)&&(size==wxDefaultSize)){
-     SetSize(0,0,405,185);
+     SetSize(0,0,405,210);
  }
 
  if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)){
-     SetSize(405,185);
+     SetSize(405,210);
  }
  initBefore();
  VwXinit();initAfter();
@@ -37,17 +37,19 @@ void format::VwXinit()
  lno6=new wxStaticLine(this,-1,wxPoint(29,32),wxSize(234,1));
  button_ok=new wxButton(this,-1,wxT(""),wxPoint(275,31),wxSize(93,24));
    button_ok->SetLabel(wxT("Go!"));
- sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,87),wxSize(335,53));
+ sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
    sb9->SetTitle(wxT("Preview"));
- preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,110),wxSize(45,13));
+ preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,145),wxSize(45,13));
    preview->SetLabel(wxT("Cls:Locate 1,1:Print \"\""));
  wxString choices[]={"KeyWords","KEYWORDS","keywords","BBCode","HTML"};
  chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
  bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
    bt16->SetLabel(wxT("Cancel"));
+ bt17=new wxButton(this,-1,wxT(""),wxPoint(275,91),wxSize(93,24));
+   bt17->SetLabel(wxT("Auto Indent"));
  Refresh();
 }
- 
+
 BEGIN_EVENT_TABLE(formatEvt,wxEvtHandler)
 //[evtEvt]add your code here
 
@@ -81,6 +83,75 @@ void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
 void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
  //[64b]Code event VwX...Don't modify[64a]//
  //add your code here
+ for(int i=0;i<Parent->stc->GetLineCount();i++)
+ {
+  //wxString line=Parent->stc->GetLine(i).Trim(false).Trim(true);
+  int cLine=i;
+  int lineInd=Parent->stc->GetLineIndentation(cLine-1);
+  int plineind=Parent->stc->GetLineIndentation(cLine-2);
+  int TabSize=Parent->Prefs.TabSize;
+  
+  //Previous line
+  wxString TempCL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-1));
+  wxString clfkw=Parent->stc->GetFirstKw(TempCL);
+  wxString cllkw=Parent->stc->GetLastKw(TempCL);
+  
+  //Line before previous
+  wxString TempPL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-2));
+  wxString plfkw=Parent->stc->GetFirstKw(TempPL);
+  wxString pllkw=Parent->stc->GetLastKw(TempPL);
+  
+  
+  if (lineInd>0) {
+   if ( clfkw == "end" && Parent->stc->IsEndDeIndentWord(cllkw) ) {
+    if (cllkw!=plfkw) { 
+     if (cllkw == "select" && plfkw == "case") lineInd = plineind;
+     else if (plineind<=lineInd) lineInd -= TabSize; 
+    }
+    else if (plfkw == "if" && pllkw!="then") {
+     if (plineind<=lineInd) lineInd -= TabSize; }
+    else lineInd = plineind;
+   }
+   else if (clfkw != pllkw) {
+    if (( clfkw == "next" && plfkw != "for")||
+        ( clfkw == "loop" && plfkw != "do")||
+        ( clfkw == "wend" && plfkw != "while")) {
+     if (plineind<=lineInd) lineInd -= TabSize;
+    }
+    else if (( clfkw == "next" && plfkw == "for")||
+             ( clfkw == "loop" && plfkw == "do")||
+             ( clfkw == "wend" && plfkw == "while"))
+     lineInd = plineind;
+    else if ( clfkw == "case" ) {
+     if (plfkw == "case" || plfkw == "select") { lineInd = plineind; }
+     else  { if (plineind<=lineInd) lineInd -= TabSize; } }
+     else if ( clfkw == "else" || clfkw == "elseif" ) {
+      if ((plfkw == "if" && pllkw == "then") ||
+          (plfkw == "elseif")) { lineInd = plineind; } 
+      else   { if (plineind<=lineInd) lineInd -= TabSize; } }              
+   }
+   Parent->stc->SetLineIndentation (cLine-1, lineInd);
+  }  
+  if (Parent->stc->IsIndentWord(clfkw)) {
+   if (clfkw == "if") {
+    if (cllkw == "then") lineInd += TabSize;
+   }
+   else if (clfkw == "do") {
+    if (cllkw != "loop") lineInd += TabSize;
+   }
+   else if (clfkw == "while") {
+    if (cllkw != "wend") lineInd += TabSize;
+   }
+   else if (clfkw == "type") {
+    if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
+        (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
+     lineInd += TabSize;
+    }
+   else  lineInd += TabSize;
+  }  
+  Parent->stc->SetLineIndentation (cLine, lineInd);
+  //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
+ }
  this->Close();
 } //end function
 
