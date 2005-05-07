@@ -323,7 +323,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
  }
  if(sel==4) output+="</pre></body>";
  if(sel==3) output+="[/size][/quote]";
- if(sel>2) Parent->NewSTCPage("",true);
+ if(sel>2) Parent->NewSTCPage("",true, 1);
  Parent->stc->SetText(output);
  this->Close();
 } //end function

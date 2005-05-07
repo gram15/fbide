@@ -41,7 +41,7 @@ public:
     Buffer* buff;
     
     void LoadSTCSettings    (  );
-    void LoadSTCTheme       (  );
+    void LoadSTCTheme       ( int FileType = 0 );
     
     void OnCharAdded  		( wxStyledTextEvent &event );
 	void OnUpdateUI		    ( wxStyledTextEvent &event );

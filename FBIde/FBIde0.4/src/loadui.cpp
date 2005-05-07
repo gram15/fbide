@@ -265,7 +265,7 @@ void MyFrame::LoadStatusBar () {
 }
 
 
-void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
+void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     
     void* doc;
     if ( InitFile == "" ) InitFile = FBUNNAMED;
@@ -278,6 +278,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
         stc->LoadSTCTheme();
         stc->LoadSTCSettings();
         buff = bufferList.AddFileBuffer("", "");
+        buff->SetFileType(FileType);
         doc = stc->GetDocPointer();
         stc->AddRefDocument(doc);
         stc->SetDocPointer(doc);
@@ -290,6 +291,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
         stc->SetBuffer( (Buffer *) 0 );
         stc->Freeze();
         buff = bufferList.AddFileBuffer("", "");
+        buff->SetFileType(FileType);
         SaveDocumentStatus(FBNotebook->GetSelection());
         doc = stc->CreateDocument();
         stc->AddRefDocument(doc);
@@ -297,14 +299,19 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select ) {
         OldTabSelected = -1;
         if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
         FBNotebook->InsertPage(FBNotebook->GetPageCount(), stc, wxFileNameFromPath(InitFile), true);
+        
+        if ( FileType != CurrentFileType ) {
+            CurrentFileType = FileType;
+            stc->LoadSTCTheme( CurrentFileType );
+        }
     }
     
     buff->SetFileName(InitFile);
     buff->SetModified(false);
     buff->UpdateModTime();
     buff->SetDocument(doc);
-    stc->SetFocus();
     stc->SetBuffer( (Buffer *) buff );
+    stc->SetFocus();
     stc->Thaw();
 
     return;
@@ -343,7 +350,7 @@ void MyFrame::SetSTCPage ( int index ) {
         stc->SetBuffer( (Buffer *) 0 );
         
         Buffer* buff = bufferList.GetBuffer(index);
-            
+        
         void* doc = buff->GetDocument();
         stc->AddRefDocument(doc);
         stc->SetDocPointer(doc);
@@ -353,9 +360,13 @@ void MyFrame::SetSTCPage ( int index ) {
         stc->SetSelectionStart(buff->GetSelectionStart());
         stc->SetSelectionEnd(buff->GetSelectionEnd());
         stc->SetFocus();
-        
         stc->SetBuffer( (Buffer *) buff);
-    stc->Thaw();
+        if ( buff->GetFileType() != CurrentFileType ) {
+            CurrentFileType = buff->GetFileType();
+            stc->LoadSTCTheme( CurrentFileType );
+        }
+
+     stc->Thaw();
 }
 
 void MyFrame::SetModified ( int index, bool status ) {

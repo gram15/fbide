@@ -24,7 +24,7 @@
 #include "inc/main.h"
 #include "inc/fbedit.h"
 #include <wx/file.h>
-
+#include <wx/colour.h>
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
 
@@ -79,7 +79,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
 }
 
 
-void FB_Edit::LoadSTCTheme       (  ) {
+void FB_Edit::LoadSTCTheme       ( int FileType ) {
     
     CommonInfo * Prefs = &(Parent->Prefs);
     StyleInfo  * Style = &(Parent->Style);
@@ -96,46 +96,78 @@ void FB_Edit::LoadSTCTheme       (  ) {
     }
 
     if (Prefs->SyntaxHighlight) {
-        SetLexer (wxSTC_LEX_VB);
-        //Initalise Highlighing colors, font styles and set lexer.
-        int Nr=0;
-        int StyleNR[]={ wxSTC_B_DEFAULT,    wxSTC_B_COMMENT,
-                        wxSTC_B_NUMBER,     wxSTC_B_KEYWORD,
-                        wxSTC_B_STRING,     wxSTC_B_PREPROCESSOR,  
-                        wxSTC_B_OPERATOR,   wxSTC_B_IDENTIFIER,
-                        wxSTC_B_DATE,       wxSTC_B_STRINGEOL,
-                        wxSTC_B_KEYWORD2,   wxSTC_B_KEYWORD3,
-                        wxSTC_B_KEYWORD4,   wxSTC_B_CONSTANT,
-                        wxSTC_B_ASM };
-        
-        for (int i=1;i<15;i++) {
-            Nr=StyleNR[i];
-            wxString fontname="";
+        if (FileType == 0) {
+            SetLexer (wxSTC_LEX_VB);
+            //Initalise Highlighing colors, font styles and set lexer.
+            int Nr=0;
+            int StyleNR[]={ wxSTC_B_DEFAULT,    wxSTC_B_COMMENT,
+                            wxSTC_B_NUMBER,     wxSTC_B_KEYWORD,
+                            wxSTC_B_STRING,     wxSTC_B_PREPROCESSOR,  
+                            wxSTC_B_OPERATOR,   wxSTC_B_IDENTIFIER,
+                            wxSTC_B_DATE,       wxSTC_B_STRINGEOL,
+                            wxSTC_B_KEYWORD2,   wxSTC_B_KEYWORD3,
+                            wxSTC_B_KEYWORD4,   wxSTC_B_CONSTANT,
+                            wxSTC_B_ASM };
             
-            //Foreground
-            StyleSetForeground (Nr, GetClr(Style->Info[i].foreground));
-            StyleSetBackground (Nr, GetClr(Style->Info[i].background));
+            for (int i=1;i<15;i++) {
+                Nr=StyleNR[i];
+                wxString fontname="";
+                
+                //Foreground
+                StyleSetForeground (Nr, GetClr(Style->Info[i].foreground));
+                StyleSetBackground (Nr, GetClr(Style->Info[i].background));
+                
+                wxFont font (
+                    Style->Info[i].fontsize, 
+                    wxMODERN, 
+                    wxNORMAL, 
+                    wxNORMAL, 
+                    false,
+                    Style->Info[i].fontname );
+                
+                StyleSetFont (Nr, font);
+                
+                //Font attributes
+                StyleSetBold       (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_BOLD) > 0);
+                StyleSetItalic     (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_ITALIC) > 0);
+                StyleSetUnderline  (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_UNDERL) > 0);
+                StyleSetVisible    (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_HIDDEN) == 0);
+                StyleSetCase       (Nr,  Style->Info[i].lettercase );
+            }
+            for (int Nr = 0; Nr < 4; Nr++)
+                SetKeyWords (Nr, Parent->Keyword[Nr+1]);
+        }
+        else if(FileType == 1) {
             
+            SetLexer (wxSTC_LEX_HTML);
+
             wxFont font (
-                Style->Info[i].fontsize, 
+                12, 
                 wxMODERN, 
                 wxNORMAL, 
                 wxNORMAL, 
-                false,
-                Style->Info[i].fontname );
+                false );
+                
+            for (int i = 0; i < 10; i++ ) {
+                StyleSetFont (i, font);
+            }
             
-            StyleSetFont (Nr, font);
+            StyleSetForeground (wxSTC_H_DEFAULT, *wxBLACK);
+            StyleSetForeground (wxSTC_H_TAG, wxColour(128,0,128));
+            StyleSetForeground (wxSTC_H_TAGUNKNOWN, *wxBLACK);
+            StyleSetForeground (wxSTC_H_ATTRIBUTE, *wxBLACK);
+            StyleSetForeground (wxSTC_H_ATTRIBUTEUNKNOWN, *wxBLACK);
+            StyleSetForeground (wxSTC_H_NUMBER, wxColour(0,0,255));
+            StyleSetForeground (wxSTC_H_DOUBLESTRING, wxColour(0,0,255));
+            StyleSetForeground (wxSTC_H_SINGLESTRING, wxColour(0,0,255));
+            StyleSetForeground (wxSTC_H_COMMENT, *wxLIGHT_GREY);
+            StyleSetForeground (wxSTC_H_ENTITY, wxColour(255,69,0));
             
-            //Font attributes
-            StyleSetBold       (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_BOLD) > 0);
-            StyleSetItalic     (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_ITALIC) > 0);
-            StyleSetUnderline  (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_UNDERL) > 0);
-            StyleSetVisible    (Nr, (Style->Info[i].fontstyle & mySTC_STYLE_HIDDEN) == 0);
-            StyleSetCase       (Nr,  Style->Info[i].lettercase );
+            StyleSetBold       (wxSTC_H_TAG, true);
+            StyleSetBold       (wxSTC_H_ATTRIBUTE, true);
+            SetKeyWords (0, "color font b i body style size pre");
         }
-        for (int Nr = 0; Nr < 4; Nr++)
-            SetKeyWords (Nr, Parent->Keyword[Nr+1]);
-
+            
     }
     else
         for (int Nr = 0; Nr < 4; Nr++)
@@ -221,7 +253,6 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
-
     if (Parent->Prefs.BraceHighlight) {
       if (IsBrace(GetCharAt(GetCurrentPos()))) {
         braceLoc = BraceMatch(GetCurrentPos());
@@ -245,14 +276,6 @@ void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
     pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
                 GetColumn(GetCurrentPos()) + 1);
     Parent->SetStatusText(pos, 1);
-    
-    if (ChangeTab) {
-        int temp = ChangeTab;
-        ChangeTab = 0;
-//        ScrollToLine(temp);
-        SetSelectionStart(temp);
-        SetSelectionEnd(temp);
-    }
 }
 
 inline bool FB_Edit::IsBrace(wxChar brace)
@@ -356,7 +379,7 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 
 
 void FB_Edit::OnKey              ( wxStyledTextEvent &event ) {
-    event.Skip(true);
+    event.Skip();
     
     if (!event.GetControl()) return;
 
@@ -402,8 +425,6 @@ void FB_Edit::OnKey              ( wxStyledTextEvent &event ) {
             int result = Parent->bufferList.FileLoaded(FileName);
             if (result != -1) Parent->FBNotebook->SetSelection(result);
             else Parent->NewSTCPage(FileName, true);
-            CmdKeyExecute (wxSTC_CMD_HOME);
-            ChangeTab = 0;
             return;
         }
 

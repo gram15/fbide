@@ -32,9 +32,13 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     dlg.ShowModal();
     if (stc==0) return;
     SaveSettings();
+    
+    int index = FBNotebook->GetSelection();
+    Buffer * buff = bufferList[index];
+    
     stc->Freeze();
         stc->StyleClearAll();
-        stc->LoadSTCTheme();
+        stc->LoadSTCTheme(buff->GetFileType());
         stc->LoadSTCSettings();
     stc->Thaw();
     return;
@@ -43,16 +47,13 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
 
 void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
     if(stc==0) return;
+    int index = FBNotebook->GetSelection();
+    Buffer * buff = bufferList[index];
+    if (buff->GetFileType()!=0) return;
+    
     format dlg(this, -1, "Convert the format");
     dlg.ShowModal();
-    /*if (stc==0) return;
-    SaveSettings();
-    stc->Freeze();
-        stc->StyleClearAll();
-        stc->LoadSTCTheme();
-        stc->LoadSTCSettings();
-    stc->Thaw();
-    return;*/
+
 }
 
 

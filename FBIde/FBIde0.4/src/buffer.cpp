@@ -36,6 +36,7 @@ Buffer::Buffer( const wxString& fileName )
         selStart(0), selEnd(0), firstLine(0)
 {
     this->fileName = fileName;
+    FileMode = 0;
 //    UpdateModTime();
 }
 
