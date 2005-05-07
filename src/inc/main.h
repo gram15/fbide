@@ -254,6 +254,7 @@ public:
     
     //View menu stuff
     void OnSettings         ( wxCommandEvent &event );
+    void OnFormat           ( wxCommandEvent &event );
     void OnResult           ( wxCommandEvent &event );
     void OnSubs             ( wxCommandEvent &event );
     
@@ -374,6 +375,7 @@ enum
 	
 	//ViewMenu:
 	Menu_Settings,
+    Menu_Format,
 	Menu_Result,
 	
 	//Tools menu
