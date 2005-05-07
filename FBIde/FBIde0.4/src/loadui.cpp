@@ -165,6 +165,7 @@ void MyFrame::LoadMenu () {
     // View menu
     FB_View = new wxMenu;
     FB_View->Append          (Menu_Settings, _(Lang[57]), _(Lang[58]));
+    FB_View->Append          (Menu_Format, "Format", "Change the format of the code");
     FB_View->AppendCheckItem (Menu_Result, _(Lang[59]), _(Lang[60]));
     FB_View->Append (Menu_Subs, _(Lang[61]), _(Lang[62]));
     //FB_Tools->Append (Menu_Converter, _(Language.ToolsConverter), _(Language.ToolsConverterDesc));

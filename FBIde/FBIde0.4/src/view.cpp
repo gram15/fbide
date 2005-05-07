@@ -25,6 +25,7 @@
 #include "inc/configdiag.h"
 #include "inc/fbedit.h"
 #include "inc/browser.h"
+#include "inc/MyDlg.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, _(Lang[98]));
@@ -37,6 +38,21 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
         stc->LoadSTCSettings();
     stc->Thaw();
     return;
+}
+
+
+void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
+    if(stc==0) return;
+    format dlg(this, -1, "Convert the format");
+    dlg.ShowModal();
+    /*if (stc==0) return;
+    SaveSettings();
+    stc->Freeze();
+        stc->StyleClearAll();
+        stc->LoadSTCTheme();
+        stc->LoadSTCSettings();
+    stc->Thaw();
+    return;*/
 }
 
 
