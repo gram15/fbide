@@ -61,6 +61,8 @@ class Buffer
         int GetSelectionStart();
         int GetSelectionEnd();
         int GetLine();
+        void SetFileType(int i) { FileMode = i; }
+        int GetFileType() { return FileMode; }
 
     private:
         wxDateTime modTime;
@@ -73,6 +75,7 @@ class Buffer
         void* document;
 
         int selStart, selEnd, firstLine, caretpos;
+        int FileMode;
 };
 
 WX_DEFINE_ARRAY(Buffer*, BufferArray);

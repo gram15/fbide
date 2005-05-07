@@ -285,7 +285,7 @@ public:
     
     void OnAbout        ( wxCommandEvent& event );
     
-    void NewSTCPage         ( wxString InitFile, bool select = false );
+    void NewSTCPage         ( wxString InitFile, bool select = false, int FileType = 0 );
     void ChangeNBPage       ( wxNotebookEvent& event );
     void ChangingNBPage     ( wxNotebookEvent& event );
     
@@ -332,6 +332,7 @@ public:
     BufferList bufferList;
     int lastTabCreated;
     int OldTabSelected;
+    int CurrentFileType;
     
 private:
     DECLARE_EVENT_TABLE()

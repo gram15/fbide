@@ -131,6 +131,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     FindDialog      = NULL;
     ReplaceDialog   = NULL;
 
+    CurrentFileType = 0;
     LoadUI();
     if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);
 
