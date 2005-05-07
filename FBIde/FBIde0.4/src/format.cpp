@@ -71,11 +71,18 @@ void format::VwXVwXEvOnChoiceSelect(wxCommandEvent& event){
 void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
  wxObject *m_wxWin = event.m_eventObject ;
  if(m_wxWin==bt16){bt16_VwXEvOnButtonClick(event,-1);return;}
+ if(m_wxWin==bt17){bt17_VwXEvOnButtonClick(event,-1);return;}
  if(m_wxWin==button_ok){button_ok_VwXEvOnButtonClick(event,-1);return;}
  event.Skip(true);
 }
 
 //[evtFunc]add your code here
+
+void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
+ //[64b]Code event VwX...Don't modify[64a]//
+ //add your code here
+ this->Close();
+} //end function
 
 void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init function
  //[4a9]Code event VwX...Don't modify[4a8]//
@@ -136,7 +143,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
    dotags=true;
    tagstart="<";
    tagend=">";
-   output="<body style=\"font-size:12pt;\ background-color:#"+hex(GetClr(Style->DefaultBgColour))+"; color:#"+hex(GetClr(Style->DefaultFgColour))+"\"><pre>";
+   output="<body style=\"font-size:12pt; background-color:#"+hex(GetClr(Style->DefaultBgColour))+"; color:#"+hex(GetClr(Style->DefaultFgColour))+"\"><pre>";
    break;
  }
  wxString curword="";
