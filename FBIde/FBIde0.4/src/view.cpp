@@ -25,7 +25,7 @@
 #include "inc/configdiag.h"
 #include "inc/fbedit.h"
 #include "inc/browser.h"
-#include "inc/MyDlg.h"
+#include "inc/format.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
     ConfigDialog dlg(this, -1, _(Lang[98]));
