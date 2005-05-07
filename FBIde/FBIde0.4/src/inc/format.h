@@ -48,6 +48,7 @@ public:
  MyFrame * Parent;
  wxString guts;
  wxString output;
+ wxButton *bt17;
  virtual ~format();
  virtual void Dformat();
  virtual void initBefore();
@@ -59,6 +60,7 @@ protected:
  void VwXVwXEvOnChoiceSelect(wxCommandEvent& event);
  void chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index=-1);
  void button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
+ void bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
  void bt16_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
  wxString hex(wxColour clr);
  bool format::isNumeric(wxString kw);
