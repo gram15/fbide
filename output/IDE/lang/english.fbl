@@ -5,6 +5,10 @@
 2=OK
 3=Cancel
 
+165=Line
+166=File
+167=Error nr
+168=Messages
 
 ;Menus
 4=&File
@@ -31,6 +35,12 @@
 24=Open new editor window
 25=&Quit\tCtrl+Q
 26=Quit FBIde
+169=Load session
+170=Loads previously saved session
+171=Save session
+172=Saves current session
+173=Close All
+174=Close all opened files
 
 27=&Undo\tCtrl+Z
 28=Undo last action
@@ -70,6 +80,8 @@
 60=Shows table with console outputs
 61=Subs... \tF2
 62=Open sub, function browser
+175=Format
+176=Change the format of the code
 
 63=Compile\tCtrl+F9
 64=Compile current file
@@ -201,78 +213,30 @@
 163=Go!
 164=Preview!
 
+;Run stuff
+177=Parameters to pass to your program
+178=Nothing to compile!
+179=Error
+180=You need first to compile the program before you can run! Compile?
+181=Compile?
+182=An error occured when trying to rin \"
+183=File is modified and before continuing it needs to be saved!
+184=Save file?
 
-165=
+185=ExitCode
 
-
-
-ShowLineNumbers=
-EditorSettings=
-HiLightMatchingBraces=
-UseSyntaxHi=
-ShRightMargin=
-ShLineEnd=
-ShWhtspc=
-ShIndGuides=
-FoldMargin=
-AutoIndent=
-RightMarginWidth=
-TabSize=
-
-;compiler
-CompilerSettings=
-CompilerPath=
-BrowseBtn=
-CompilerCommand=
-
-;themes tab
-ThemesComments=
-ThemesNumbers=
-ThemesStringClosed=
-ThemesPreprocessor=
-ThemesOperator=
-ThemesIdentifier=
-ThemesDate=
-ThemesStringOpen=
-ThemesKeywords=
-ThemesCaret=
-ThemesLineNumbers=
-ThemesTextSelect=
-ThemesBraceMatch=
-ThemesBraceMismatch=
-ThemesEditor=
-ThemesFontstyleBold=
-ThemesFontstyleItalic=
-ThemesFontstyleUnderline=
-ThemesSaveTheme=
-ThemesTheme=
-ThemesCreateNew=
-ThemesColors=
-ThemesType=
-ThemesFgColor=
-ThemesBgColor=
-ThemesFontstyle=
-ThemesFont=
-ThemesFontsize=
-
-EnterThemeName=
-Parameters=
-Theme=
-AlreadyExists=
-       
-       
-;Keywords
-Keywords=
-SelectKeywordGroup=
-Group=
-
-
-
-[menus]
-
-       
-ToolsConverter=Converter
-ToolsConverterDesc=Converts source code to BB or html format
-
-HelpAbout=&About...\tF1
-HelpAboutDesc=Show about dialog
+;File stuff
+186=Load file
+187=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*
+188=File \"
+189=\" has been modified. Save?
+190=The file '%s' has been modified.\nWould you like to save the changes?
+192=File Modified
+193=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi| html files (*.html)|*.html|
+194=Any file(*)|*.*
+195=Save file
+196=Use new file?
+197=Question
+198=FBIde session (*.fbs)|*.fbs|Any file(*)|*.*
+199=Save session
+200=html files (*.html)|*.html|
