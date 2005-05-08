@@ -136,6 +136,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     ReplaceData     = new wxFindReplaceData(wxFR_DOWN);
     FindDialog      = NULL;
     ReplaceDialog   = NULL;
+    SFDialog        = NULL;
 
     CurrentFileType = 0;
     LoadUI();
