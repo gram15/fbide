@@ -250,7 +250,7 @@ void MyFrame::SessionLoad ( wxString File ) {
     
     for( unsigned int i=1; i< TextFile.GetLineCount();i++ ) {
         Temp = TextFile[i];
-        if(Temp!="") {
+        if(Temp!=""&&wxFileExists(Temp)) {
             result = bufferList.FileLoaded(Temp);
             if (result == -1) NewSTCPage(Temp, false);
         }
