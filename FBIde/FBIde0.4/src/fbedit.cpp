@@ -265,8 +265,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 //Stc events
 void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
     if(buff!=0) {
-        if(GetLength()==0) { Parent->SetModified(-1, false); }
-        else if(GetModify()!=buff->GetModified()) { Parent->SetModified(-1, !buff->GetModified()); }
+        if(GetModify()!=buff->GetModified()) { Parent->SetModified(-1, !buff->GetModified()); }
     }
     if(Parent->SFDialog) { Parent->SFDialog->Rebuild(); }
 }
