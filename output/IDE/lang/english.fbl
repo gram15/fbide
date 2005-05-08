@@ -125,7 +125,7 @@
 94=Run (Ctrl+Shift+F9)
 95=Compile and Run (F9)
 96=Quick run (F5)
-97=Open/Close outout window
+97=Open/Close output window
 
 
 ;FBIde Settings dialog box
@@ -232,11 +232,11 @@
 189=\" has been modified. Save?
 190=The file '%s' has been modified.\nWould you like to save the changes?
 192=File Modified
-193=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi| html files (*.html)|*.html|
+193=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|
 194=Any file(*)|*.*
 195=Save file
 196=Use new file?
 197=Question
 198=FBIde session (*.fbs)|*.fbs|Any file(*)|*.*
 199=Save session
-200=html files (*.html)|*.html|
+200=HTML files (*.html)|*.html|
