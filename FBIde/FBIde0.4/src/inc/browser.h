@@ -52,17 +52,22 @@ public:
 
     void GenerateList( wxString Search );
     
+    void OnClose (wxCloseEvent & event);
+    
+    void Rebuild (  );
+    
     MyFrame     * Parent;
     wxStaticText* SearchLabel;
     wxTextCtrl  * SearchBox;
     wxListCtrl  * SFList;
     wxPanel     * Panel;
-    void * itSelf;
     
     wxArrayString Original;
     wxArrayString OriginalArg;
     vector <int> OrigLineNr;
     vector <int> OrigType;
+    
+    wxString SearchString;
 
     enum {
         SearchBoxId,
