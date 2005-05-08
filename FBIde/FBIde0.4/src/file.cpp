@@ -37,7 +37,7 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
         _T("Load file"),
         _T(""),
         _T(".bas"),
-        _T("FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|All file(*)|*.*"),
+        _T("FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*"),
     wxFILE_MUST_EXIST | wxCHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     wxString File = dlg.GetPath();
