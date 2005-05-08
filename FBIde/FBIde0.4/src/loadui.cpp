@@ -56,19 +56,19 @@ void MyFrame::LoadUI () {
 	FBConsole->SetFont(LbFont);
 
     wxListItem itemCol;
-    itemCol.SetText(_T("Line"));
+    itemCol.SetText(_T(Lang[165])); //"Line"
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(0, itemCol);
 
-    itemCol.SetText(_T("File"));
+    itemCol.SetText(_T(Lang[166])); //"File"
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(1, itemCol);
     
-    itemCol.SetText(_T("Error nr"));
+    itemCol.SetText(_T(Lang[167])); //"Error nr"
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(2, itemCol);
 
-    itemCol.SetText(_T("Message"));
+    itemCol.SetText(_T(Lang[168])); //"Messages"
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(3, itemCol);
     
@@ -121,12 +121,12 @@ void MyFrame::LoadMenu () {
     FB_File->Append (Menu_SaveAll, _T(Lang[19]), _T(Lang[20]));
     
     FB_File->AppendSeparator();
-    FB_File->Append (Menu_SessionLoad, _T("Load session"), _T("Loads previously saved session"));
-    FB_File->Append (Menu_SessionSave, _T("Save session"), _T("Saves current session"));
+    FB_File->Append (Menu_SessionLoad, _T(Lang[169]), _T(Lang[170]));
+    FB_File->Append (Menu_SessionSave, _T(Lang[171]), _T(Lang[172]));
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Close, _T(Lang[21]), _T(Lang[22]));
-    FB_File->Append (Menu_CloseAll, "Close All", "Close all opened files");
+    FB_File->Append (Menu_CloseAll, Lang[173], Lang[174]);
 
     FB_File->AppendSeparator();
     FB_File->Append (Menu_NewEditor, _T(Lang[23]), _T(Lang[24]));
@@ -169,7 +169,7 @@ void MyFrame::LoadMenu () {
     // View menu
     FB_View = new wxMenu;
     FB_View->Append          (Menu_Settings, _(Lang[57]), _(Lang[58]));
-    FB_View->Append          (Menu_Format, "Format", "Change the format of the code");
+    FB_View->Append          (Menu_Format, Lang[175], Lang[176]);
     FB_View->AppendCheckItem (Menu_Result, _(Lang[59]), _(Lang[60]));
     FB_View->Append (Menu_Subs, _(Lang[61]), _(Lang[62]));
     //FB_Tools->Append (Menu_Converter, _(Language.ToolsConverter), _(Language.ToolsConverterDesc));
