@@ -163,6 +163,7 @@ public:
 };
 
 class FB_Edit;
+class SFBrowser;
 //class BufferList;
 //class Buffer;
 
@@ -276,6 +277,7 @@ public:
     wxFindReplaceData*      ReplaceData;
     wxFindReplaceDialog*    FindDialog;
     wxFindReplaceDialog*    ReplaceDialog;
+    SFBrowser*              SFDialog;
     wxString                findText;
     wxString                replaceText;
     wxString                findString;

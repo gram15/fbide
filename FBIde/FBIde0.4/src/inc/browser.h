@@ -57,6 +57,7 @@ public:
     wxTextCtrl  * SearchBox;
     wxListCtrl  * SFList;
     wxPanel     * Panel;
+    void * itSelf;
     
     wxArrayString Original;
     wxArrayString OriginalArg;

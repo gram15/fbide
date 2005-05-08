@@ -226,5 +226,7 @@ void SFBrowser::GenerateList ( wxString Search ) {
 
 SFBrowser::~SFBrowser () {
     delete Panel;
+    Parent->SFDialog=0;
+//    delete this;
     return;
 }

@@ -77,9 +77,10 @@ void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
 
 void MyFrame::OnSubs (wxCommandEvent 	&WXUNUSED(event)) {
     if (stc==0) return;
+    if (SFDialog) return;
 
-    SFBrowser dlg(this, -1, "Sub/Function browser");
-    dlg.ShowModal();
+    SFDialog = new SFBrowser(this, -1, "Sub/Function browser");
+    SFDialog->Show();
 
     return;
 }
