@@ -154,7 +154,9 @@ void MyFrame::OnCloseFile       ( ) {
 
 void MyFrame::CloseFile          ( int index ) {
 
-    if (SFDialog) { SFDialog->Close(true); SFDialog = 0; }
+    if (SFDialog)       { SFDialog->Close(true); }
+    if (FindDialog)     { FindDialog->Close(true); }
+    if (ReplaceDialog)  { ReplaceDialog->Close(true); }
     
     stc->SetBuffer( (Buffer *) 0 );
     OldTabSelected = -1;
@@ -167,6 +169,7 @@ void MyFrame::CloseFile          ( int index ) {
         delete stc;
         stc = 0;
         FBNotebook->Hide();
+
     }
     else {
         SetSTCPage(FBNotebook->GetSelection());
@@ -209,7 +212,7 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
         wxFileDialog dlg (this,
             _T(Lang[195]),//Save file
             _T(""),
-            _T( (ft=0) ? ".bas" : ".html" ),
+            _T( (ft==0) ? ".bas" : ".html" ),
             _T( Temp ),
             wxSAVE|wxOVERWRITE_PROMPT);
         if (dlg.ShowModal() != wxID_OK) return false;
