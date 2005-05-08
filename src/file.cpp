@@ -21,9 +21,10 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
+#include <wx/textfile.h>
 #include "inc/main.h"
 #include "inc/fbedit.h"
-#include <wx/textfile.h>
+#include "inc/browser.h"
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
     NewSTCPage("", true);
@@ -154,6 +155,8 @@ void MyFrame::OnCloseFile       ( ) {
 
 void MyFrame::CloseFile          ( int index ) {
 
+    if (SFDialog) { SFDialog->Close(true); SFDialog = 0; }
+    
     stc->SetBuffer( (Buffer *) 0 );
     OldTabSelected = -1;
     FBNotebook->RemovePage(index);
@@ -334,4 +337,3 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
     
     return;
 }
-    

@@ -53,6 +53,7 @@ public:
     void GenerateList( wxString Search );
     
     void OnClose (wxCloseEvent & event);
+//    void SFBClose (  ) { delete this; }
     
     void Rebuild (  );
     
