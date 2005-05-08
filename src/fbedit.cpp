@@ -21,10 +21,12 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-#include "inc/main.h"
-#include "inc/fbedit.h"
 #include <wx/file.h>
 #include <wx/colour.h>
+
+#include "inc/main.h"
+#include "inc/fbedit.h"
+#include "inc/browser.h"
 
 BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
 
@@ -265,7 +267,8 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
     if(buff!=0) {
         if(GetLength()==0) { Parent->SetModified(-1, false); }
         else if(GetModify()!=buff->GetModified()) { Parent->SetModified(-1, !buff->GetModified()); }
-   }
+    }
+    if(Parent->SFDialog) { Parent->SFDialog->Rebuild(); }
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {

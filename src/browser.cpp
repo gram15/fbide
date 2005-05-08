@@ -29,6 +29,7 @@
 #include "inc/browser.h"
 
 BEGIN_EVENT_TABLE( SFBrowser, wxDialog)
+    EVT_CLOSE ( SFBrowser::OnClose )
     EVT_TEXT(SearchBoxId,       SFBrowser::OnCharAdded)
     EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
     EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
@@ -95,11 +96,13 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     SFList->SetColumnWidth( 0, 50  );
     SFList->SetColumnWidth( 1, 50 );
     SFList->SetColumnWidth( 2, 400 );
-	
-//	
-	
+
     Refresh();
     
+    Rebuild();
+}
+
+void SFBrowser::Rebuild (  ) {
     wxString Temp;
     wxString fkw;
     wxString skw;
@@ -107,6 +110,12 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     wxString Arg;
     bool Add = false;
     FB_Edit * stc = Parent->stc;
+
+    Original.Clear();
+    OriginalArg.Clear();
+            
+    OrigLineNr.clear();
+    OrigType.clear();
 
     for ( int i = 0; i < stc->GetLineCount(); i++ ) {
         Temp = stc->GetLine(i);
@@ -147,10 +156,11 @@ SFBrowser::SFBrowser(   wxWindow* parent,
             OrigLineNr.push_back(i);
             OrigType.push_back(type);
         }
-    } // ~for
-    GenerateList("");
-}
+    }
 
+    GenerateList( SearchString );
+    return;
+}
 
 void SFBrowser::AddListItem ( int Linenr, wxString Type, wxString Message ) {
 
@@ -166,7 +176,8 @@ void SFBrowser::AddListItem ( int Linenr, wxString Type, wxString Message ) {
 
 
 void SFBrowser::OnCharAdded ( wxCommandEvent& event ) {
-    GenerateList(event.GetString().Lower());
+    SearchString = event.GetString().Lower();
+    GenerateList( SearchString );
     return;
 }
 
@@ -229,4 +240,8 @@ SFBrowser::~SFBrowser () {
     Parent->SFDialog=0;
 //    delete this;
     return;
+}
+
+void SFBrowser::OnClose (wxCloseEvent & event) {
+    delete this;
 }
