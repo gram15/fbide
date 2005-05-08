@@ -24,6 +24,7 @@
 #include "inc/main.h"
 //#include "inc/tabctrl.h"
 #include "inc/fbedit.h"
+#include <filename.h>
 
 
 //------------------------------------------------------------------------------
@@ -118,6 +119,10 @@ void MyFrame::LoadMenu () {
     FB_File->Append (Menu_Save,	_T(Lang[15]), _T(Lang[16]));
     FB_File->Append (Menu_SaveAS, _T(Lang[17]), _T(Lang[18]));
     FB_File->Append (Menu_SaveAll, _T(Lang[19]), _T(Lang[20]));
+    
+    FB_File->AppendSeparator();
+    FB_File->Append (Menu_SessionLoad, _T("Load session"), _T("Loads previously saved session"));
+    FB_File->Append (Menu_SessionSave, _T("Save session"), _T("Saves current session"));
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Close, _T(Lang[21]), _T(Lang[22]));
@@ -269,6 +274,11 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     void* doc;
     if ( InitFile == "" ) InitFile = FBUNNAMED;
     Buffer* buff;
+    
+    wxFileName File(InitFile);
+    
+    if(File.GetExt() == "html"||File.GetExt() == "htm") { FileType = 1; }
+
     
     if (stc==NULL) {
         OldTabSelected = -1;

@@ -23,6 +23,7 @@
 
 #include "inc/main.h"
 #include "inc/fbedit.h"
+#include <wx/textfile.h>
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
     NewSTCPage("", true);
@@ -197,12 +198,17 @@ void MyFrame::OnNewWindow     (wxCommandEvent &WXUNUSED(event)) {
 bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
     wxString FileName = (SaveAS) ? "" : buff->GetFileName();
     
+    int ft = buff->GetFileType();
+    
+    wxString Temp = (ft=0) ? "FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|" : "html files (*.html)|*.html|";
+    Temp <<  "Any file(*)|*.*";
+
     if (FileName==""||FileName==FBUNNAMED) {
         wxFileDialog dlg (this,
             _T("Save file"),
             _T(""),
-            _T(".bas"),
-            _T("FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|Any file(*)|*.*"),
+            _T( (ft=0) ? ".bas" : ".html" ),
+            _T( Temp ),
             wxSAVE|wxOVERWRITE_PROMPT);
         if (dlg.ShowModal() != wxID_OK) return false;
 	    FileName = dlg.GetPath();
@@ -218,3 +224,114 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
 }
 
 
+
+void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
+    wxFileDialog dlg (this,
+        _T("Load file"),
+        _T(""),
+        _T(".bas"),
+        _T("FBIde session (*.fbs)|*.fbs|Any file(*)|*.*"),
+    wxFILE_MUST_EXIST | wxCHANGE_DIR);
+    if (dlg.ShowModal() != wxID_OK) return;
+    wxString File = dlg.GetPath();
+    
+    SessionLoad(File);
+}
+
+void MyFrame::SessionLoad ( wxString File ) {
+
+    wxTextFile TextFile(File);
+    TextFile.Open();
+    if(TextFile.GetLineCount()==0) return;
+    
+    wxString Temp;
+    int result = 0;
+    unsigned long selectedtab = 0;    
+    
+    for( unsigned int i=1; i< TextFile.GetLineCount();i++ ) {
+        Temp = TextFile[i];
+        if(Temp!="") {
+            result = bufferList.FileLoaded(Temp);
+            if (result == -1) NewSTCPage(Temp, false);
+        }
+    }
+    
+    Temp=TextFile[0];
+    Temp.ToULong(&selectedtab);
+    
+    FBNotebook->SetSelection(selectedtab);
+    
+    TextFile.Close();
+    
+    return;
+}
+
+
+void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
+    if (stc==0) return;
+    
+    wxString FileName;
+    
+    wxFileDialog dlg (this,
+        _T("Save session"),
+        _T(""),
+        _T(".fbs"),
+        _T("FBIde session (*.fbs)|*.fbs|Any file(*)|*.*"),
+        wxSAVE|wxOVERWRITE_PROMPT);
+    if (dlg.ShowModal() != wxID_OK) return;
+    FileName = dlg.GetPath();
+    
+    wxTextFile TextFile(FileName);
+    if (TextFile.Exists()) { TextFile.Open(); TextFile.Clear(); }
+    else { TextFile.Create(); }
+    
+    Buffer* buff;
+    bool session = false;
+    bool header = true;
+    
+    int SelectedTab = FBNotebook->GetSelection();
+    
+    for (unsigned int i=0; i < FBNotebook->GetPageCount();i++ ) {
+        buff = bufferList[i];
+        if (buff->GetModified()) {
+            FBNotebook->SetSelection(i);
+            int result = wxMessageBox("File \"" + buff->GetFileName() + "\" has been modified. Save?", 
+                             "Save file?",
+                             wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
+            if (result==wxCANCEL) return;
+            else if (result==wxYES) {
+                SaveFile(buff);
+                session = true;
+                SetModified ( i, false );
+            }
+            else if (result==wxNO) {
+                if (buff->GetFileName()!=FBUNNAMED) {
+                    session = true;
+                }
+            }
+        }
+        else { session = true; }
+        
+        if ( session && buff->GetFileName()!=FBUNNAMED ) {
+            if (header) {
+                header = false;
+                wxString t;
+                t << SelectedTab;
+                TextFile.AddLine(t);
+            }
+            session = false;
+            TextFile.AddLine(buff->GetFileName());
+        }
+    } 
+    
+    FBNotebook->SetSelection(SelectedTab);
+    
+    if(TextFile.GetLineCount()) {
+        TextFile.Write();
+    }
+    
+    TextFile.Close();
+    
+    return;
+}
+    

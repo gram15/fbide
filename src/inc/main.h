@@ -199,6 +199,8 @@ public:
     void OnSave             ( wxCommandEvent& event );
     void OnSaveAs           ( wxCommandEvent& event );
     void OnSaveAll          ( wxCommandEvent& event );
+    void OnSessionLoad      ( wxCommandEvent& event );
+    void OnSessionSave      ( wxCommandEvent& event );
     void OnCloseFile_       ( wxCommandEvent& event );
     void OnCloseFile        (  );
     void OnCloseAll_        ( wxCommandEvent& event );
@@ -208,6 +210,7 @@ public:
     bool SaveFile           ( Buffer* buff, bool SaveAS = false );
     void CloseFile          ( int index );
     int  Proceed            ( void );
+    void SessionLoad        ( wxString File );
     
     
     //Editmenu-events and related stuff
@@ -350,6 +353,8 @@ enum
     Menu_Close,
     Menu_CloseAll,
     Menu_FileHistory,
+    Menu_SessionSave,
+    Menu_SessionLoad,
     
 	//EditMenu:
 	Menu_Undo,

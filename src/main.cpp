@@ -26,6 +26,7 @@
 #include "inc/fbedit.h"
 #include <wx/image.h>
 #include <wx/splash.h>
+#include <wx/filename.h>
 
 
 //------------------------------------------------------------------------------
@@ -38,6 +39,8 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_Save,                 MyFrame::OnSave)
     EVT_MENU(Menu_SaveAS,               MyFrame::OnSaveAs)
     EVT_MENU(Menu_SaveAll,              MyFrame::OnSaveAll)
+    EVT_MENU(Menu_SessionLoad,          MyFrame::OnSessionLoad)
+    EVT_MENU(Menu_SessionSave,          MyFrame::OnSessionSave)
     EVT_MENU(Menu_Close,                MyFrame::OnCloseFile_)
     EVT_MENU(Menu_CloseAll,             MyFrame::OnCloseAll_)
     EVT_MENU(Menu_NewEditor,            MyFrame::OnNewWindow)
@@ -119,7 +122,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     {
       new wxSplashScreen(bitmap,
           wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
-          2000, this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
+          1000, this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
           wxSIMPLE_BORDER|wxSTAY_ON_TOP);
     }
 
@@ -136,8 +139,14 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 
     CurrentFileType = 0;
     LoadUI();
-    if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);
     
+    wxFileName File(FB_App->argv[1]);
+    
+    if(File.GetExt() == "fbs") { SessionLoad ( FB_App->argv[1] ); }
+    else {
+        if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);
+    }
+
     Show();
 
 }
