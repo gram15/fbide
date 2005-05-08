@@ -136,16 +136,13 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             for (int Nr = 0; Nr < 4; Nr++)
                 SetKeyWords (Nr, Parent->Keyword[Nr+1]);
             
-            StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
-            StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
-
         }
         else if(FileType == 1) {
             
             SetLexer (wxSTC_LEX_HTML);
 
             wxFont font (
-                12, 
+                10, 
                 wxMODERN, 
                 wxNORMAL, 
                 wxNORMAL, 
@@ -170,22 +167,47 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             StyleSetBold       (wxSTC_H_TAG, true);
             StyleSetBold       (wxSTC_H_ATTRIBUTE, true);
             SetKeyWords (0, "color font b i body style size pre");
-            
-            StyleSetForeground (wxSTC_STYLE_DEFAULT,    *wxBLACK );
-            StyleSetBackground (wxSTC_STYLE_DEFAULT,    *wxWHITE );
         }
     }
     else {
         for (int Nr = 0; Nr < 4; Nr++)
             SetKeyWords (Nr, "");
-        StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
-        StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
     }
     
+    if (FileType==0||!Prefs->SyntaxHighlight) {
+        StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
+        StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
+        
+        StyleSetForeground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberFgColour));
+        StyleSetBackground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberBgColour));
+        SetCaretForeground (GetClr(Style->CaretColour));
+        
+        SetSelBackground(true, GetClr(Style->SelectBgColour));
+        SetSelForeground(true, GetClr(Style->SelectFgColour));
+        
+        wxFont font (   Style->DefaultFontSize, 
+                        wxMODERN, 
+                        wxNORMAL, 
+                        wxNORMAL, 
+                        false,
+                        Style->DefaultFont );
+        StyleSetFont (wxSTC_STYLE_DEFAULT, font);
+    }
+    else {
+        StyleSetForeground (wxSTC_STYLE_DEFAULT,    *wxBLACK );
+        StyleSetBackground (wxSTC_STYLE_DEFAULT,    *wxWHITE );
+
+        StyleSetForeground (wxSTC_STYLE_LINENUMBER, *wxWHITE);
+        StyleSetBackground (wxSTC_STYLE_LINENUMBER,  wxColour(192,192,192));
+        SetCaretForeground (*wxBLACK);
+        
+        SetSelBackground(true, wxColour(192,192,192));
+        SetSelForeground(true, wxColour(255,255,255));
+    }
+
+    
     //   SetCaretLineBack("RED");
-    StyleSetForeground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberFgColour));
-    StyleSetBackground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberBgColour));
- 
+
     //Brace light
     StyleSetForeground (wxSTC_STYLE_BRACELIGHT, GetClr(Style->BraceFgColour));
     StyleSetBackground (wxSTC_STYLE_BRACELIGHT, GetClr(Style->BraceBgColour));
@@ -203,22 +225,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
     StyleSetVisible    (wxSTC_STYLE_BRACEBAD, (Style->BadBraceFontStyle & mySTC_STYLE_HIDDEN) == 0);
 
 //   
-    SetCaretForeground (GetClr(Style->CaretColour));
-
-    SetSelBackground(true, GetClr(Style->SelectBgColour));
-    if (Style->SelectFgColour!=0)
-		SetSelForeground(true, GetClr(Style->SelectFgColour));
-
-    wxFont font (   Style->DefaultFontSize, 
-                    wxMODERN, 
-                    wxNORMAL, 
-                    wxNORMAL, 
-                    false,
-                    Style->DefaultFont );
-
-    StyleSetFont (wxSTC_STYLE_DEFAULT, font);
-    StyleSetForeground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberFgColour));
-    StyleSetBackground (wxSTC_STYLE_LINENUMBER, GetClr(Style->LineNumberBgColour));
+    
 
    
    //Markers
