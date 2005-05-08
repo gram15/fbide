@@ -21,10 +21,10 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-#include "inc/main.h"
-//#include "inc/tabctrl.h"
-#include "inc/fbedit.h"
 #include <filename.h>
+#include "inc/main.h"
+#include "inc/fbedit.h"
+#include "inc/browser.h"
 
 
 //------------------------------------------------------------------------------
@@ -322,6 +322,8 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     stc->SetBuffer( (Buffer *) buff );
     stc->SetFocus();
     stc->Thaw();
+    
+    if (SFDialog) SFDialog->Rebuild();
 
     return;
 }
@@ -376,6 +378,8 @@ void MyFrame::SetSTCPage ( int index ) {
         }
 
      stc->Thaw();
+     
+     if (SFDialog) SFDialog->Rebuild();
 }
 
 void MyFrame::SetModified ( int index, bool status ) {
