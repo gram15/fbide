@@ -138,11 +138,11 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     ReplaceDialog   = NULL;
     SFDialog        = NULL;
 
+
     CurrentFileType = 0;
     LoadUI();
-    
+
     wxFileName File(FB_App->argv[1]);
-    
     if(File.GetExt() == "fbs") { SessionLoad ( FB_App->argv[1] ); }
     else {
         if (FB_App->argc>1)  NewSTCPage(FB_App->argv[1], true);

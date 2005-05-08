@@ -325,8 +325,7 @@ public:
     wxString CurFolder;
     CommonInfo  Prefs;
     StyleInfo   Style; 
-    #define     RowCount    200
-    wxString Lang[RowCount];
+    wxArrayString Lang;
     
     wxString Keyword[KWGROUPS + 1];
     

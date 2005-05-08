@@ -38,12 +38,14 @@ void MyFrame::OpenLangFile( wxString FileName ){
      
      //And GO!
      wxString temp;
-     for (int i=0; i<RowCount; i++){
+     for (int i=0; i < 201; i++){
          temp="";
          temp<<i;
-         Lang[i] = FileINI.Read(temp,"");
+         Lang.Add(FileINI.Read(temp,""));
      }
-         
+     
+     Lang.Shrink();
+     
      return;               
 }
                

@@ -27,6 +27,7 @@
 
 void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (FindDialog != NULL || ReplaceDialog != NULL)
         return;
 
@@ -45,6 +46,7 @@ void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     if (FindDialog != NULL || ReplaceDialog != NULL)
         return;
 
@@ -64,6 +66,7 @@ void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnFindAgain (wxCommandEvent& WXUNUSED(event))
 {
+   if (stc==0) return;
    int flags=FindData->GetFlags();
    if (flags & wxFR_DOWN)
       FindNext();
@@ -76,6 +79,7 @@ void MyFrame::OnFindAgain (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event))
 {
+    if (stc==0) return;
     wxString lineString = wxGetTextFromUser(_("Go To Line Number:"), _("Go To Line"), _(""), this);
 
     if (lineString.IsEmpty()) return;
@@ -131,6 +135,7 @@ void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::FindButton ( wxFindDialogEvent& event )
 {
+    if (stc==0) return;
     int flags = 0;
     if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
@@ -153,6 +158,7 @@ void MyFrame::FindButton ( wxFindDialogEvent& event )
 
 void MyFrame::FindClose ( wxFindDialogEvent& event )
 {
+    
     if (event.GetDialog() == FindDialog)
     {
         FindDialog->Destroy();
@@ -171,6 +177,7 @@ void MyFrame::FindClose ( wxFindDialogEvent& event )
 
 void MyFrame::MenuFindNext ( wxFindDialogEvent& event )
 {
+    if (stc==0) return;
     int flags = 0;
 
     if (event.GetFlags() & wxFR_WHOLEWORD)
@@ -194,6 +201,7 @@ void MyFrame::MenuFindNext ( wxFindDialogEvent& event )
 
 void MyFrame::ReplaceSel ( wxFindDialogEvent& event )
 {
+   if (stc==0) return;
    int flags = 0;
    if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
@@ -208,6 +216,7 @@ void MyFrame::ReplaceSel ( wxFindDialogEvent& event )
 
 void MyFrame::MenuReplaceAll ( wxFindDialogEvent& event )
 {
+    if (stc==0) return;
     int flags = 0;
     if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
