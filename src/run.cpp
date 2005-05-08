@@ -175,8 +175,8 @@ void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
 }
 
 void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
-    wxTextEntryDialog dialog(this, _T("Parameters to pass to your program"),
-                                  _T("Parameters..."),
+    wxTextEntryDialog dialog(this, _T(Lang[178]), //"Parameters to pass to your program"
+                                  _T(Lang[158]),
                                   _T(ParameterList),
                            wxOK | wxCANCEL);
     
@@ -194,7 +194,7 @@ void MyFrame::OnShowExitCode (wxCommandEvent& WXUNUSED(event)) {
 
 int  MyFrame::Compile            ( wxString FileName ) {
     if (stc->GetLength()==0) {
-        wxMessageBox (_("Nothing to compile!"), _("Error"));
+        wxMessageBox (_(Lang[178]), _(Lang[179]));
         return 1;
     }
     
@@ -334,8 +334,8 @@ void MyFrame::Run                ( wxString FileName ) {
     
     if (FileName=="") {
         if (stc==0) return;
-    	int Question= wxMessageBox ("You need first to compile the program before you can run! Compile?",
-                                  "Compile?",
+    	int Question= wxMessageBox (Lang[180],
+                                  Lang[181],
                                    wxYES_NO | wxICON_QUESTION);
        if (Question==wxNO) return;
        if (Compile()!=0)   return;
@@ -349,8 +349,8 @@ void MyFrame::Run                ( wxString FileName ) {
     {
         delete process;
         ProcessIsRunning=false;
-        wxMessageBox ("An error occured when trying to rin \"" + Temp + "\"", 
-                      "Error",
+        wxMessageBox (Lang[182] + Temp + "\"", 
+                      Lang[179],
                       wxICON_ERROR);
         return;
     }
@@ -456,8 +456,8 @@ int MyFrame::Proceed   	(void) {
     Buffer * buff = bufferList[index]; 
     
     if (buff->GetModified()) {
-        if (wxMessageBox("File is modified and to contrinue needs to be save!", 
-                         "Save file?", 
+        if (wxMessageBox(Lang[183], 
+                         Lang[184], 
                          wxICON_EXCLAMATION|wxYES_NO) == wxYES) {
             if (SaveFile(buff)) {
                 SetModified ( index, false );
@@ -476,7 +476,7 @@ void MyProcess::OnTerminate(int pid, int status)
     if (m_parent->Prefs.ShowExitCode) {
         wxString Temp;
         Temp<<status;
-        wxMessageBox(Temp, "ExitCode");
+        wxMessageBox(Temp, m_parent->Lang[185]);
     }
     if (m_parent->IsTemp) {
          wxRemoveFile(m_parent->CurFolder + "FBIDETEMP.bas");
