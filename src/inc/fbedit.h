@@ -85,7 +85,9 @@ public:
     }
     
     inline wxString GetFirstKw ( wxString cmdline ) {
-        return cmdline.Left(cmdline.Find(' ')).Left(cmdline.Find('('));
+        wxString Temp = cmdline.Left(cmdline.Find(' '));
+        Temp = Temp.Left(Temp.Find('('));
+        return Temp;
     }
     
     inline wxString GetSecondKw ( wxString cmdline ) {
