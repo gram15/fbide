@@ -33,7 +33,9 @@ BEGIN_EVENT_TABLE (FB_Edit, wxStyledTextCtrl)
     EVT_STC_CHARADDED   (-1,                FB_Edit::OnCharAdded)
     EVT_STC_UPDATEUI    (-1,                FB_Edit::OnUpdateUI)
     EVT_STC_MODIFIED    (-1,                FB_Edit::OnModified)
-    EVT_STC_HOTSPOT_CLICK(-1,               FB_Edit::OnKey)
+    EVT_STC_HOTSPOT_CLICK(-1,               FB_Edit::OnHotSpot)
+    EVT_KEY_UP(                             FB_Edit::OnKeyUp)
+    EVT_KEY_DOWN(                           FB_Edit::OnKeyDown)
     
 END_EVENT_TABLE()
 
@@ -48,6 +50,7 @@ FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id
     braceLoc = -1;
     buff = 0;
     ChangeTab = 0;
+    exitUUI = false;
 }
 
 
@@ -73,8 +76,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
     SetViewWhiteSpace (Prefs->whiteSpace ? wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
     CmdKeyClear (wxSTC_KEY_TAB, 0);
-    StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
-    
+
     return;
 }
 
@@ -267,6 +269,21 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
+//    if (exitUUI) { event.Skip(); return; }
+//
+//    if (Parent->Prefs.LineNumber) {
+//        exitUUI = true;
+//        int t = GetCurrentLine();
+//        wxString st;
+//        st << t << "0";
+//    
+//        int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T(st));
+//    
+//        SetMarginWidth (0, LineNrMargin);
+//        SetMarginWidth (1,0);
+//        exitUUI = false;
+//    }
+
     if (Parent->Prefs.BraceHighlight) {
       if (IsBrace(GetCharAt(GetCurrentPos()))) {
         braceLoc = BraceMatch(GetCurrentPos());
@@ -302,7 +319,7 @@ inline bool FB_Edit::IsBrace(wxChar brace)
 
 
 void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
-    
+    event.Skip();
     if (!Parent->Prefs.AutoIndent) return;
 
     char        key     = event.GetKey();
@@ -396,10 +413,23 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 }
 
 
-void FB_Edit::OnKey              ( wxStyledTextEvent &event ) {
+void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     event.Skip();
-    
-    if (!event.GetControl()) return;
+    if (!event.ControlDown()) return;
+    SetMouseDownCaptures(false);
+    StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
+    return;
+}
+
+void FB_Edit::OnKeyUp            ( wxKeyEvent &event ) {
+    event.Skip();
+    if (event.ControlDown()) return;
+    SetMouseDownCaptures(true);
+    StyleSetHotSpot(wxSTC_B_PREPROCESSOR, false);
+    return;
+}
+
+void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
 
     ChangeTab = LineFromPosition(event.GetPosition());
     wxString FileName = ClearCmdLine(GetLine(ChangeTab));
@@ -447,6 +477,5 @@ void FB_Edit::OnKey              ( wxStyledTextEvent &event ) {
         }
 
     }
-    ChangeTab = 0;
 }
 

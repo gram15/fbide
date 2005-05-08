@@ -100,8 +100,11 @@ void MyFrame::GoToError ( int Linenr, wxString FileName ) {
         else NewSTCPage(FileName, true);
     }
 
-    if (stc->GetCurrentLine()!=(int)Linenr)
+    if (stc->GetCurrentLine()!=(int)Linenr) {
+        stc->ScrollToLine((int)Linenr-(stc->LinesOnScreen()/2));
         stc->GotoLine((int)Linenr);
+    
+    }
     stc->SetFocus();
     stc->EnsureCaretVisible();
 }
@@ -196,6 +199,8 @@ int  MyFrame::Compile            ( wxString FileName ) {
     }
     
     wxString Temp=GetCompileData( FileName );
+    wxString FilePath = wxPathOnly( FileName );
+
     if (Temp=="") return false;
     
     unsigned long LineNumber = 0, errornr = 0;
@@ -253,10 +258,17 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     }
                 }
                 if (errline) {
+                    
+                    wxFileName tf(FileName);
+                    if(!tf.HasVolume()) {
+                         FileName=FilePath+"\\"+FileName;
+                    }
+                                        
                     if (FirstFile=="") {
                         FirstFile=FileName;
                         FirstLine=LineNumber;
                     }
+                    
                     AddListItem(LineNumber, errornr, FileName, Message);
                     if ( output[ii+1].Len() )
                         AddListItem(-1, -1, "", output[ii+1]);

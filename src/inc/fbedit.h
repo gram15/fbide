@@ -48,11 +48,14 @@ public:
     static bool IsBrace     ( wxChar brace );
     void OnMarginClick      ( wxStyledTextEvent &event );
     void OnModified         ( wxStyledTextEvent &event );
-    void OnKey              ( wxStyledTextEvent &event );
-        
+    void OnKeyDown          ( wxKeyEvent &event );
+    void OnKeyUp            ( wxKeyEvent &event );
+    void OnHotSpot          ( wxStyledTextEvent &event );
+
     wxString    DocumentName;
     int braceLoc;
     int ChangeTab;
+    bool exitUUI;
     
     inline bool IsIndentWord ( wxString word ) {
         return  (word == "if" || word == "for" || word=="sub" ||

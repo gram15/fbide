@@ -82,7 +82,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
     
-    EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError) 
+    EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError)
     
 END_EVENT_TABLE()
 
