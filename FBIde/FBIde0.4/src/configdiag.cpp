@@ -72,44 +72,44 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     //--------------------------------------------------------------------------
     
     CB_CurrentLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,30),wxSize(148,13));
-    CB_CurrentLine->SetTitle(wxT("Show line numbers"));
+    CB_CurrentLine->SetTitle(wxT(Parent->Lang[103]));
     CB_CurrentLine->SetValue(Parent->Prefs.LineNumber);
     
     
     st20=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(10,5),wxSize(90,13),wxST_NO_AUTORESIZE);
-    st20->SetTitle(wxT("Editor settings"));
+    st20->SetTitle(wxT(Parent->Lang[104]));
 
     CB_HiLightBraces=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,90),wxSize(148,13));
-    CB_HiLightBraces->SetTitle(wxT("Highlight matching braces"));
+    CB_HiLightBraces->SetTitle(wxT(Parent->Lang[105]));
     CB_HiLightBraces->SetValue(Parent->Prefs.BraceHighlight);
     
     CB_SyntaxHiLight=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,50),wxSize(148,13));
-    CB_SyntaxHiLight->SetTitle(wxT("Use syntax highlighting"));
+    CB_SyntaxHiLight->SetTitle(wxT(Parent->Lang[106]));
     CB_SyntaxHiLight->SetValue(Parent->Prefs.SyntaxHighlight);
     
     CB_LongLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,110),wxSize(108,13));
-    CB_LongLine->SetTitle(wxT("Show right margin"));
+    CB_LongLine->SetTitle(wxT(Parent->Lang[107]));
     CB_LongLine->SetValue(Parent->Prefs.LongLine);
     
     CB_LineEndings=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,70),wxSize(148,13));
-    CB_LineEndings->SetTitle(wxT("Show line endings"));
+    CB_LineEndings->SetTitle(wxT(Parent->Lang[108]));
     CB_LineEndings->SetValue(Parent->Prefs.DisplayEOL);
     
     CB_WhiteSpaces=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,69),wxSize(148,13));
-    CB_WhiteSpaces->SetTitle(wxT("Show whitespaces"));
+    CB_WhiteSpaces->SetTitle(wxT(Parent->Lang[109]));
     CB_WhiteSpaces->SetValue(Parent->Prefs.whiteSpace);
     
     CB_IndentGuides=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,50),wxSize(148,13));
-    CB_IndentGuides->SetTitle(wxT("Show indendantion guides"));
+    CB_IndentGuides->SetTitle(wxT(Parent->Lang[110]));
     CB_IndentGuides->SetValue(Parent->Prefs.IndentGuide);
     
    
     CB_FoldMargin=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,90),wxSize(148,13));
-    CB_FoldMargin->SetTitle(wxT("Fold margin"));
+    CB_FoldMargin->SetTitle(wxT(Parent->Lang[111]));
     CB_FoldMargin->SetValue(Parent->Prefs.FolderMargin);
     
     CB_AutoIndent=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,30),wxSize(148,13));
-    CB_AutoIndent->SetTitle(wxT("Auto indent"));
+    CB_AutoIndent->SetTitle(wxT(Parent->Lang[112]));
     CB_AutoIndent->SetValue(Parent->Prefs.AutoIndent);
 
 
@@ -122,11 +122,11 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
 
     // compile page
     st33=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,5),wxSize(105,13),wxST_NO_AUTORESIZE);
-    st33->SetLabel(wxT("Compiler Settings"));
+    st33->SetLabel(wxT(Parent->Lang[113]));
     lno31=new wxStaticLine(CD_Compiler,-1,wxPoint(10,20),wxSize(360,2));
 
     st37=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,30),wxSize(70,13),wxST_NO_AUTORESIZE);
-    st37->SetLabel(wxT("Compiler path"));
+    st37->SetLabel(wxT(Parent->Lang[114]));
     
     TB_CompilerPath=new wxTextCtrl(CD_Compiler,-1,wxT(""),wxPoint(85,28),wxSize(250,21));
     TB_CompilerPath->SetValue(Parent->CompilerPath);
@@ -136,7 +136,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     
     //Compiler command
     st41=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,60),wxSize(70,13),wxST_NO_AUTORESIZE);
-    st41->SetLabel(wxT("Command"));
+    st41->SetLabel(wxT(Parent->Lang[115]));
     
     CompilerCommand=new wxTextCtrl(CD_Compiler,-1,wxT(""),wxPoint(85,58),wxSize(250,21));
     CompilerCommand->SetValue(Parent->CMDPrototype);
@@ -145,13 +145,13 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
 
     
     st34=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,110),wxSize(95,13),wxST_NO_AUTORESIZE);
-    st34->SetLabel(wxT("Rightmargin Width"));
+    st34->SetLabel(wxT(Parent->Lang[116]));
     
     //Compiler path
     
     //Tab Size
     st43=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,130),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st43->SetLabel(wxT("TabSize"));
+    st43->SetLabel(wxT(Parent->Lang[117]));
 
     spc44=new wxSpinCtrl(CD_Settings,-1,wxT(""),wxPoint(275,130),wxSize(60,15));
     spc44->SetValue(Parent->Prefs.TabSize);
@@ -159,25 +159,25 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
 
     //Theme colors types:
     wxArrayString Choices;
-    Choices.Add("Comments");
-    Choices.Add("Numbers");
-    Choices.Add("Keywords 1");
-    Choices.Add("String Closed");
-    Choices.Add("Preprocessor");
-    Choices.Add("Operator");
-    Choices.Add("Identifier");
-    Choices.Add("Date (doesn't work)");
-    Choices.Add("String Open");
-    Choices.Add("Keywords 2");
-    Choices.Add("Keywords 3");
-    Choices.Add("Keywords 4");
+    Choices.Add(Parent->Lang[118]);        //Comments
+    Choices.Add(Parent->Lang[119]);        //Numbers
+    Choices.Add(Parent->Lang[120]);        //Keywords 1
+    Choices.Add(Parent->Lang[121]);        //String Closed
+    Choices.Add(Parent->Lang[122]);        //Preprocessor
+    Choices.Add(Parent->Lang[123]);        //Operator
+    Choices.Add(Parent->Lang[124]);        //Identifier
+    Choices.Add(Parent->Lang[125]);        //Date (doesn't work)
+    Choices.Add(Parent->Lang[126]);        //String Open
+    Choices.Add(Parent->Lang[127]);        //Keywords 2
+    Choices.Add(Parent->Lang[128]);        //Keywords 3
+    Choices.Add(Parent->Lang[129]);        //Keywords 4
 
-    Choices.Add("Caret");
-    Choices.Add("Linenumbers");
-    Choices.Add("Text select");
-    Choices.Add("Brace match");
-    Choices.Add("Brace mismatch");
-    Choices.Add("Editor");
+    Choices.Add(Parent->Lang[130]);        //Caret
+    Choices.Add(Parent->Lang[131]);        //Line numbers
+    Choices.Add(Parent->Lang[132]);        //Text select
+    Choices.Add(Parent->Lang[133]);        //Brace match
+    Choices.Add(Parent->Lang[134]);        //Brace mismatch
+    Choices.Add(Parent->Lang[135]);        //Editor
 
     LB_Types=new wxListBox(CD_Theme,-1,wxPoint(10,45),wxSize(120,176), Choices);
     LB_Types->SetSelection(0);
@@ -190,22 +190,22 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
 
     
     CB_Bold=new wxCheckBox(CD_Theme,-1,wxT(""),wxPoint(300,95),wxSize(78,13));
-    CB_Bold->SetTitle(wxT("Bold"));
+    CB_Bold->SetTitle(wxT(Parent->Lang[136])); //"Bold"
     
     CB_Italic=new wxCheckBox(CD_Theme,-1,wxT(""),wxPoint(300,115),wxSize(38,13));
-    CB_Italic->SetTitle(wxT("Italic"));
+    CB_Italic->SetTitle(wxT(Parent->Lang[137])); //"Italic"
     
     CB_Underlined=new wxCheckBox(CD_Theme,-1,wxT(""),wxPoint(300,135),wxSize(68,13));
-    CB_Underlined->SetTitle(wxT("Underlined"));
+    CB_Underlined->SetTitle(wxT(Parent->Lang[138])); //"Underlined"
     
     But_SaveTheme=new wxButton(CD_Theme, CDID_SaveTheme,wxT(""),wxPoint(285,45),wxSize(85,20));
-    But_SaveTheme->SetLabel(wxT("Save theme"));
+    But_SaveTheme->SetLabel(wxT(Parent->Lang[139])); //"Save theme"
     
     st58=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(135,30),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st58->SetLabel(wxT("Theme"));
+    st58->SetLabel(wxT(Parent->Lang[140])); //"Theme"
 
     wxArrayString Themes;
-    Themes.Add("Create new theme");
+    Themes.Add(Parent->Lang[141]); //"Create new theme"
 //    Themes.Add(w.GetFullName());
 
     wxFileSystem ThemeFiles;
@@ -227,28 +227,28 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     CB_Themes->Select(selector);
     
     st59=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(10,5),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st59->SetLabel(wxT("Colors"));
+    st59->SetLabel(wxT(Parent->Lang[142])); //"Colors"
     
     lno60=new wxStaticLine(CD_Theme,-1,wxPoint(10,20),wxSize(360,2));
     
     st61=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(10,30),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st61->SetLabel(wxT("Type"));
+    st61->SetLabel(wxT(Parent->Lang[143])); //"Type"
     
     st62=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(135,80),wxSize(65,13),wxST_NO_AUTORESIZE);
-    st62->SetLabel(wxT("Foreground"));
+    st62->SetLabel(wxT(Parent->Lang[144])); //"Foreground"
     
     st63=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(135,125),wxSize(60,13),wxST_NO_AUTORESIZE);
-    st63->SetLabel(wxT("Background"));
+    st63->SetLabel(wxT(Parent->Lang[145])); //"Background"
     
     st64=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(300,80),wxSize(50,13),wxST_NO_AUTORESIZE);
-    st64->SetLabel(wxT("Fontstyle"));
+    st64->SetLabel(wxT(Parent->Lang[146])); //"Fontstyle"
     
     lno65=new wxStaticLine(CD_Theme,-1,wxPoint(135,75),wxSize(235,2));
     
     lnv66=new wxStaticLine(CD_Theme,-1,wxPoint(290,80),wxSize(2,120),wxLI_VERTICAL);
     
     st67=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(135,165),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st67->SetLabel(wxT("Font\r\n"));
+    st67->SetLabel(wxT(Parent->Lang[147])); //"Font\r\n"
     
     
     wxArrayString Fonts;
@@ -265,7 +265,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     cmb69->Select(1);
     
     st70=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(300,165),wxSize(45,13),wxST_NO_AUTORESIZE);
-    st70->SetLabel(wxT("Fontsize\r\n"));
+    st70->SetLabel(wxT(Parent->Lang[148])); //"Fontsize\r\n"
     
     //
     spc71=new wxSpinCtrl(CD_Theme,-1,wxT(""),wxPoint(300,180),wxSize(70,20));
@@ -274,16 +274,16 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     lno74=new wxStaticLine(CD_Keywords,-1,wxPoint(10,20),wxSize(360,2));
     
     st75=new wxStaticText(CD_Keywords,-1,wxT(""),wxPoint(10,5),wxSize(60,13),wxST_NO_AUTORESIZE);
-    st75->SetLabel(wxT("Keywords\r\n"));
+    st75->SetLabel(wxT(Parent->Lang[149])); //"Keywords\r\n"
     
     st77=new wxStaticText(CD_Keywords,-1,wxT(""),wxPoint(10,30),wxSize(110,13),wxST_NO_AUTORESIZE);
-    st77->SetLabel(wxT("Select keyword group"));
+    st77->SetLabel(wxT(Parent->Lang[150]));//"Select keyword group"
     
     CB_KeywordGroup=new wxChoice(CD_Keywords,CDID_KeywordSelector,wxPoint(10,45),wxSize(150,21),0,NULL);
-    CB_KeywordGroup->Append("Group 1");
-    CB_KeywordGroup->Append("Group 2");
-    CB_KeywordGroup->Append("Group 3");
-    CB_KeywordGroup->Append("Group 4");
+    CB_KeywordGroup->Append(Parent->Lang[151]);//"Group 1"
+    CB_KeywordGroup->Append(Parent->Lang[152]);//"Group 2"
+    CB_KeywordGroup->Append(Parent->Lang[153]);//"Group 3"
+    CB_KeywordGroup->Append(Parent->Lang[154]);//"Group 4"
     CB_KeywordGroup->Select(0);
     OldKWSelect = 1;
     
@@ -291,10 +291,10 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     TA_Keywords->AppendText(Parent->Keyword[1]);
     
     But_OK=new wxButton(this, CDID_OK,wxT(""),wxPoint(250,270),wxSize(70,25));
-    But_OK->SetLabel(wxT("OK"));
+    But_OK->SetLabel(wxT(Parent->Lang[2])); //OK
     
     But_Cancel=new wxButton(this, CDID_Cancel, wxT(""),wxPoint(325,270),wxSize(70,25));
-    But_Cancel->SetLabel(wxT("Cancel"));
+    But_Cancel->SetLabel(wxT(Parent->Lang[3])); //Cancel
     
     Refresh();
     wxCommandEvent test;
@@ -346,10 +346,10 @@ void ConfigDialog::Button_Cancel  (wxCommandEvent&  event){
 void ConfigDialog::Button_GetCompPath   (wxCommandEvent&  event) {
 
     wxFileDialog dlg (this,
-        _T("Open File"),
+        _T(Parent->Lang[155]), //Open file
         _T(""),
         _T(".exe"),
-        _T("All programs (*.exe)|*.exe"),
+        _T(Parent->Lang[156]), //"All programs (*.exe)|*.exe"
     wxFILE_MUST_EXIST | wxCHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     
@@ -605,8 +605,8 @@ void ConfigDialog::Button_SaveTheme ( wxCommandEvent&  event ) {
     if (CB_Themes->GetSelection()!=0)
         Parent->SaveThemeFile(Style, CB_Themes->GetValue());
     else {
-        wxTextEntryDialog dialog(this, _T("Enter theme name:"),
-                                        _T("Parameters..."),
+        wxTextEntryDialog dialog(this, _T(Parent->Lang[157]), //"Enter theme name:"
+                                        _T(Parent->Lang[158]), //"Paremeters..."
                                         "", wxOK | wxCANCEL);
         if (dialog.ShowModal() != wxID_OK) return;
         
@@ -617,7 +617,8 @@ void ConfigDialog::Button_SaveTheme ( wxCommandEvent&  event ) {
 
         wxFileSystem File;
         if (File.FindFirst(Parent->EditorPath+"ide\\"+fn+".fbt")!="") {
-            if (wxMessageBox ("Theme \""+ fn + "\" already exists!\nOverwrite it?", "Message", wxICON_QUESTION | wxYES_NO )!=wxOK) 
+            //"Theme \""+ fn +"\" already exists!\nOverwrite it?"
+            if (wxMessageBox (Parent->Lang[159]+ fn + Parent->Lang[160], Parent->Lang[161], wxICON_QUESTION | wxYES_NO )!=wxOK) 
                 return;
         }
         else {
