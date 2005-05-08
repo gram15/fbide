@@ -35,10 +35,10 @@ void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
 
 void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
     wxFileDialog dlg (this,
-        _T("Load file"),
+        _T(Lang[186]),//Load File
         _T(""),
         _T(".bas"),
-        _T("FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*"),
+        _T(Lang[187]),//Types
     wxFILE_MUST_EXIST | wxCHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     wxString File = dlg.GetPath();
@@ -109,8 +109,8 @@ void MyFrame::OnCloseAll        ( ) {
         buff = bufferList[0];
         FBNotebook->SetSelection(0);
         if (buff->GetModified()) {
-            int result = wxMessageBox("File \"" + buff->GetFileName() + "\" has been modified. Save?", 
-                             "Save file?",
+            int result = wxMessageBox(Lang[188] + buff->GetFileName() + Lang[189], 
+                             Lang[184],
                              wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
             if (result==wxCANCEL) return;
             else if (result==wxYES) {
@@ -134,11 +134,10 @@ void MyFrame::OnCloseFile       ( ) {
     
     if (buff->GetModified())
     {
-        wxString message = wxString::Format(_("The file '%s' has been modified.\n"
-            "Would you like to save the changes?"),
+        wxString message = wxString::Format(_(Lang[190]),
             wxFileNameFromPath(buff->GetFileName()).c_str());
 
-        int closeDialog = wxMessageBox(message, _("File Modified"),
+        int closeDialog = wxMessageBox(message, _(Lang[191]), //"File Modified"
             wxYES_NO | wxCANCEL | wxICON_EXCLAMATION, GetParent());
 
         if (closeDialog == wxYES)
@@ -203,12 +202,12 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
     
     int ft = buff->GetFileType();
     
-    wxString Temp = (ft=0) ? "FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|" : "html files (*.html)|*.html|";
-    Temp <<  "Any file(*)|*.*";
+    wxString Temp = (ft==0) ? Lang[193] : Lang[200];
+    Temp <<  Lang[194];
 
     if (FileName==""||FileName==FBUNNAMED) {
         wxFileDialog dlg (this,
-            _T("Save file"),
+            _T(Lang[195]),//Save file
             _T(""),
             _T( (ft=0) ? ".bas" : ".html" ),
             _T( Temp ),
@@ -216,7 +215,7 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
         if (dlg.ShowModal() != wxID_OK) return false;
 	    FileName = dlg.GetPath();
 	    if (SaveAS) {
-            if(wxMessageBox("Use new file?", "Question", wxICON_QUESTION|wxYES_NO|wxNO_DEFAULT ) == wxYES)
+            if(wxMessageBox(Lang[196], Lang[197], wxICON_QUESTION|wxYES_NO|wxNO_DEFAULT ) == wxYES)
                 buff->SetFileName( FileName );
         }
         else buff->SetFileName( FileName );
@@ -230,10 +229,10 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
 
 void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
     wxFileDialog dlg (this,
-        _T("Load file"),
+        _T(Lang[186]), //Load file
         _T(""),
         _T(".bas"),
-        _T("FBIde session (*.fbs)|*.fbs|Any file(*)|*.*"),
+        _T(Lang[198]), //FBIde Session
     wxFILE_MUST_EXIST | wxCHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;
     wxString File = dlg.GetPath();
@@ -276,10 +275,10 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
     wxString FileName;
     
     wxFileDialog dlg (this,
-        _T("Save session"),
+        _T(Lang[199]),
         _T(""),
         _T(".fbs"),
-        _T("FBIde session (*.fbs)|*.fbs|Any file(*)|*.*"),
+        _T(Lang[198]),
         wxSAVE|wxOVERWRITE_PROMPT);
     if (dlg.ShowModal() != wxID_OK) return;
     FileName = dlg.GetPath();
@@ -298,8 +297,8 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
         buff = bufferList[i];
         if (buff->GetModified()) {
             FBNotebook->SetSelection(i);
-            int result = wxMessageBox("File \"" + buff->GetFileName() + "\" has been modified. Save?", 
-                             "Save file?",
+            int result = wxMessageBox(Lang[188] + buff->GetFileName() + Lang[189], 
+                             Lang[184],
                              wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
             if (result==wxCANCEL) return;
             else if (result==wxYES) {
