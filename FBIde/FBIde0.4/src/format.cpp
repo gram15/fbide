@@ -83,33 +83,35 @@ void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
 void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
  //[64b]Code event VwX...Don't modify[64a]//
  //add your code here
- for(int i=0;i<Parent->stc->GetLineCount();i++)
+ FB_Edit * stc = Parent->stc;
+ for(int i=0;i<stc->GetLineCount();i++)
  {
-  //wxString line=Parent->stc->GetLine(i).Trim(false).Trim(true);
+  //wxString line=stc->GetLine(i).Trim(false).Trim(true);
   int cLine=i;
-  int lineInd=Parent->stc->GetLineIndentation(cLine-1);
-  int plineind=Parent->stc->GetLineIndentation(cLine-2);
+  int lineInd=stc->GetLineIndentation(cLine-1);
+  int plineind=stc->GetLineIndentation(cLine-2);
   int TabSize=Parent->Prefs.TabSize;
   
   //Previous line
-  wxString TempCL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-1));
-  wxString clfkw=Parent->stc->GetFirstKw(TempCL);
-  wxString cllkw=Parent->stc->GetLastKw(TempCL);
+  wxString TempCL=stc->ClearCmdLine(stc->GetLine(cLine-1));
+  wxString clfkw=stc->GetFirstKw(TempCL);
+  wxString cllkw=stc->GetLastKw(TempCL);
   
   //Line before previous
-  wxString TempPL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-2));
-  wxString plfkw=Parent->stc->GetFirstKw(TempPL);
-  wxString pllkw=Parent->stc->GetLastKw(TempPL);
+  wxString TempPL=stc->ClearCmdLine(stc->GetLine(cLine-2));
+  wxString plfkw=stc->GetFirstKw(TempPL);
+  wxString pllkw=stc->GetLastKw(TempPL);
   
   
   if (lineInd>0) {
-   if ( clfkw == "end" && Parent->stc->IsEndDeIndentWord(cllkw) ) {
+   if ( clfkw == "end" && stc->IsEndDeIndentWord(cllkw) ) {
     if (cllkw!=plfkw) { 
      if (cllkw == "select" && plfkw == "case") lineInd = plineind;
      else if (plineind<=lineInd) lineInd -= TabSize; 
     }
     else if (plfkw == "if" && pllkw!="then") {
      if (plineind<=lineInd) lineInd -= TabSize; }
+    else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
     else lineInd = plineind;
    }
    else if (clfkw != pllkw) {
@@ -130,9 +132,9 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
           (plfkw == "elseif")) { lineInd = plineind; } 
       else   { if (plineind<=lineInd) lineInd -= TabSize; } }              
    }
-   Parent->stc->SetLineIndentation (cLine-1, lineInd);
+   stc->SetLineIndentation (cLine-1, lineInd);
   }  
-  if (Parent->stc->IsIndentWord(clfkw)) {
+  if (stc->IsIndentWord(clfkw)) {
    if (clfkw == "if") {
     if (cllkw == "then") lineInd += TabSize;
    }
@@ -147,9 +149,12 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
         (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
      lineInd += TabSize;
     }
+   else if (clfkw=="function") {
+    if (TempCL.Find('=')==-1) lineInd += TabSize;
+   }
    else  lineInd += TabSize;
   }  
-  Parent->stc->SetLineIndentation (cLine, lineInd);
+  stc->SetLineIndentation (cLine, lineInd);
   //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
  }
  this->Close();

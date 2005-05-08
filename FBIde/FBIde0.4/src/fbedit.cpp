@@ -322,7 +322,8 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
                 if (cllkw == "select" && plfkw == "case") lineInd = plineind;
                 else if (plineind<=lineInd) lineInd -= TabSize; 
             }
-            else if (plfkw == "if" && pllkw!="then") {
+            else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
+            else if (plfkw== "if" && pllkw!="then") {
                 if (plineind<=lineInd) lineInd -= TabSize; }
             else lineInd = plineind;
         }
@@ -363,6 +364,9 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
             if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
                 (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
                 lineInd += TabSize;
+        }
+        else if (clfkw=="function") {
+            if (TempCL.Find('=')==-1) lineInd += TabSize;
         }
         else  lineInd += TabSize;
     }
