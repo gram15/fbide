@@ -160,21 +160,20 @@ void MyFrame::CloseFile          ( int index ) {
     
     stc->SetBuffer( (Buffer *) 0 );
     OldTabSelected = -1;
-    FBNotebook->RemovePage(index);
-    bufferList.RemoveBuffer(index);
-    
+        
     stc->ClearAll();
     stc->ReleaseDocument( bufferList[index]->GetDocument() );
+    FBNotebook->RemovePage(index);
+    bufferList.RemoveBuffer(index);
     if (bufferList.GetBufferCount() == 0) {
         delete stc;
         stc = 0;
         FBNotebook->Hide();
-
     }
     else {
         SetSTCPage(FBNotebook->GetSelection());
     }
-        
+                    
     return;
 }
 
