@@ -125,6 +125,79 @@
 
 
 ;General tab
+103=Show line numbers
+104=Editor settings
+105=Highlight matching braces
+106=Use syntax highlighting
+107=Show right margin
+108=Show line endings
+109=Show whitespaces
+110=Show indendantion guides
+111=Fold margin
+112=Auto indent
+116=Rightmargin Width
+117=Tab Size
+
+;Compile tab
+113=Compiler Settings
+114=Compiler path
+115=Command
+
+
+;Themes tab
+118=Comments
+119=Numbers
+120=Keywords 1
+121=String Closed
+122=Preprocessor
+123=Operator
+124=Identifier
+125=Date (doesn't work)
+126=String Open
+127=Keywords 2
+128=Keywords 3
+129=Keywords 4
+130=Caret
+131=Line numbers
+132=Text select
+133=Brace match
+134=Brace mismatch
+135=Editor
+
+136=Bold
+137=Italic
+138=Underlined
+139=Save theme
+140=Theme
+141=Create new theme
+
+142=Colors
+143=Type
+144=Foreground
+145=Background
+146=Fontstyle
+147=Font\r\n
+148=Fontsize\r\n
+149=Keywords\r\n
+150=Select keyword group
+151=Group 1
+152=Group 2
+153=Group 3
+154=Group 4
+
+155=Open file
+156=All programs (*.exe)|*.exe
+
+157=Enter theme name:
+158=Parameters...
+
+159=Theme \"
+160=\" already exists!\nOverwrite it?
+161=Message
+
+
+
+
 ShowLineNumbers=
 EditorSettings=
 HiLightMatchingBraces=
