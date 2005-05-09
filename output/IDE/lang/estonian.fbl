@@ -1,14 +1,14 @@
 [FBIde]
 
 ;Generic stuff
-1=Tere tulemast FBIdesse
-2=Kinnitan
-3=Katkestan
+1=Tere tulemast FBIde'sse.
+2=OK
+3=Tühista
 
 165=Rida
 166=Fail
-167=Errori number
-168=Teade
+167=Veanumber
+168=Messages
 
 ;Menus
 4=&Fail
@@ -20,43 +20,43 @@
 10=&Abi
 
 11=&Uus ..\tCtrl+N
-12=Uus tühi dokument
+12=Tekita uus, tühi dokument
 13=&Ava ..\tCtrl+O
-14=Ava dokument
+14=Ava uus dokument
 15=&Salvesta\tCtrl+S
-16=Salvesta aktiivne fail
-17=Salvesta nimega ..\tCtrl+Shift+S
-18=Salvesta aktiivne fail uue nimega
-19=Salvesta kõik
+16=Salvesta fail
+17=&Muuda nimi...\tCtrl+Shift+S
+18=Salvesta fail uue nimega
+19=Salvesta &kõik
 20=Salvesta kõik avatud failid
-21=Sule\tCtrl+F4
-22=Sule aktiivne fail
-23=Uus aken \tShift+Ctrl+N
-24=Ava uus aken
-25=Välju\tCtrl+Q
-26=Välju FBIdest
-169=Ava sessioon
-170=Avab varem salvestatud sessiooni
+21=Sulge\tCtrl+F4
+22=Sulge käesolev fail
+23=Uus ak&en \tShift+Ctrl+N
+24=Ava uus editori aken
+25=&Välju\tCtrl+Q
+26=Välju FBIde'st
+169=Lae sessioon
+170=Laeb salvestatud sessiooni
 171=Salvesta sessioon
-172=Salvestab sessiooni
-173=Sule kõik
-174=Suleb kõik avatud failid
+172=Salvestab käesoleva sessiooni
+173=Sulge kõik
+174=Sulgeb kõik avatud failid
 
-27=Võta tagasi\tCtrl+Z
-28=Võtab tagasi viimase muudatuse
-29=Taasta\tCtrl+Shift+Z
-30=Taastab viimati tehtud muudatuse
-31=Lõika\tCtrl+X
-32=Lõikab valitud teksti
-33=Kopeeri\tCtrl+C
-34=Kopeerib valitud teksti
-35=Kleebi\tCtrl+V
-36=Kleebib mälus oleva teksti
-37=Vali kõik\tCtrl+A
-38=Valib kogu dokumendi
-39=Vali rida\tCtrl+L
-40=Valib rea, millel on kursor
-41=Liigutab paremale\tTab
+27=&Võta tagasi\tCtrl+Z
+28=Tühista viimane tegevus
+29=&Ennista\tCtrl+Shift+Z
+30=Võta viimane tühistus tagasi
+31=&Lõika\tCtrl+X
+32=Lõikab märgistatud teksti lõikelauale
+33=&Kopeeri\tCtrl+C
+34=Kopeerib valitud teksti lõikelauale
+35=K&leebi\tCtrl+V
+36=Kleebib teksti lõikelaualt
+37=&Märgista kõik\tCtrl+A
+38=Märgistab kogu teksti dokumendis
+39=Märgista &rida\tCtrl+L
+40=Märgistab aktiivse rea
+41=Liiguta paremale\tTab
 42=Liigutab valitud teksti või aktiivse rea paremale
 43=Liiguta vasakule\tShift+Tab
 44=Liigutab valitud teksti või aktiivse rea vasakule
@@ -74,13 +74,13 @@
 55=Mine reale...\tCtrl+G
 56=Läheb määratud reale dokumendis
 
-57=Settingud
-58=Sea programmi setingud
+57=Seaded
+58=Muudab programmi sätteid
 59=Näita konsooli akent\tF4
 60=Näitab kompilaatori poolt väljastatud teavet
 61=Protseduurid \tF2
 62=Avab protseduuride/funksioonide akna
-175=Formati
+175=Vorminda
 176=Muudab teksti või väljastab BB/HTML koodi
 
 63=Kompileeri\tCtrl+F9
@@ -90,7 +90,7 @@
 67=Käivita\tShift+Ctrl+F9
 68=Käivitab viimati kompileeritud faili
 69=Kiirkäivitus\tF5
-70=Kompileerib ja käivitab faili kasutades varu faili.
+70=Kompileerib ja käivitab faili kasutades varufaili.
 71=Ava konsooli aken\tF8
 72=Avab DOS'i konsooli akna
 73=Parameetrid
@@ -98,11 +98,11 @@
 77=Väljumiskood
 78=Näitab programmi väljumiskoodi
 
-79=Programmis\tF1
-80=Näita teavet selle programmi kohta
+79=Programmist\tF1
+80=Näitab teavet selle programmi kohta
 
-81=Sule kõik
-82=Sule kõik avatud failid
+81=Sulge kõik
+82=Sulgeb kõik avatud failid
 
 
 ;Toolbar
@@ -127,16 +127,16 @@
 
 
 ;FBIde Settings dialog box
-98=FBIde settingud
+98=FBIde Seaded
 99=Üldine
 100=Teemad
 101=Võtmesõnad
-102=Kompilaator
+102=Kompileerija
 
 
 ;General tab
 103=Näita reanumbreid
-104=Programmi settingud
+104=Redigeerija seaded
 105=Märgista klappivad sulud
 106=Kasuta spntaxi stiilimist
 107=Näita paremat pikijoont
@@ -147,11 +147,14 @@
 112=Automaatne taane
 116=Parema pikijoone kaugus
 117=Tabulaatori suurus
+201=Keel
+202=NB! Keele muutus nõuab FBIde taaskäivitust!
+203=Vali oma keel:
 
 ;Compile tab
-113=Kompilaatori settingud
-114=Kompilaator
-115=Käsurida
+113=Kompileerija settingud
+114=Kompileerija
+115=Käsk
 
 
 ;Themes tab
@@ -159,7 +162,7 @@
 119=Numbrid
 120=Võtmesõnad 1
 121=Tekst suletud
-122=eelprotsessor
+122=Eelprotsessor
 123=Operaator
 124=Identifikaator
 125=Kuupäev (doesn't work)
@@ -190,19 +193,19 @@
 148=Suurus\r\n
 149=Võtmesõnad\r\n
 150=Vali võtmesõnade grupp
-151=Gropp 1
-152=Gropp 2
-153=Gropp 3
-154=Gropp 4
+151=Grupp 1
+152=Grupp 2
+153=Grupp 3
+154=Grupp 4
 
 155=Ava fail
 156=Kõik programmid (*.exe)|*.exe
 
-157=Sisesta nimi:
+157=Sisesta teema nimi:
 158=Parameetrid
 
 159=Teema \"
-160=\" juba eksisteerib!\nKirjutada üle?
+160=\" on juba olemas!\nKirjutada üle?
 161=Teade
 
 
@@ -238,3 +241,19 @@
 198=FBIde sessioon (*.fbs)|*.fbs|Kõik failid(*)|*.*
 199=Salvesta sessioon
 200=HTML failid (*.html)|*.html|
+
+;About dialog stuff
+204=avatud lähtekoodil põhinev keskkond FreeBASICu kompileerijale
+205=(www.freebasic.net)
+206=loodud kasutades c++'i, wxWidgeteid ja scintilla tekstikontrolli
+207=Tänud:
+208=programmeerijad
+209=juhtprogrammeerija, projektijuht projekti looja
+210=projekti ülevaataja, võrgukood (kliendi- ja serveripoolne)
+211=automaatlõpetus
+212=koodi eksportimis- ja vormindamisrutiinid
+213=internatsionaliseerimise (i18n) moodulid
+214=muu
+215=veebimeister ja dokumentatsioon
+216=testijad
+217=...ja kõik ülejäänud kelle me unustasime. :D
