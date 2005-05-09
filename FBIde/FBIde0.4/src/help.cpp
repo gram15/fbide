@@ -22,12 +22,13 @@
 */
 
 #include "inc/main.h"
+#include "inc/about.h"
 
 //------------------------------------------------------------------------------
 // Show about dialog
 void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    wxString aboutText = wxString::Format(_(PRODUCT_NAME 
+    /*wxString aboutText = wxString::Format(_(PRODUCT_NAME 
         " %d.%d\n"
         "Build: %d\n"
         "By VonGodric\n\n"
@@ -37,5 +38,7 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
         "Scintilla rich edit control.\n\n"
         "Licensed under the GPL License."),
         VER_MAJOR, VER_MINOR, VER_BUILD);
-    wxMessageBox(aboutText, _("About"), wxOK | wxICON_INFORMATION);
+    wxMessageBox(aboutText, _("About"), wxOK | wxICON_INFORMATION);*/
+    about dlg(this);
+    dlg.ShowModal();
 }

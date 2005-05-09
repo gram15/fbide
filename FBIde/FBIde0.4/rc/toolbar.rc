@@ -38,6 +38,7 @@ qrun     BITMAP "bitmaps/quickrun.bmp"
 close    BITMAP "bitmaps/close1.bmp"
 saveall  BITMAP "bitmaps/saveall1.bmp"
 output   BITMAP "bitmaps/output1.bmp"
+fbide    BITMAP "bitmaps/fbide.bmp"
 
 wxBITMAP_STD_COLOURS BITMAP "bitmaps/colours.bmp"
 
