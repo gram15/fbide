@@ -5,11 +5,11 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = obj/FBIde0.4_private.res
-OBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o $(RES)
-LINKOBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o $(RES)
-LIBS =  -L"D:/Dev-Cpp/lib" -L"C:/wxw/lib/gcc_lib" -mwindows -Wl,--subsystem,windows  -mthreads  -mwindows   -lwxmsw25_stc -lwxmsw25_core -lwxbase25 -lwsock32  -lcomctl32   -lole32  -loleaut32  -luuid  -fmessage-length=0 -s 
-INCS =  -I"D:/Dev-Cpp/include" 
-CXXINCS =  -I"D:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"D:/Dev-Cpp/include/c++/3.4.2/backward"  -I"D:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"D:/Dev-Cpp/include/c++/3.4.2"  -I"D:/Dev-Cpp/include"  -I"C:/wxw/include"  -I"C:/wxw/include/wx"  -I"C:/wxw/contrib/include" 
+OBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o obj/about.o $(RES)
+LINKOBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o obj/about.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -L"C:/dev/wx/lib/gcc_lib" -mwindows -Wl,--subsystem,windows  -mthreads  -mwindows   -lwxmsw25_adv  -lwxmsw25_stc -lwxmsw25_core -lwxbase25 -lwsock32  -lcomctl32   -lole32  -loleaut32  -luuid -lwxpng  -lwxzlib -lmingw32  -fmessage-length=0 -s 
+INCS =  -I"C:/Dev-Cpp/include" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"C:/dev/wx/include"  -I"C:/dev/wx/include/wx"  -I"C:/dev/wx/contrib/include" 
 BIN  = output/FBIde04.exe
 CXXFLAGS = $(CXXINCS) -D__WXMSW__  -mthreads  -DNO_GCC_PRAGMA -Wall  -fno-pcc-struct-return  -O4  -Os  -fno-rtti  -fno-exceptions   -fexpensive-optimizations -O3 -fmessage-length=0
 CFLAGS = $(INCS)     -fexpensive-optimizations -O3 -fmessage-length=0
@@ -73,6 +73,9 @@ obj/browser.o: src/browser.cpp
 
 obj/format.o: src/format.cpp
 	$(CPP) -c src/format.cpp -o obj/format.o $(CXXFLAGS)
+
+obj/about.o: src/about.cpp
+	$(CPP) -c src/about.cpp -o obj/about.o $(CXXFLAGS)
 
 obj/FBIde0.4_private.res: FBIde0.4_private.rc 
 	$(WINDRES) -i FBIde0.4_private.rc --input-format=rc -o obj/FBIde0.4_private.res -O coff  --include-dir C:/Dev/FBIde/FBIde0.4/rc
