@@ -388,7 +388,7 @@ void MyFrame::SetModified ( int index, bool status ) {
     
     Buffer* buff = bufferList.GetBuffer(index);
 
-    buff->SetWasModified(!status);
+    buff->SetWasModified(buff->GetModified());
     wxString NewName;
     if(status) NewName << "[*] ";            
     

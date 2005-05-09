@@ -83,11 +83,14 @@ void MyFrame::OnSaveAll (wxCommandEvent& WXUNUSED(event)) {
     int selectpage = FBNotebook->GetSelection();
     Buffer* buff;
     
-    while (bufferList.GetModifiedCount()&&index<FBNotebook->GetPageCount()) {
+    while (bufferList.GetModifiedCount()) {
         buff = bufferList[index];
-        FBNotebook->SetSelection(index);
-        if (SaveFile( buff ))
-            SetModified ( index, false );
+        if (buff->GetModified()) {
+            FBNotebook->SetSelection(index);
+            if (SaveFile( buff )) {
+                SetModified ( index, false );
+            }
+        }
         index++;
     }
     
