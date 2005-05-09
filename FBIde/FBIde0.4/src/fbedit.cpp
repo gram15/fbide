@@ -60,7 +60,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
 
     CommonInfo * Prefs = &Parent->Prefs;
     
-    SetTabWidth (Parent->Prefs.TabSize);
+    SetTabWidth (Prefs->TabSize);
     SetUseTabs (false);
     SetTabIndents (true);
     SetBackSpaceUnIndents (true);

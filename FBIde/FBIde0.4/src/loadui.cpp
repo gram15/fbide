@@ -387,14 +387,14 @@ void MyFrame::SetModified ( int index, bool status ) {
     if (index==-1) index = FBNotebook->GetSelection();
     
     Buffer* buff = bufferList.GetBuffer(index);
-    if (status!=buff->GetModified()) {
-        buff->SetWasModified(!status);
-        wxString NewName;
-        if(status) NewName << "[*] ";            
-        
-        bufferList.SetBufferModified(index, status);
-        NewName << wxFileNameFromPath(buff->GetFileName());
-        FBNotebook->SetPageText( index, NewName );
-    }
+
+    buff->SetWasModified(!status);
+    wxString NewName;
+    if(status) NewName << "[*] ";            
+    
+    bufferList.SetBufferModified(index, status);
+    NewName << wxFileNameFromPath(buff->GetFileName());
+    FBNotebook->SetPageText( index, NewName );
+
 }
 
