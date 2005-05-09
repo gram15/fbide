@@ -1,3 +1,25 @@
+/*
+* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* FreeBasic compiler.
+* Copyright (C) 2005  Albert Varaksin
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
+* Program URL   : http://fbide.sourceforge.net
+*/
 
 // Don't modify comment 
 #include "inc/main.h"
@@ -33,20 +55,20 @@ format::~format()
 void format::VwXinit()
 {
  st5=new wxStaticText(this,-1,wxT(""),wxPoint(33,11),wxSize(218,19),wxST_NO_AUTORESIZE);
-   st5->SetLabel(wxT(Parent->Lang[162])); //"Type of conversion:"
+   st5->SetLabel(wxT("Type of conversion:"));
  lno6=new wxStaticLine(this,-1,wxPoint(29,32),wxSize(234,1));
  button_ok=new wxButton(this,-1,wxT(""),wxPoint(275,31),wxSize(93,24));
-   button_ok->SetLabel(wxT(Parent->Lang[163])); //"Go!"
+   button_ok->SetLabel(wxT("Go!"));
  sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
-   sb9->SetTitle(wxT(Parent->Lang[164])); //"Preview!"
+   sb9->SetTitle(wxT("Preview"));
  preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,145),wxSize(45,13));
    preview->SetLabel(wxT("Cls:Locate 1,1:Print \"\""));
  wxString choices[]={"KeyWords","KEYWORDS","keywords","BBCode","HTML"};
  chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
  bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
-   bt16->SetLabel(wxT(Parent->Lang[3]));
+   bt16->SetLabel(wxT("Cancel"));
  bt17=new wxButton(this,-1,wxT(""),wxPoint(275,91),wxSize(93,24));
-   bt17->SetLabel(wxT(Parent->Lang[112]));
+   bt17->SetLabel(wxT("Auto Indent"));
  Refresh();
 }
 
@@ -83,35 +105,33 @@ void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
 void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
  //[64b]Code event VwX...Don't modify[64a]//
  //add your code here
- FB_Edit * stc = Parent->stc;
- for(int i=0;i<stc->GetLineCount();i++)
+ for(int i=0;i<Parent->stc->GetLineCount();i++)
  {
-  //wxString line=stc->GetLine(i).Trim(false).Trim(true);
+  //wxString line=Parent->stc->GetLine(i).Trim(false).Trim(true);
   int cLine=i;
-  int lineInd=stc->GetLineIndentation(cLine-1);
-  int plineind=stc->GetLineIndentation(cLine-2);
+  int lineInd=Parent->stc->GetLineIndentation(cLine-1);
+  int plineind=Parent->stc->GetLineIndentation(cLine-2);
   int TabSize=Parent->Prefs.TabSize;
   
   //Previous line
-  wxString TempCL=stc->ClearCmdLine(stc->GetLine(cLine-1));
-  wxString clfkw=stc->GetFirstKw(TempCL);
-  wxString cllkw=stc->GetLastKw(TempCL);
+  wxString TempCL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-1));
+  wxString clfkw=Parent->stc->GetFirstKw(TempCL);
+  wxString cllkw=Parent->stc->GetLastKw(TempCL);
   
   //Line before previous
-  wxString TempPL=stc->ClearCmdLine(stc->GetLine(cLine-2));
-  wxString plfkw=stc->GetFirstKw(TempPL);
-  wxString pllkw=stc->GetLastKw(TempPL);
+  wxString TempPL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-2));
+  wxString plfkw=Parent->stc->GetFirstKw(TempPL);
+  wxString pllkw=Parent->stc->GetLastKw(TempPL);
   
   
   if (lineInd>0) {
-   if ( clfkw == "end" && stc->IsEndDeIndentWord(cllkw) ) {
+   if ( clfkw == "end" && Parent->stc->IsEndDeIndentWord(cllkw) ) {
     if (cllkw!=plfkw) { 
      if (cllkw == "select" && plfkw == "case") lineInd = plineind;
      else if (plineind<=lineInd) lineInd -= TabSize; 
     }
     else if (plfkw == "if" && pllkw!="then") {
      if (plineind<=lineInd) lineInd -= TabSize; }
-    else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
     else lineInd = plineind;
    }
    else if (clfkw != pllkw) {
@@ -132,9 +152,9 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
           (plfkw == "elseif")) { lineInd = plineind; } 
       else   { if (plineind<=lineInd) lineInd -= TabSize; } }              
    }
-   stc->SetLineIndentation (cLine-1, lineInd);
+   Parent->stc->SetLineIndentation (cLine-1, lineInd);
   }  
-  if (stc->IsIndentWord(clfkw)) {
+  if (Parent->stc->IsIndentWord(clfkw)) {
    if (clfkw == "if") {
     if (cllkw == "then") lineInd += TabSize;
    }
@@ -149,12 +169,9 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
         (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
      lineInd += TabSize;
     }
-   else if (clfkw=="function") {
-    if (TempCL.Find('=')==-1) lineInd += TabSize;
-   }
    else  lineInd += TabSize;
   }  
-  stc->SetLineIndentation (cLine, lineInd);
+  Parent->stc->SetLineIndentation (cLine, lineInd);
   //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
  }
  this->Close();
@@ -223,6 +240,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
    break;
  }
  wxString curword="";
+ initkeywords();
  int kwtyp=0;
  bool commenting=false,dontadd=false,quoting=false;
  wxColour colours[]={GetClr(Style->Info[wxSTC_B_KEYWORD].foreground),
@@ -235,33 +253,34 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             GetClr(Style->Info[wxSTC_B_NUMBER].foreground)};
  for(int i=0;i<(int)guts.Len();i++)
  {
-  curword+=guts.Mid(i,1);
-  if(guts.Mid(i,1)=="("||guts.Mid(i,1)==" "||guts.Mid(i,1)==","||
+  char j00_n00b=(char)*guts.Mid(i,1);
+  curword+=j00_n00b;
+  if(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
      guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-     guts.Mid(i,1)=="["||guts.Mid(i,1)=="\""||guts.Mid(i,1)=="'"||
-     i+1==(int)guts.Len()||guts.Mid(i,1)==")"||guts.Mid(i,1)=="="||
-     guts.Mid(i,1)=="{"||guts.Mid(i,1)=="}"||guts.Mid(i,1)=="+"||
-     guts.Mid(i,1)=="\\"||guts.Mid(i,1)=="/"||guts.Mid(i,1)=="*"||
-     guts.Mid(i,1)=="-"||guts.Mid(i,1)==";"||guts.Mid(i,1)==","||
-     guts.Mid(i,1)==":"||guts.Mid(i,1)=="<"||guts.Mid(i,1)==">")
+     j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
+     i+1==(int)guts.Len()||j00_n00b==')'||j00_n00b=='='||
+     j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
+     j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
+     j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
+     j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>')
   {
    curword=curword.Mid(0,curword.Len()-1);
-   if(i+1==(int)guts.Len()&&!(guts.Mid(i,1)=="("||guts.Mid(i,1)==" "||guts.Mid(i,1)==","||
+   if(i+1==(int)guts.Len()&&!(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
      guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-     guts.Mid(i,1)=="["||guts.Mid(i,1)=="\""||guts.Mid(i,1)=="'"||
-     guts.Mid(i,1)==")"||guts.Mid(i,1)=="="||
-     guts.Mid(i,1)=="{"||guts.Mid(i,1)=="}"||guts.Mid(i,1)=="+"||
-     guts.Mid(i,1)=="\\"||guts.Mid(i,1)=="/"||guts.Mid(i,1)=="*"||
-     guts.Mid(i,1)=="-"||guts.Mid(i,1)==";"||guts.Mid(i,1)==","||
-     guts.Mid(i,1)==":"||guts.Mid(i,1)=="<"||guts.Mid(i,1)==">")) { curword+=guts.Mid(i,1); dontadd=true; }
+     j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
+     j00_n00b==')'||j00_n00b=='='||
+     j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
+     j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
+     j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
+     j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>')) { curword+=j00_n00b; dontadd=true; }
    if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0)
    {
     output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[kwtyp-1])+ \
-            (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend+(dontadd?"":guts.Mid(i,1));
+            (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
    }
    else if(dotags&&!commenting&&!quoting&&isNumeric(curword))
     output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[7])+ \
-            (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+(dontadd?"":guts.Mid(i,1));
+            (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
    else if(dokeyws&&!commenting&&!quoting&&isKeyword(curword)!=0)
    {
     switch(sel)
@@ -276,50 +295,50 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
       curword=curword.MakeLower();
       break;
     }
-    output+=curword+(dontadd?"":guts.Mid(i,1));
+    output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
    }
    else
-    output+=curword+(dontadd?"":guts.Mid(i,1));
+    output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
    curword="";
-   if(!commenting&&!quoting&&guts.Mid(i,1)=="'")
+   if(!commenting&&!quoting&&j00_n00b=='\'')
    {
     commenting=true;
     if(dotags)
     {
      output=output.Mid(0,output.Len()-1);
      output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[4])+ \
-             (sel==4?"\"":"")+tagend+guts.Mid(i,1);
+             (sel==4?"\"":"")+tagend+j00_n00b;
     }
    }
-   else if((guts.Mid(i,1)=="\n"||guts.Mid(i,1)=="\r")&&commenting)
+   else if((j00_n00b=='\n'||j00_n00b=='\r')&&commenting)
    {
     commenting=false;
     if(dotags)
     {
      output=output.Mid(0,output.Len()-1);
-     output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend+guts.Mid(i,1);
+     output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend+j00_n00b;
     }
    }
-   if(dotags&&(guts.Mid(i,1)=="("||guts.Mid(i,1)==")"||guts.Mid(i,1)=="="||
-       guts.Mid(i,1)=="{"||guts.Mid(i,1)=="}"||guts.Mid(i,1)=="+"||
-       guts.Mid(i,1)=="\\"||guts.Mid(i,1)=="/"||guts.Mid(i,1)=="*"||
-       guts.Mid(i,1)=="-"||guts.Mid(i,1)==";"||guts.Mid(i,1)==",")&&!commenting)
+   if(dotags&&(j00_n00b=='('||j00_n00b==')'||j00_n00b=='='||
+       j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
+       j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
+       j00_n00b=='-'||j00_n00b==';'||j00_n00b==',')&&!commenting)
    {
     output=output.Mid(0,output.Len()-1);
     output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
-            (sel==4?"\"":"")+tagend+guts.Mid(i,1)+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+            (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
    }
-   if(!commenting&&!quoting&&guts.Mid(i,1)=="\"")
+   if(!commenting&&!quoting&&j00_n00b=='\"')
    {
     quoting=true;
     if(dotags)
     {
      output=output.Mid(0,output.Len()-1);
      output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[6])+ \
-             (sel==4?"\"":"")+tagend+guts.Mid(i,1);
+             (sel==4?"\"":"")+tagend+j00_n00b;
     }
    }
-   else if(guts.Mid(i,1)=="\""&&quoting)
+   else if(j00_n00b=='\"'&&quoting)
    {
     quoting=false;
     if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
@@ -328,33 +347,44 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
  }
  if(sel==4) output+="</pre></body>";
  if(sel==3) output+="[/size][/quote]";
- if(sel>2) Parent->NewSTCPage("",true, 1);
+ if(sel>2) Parent->NewSTCPage("",true);
  Parent->stc->SetText(output);
+ //Parent->stc->SaveFile("c:\\documents and settings\\dan\\desktop\\fbide_fb_linuxbuild\\fbidev3.html");
  this->Close();
 } //end function
 
 int format::isKeyword(wxString kw)
 {
- wxString curword="";
  kw=kw.MakeUpper();
- for(int i=1;i<=4;i++)
+ for(int i=0;i<4;i++)
  {
-  for(int j=0;j<(int)Parent->Keyword[i].Len();j++)
+  for(int j=0;j<(int)keyw[i].Count()-1;j++)
   {
-   curword+=Parent->Keyword[i].Mid(j,1);
-   if(Parent->Keyword[i].Mid(j,1)==" "||Parent->Keyword[i].Mid(j,1)=="\n"||
-      Parent->Keyword[i].Mid(j,1)=="\r"||j+1==(int)Parent->Keyword[i].Len())
+   if(keyw[i][j]==kw||keyw[i][j]+"$"==kw) return i+1;
+  }
+ }
+ return 0;
+}
+
+void format::initkeywords()
+{
+ wxString curword="";
+ char j00_n00b;
+ for(int i=0;i<4;i++)
+ {
+  for(int j=0;j<(int)Parent->Keyword[i+1].Len();j++)
+  {
+   j00_n00b=(char)*Parent->Keyword[i+1].Mid(j,1);
+   curword+=j00_n00b;
+   if(j00_n00b==' '||j00_n00b=='\n'||j00_n00b=='\r'||
+      j+1==(int)Parent->Keyword[i+1].Len())
    {
-    curword=curword.Trim(false).Trim(true);
-    if(curword.Len()>0)
-    {
-     if(curword.MakeUpper()==kw||curword.MakeUpper()+"$"==kw) return i;
-    }
+    if(curword.Trim(false).Trim(true).Len()>0)
+     keyw[i].Add(curword.Trim(false).Trim(true).MakeUpper());
     curword="";
    }
   }
  }
- return 0;
 }
 
 bool format::isNumeric(wxString kw)
