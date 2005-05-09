@@ -120,6 +120,7 @@ public:
     wxCheckBox *CB_Underlined;
     wxButton *But_SaveTheme;
     wxComboBox *CB_Themes;
+    wxComboBox *CB_Langs;
     wxStaticText *st58;
     wxStaticText *st59;
     wxStaticLine *lno60;
