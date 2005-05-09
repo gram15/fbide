@@ -220,7 +220,7 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
             if(wxMessageBox(Lang[196], Lang[197], wxICON_QUESTION|wxYES_NO|wxNO_DEFAULT ) == wxYES)
                 buff->SetFileName( FileName );
         }
-        else buff->SetFileName( FileName );
+        else { buff->SetFileName( FileName ); }
     }
     
     stc->SaveFile (FileName);
