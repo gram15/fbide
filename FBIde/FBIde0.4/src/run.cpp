@@ -199,7 +199,7 @@ int  MyFrame::Compile            ( wxString FileName ) {
     }
     
     wxString Temp=GetCompileData( FileName );
-    wxString FilePath = wxPathOnly( FileName );
+    wxString FilePath = wxPathOnly( CompiledFile );
 
     if (Temp=="") return false;
     
