@@ -1,8 +1,8 @@
 
 // Don't modify comment 
-#include "inc/about.h"
 #include "inc/main.h"
 #include "inc/fbedit.h"
+#include "inc/about.h"
 //[inc]add your include files here
 
 
@@ -12,7 +12,7 @@
 about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
   VwX_INIT_OBJECTS_about
 {
- Parent = parent;
+ Parent = (MyFrame*) parent;
  OnPreCreate();
  Create(parent,id,title,pos,size,style,name);
 
@@ -85,7 +85,7 @@ void about::OnPreCreate(){
  textstuffs.Add(wxString::Format("FBIde %d.%d",VER_MAJOR,VER_MINOR));
  textstuffs.Add(wxString::Format("Build %d",VER_BUILD));
  //"an open-source IDE for the FreeBASIC compiler"
- textstuffs.Add(parent->Lang[204]); 
+ textstuffs.Add(Parent->Lang[204]); 
  //"(www.freebasic.net)"
  textstuffs.Add(Parent->Lang[205]); 
  //"made using c++ with wxWidgets and the scintilla text control"

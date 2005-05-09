@@ -37,6 +37,7 @@ class about:public wxDialog
 public:
  about(wxWindow* parent, wxWindowID id = -1, const wxString& title = wxT("About FBIde"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxCAPTION|wxSYSTEM_MENU|wxCLOSE_BOX|wxDIALOG_NO_PARENT|wxDEFAULT_DIALOG_STYLE, const wxString& name = wxT("dialogBox"));
 // Pointer control
+ MyFrame *Parent;
  wxStaticText *st4;
  wxStaticBitmap *bm3;
  wxButton *button_ok;
@@ -55,8 +56,6 @@ protected:
  void button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
  DECLARE_EVENT_TABLE()  
 //[win]add your code here
-MyFrame *Parent;
-
 
  #define VwX_INIT_OBJECTS_about
 //[win]end your code 
