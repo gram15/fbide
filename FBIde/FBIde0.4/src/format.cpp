@@ -130,6 +130,7 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
      if (cllkw == "select" && plfkw == "case") lineInd = plineind;
      else if (plineind<=lineInd) lineInd -= TabSize; 
     }
+    else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
     else if (plfkw == "if" && pllkw!="then") {
      if (plineind<=lineInd) lineInd -= TabSize; }
     else lineInd = plineind;
@@ -169,6 +170,8 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
         (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
      lineInd += TabSize;
     }
+   else if (clfkw=="function") {
+    if (TempCL.Find('=')==-1) lineInd += TabSize; }
    else  lineInd += TabSize;
   }  
   Parent->stc->SetLineIndentation (cLine, lineInd);
@@ -347,7 +350,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
  }
  if(sel==4) output+="</pre></body>";
  if(sel==3) output+="[/size][/quote]";
- if(sel>2) Parent->NewSTCPage("",true);
+ if(sel>2) Parent->NewSTCPage("",true, 1);
  Parent->stc->SetText(output);
  //Parent->stc->SaveFile("c:\\documents and settings\\dan\\desktop\\fbide_fb_linuxbuild\\fbidev3.html");
  this->Close();
