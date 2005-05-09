@@ -93,6 +93,7 @@ IMPLEMENT_APP(MyApp)
 
 bool MyApp::OnInit()
 {
+
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
     new MyFrame(this, GetAppName());
