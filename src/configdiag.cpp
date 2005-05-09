@@ -119,9 +119,9 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     lno21=new wxStaticLine(CD_Settings,-1,wxPoint(10,20),wxSize(360,2));
     
     new wxStaticLine(CD_Settings,-1,wxPoint(10,165),wxSize(360,2));
-    new wxStaticText(CD_Settings,-1,wxT("Language"),wxPoint(10,150),wxSize(360,13),wxST_NO_AUTORESIZE);
-    new wxStaticText(CD_Settings,-1,wxT("NB! Changing language needs restart of the FBIde!"),wxPoint(10,215),wxSize(360,13),wxST_NO_AUTORESIZE);
-    new wxStaticText(CD_Settings,-1,wxT("Select yout language:"),wxPoint(10,180),wxSize(150,13),wxST_NO_AUTORESIZE);
+    new wxStaticText(CD_Settings,-1,wxT(Parent->Lang[201]),wxPoint(10,150),wxSize(360,13),wxST_NO_AUTORESIZE);
+    new wxStaticText(CD_Settings,-1,wxT(Parent->Lang[202]),wxPoint(10,215),wxSize(360,13),wxST_NO_AUTORESIZE);
+    new wxStaticText(CD_Settings,-1,wxT(Parent->Lang[203]),wxPoint(10,180),wxSize(150,13),wxST_NO_AUTORESIZE);
 
     
     wxArrayString Langs;

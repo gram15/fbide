@@ -55,7 +55,7 @@ protected:
  void button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
  DECLARE_EVENT_TABLE()  
 //[win]add your code here
-
+MyFrame *Parent;
 
 
  #define VwX_INIT_OBJECTS_about
