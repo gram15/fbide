@@ -112,7 +112,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 //    App->wxYield();
     
     FB_App = App;
-    SetIcon(wxICON(sample));
+    SetIcon(wxIcon(_T("icon")));
     
     LoadSettings();
 
