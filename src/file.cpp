@@ -91,7 +91,7 @@ void MyFrame::OnSaveAll (wxCommandEvent& WXUNUSED(event)) {
         index++;
     }
     
-    SetSTCPage ( selectpage );
+    FBNotebook->SetSelection(selectpage);
     
     return;
 }
