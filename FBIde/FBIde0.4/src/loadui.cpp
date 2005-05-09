@@ -313,6 +313,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
             CurrentFileType = FileType;
             stc->LoadSTCTheme( CurrentFileType );
         }
+        stc->LoadSTCSettings();
     }
     
     buff->SetFileName(InitFile);
@@ -358,6 +359,7 @@ void MyFrame::SetSTCPage ( int index ) {
     if (stc == 0) return;
     
     stc->Freeze();
+                
         stc->SetBuffer( (Buffer *) 0 );
         
         Buffer* buff = bufferList.GetBuffer(index);
