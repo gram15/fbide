@@ -111,6 +111,7 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("lightcursorline",   (bool)Prefs.CurrentLine);
     PrefsINI.Write("tabsize",           (long)Prefs.TabSize);
     PrefsINI.Write("edgecolumn",        (long)Prefs.EdgeColumn);
+    PrefsINI.Write("language",          Prefs.Language);
 
     PrefsINI.SetPath("/paths");
     PrefsINI.Write("fbc",               CompilerPath);

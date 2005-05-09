@@ -118,8 +118,30 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     
     lno21=new wxStaticLine(CD_Settings,-1,wxPoint(10,20),wxSize(360,2));
     
+    new wxStaticLine(CD_Settings,-1,wxPoint(10,165),wxSize(360,2));
+    new wxStaticText(CD_Settings,-1,wxT("Language"),wxPoint(10,150),wxSize(360,13),wxST_NO_AUTORESIZE);
+    new wxStaticText(CD_Settings,-1,wxT("NB! Changing language needs restart of the FBIde!"),wxPoint(10,215),wxSize(360,13),wxST_NO_AUTORESIZE);
+    new wxStaticText(CD_Settings,-1,wxT("Select yout language:"),wxPoint(10,180),wxSize(150,13),wxST_NO_AUTORESIZE);
 
-
+    
+    wxArrayString Langs;
+    wxFileSystem LangFiles;
+    wxString Fn = LangFiles.FindFirst(Parent->EditorPath+"ide\\lang\\*.fbl");
+    wxFileName l;
+    
+    int counter=0, selector=0;
+    while (Fn!="") {
+        counter++;
+        l.Assign(Fn, wxPATH_NATIVE);
+        Fn = l.GetName();
+        Fn = Fn.Lower();
+        if (Fn==Parent->Prefs.Language) selector = counter-1;
+        Langs.Add(Fn);
+        Fn = LangFiles.FindNext();
+    }
+    CB_Langs=new wxComboBox(CD_Settings,-1,wxT(""),wxPoint(180,175),wxSize(190,21),Langs, wxCB_READONLY | wxCB_DROPDOWN );
+    CB_Langs->Select(selector);
+    
     // compile page
     st33=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,5),wxSize(105,13),wxST_NO_AUTORESIZE);
     st33->SetLabel(wxT(Parent->Lang[113]));
@@ -209,10 +231,10 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
 //    Themes.Add(w.GetFullName());
 
     wxFileSystem ThemeFiles;
-    wxString Fn = ThemeFiles.FindFirst(Parent->EditorPath+"ide\\*.fbt");
+    Fn = ThemeFiles.FindFirst(Parent->EditorPath+"ide\\*.fbt");
     wxFileName w;
     
-    int counter=0, selector=0;
+    counter=0; selector=0;
     while (Fn!="") {
         counter++;
         w.Assign(Fn, wxPATH_NATIVE);
@@ -328,6 +350,7 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Parent->Prefs.TabSize           = spc44->GetValue();
     Parent->CompilerPath            = TB_CompilerPath->GetValue();
     Parent->CMDPrototype            = CompilerCommand->GetValue();
+    Parent->Prefs.Language          = CB_Langs->GetValue();
     
     Parent->Style = Style;
     
