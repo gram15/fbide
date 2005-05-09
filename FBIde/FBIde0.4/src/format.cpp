@@ -58,30 +58,29 @@ format::~format()
 
 void format::VwXinit()
 {
-    st5=new wxStaticText(this,-1,wxT(""),wxPoint(33,11),wxSize(218,19),wxST_NO_AUTORESIZE);
-    st5->SetLabel(wxT("Type of conversion:"));
-    
-    lno6=new wxStaticLine(this,-1,wxPoint(29,32),wxSize(234,1));
-    
-    button_ok=new wxButton(this,-1,wxT(""),wxPoint(275,31),wxSize(93,24));
-    button_ok->SetLabel(wxT("Go!"));
-    
-    sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
-    sb9->SetTitle(wxT("Preview"));
-    
-    preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,145),wxSize(45,13));
-    preview->SetLabel(wxT("Cls:Locate 1,1:Print \"\""));
-    
-    wxString choices[]={"KeyWords","KEYWORDS","keywords","BBCode","HTML"};
-    
-    chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
-    
-    bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
-    bt16->SetLabel(wxT("Cancel"));
-    
-    bt17=new wxButton(this,-1,wxT(""),wxPoint(275,91),wxSize(93,24));
-    bt17->SetLabel(wxT("Auto Indent"));
-    Refresh();
+ st5=new wxStaticText(this,-1,wxT(""),wxPoint(33,11),wxSize(218,19),wxST_NO_AUTORESIZE);
+ st5->SetLabel(wxT(Parent->Lang[162])); //"Type of conversion:"
+ 
+ lno6=new wxStaticLine(this,-1,wxPoint(29,32),wxSize(234,1));
+ 
+ button_ok=new wxButton(this,-1,wxT(""),wxPoint(275,31),wxSize(93,24));
+ button_ok->SetLabel(wxT(Parent->Lang[163])); //"Go!"
+ 
+ sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
+ sb9->SetTitle(wxT(Parent->Lang[164])); //"Preview!"
+ 
+ preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,145),wxSize(45,13));
+ preview->SetLabel(wxT("Cls:Locate 1,1:Print \"\""));
+ 
+ wxString choices[]={"KeyWords","KEYWORDS","keywords","BBCode","HTML"};
+ chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
+ 
+ bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
+ bt16->SetLabel(wxT(Parent->Lang[3]));
+ bt17=new wxButton(this,-1,wxT(""),wxPoint(275,91),wxSize(93,24));
+ bt17->SetLabel(wxT(Parent->Lang[112]));
+ 
+ Refresh();
 }
 
 BEGIN_EVENT_TABLE(formatEvt,wxEvtHandler)

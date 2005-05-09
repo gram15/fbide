@@ -149,6 +149,9 @@
 112=Auto indent
 116=Rightmargin Width
 117=Tab Size
+201=Language
+202=NB! Changing language needs restart of the FBIde!
+203=Select yout language:
 
 ;Compile tab
 113=Compiler Settings
@@ -240,3 +243,19 @@
 198=FBIde session (*.fbs)|*.fbs|Any file(*)|*.*|
 199=Save session
 200=HTML files (*.html)|*.html|
+
+;About dialog stuff
+204=an open-source IDE for the FreeBASIC compiler
+205=(www.freebasic.net)
+206=made using c++ with wxWidgets and the scintilla text control
+207=credits:
+208=programmers
+209=head programmer, project administrator and founder of the project
+210=project supervisor, network code (client and serverside)
+211=autocompletion code
+212=code exporting and formatting routines
+213=internationalization (i18n) modules
+214=misc
+215=webmaster and documentation
+216=testers
+217=...and everyone we forgot. :D

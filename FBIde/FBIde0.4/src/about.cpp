@@ -12,6 +12,7 @@
 about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
   VwX_INIT_OBJECTS_about
 {
+ Parent = parent;
  OnPreCreate();
  Create(parent,id,title,pos,size,style,name);
 
@@ -83,31 +84,45 @@ void about::OnPreCreate(){
  //add your code here
  textstuffs.Add(wxString::Format("FBIde %d.%d",VER_MAJOR,VER_MINOR));
  textstuffs.Add(wxString::Format("Build %d",VER_BUILD));
- textstuffs.Add("an open-source IDE for the FreeBASIC compiler");
- textstuffs.Add("(www.freebasic.net)");
- textstuffs.Add("made using c++ with wxWidgets and the scintilla text control");
+ //"an open-source IDE for the FreeBASIC compiler"
+ textstuffs.Add(parent->Lang[204]); 
+ //"(www.freebasic.net)"
+ textstuffs.Add(Parent->Lang[205]); 
+ //"made using c++ with wxWidgets and the scintilla text control"
+ textstuffs.Add(Parent->Lang[206]); //"made using c++ with wxWidgets and the scintilla text control")
  textstuffs.Add("");
- textstuffs.Add("credits:");
- textstuffs.Add("programmers");
+ //"credits:"
+ textstuffs.Add(Parent->Lang[207]);
+ //"programmers"
+ textstuffs.Add(Parent->Lang[208]);
  textstuffs.Add("");
- textstuffs.Add("VonGodric - head programmer, project administrator and founder of the project");
- textstuffs.Add("marzec - project supervisor, network code (client and serverside)");
- textstuffs.Add("dilyias - autocompletion code");
- textstuffs.Add("dumbledore - code exporting and formatting routines");
- textstuffs.Add("Madedog - translation modules");
+// "head programmer, project administrator and founder of the project"
+ textstuffs.Add("VonGodric - "+Parent->Lang[209]);
+ //"project supervisor, network code (client and serverside)"
+ textstuffs.Add("marzec - " + Parent->Lang[210]);
+ //"autocompletion code"
+ textstuffs.Add("dilyias - " + Parent->Lang[211]);
+ //"code exporting and formatting routines"
+ textstuffs.Add("dumbledore - " + Parent->Lang[212]);
+ //"internationalization (i18n) modules"
+ textstuffs.Add("Madedog - " + Parent->Lang[213]);
  textstuffs.Add("");
- textstuffs.Add("misc");
+ //"misc"
+ textstuffs.Add(Parent->Lang[214]);
  textstuffs.Add("");
- textstuffs.Add("aetherFox - webmaster and documentation");
+ //"webmaster and documentation"
+ textstuffs.Add("aetherFox - " + Parent->Lang[215]);
  textstuffs.Add("");
- textstuffs.Add("testers");
+ //"testers"
+ textstuffs.Add(Parent->Lang[216]);
  textstuffs.Add("");
  textstuffs.Add("Shadowolf\tAetherFox");
  textstuffs.Add("Z!re\t\tak00ma");
  textstuffs.Add("nodveidt\tWhitetiger");
  textstuffs.Add("DrV");
  textstuffs.Add("");
- textstuffs.Add("...and everyone we forgot. :D");
+ //"...and everyone we forgot. :D"
+ textstuffs.Add(Parent->Lang[217]);
 }
 
 void about::Dabout(){
