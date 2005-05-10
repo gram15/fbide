@@ -272,7 +272,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                          GetClr(Style->Info[wxSTC_B_COMMENT].foreground),
                          GetClr(Style->Info[wxSTC_B_OPERATOR].foreground),
                          GetClr(Style->Info[wxSTC_B_STRING].foreground),
-                         GetClr(Style->Info[wxSTC_B_NUMBER].foreground)};
+                         GetClr(Style->Info[wxSTC_B_NUMBER].foreground),
+                         GetClr(Style->Info[wxSTC_B_PREPROCESSOR].foreground)};
      for(int i=0;i<(int)guts.Len();i++)
      {
          char j00_n00b=(char)*guts.Mid(i,1);
@@ -284,7 +285,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
             j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
             j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
-            j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>')
+            j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
+            j00_n00b=='#')
          {
              curword=curword.Mid(0,curword.Len()-1);
              if(i+1==(int)guts.Len()&&!(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
@@ -294,7 +296,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                 j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
                 j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
                 j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
-                j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>')) { curword+=j00_n00b; dontadd=true; }
+                j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
+                j00_n00b=='#')) { curword+=j00_n00b; dontadd=true; }
              if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0)
              {
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[kwtyp-1])+ \
@@ -341,15 +344,6 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                      output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend+j00_n00b;
                  }
              }
-             if(dotags&&(j00_n00b=='('||j00_n00b==')'||j00_n00b=='='||
-                j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
-                j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
-                j00_n00b=='-'||j00_n00b==';'||j00_n00b==',')&&!commenting)
-             {
-                 output=output.Mid(0,output.Len()-1);
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
-                         (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
-             }
              if(!commenting&&!quoting&&j00_n00b=='\"')
              {
                  quoting=true;
@@ -364,6 +358,32 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              {
                  quoting=false;
                  if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
+             }
+             if(!commenting&&!quoting&&j00_n00b=='#'&&(i==0||(output.Mid(output.Len()-2,1)=="\n"||output.Mid(output.Len()-2,1)=="\r")))
+             {
+                 output=output.Mid(0,output.Len()-1);
+                 if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[8])+ \
+                        (sel==4?"\"":"")+tagend+j00_n00b;
+                 for(i++;guts.Mid(i,1)!="\r"&&guts.Mid(i,1)!="\n"&&i<(int)guts.Len();i++)
+                 {
+                     output+=guts.Mid(i,1);
+                 }
+                 if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend+guts.Mid(i,1);
+             }
+             else if(!commenting&&!quoting&&j00_n00b=='#')
+             {
+                 output=output.Mid(0,output.Len()-1);
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
+                         (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+             }
+             if(dotags&&(j00_n00b=='('||j00_n00b==')'||j00_n00b=='='||
+                j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
+                j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
+                j00_n00b=='-'||j00_n00b==';'||j00_n00b==',')&&!commenting&&!quoting)
+             {
+                 output=output.Mid(0,output.Len()-1);
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
+                         (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
              }
          }
      }
