@@ -1,7 +1,6 @@
 
 // Don't modify comment 
 #include "inc/main.h"
-#include "inc/fbedit.h"
 #include "inc/about.h"
 //[inc]add your include files here
 
@@ -12,16 +11,16 @@
 about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
   VwX_INIT_OBJECTS_about
 {
- Parent = (MyFrame*) parent;
+ Parent = ( MyFrame * ) parent;
  OnPreCreate();
  Create(parent,id,title,pos,size,style,name);
 
  if((pos==wxDefaultPosition)&&(size==wxDefaultSize)){
-     SetSize(0,0,510,525);
+     SetSize(0,0,350,320);
  }
 
  if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)){
-     SetSize(510,525);
+     SetSize(350,320);
  }
  initBefore();
  fileImgBuf[0]=wxBITMAP(fbide);
@@ -34,14 +33,79 @@ about::~about()
 }
 void about::VwXinit()
 {
- button_ok=new wxButton(this,-1,wxT(""),wxPoint(180,459),wxSize(123,24));
+ bm3=new wxStaticBitmap(this,-1,*bm3Img0,wxPoint(22,15),wxSize(300,75));
+ button_ok=new wxButton(this,-1,wxT(""),wxPoint(100,254),wxSize(123,24));
    button_ok->SetLabel(wxT("Ok"));
- st4=new wxStaticText(this,-1,wxT(""),wxPoint(33,105),wxSize(436,345));
-   StatChange();
- bm3=new wxStaticBitmap(this,-1,*bm3Img0,wxPoint(92,15),wxSize(300,75));
+ txm7=new wxTextCtrl(this,-1,wxT(""),wxPoint(23,103),wxSize(294,139),wxVSCROLL|wxHSCROLL|wxTE_READONLY|wxTE_RICH2|wxTE_DONTWRAP|wxTE_MULTILINE);
+   txm7->SetLabel(wxT(""));
+ wxArrayString myarr;
+ myarr.Add(wxString::Format("[bold]FBIde %d.%d",VER_MAJOR,VER_MINOR));
+ myarr.Add(wxString::Format("Build %d[/bold]",VER_BUILD));
+ myarr.Add(Parent->Lang[204]);
+ myarr.Add(Parent->Lang[205]);
+ myarr.Add(Parent->Lang[206]);
+ myarr.Add("");
+ myarr.Add("[bold]"+Parent->Lang[207]);
+ myarr.Add(Parent->Lang[208]+"[/bold]");
+ myarr.Add("");
+ myarr.Add("VonGodric - "+Parent->Lang[209]);
+ myarr.Add("marzec - "+Parent->Lang[210]);
+ myarr.Add("dilyias - "+Parent->Lang[211]);
+ myarr.Add("dumbledore - "+Parent->Lang[212]);
+ myarr.Add("Madedog - "+Parent->Lang[213]);
+ myarr.Add("");
+ myarr.Add("[bold]"+Parent->Lang[214]+"[/bold]");
+ myarr.Add("");
+ myarr.Add("aetherFox - "+Parent->Lang[215]);
+ myarr.Add("");
+ myarr.Add("[bold]"+Parent->Lang[216]+"[/bold]");
+ myarr.Add("");
+ myarr.Add("Shadowolf\tAetherFox");
+ myarr.Add("Z!re\t\tak00ma");
+ myarr.Add("nodveidt\t\tWhitetiger");
+ myarr.Add("DrV");
+ myarr.Add("");
+ myarr.Add(Parent->Lang[217]);
+ wxString tag="";
+ wxTextAttr myattr=txm7->GetDefaultStyle();
+ wxFont defFont=myattr.GetFont();
+ wxFont boldFont=myattr.GetFont();
+ boldFont.SetWeight(wxFONTWEIGHT_BOLD);
+ bool nesting=false;
+ for(int i=0;i<(int)myarr.Count();i++)
+ {
+  for(int j=0;j<(int)myarr[i].Len();j++)
+  {
+   char thechar=(char)*myarr[i].Mid(j,1);
+   if(thechar=='['&&!nesting)
+   {
+    nesting=true;
+   }
+   else if(thechar==']'&&nesting)
+   {
+    nesting=false;
+    tag=tag.MakeLower();
+    if(tag=="bold")
+     myattr.SetFont(boldFont);
+    else if(tag=="/bold")
+     myattr.SetFont(defFont);
+    txm7->SetDefaultStyle(myattr);
+    tag="";
+   }
+   else if(nesting)
+   {
+    tag+=thechar;
+   }
+   else
+   {
+    txm7->WriteText(thechar);
+   }
+  }
+  txm7->WriteText("\r\n");
+ }
  Refresh();
 }
- 
+
 BEGIN_EVENT_TABLE(aboutEvt,wxEvtHandler)
 //[evtEvt]add your code here
 
@@ -52,6 +116,7 @@ END_EVENT_TABLE()
 BEGIN_EVENT_TABLE( about,wxDialog)
   EVT_BUTTON(-1,about::VwXVwXEvOnButtonClick)
 //[evtwin]add your code here
+
 
 //[evtwin]end your code
 END_EVENT_TABLE()
@@ -76,53 +141,12 @@ void about::initBefore(){
 
 void about::initAfter(){
  //add your code here
- //the_timer.Start(500);
  Centre();
 }
 
 void about::OnPreCreate(){
  //add your code here
- textstuffs.Add(wxString::Format("FBIde %d.%d",VER_MAJOR,VER_MINOR));
- textstuffs.Add(wxString::Format("Build %d",VER_BUILD));
- //"an open-source IDE for the FreeBASIC compiler"
- textstuffs.Add(Parent->Lang[204]); 
- //"(www.freebasic.net)"
- textstuffs.Add(Parent->Lang[205]); 
- //"made using c++ with wxWidgets and the scintilla text control"
- textstuffs.Add(Parent->Lang[206]); //"made using c++ with wxWidgets and the scintilla text control")
- textstuffs.Add("");
- //"credits:"
- textstuffs.Add(Parent->Lang[207]);
- //"programmers"
- textstuffs.Add(Parent->Lang[208]);
- textstuffs.Add("");
-// "head programmer, project administrator and founder of the project"
- textstuffs.Add("VonGodric - "+Parent->Lang[209]);
- //"project supervisor, network code (client and serverside)"
- textstuffs.Add("marzec - " + Parent->Lang[210]);
- //"autocompletion code"
- textstuffs.Add("dilyias - " + Parent->Lang[211]);
- //"code exporting and formatting routines"
- textstuffs.Add("dumbledore - " + Parent->Lang[212]);
- //"internationalization (i18n) modules"
- textstuffs.Add("Madedog - " + Parent->Lang[213]);
- textstuffs.Add("");
- //"misc"
- textstuffs.Add(Parent->Lang[214]);
- textstuffs.Add("");
- //"webmaster and documentation"
- textstuffs.Add("aetherFox - " + Parent->Lang[215]);
- textstuffs.Add("");
- //"testers"
- textstuffs.Add(Parent->Lang[216]);
- textstuffs.Add("");
- textstuffs.Add("Shadowolf\tAetherFox");
- textstuffs.Add("Z!re\t\tak00ma");
- textstuffs.Add("nodveidt\tWhitetiger");
- textstuffs.Add("DrV");
- textstuffs.Add("");
- //"...and everyone we forgot. :D"
- textstuffs.Add(Parent->Lang[217]);
+
 }
 
 void about::Dabout(){
@@ -130,13 +154,4 @@ void about::Dabout(){
 
 }
 
-void about::StatChange(){
- wxString mystr="";
- for(int i=0;i<(int)textstuffs.Count();i++)
-  mystr+=textstuffs[i]+"\r\n";
- st4->SetLabel(wxT(mystr.Mid(0,mystr.Len()-2)));
-}
-
 //[evtFunc]end your code
-
-
