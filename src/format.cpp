@@ -220,6 +220,13 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      //[3d7]Code event VwX...Don't modify[3d6]//
      //add your code here
      //here's where i write the conversion $h17....
+
+     FB_Edit * stc = Parent->stc;
+     int idx = Parent->FBNotebook->GetSelection();
+     Buffer * buff = Parent->bufferList[idx];
+     
+     if (buff->GetFileType()>0) return;
+     
      wxString guts=Parent->stc->GetText(),tagstart="",tagend="";
      int sel=chc15->GetSelection();
      bool dotags=false,dokeyws=false;
@@ -378,7 +385,15 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      if(sel==4) output+="</pre></body>";
      if(sel==3) output+="[/size][/quote]";
      if(sel>2) Parent->NewSTCPage("",true, 1);
-     Parent->stc->SetText(output);
+    
+     idx = Parent->FBNotebook->GetSelection();
+     buff = Parent->bufferList[idx];
+     
+     stc->SetText(output);
+     stc->ScrollToLine(buff->GetLine());
+     stc->SetCurrentPos(buff->GetCaretPos());
+     stc->SetSelectionStart(buff->GetSelectionStart());
+     stc->SetSelectionEnd(buff->GetSelectionEnd());
 } //end function
 
 int format::isKeyword(wxString kw)
