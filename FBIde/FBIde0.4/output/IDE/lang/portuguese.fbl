@@ -1,0 +1,261 @@
+[FBIde]
+
+;Generic stuff
+1=Benvindo ao FBIde
+2=OK
+3=Cancelar
+
+165=Linha
+166=Arquivo
+167=Erro nr
+168=Mensages
+
+;Menus
+4=&Arquivo
+5=&Editar
+6=&Procurar
+7=&Mostrar
+8=&Ferramentas
+9=&Executar
+10=A&juda
+
+11=&Novo\tCtrl+N
+12=Cria um novo documento
+13=&Abrir...\tCtrl+O
+14=Abre um documento existente
+15=&Salvar\tCtrl+S
+16=Salva o documento atual
+17=Salvar &como...\tCtrl+Shift+S
+18=Salva o documento atual utilizando um nome diferente
+19=Salvar &todos
+20=Salva todos os documentos abertos
+21=&Fechar\tCtrl+F4
+22=Fecha o documento atual
+23=Nova &instância \tShift+Ctrl+N
+24=Abri uma nova instância do FBIde
+25=Sai&r\tCtrl+Q
+26=Sai do FBIde
+169=Carregar sessão...
+170=Carrega a sessão previamente salva
+171=Salvar sessão...
+172=Salva a sessão atual
+173=Fechar todos
+174=Fecha todos os documentos abertos
+
+27=&Desfazer\tCtrl+Z
+28=Desfaça a última ação
+29=&Refazer\tCtrl+Shift+Z
+30=Refaça a última ação
+31=Co&rtar\tCtrl+X
+32=Corta o texto selecionado e copia para o clipboard
+33=&Copiar\tCtrl+C
+34=Copia o texto selecionado para o clipboard
+35=Co&lar\tCtrl+V
+36=Cola o conteúdo atual do clipboard
+37=&Selecionar tudo\tCtrl+A
+38=Seleciona todo o documento
+39=Selecionar &linha\tCtrl+L
+40=Seleciona a linha atual
+41=&Aumentar Indentação\tTab
+42=Move o texto selecionado para a direita
+43=&Diminuir Indentação\tShift+Tab
+44=Move o texto selecionado para a esquerda
+45=Comentar bloco \tCtrl+M
+46=Torna o texto selecionado em comentário
+47=Descomentar bloco\tCtrl+Shift+M
+48=Remove os comentários do texto selecionado
+
+49=Procurar...\tCtrl+F
+50=Procura pelo texto específicado
+51=Procurar Próximo \tF3
+52=Repete a última procura
+53=Substituir...\tCtrl+R
+54=Substitue um texto específico por outro
+55=Ir para linha...\tCtrl+G
+56=Vai para uma linha qualquer no documento
+
+57=Configurações...
+58=Define as configurações da IDE
+59=Mostrar janela de saída\tF4
+60=Mostra a saída do console
+61=Subrotinas...\tF2
+62=Mostra a lista de SUB's e FUNCTION's
+175=Formatar...
+176=Modifica a formatação do código
+
+63=Compilar\tCtrl+F9
+64=Compila o documento atual
+65=Compilar e Executar\tF9
+66=Compila e executa o documento atual
+67=Executar\tShift+Ctrl+F9
+68=Executa um programa previamente compilado
+69=Execução Rápida\tF5
+70=Executa o programa sem salvar, utilizando arquivos temporários
+71=Janela de comando\tF8
+72=Abre a janela de comando
+73=&Parâmetros...
+74=Define os parâmetros que serão passados ao programa
+75=Parâmetros do &Compilador...
+76=Define os Parâmetros passados para o compilador
+77=Mo&strar código de saída
+78=Mostra a resultado retornado pelo programa que foi executado
+
+79=&Sobre...\tF1
+80=Mostra as informações sobre o FBIde
+
+81=Fechar Todos
+82=Fecha todos os arquivos abertos
+
+
+;Toolbar
+83=Novo arquivo (Ctrl+N)
+84=Abrir arquivo (Ctrl+O)
+85=Salvar o arquivo atual (Ctrl+S)
+86=Salvar todos os arquivos
+87=Fechar o arquivo atual
+
+88=Cortar (Ctrl+X)
+89=Copiar (Ctrl+C)
+90=Colar (Ctrl+V)
+
+91=Desfazer (Ctrl+Z)
+92=Refazer (Ctrl+Shift+Z)
+
+93=Compilar (Ctrl+F9)
+94=Executar (Ctrl+Shift+F9)
+95=Compilar and Run (F9)
+96=Execução rápida (F5)
+97=Abrir/Fechar a janela de saída
+
+
+;FBIde Settings dialog box
+98=Configurações
+99=Geral
+100=Temas
+101=Palavras-chave
+102=Compilador
+
+
+;General tab
+103=Mostrar númeração de linha
+104=Configurações
+105=Indicar pares de parênteses
+106=Usar coloração de sintaxe
+107=Mostrar a margem direita
+108=Mostrar final de linha
+109=Mostrar caracteres de edição
+110=Mostrar guias de indentação
+111=Dobrar à margem
+112=Auto indentação
+116=Largura da margem direita
+117=Lagura do Tab
+201=Linguagem
+202=Obs.: reinicie a IDE se a linguagem for modificada.
+203=Selecionar a linguagem:
+
+;Compile tab
+113=Configurações
+114=Caminho
+115=Comando
+
+
+;Themes tab
+118=Comentários
+119=Números
+120=Palavras-chave 1
+121=Strings Fechadas
+122=Pre-processador
+123=Operadores
+124=Identificadores
+125=Datas
+126=String Abertas
+127=Palavras-chave 2
+128=Palavras-chave 3
+129=Palavras-chave 4
+130=Caret
+131=Númeração de linhas
+132=Texto selecionado
+133=Pares encontrados
+134=Pares não-encontrados
+135=Editor
+
+136=Realçado
+137=Itálico
+138=Sublinhado
+139=Salvar tema
+140=Tema
+141=Criar novo tema
+
+142=Cores
+143=Tipos
+144=Frente
+145=Fundo
+146=Estilo
+147=Fonte\r\n
+148=Tamanho\r\n
+149=Palavras-chave\r\n
+150=Selecionar grupo
+151=Grupo 1
+152=Grupo 2
+153=Grupo 3
+154=Grupo 4
+
+155=Abrir arquivo
+156=Todos os programs (*.exe)|*.exe
+
+157=Entre com o nome do tema:
+158=Parâmetros...
+
+159=Tema \"
+160=\" já existe!\nDeseja sobrescrevê-lo?
+161=Message
+
+
+;Conversion stuff
+162=Tipo de conversão:
+163=OK
+164=Exemplo 
+
+;Run stuff
+177=Parâmetros que serão passados ao programa
+178=Nada a ser compilado
+179=Erro
+180=É preciso compilar o programa antes de executá-lo. Compilar?
+181=Compilar?
+182=Um erro ocorreu ao executar \"
+183=O documento foi modificado e é precisa salvá-lo antes de continuar.
+184=Salvar o documento?
+
+185=Código de saída
+
+;File stuff
+186=Carregar documento
+187=Códigos-fonte (*.bas)|*.bas|Cabeçalhos(*.bi)|*.bi|Arquivos HTML (*.html)|*.html|Todos os arquivos(*)|*.*|
+188=Arquivo \"
+189=\" foi modificado. Salvar?
+190=O arquivo '%s' foi modificado.\nSalvar modificações?
+192=Arquivo modificado
+193=Códigos-fonte (*.bas)|*.bas|Cabeçalhos(*.bi)|*.bi|Arquivos HTML (*.html)|*.html|
+194=Todos os arquivo(*)|*.*|
+195=Salvar arquivo
+196=Usar o novo arquivo?
+197=Questão
+198=Sessão FBIde (*.fbs)|*.fbs|Todos os arquivo(*)|*.*|
+199=Salvar sessão
+200=Arquivos HTML (*.html)|*.html|
+
+;About dialog stuff
+204=uma IDE de código-fonte aberto para o compilador FreeBASIC
+205=(www.freebasic.net)
+206=escrita em C++ usando a wxWidgets e o Scintilla text control
+207=créditos:
+208=programadores
+209=programador líder, administrador e fundador do projeto
+210=supervisor do projeto, código de rede (cliente e servidor)
+211=código de auto-inserção
+212=rotinas de formatação e código de exportação
+213=módulos de internationalização (i18n)
+214=misc
+215=documentação e webmaster
+216=testes
+217=...e a todos de quem me esqueci. :D
