@@ -25,6 +25,7 @@
 #include "inc/main.h"
 #include "inc/fbedit.h"
 #include "inc/browser.h"
+#include "inc/format.h"
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
     NewSTCPage("", true);
@@ -163,6 +164,7 @@ void MyFrame::CloseFile          ( int index ) {
     if (SFDialog)       { SFDialog->Close(true); }
     if (FindDialog)     { FindDialog->Close(true); }
     if (ReplaceDialog)  { ReplaceDialog->Close(true); }
+    if (formatDialog)   { formatDialog->Close(true); }
     
     stc->SetBuffer( (Buffer *) 0 );
     OldTabSelected = -1;
