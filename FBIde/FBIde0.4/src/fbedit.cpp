@@ -263,11 +263,13 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 }
 
 //Stc events
-void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
+void FB_Edit::OnModified        ( wxStyledTextEvent &WXUNUSED(event) ) {
     if(buff!=0) {
-        if(GetModify()!=buff->GetModified()) { Parent->SetModified(-1, !buff->GetModified()); }
+        if(GetModify()!=buff->GetModified()) { 
+            Parent->SetModified(-1, !buff->GetModified()); 
+        }
     }
-    if(Parent->SFDialog) { Parent->SFDialog->Rebuild(); }
+    if(Parent->SFDialog) { if (Parent->SFDialog->ChangePos == false) Parent->SFDialog->Rebuild(); }
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {

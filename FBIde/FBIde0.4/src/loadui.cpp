@@ -378,10 +378,9 @@ void MyFrame::SetSTCPage ( int index ) {
             CurrentFileType = buff->GetFileType();
             stc->LoadSTCTheme( CurrentFileType );
         }
-
-     stc->Thaw();
-     
-     if (SFDialog) SFDialog->Rebuild();
+    stc->LoadSTCSettings();
+    stc->Thaw();
+    if (SFDialog) SFDialog->Rebuild();
 }
 
 void MyFrame::SetModified ( int index, bool status ) {

@@ -43,6 +43,7 @@ SFBrowser::SFBrowser(   wxWindow* parent,
                         const wxString& name )
 {
     
+    ChangePos = false;
     Parent = ( MyFrame * ) parent;
     Create(parent,id,title,wxDefaultPosition, wxSize(300, 400), style, name);
  
@@ -103,6 +104,7 @@ SFBrowser::SFBrowser(   wxWindow* parent,
 }
 
 void SFBrowser::Rebuild (  ) {
+    if (ChangePos) return;
     wxString Temp;
     wxString fkw;
     wxString skw;
@@ -183,6 +185,7 @@ void SFBrowser::OnCharAdded ( wxCommandEvent& event ) {
 
 
 void SFBrowser::OnEnter ( wxCommandEvent& event ) {
+    ChangePos = true;
     FB_Edit * stc = Parent->stc;
     if (SFList->GetItemCount()) {
         unsigned long linnr = 0;
@@ -190,27 +193,33 @@ void SFBrowser::OnEnter ( wxCommandEvent& event ) {
         stc->GotoLine(stc->GetLineCount());
         stc->GotoLine(linnr-1);
     }
+    ChangePos = false;
     Close(true);
+    
 }
 
 
 void SFBrowser::OnSelect ( wxListEvent& event ) {
+    ChangePos = true;
     FB_Edit * stc = Parent->stc;
     int index = event.GetIndex();
     unsigned long linnr = 0;
     SFList->GetItemText(index).ToULong(&linnr);
-    stc->GotoLine(stc->GetLineCount());
-    stc->GotoLine(linnr-1);
+//    stc->GotoLine(stc->GetLineCount());
+//    stc->GotoLine(linnr-1);
+    ChangePos = false;
     return;
 }
 
 void SFBrowser::OnActivate ( wxListEvent& event ) {
+    ChangePos = true;
     FB_Edit * stc = Parent->stc;
     int index = event.GetIndex();
     unsigned long linnr = 0;
     SFList->GetItemText(index).ToULong(&linnr);
     stc->GotoLine(stc->GetLineCount());
     stc->GotoLine(linnr-1);
+    ChangePos = false;
     Close(true);
     return;
 }

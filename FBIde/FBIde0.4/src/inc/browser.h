@@ -69,6 +69,7 @@ public:
     vector <int> OrigType;
     
     wxString SearchString;
+    bool     ChangePos;
 
     enum {
         SearchBoxId,
