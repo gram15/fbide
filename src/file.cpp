@@ -39,14 +39,17 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
         _T(""),
         _T(".bas"),
         _T(Lang[187]),//Types
-    wxFILE_MUST_EXIST | wxCHANGE_DIR);
+    wxFILE_MUST_EXIST | wxCHANGE_DIR | wxMULTIPLE);
     if (dlg.ShowModal() != wxID_OK) return;
-    wxString File = dlg.GetPath();
-    int result = bufferList.FileLoaded(File);
-    
-    if (result != -1) FBNotebook->SetSelection(result);
-    else NewSTCPage(dlg.GetPath(), true);
-
+    wxArrayString File;
+    dlg.GetPaths(File);
+    for(int i=0;i<(int)File.Count();i++)
+    {
+        int result = bufferList.FileLoaded(File[i]);
+        
+        if (result != -1) FBNotebook->SetSelection(result);
+        else NewSTCPage(File[i], true);
+    }
     return;
 }
 
