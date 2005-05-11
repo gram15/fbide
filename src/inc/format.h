@@ -71,12 +71,9 @@ public:
  wxString guts;
  wxString output;
  wxButton *bt17;
- virtual ~format();
- virtual void Dformat();
- virtual void initBefore();
- void OnPreCreate();
+ ~format();
  void VwXinit();
- virtual void initAfter();
+ void OnClose(wxCloseEvent &event);
  void initkeywords();
  wxArrayString keyw[4];
 protected:

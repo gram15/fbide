@@ -38,7 +38,6 @@
 #include <wx/splitter.h>
 #include <wx/listctrl.h>
 
-
 #include "../../FBIde0.4_private.h"
 #define FBUNNAMED       "Untitled"
 #define KWGROUPS        4
@@ -164,6 +163,7 @@ public:
 
 class FB_Edit;
 class SFBrowser;
+class format;
 //class BufferList;
 //class Buffer;
 
@@ -278,6 +278,7 @@ public:
     wxFindReplaceDialog*    FindDialog;
     wxFindReplaceDialog*    ReplaceDialog;
     SFBrowser*              SFDialog;
+    format*                 formatDialog;
     wxString                findText;
     wxString                replaceText;
     wxString                findString;

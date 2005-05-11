@@ -21,21 +21,15 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-// Don't modify comment 
+
 #include "inc/main.h"
 #include "inc/fbedit.h"
 #include "inc/format.h"
-//[inc]add your include files here
-
-
-//[inc]end your include
-
 
 format::format(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
 VwX_INIT_OBJECTS_format
 {
     Parent = ( MyFrame * ) parent;
-    OnPreCreate();
     Create(parent,id,title,pos,size,style,name);
     
     if((pos==wxDefaultPosition)&&(size==wxDefaultSize)){
@@ -45,14 +39,13 @@ VwX_INIT_OBJECTS_format
     if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)){
         SetSize(405,210);
     }
-    initBefore();
-    VwXinit();initAfter();
+    VwXinit();
 }
 
 
 format::~format()
 {
-    Dformat();
+    Parent->formatDialog=0;
 }
 
 
@@ -74,6 +67,7 @@ void format::VwXinit()
     
     wxString choices[]={"KeyWords","KEYWORDS","keywords","BBCode","HTML"};
     chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
+    chc15->SetSelection(0);
     
     bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
     bt16->SetLabel(wxT(Parent->Lang[3]));
@@ -81,22 +75,17 @@ void format::VwXinit()
     bt17->SetLabel(wxT(Parent->Lang[112]));
     
     Refresh();
+    Centre();
 }
 
 BEGIN_EVENT_TABLE(formatEvt,wxEvtHandler)
-//[evtEvt]add your code here
 
-
-//[evtEvt]end your code
 END_EVENT_TABLE()
 
 BEGIN_EVENT_TABLE( format,wxDialog)
     EVT_BUTTON(-1,format::VwXVwXEvOnButtonClick)
     EVT_CHOICE(-1,format::VwXVwXEvOnChoiceSelect)
-//[evtwin]add your code here
-
-
-//[evtwin]end your code
+    EVT_CLOSE(format::OnClose)
 END_EVENT_TABLE()
 
 
@@ -196,7 +185,6 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
             Parent->stc->SetLineIndentation (cLine, lineInd);
             //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
      }
-     this->Close();
 } //end function
 
 void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init function
@@ -225,7 +213,7 @@ void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init 
 void format::bt16_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
      //[4aa]Code event VwX...Don't modify[4a9]//
      //add your code here
-     this->Close();
+     Close(true);
 } //end function
 
 void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
@@ -370,7 +358,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  }
                  if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend+guts.Mid(i,1);
              }
-             else if(!commenting&&!quoting&&j00_n00b=='#')
+             else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')
              {
                  output=output.Mid(0,output.Len()-1);
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
@@ -391,8 +379,6 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      if(sel==3) output+="[/size][/quote]";
      if(sel>2) Parent->NewSTCPage("",true, 1);
      Parent->stc->SetText(output);
-     //Parent->stc->SaveFile("c:\\documents and settings\\dan\\desktop\\fbide_fb_linuxbuild\\fbidev3.html");
-     this->Close();
 } //end function
 
 int format::isKeyword(wxString kw)
@@ -454,25 +440,7 @@ wxString format::hex(wxColour clr)
            hexs.Mid(g&0xF,1)+hexs.Mid((b&0xF0)>>4,1)+hexs.Mid(b&0xF,1);
 }
 
-void format::initBefore(){
-     //add your code here
-
+void format::OnClose(wxCloseEvent &event)
+{
+    delete this;
 }
-
-void format::initAfter(){
-     //add your code here
-     chc15->SetSelection(0);
-     Centre();
-}
-
-void format::OnPreCreate(){
-     //add your code here
-
-}
-
-void format::Dformat(){
-     //add your code here
-
-}
-
-//[evtFunc]end your code

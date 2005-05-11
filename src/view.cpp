@@ -47,13 +47,15 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
 
 void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
     if(stc==0) return;
+    if(formatDialog) return;
     int index = FBNotebook->GetSelection();
     Buffer * buff = bufferList[index];
     if (buff->GetFileType()!=0) return;
     
-    format dlg(this, -1, "Convert the format");
-    dlg.ShowModal();
-
+    formatDialog=new format(this, -1, "Convert the format");
+    formatDialog->Show();
+    
+    return;
 }
 
 
