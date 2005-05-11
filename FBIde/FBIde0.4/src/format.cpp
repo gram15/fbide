@@ -260,6 +260,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      initkeywords();
      int kwtyp=0;
      bool commenting=false,dontadd=false,quoting=false;
+     
      wxColour colours[]={GetClr(Style->Info[wxSTC_B_KEYWORD].foreground),
                          GetClr(Style->Info[wxSTC_B_KEYWORD2].foreground),
                          GetClr(Style->Info[wxSTC_B_KEYWORD3].foreground),
@@ -269,10 +270,21 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                          GetClr(Style->Info[wxSTC_B_STRING].foreground),
                          GetClr(Style->Info[wxSTC_B_NUMBER].foreground),
                          GetClr(Style->Info[wxSTC_B_PREPROCESSOR].foreground)};
+     
      for(int i=0;i<(int)guts.Len();i++)
      {
-         char j00_n00b=(char)*guts.Mid(i,1);
+         char j00_n00b=guts.GetChar(i);
          curword+=j00_n00b;
+//         if(j00_n00b==' '||
+//            j00_n00b=='#'||
+//            (j00_n00b>='{'&&j00_n00b<='}')||    // {\}
+//            (j00_n00b>=39&&j00_n00b<=45)||      // '()*+,-
+//            j00_n00b=='/'||
+//            (j00_n00b>=58&&j00_n00b<=62)||      //:;<=>
+//            (j00_n00b>=91&&j00_n00b<=94)||      //[\]^
+//            guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
+//            i+1==(int)guts.Len())
+//         {
          if(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
             guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
             j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
@@ -283,6 +295,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
             j00_n00b=='#')
          {
+
              curword=curword.Mid(0,curword.Len()-1);
              if(i+1==(int)guts.Len()&&!(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
                 guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
@@ -382,28 +395,39 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              }
          }
      }
-     if(sel==4) output+="</pre></body>";
-     if(sel==3) output+="[/size][/quote]";
-     if(sel>2) Parent->NewSTCPage("",true, 1);
-    
-     idx = Parent->FBNotebook->GetSelection();
-     buff = Parent->bufferList[idx];
-     
-     stc->SetText(output);
-     stc->ScrollToLine(buff->GetLine());
-     stc->SetCurrentPos(buff->GetCaretPos());
-     stc->SetSelectionStart(buff->GetSelectionStart());
-     stc->SetSelectionEnd(buff->GetSelectionEnd());
+     if (sel < 4) {
+         buff = stc->buff;
+         buff->SetPositions(stc->GetSelectionStart(), stc->GetSelectionEnd());
+         buff->SetLine(stc->GetFirstVisibleLine());
+         buff->SetCaretPos(stc->GetCurrentPos());
+         stc->SetText(output);
+         stc->ScrollToLine(buff->GetLine());
+         stc->SetCurrentPos(buff->GetCaretPos());
+         stc->SetSelectionStart(buff->GetSelectionStart());
+         stc->SetSelectionEnd(buff->GetSelectionEnd());
+    }
+    else { 
+        if     (sel==4) output+="</pre></body>";
+        else if(sel==3) output+="[/size][/quote]";
+        Parent->NewSTCPage("",true, 1);
+        stc->SetText(output);
+    }
 } //end function
 
-int format::isKeyword(wxString kw)
+inline int format::isKeyword(wxString kw)
 {
     kw=kw.MakeUpper();
     for(int i=0;i<4;i++)
     {
         for(int j=0;j<(int)keyw[i].Count()-1;j++)
         {
-            if(keyw[i][j]==kw||keyw[i][j]+"$"==kw) return i+1;
+            //check the lenght of the kw and keyw, if matxhes then
+            //check first char as well.
+            if (keyw[i][j].Len()==kw.Len()) {
+                if(keyw[i][j].GetChar(0)==kw.GetChar(0)) {
+                    if(keyw[i][j]==kw) return i+1;
+                }
+            }
         }
     }
     return 0;
@@ -430,24 +454,22 @@ void format::initkeywords()
     }
 }
 
-bool format::isNumeric(wxString kw)
+inline bool format::isNumeric(wxString kw)
 {
      if(kw.Len()==0) return false;
-     bool yes=false;
-     wxString digits="0123456789";
+     char ch;
      for(int i=0;i<(int)kw.Len();i++)
      {
-         for(int j=0;j<(int)digits.Len();j++)
-         {
-             if(kw.Mid(i,1)==digits.Mid(j,1)) { yes=true; break; }
-         }
-         if(yes==false) return false;
-         yes=false;
+        ch = kw.GetChar(i);
+        if( ch >= 46 && ch <= 57 ) {
+            if (ch==47) return false;
+        }
+        else { return false; }
      }
      return true;
 }
 
-wxString format::hex(wxColour clr)
+inline wxString format::hex(wxColour clr)
 {
     wxString hexs="0123456789abcdef";
     int r=clr.Red(),b=clr.Blue(),g=clr.Green();
