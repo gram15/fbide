@@ -422,13 +422,14 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     if (event.ControlDown()) {
         int key = event.GetKeyCode();
         if (key>=48 && key <= 57) {
-            int tab = key-49;
+            int tab = (key-49) + (event.ShiftDown() ? 10 : 0);
             if (tab!=(int)Parent->FBNotebook->GetSelection()&&
                 tab< (int)Parent->FBNotebook->GetPageCount()) {
                 Parent->FBNotebook->SetSelection(tab);
             }
             return;
         }
+        else if(key==WXK_F4) { Parent->OnCloseFile(); }
     }
     if (!event.ControlDown()) return;
     SetMouseDownCaptures(false);
