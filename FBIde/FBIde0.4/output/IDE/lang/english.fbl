@@ -19,21 +19,21 @@
 9=&Run
 10=&Help
 
-11=&New ..\tCtrl+N
+11=&New ..
 12=Open new empty document
-13=&Open ..\tCtrl+O
+13=&Open ..
 14=Open new document
-15=&Save\tCtrl+S
+15=&Save
 16=Save current file
-17=Save &as ..\tCtrl+Shift+S
+17=Save &as ..
 18=Save current file under new name
 19=Save all
 20=Save all opened files
-21=Close\tCtrl+F4
+21=Close
 22=Close current file
 23=New &window \tShift+Ctrl+N
 24=Open new editor window
-25=&Quit\tCtrl+Q
+25=&Quit
 26=Quit FBIde
 169=Load session
 170=Loads previously saved session
@@ -42,56 +42,56 @@
 173=Close All
 174=Close all opened files
 
-27=&Undo\tCtrl+Z
+27=&Undo
 28=Undo last action
-29=&Redo\tCtrl+Shift+Z
+29=&Redo
 30=Redo last action
-31=Cu&t\tCtrl+X
+31=Cu&t
 32=Cut selected text and copy to clipboard
-33=&Copy\tCtrl+C
+33=&Copy
 34=Copy selected text to clipboard
-35=&Paste\tCtrl+V
+35=&Paste
 36=Paste from clipboard
-37=&Select all\tCtrl+A
+37=&Select all
 38=Select whole document
-39=Select &line\tCtrl+L
+39=Select &line
 40=Select current line
-41=&Indent increase\tTab
+41=&Indent increase
 42=Indent selected text to right
-43=Indent reduce\tShift+Tab
+43=Indent reduce
 44=Deindent selected text to left
-45=Comment block \tCtrl+M
+45=Comment block
 46=Comments out selected text
-47=UnComment block\tCtrl+Shift+M
+47=UnComment block
 48=Uncomments selected text
 
-49=Find \tCtrl+F
+49=Find
 50=Find in the document
-51=Find Next \tF3
+51=Find Next
 52=Repeat lest search
-53=Replace \tCtrl+R
+53=Replace
 54=Replace text in the document
-55=Goto line...\tCtrl+G
+55=Goto line...
 56=Goto to the line in document
 
 57=Settings
 58=Set editor settings
-59=View result window\tF4
+59=View result window
 60=Shows table with console outputs
-61=Subs... \tF2
+61=Subs... 
 62=Open sub, function browser
 175=Format
 176=Change the format of the code
 
-63=Compile\tCtrl+F9
+63=Compile
 64=Compile current file
-65=Compile && Run\tF9
+65=Compile && Run
 66=Compile and run current file
-67=Run\tShift+Ctrl+F9
+67=Run
 68=Run previously compiled file
-69=Quick Run\tF5
+69=Quick Run
 70=Run program without saving (uses temp file)
-71=CMD Prompt\tF8
+71=CMD Prompt
 72=Open command prompt
 73=&Parameters...
 74=Set parameters to pass to your program
@@ -100,7 +100,7 @@
 77=&Show exit code
 78=Show\'s program exit code.
 
-79=&About...\tF1
+79=&About...
 80=Show about dialog
 
 81=Close All
@@ -260,3 +260,29 @@
 216=splash screen logo
 217=testers
 218=...and everyone we forgot. :D
+
+;==================================
+;Additonal: (groups)
+;searching stuff
+219=Find Text
+220=Replace Text
+221=Go To Line Number:
+222=Go To Line
+226=Search:
+;Type, as in "What type is the thing", to explain this
+227=Type
+228=Arguments
+
+;View
+223=Convert the format
+224=Sub/Function browser
+
+;About
+225=Language files by:
+
+;Untitled filename :)
+229=Untitled
+
+;Saving
+230=Save Changes?
+231=Save before exit?

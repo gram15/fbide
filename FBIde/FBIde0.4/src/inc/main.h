@@ -39,7 +39,7 @@
 #include <wx/listctrl.h>
 
 #include "../../FBIde0.4_private.h"
-#define FBUNNAMED       "Untitled"
+#define FBUNNAMED "Unnamed"
 #define KWGROUPS        4
 #define mySTC_STYLE_BOLD 	1
 #define mySTC_STYLE_ITALIC 	2

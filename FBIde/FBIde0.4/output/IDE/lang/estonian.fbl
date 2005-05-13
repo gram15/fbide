@@ -19,21 +19,21 @@
 9=&Käivita
 10=&Abi
 
-11=&Uus ..\tCtrl+N
+11=&Uus ..
 12=Tekita uus, tühi dokument
-13=&Ava ..\tCtrl+O
+13=&Ava ..
 14=Ava uus dokument
-15=&Salvesta\tCtrl+S
+15=&Salvesta
 16=Salvesta fail
-17=&Muuda nimi...\tCtrl+Shift+S
+17=&Muuda nimi...
 18=Salvesta fail uue nimega
 19=Salvesta &kõik
 20=Salvesta kõik avatud failid
-21=Sulge\tCtrl+F4
+21=Sulge
 22=Sulge käesolev fail
-23=Uus ak&en \tShift+Ctrl+N
+23=Uus ak&en 
 24=Ava uus editori aken
-25=&Välju\tCtrl+Q
+25=&Välju
 26=Välju FBIde'st
 169=Lae sessioon
 170=Laeb salvestatud sessiooni
@@ -42,63 +42,63 @@
 173=Sulge kõik
 174=Sulgeb kõik avatud failid
 
-27=&Võta tagasi\tCtrl+Z
+27=&Võta tagasi
 28=Tühista viimane tegevus
-29=&Ennista\tCtrl+Shift+Z
+29=&Ennista
 30=Võta viimane tühistus tagasi
-31=&Lõika\tCtrl+X
+31=&Lõika
 32=Lõikab märgistatud teksti lõikelauale
-33=&Kopeeri\tCtrl+C
+33=&Kopeeri
 34=Kopeerib valitud teksti lõikelauale
-35=K&leebi\tCtrl+V
+35=K&leebi
 36=Kleebib teksti lõikelaualt
-37=&Märgista kõik\tCtrl+A
+37=&Märgista kõik
 38=Märgistab kogu teksti dokumendis
-39=Märgista &rida\tCtrl+L
+39=Märgista &rida
 40=Märgistab aktiivse rea
-41=Liiguta paremale\tTab
+41=Liiguta paremale
 42=Liigutab valitud teksti või aktiivse rea paremale
-43=Liiguta vasakule\tShift+Tab
+43=Liiguta vasakule
 44=Liigutab valitud teksti või aktiivse rea vasakule
-45=Kommenteeri blokk \tCtrl+M
+45=Kommenteeri blokk
 46=Kommenteerib välja valitud teksti või rea
-47=Eemalda kommentaar\tCtrl+Shift+M
+47=Eemalda kommentaar
 48=Eemaldab kommentaari märgid valitud tekstilt või realt
 
-49=Otsi \tCtrl+F
+49=Otsi
 50=Otsi lõikku dokumendist
-51=Otsi järgmist \tF3
+51=Otsi järgmist
 52=Korda viimast otsingut
-53=Asenda \tCtrl+R
+53=Asenda
 54=Asendab teksti dokumendis
-55=Mine reale...\tCtrl+G
+55=Mine reale...
 56=Läheb määratud reale dokumendis
 
 57=Seaded
 58=Muudab programmi sätteid
-59=Näita konsooli akent\tF4
+59=Näita konsooli akent
 60=Näitab kompilaatori poolt väljastatud teavet
-61=Protseduurid \tF2
+61=Protseduurid
 62=Avab protseduuride/funksioonide akna
 175=Vorminda
 176=Muudab teksti või väljastab BB/HTML koodi
 
-63=Kompileeri\tCtrl+F9
+63=Kompileeri
 64=Kompileerib aktiivse faili
-65=Kompileeri ja käivita\tF9
+65=Kompileeri ja käivita
 66=Kompileerib aktiivse faili ja käivitab selle
-67=Käivita\tShift+Ctrl+F9
+67=Käivita
 68=Käivitab viimati kompileeritud faili
-69=Kiirkäivitus\tF5
+69=Kiirkäivitus
 70=Kompileerib ja käivitab faili kasutades varufaili.
-71=Ava konsooli aken\tF8
+71=Ava konsooli aken
 72=Avab DOS'i konsooli akna
 73=Parameetrid
 74=Parameetrid, mis edastatakse kompileeritud programmi käivitamisel
 77=Väljumiskood
 78=Näitab programmi väljumiskoodi
 
-79=Programmist\tF1
+79=Programmist
 80=Näitab teavet selle programmi kohta
 
 81=Sulge kõik
@@ -257,3 +257,29 @@
 215=veebimeister ja dokumentatsioon
 216=testijad
 217=...ja kõik ülejäänud kelle me unustasime. :D
+
+;==================================
+;Additonal: (groups)
+;searching stuff
+219=Otsi teksti
+220=Asenda tekst
+221=Mine reale number:
+222=Mine reale
+226=Otsi:
+;Type, as in "What type is the thing", to explain this
+227=Tüüp
+228=Argumendid
+
+;View
+223=Konverdi vorming
+224=Alamprogrammi\funktsioonibrauser
+
+;About
+225=Keelefailid:
+
+;Untitled filename :)
+229=Nimetu
+
+;Saving
+230=Salvesta muutused?
+231=Salevsta enne väljumist?

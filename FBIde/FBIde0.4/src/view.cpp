@@ -52,7 +52,7 @@ void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
     Buffer * buff = bufferList[index];
     if (buff->GetFileType()!=0) return;
     
-    formatDialog=new format(this, -1, "Convert the format");
+    formatDialog=new format(this, -1, Lang[223]); //Convert the format
     formatDialog->Show();
     
     return;
@@ -81,7 +81,7 @@ void MyFrame::OnSubs (wxCommandEvent 	&WXUNUSED(event)) {
     if (stc==0) return;
     if (SFDialog) return;
 
-    SFDialog = new SFBrowser(this, -1, "Sub/Function browser");
+    SFDialog = new SFBrowser(this, -1, Lang[224]); //Sub/Function Browser
     SFDialog->Show();
 
     return;

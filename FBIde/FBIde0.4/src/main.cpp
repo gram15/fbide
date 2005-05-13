@@ -158,7 +158,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 void MyFrame::OnClose 	(wxCloseEvent &event) {
     
     if (bufferList.GetModifiedCount()) {
-        int result = wxMessageBox("Save changes?", "Save before exit?", wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
+        int result = wxMessageBox(Lang[230], Lang[231], wxYES_NO | wxCANCEL | wxICON_EXCLAMATION);
         if (result==wxCANCEL) return;
         if (result==wxYES) {
             OnCloseAll ();
