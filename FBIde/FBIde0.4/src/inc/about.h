@@ -34,7 +34,7 @@ class about:public wxDialog
 {
  friend class aboutEvt;
 public:
- about(wxWindow* parent, wxWindowID id = -1, const wxString& title = wxT(""), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxDIALOG_NO_PARENT|wxDEFAULT_DIALOG_STYLE|wxMINIMIZE_BOX|wxMAXIMIZE_BOX, const wxString& name = wxT("dialogBox"));
+ about(wxWindow* parent, wxWindowID id = -1, const wxString& title = wxT("About FBIde"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxCAPTION|wxCLOSE_BOX|wxDIALOG_NO_PARENT|wxDEFAULT_DIALOG_STYLE, const wxString& name = wxT("dialogBox"));
 // Pointer control
  wxStaticBitmap *bm3;
  wxButton *button_ok;
