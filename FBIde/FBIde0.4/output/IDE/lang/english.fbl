@@ -39,7 +39,7 @@
 170=Loads previously saved session
 171=Save session
 172=Saves current session
-173=Close All
+173=Close all
 174=Close all opened files
 
 27=&Undo
@@ -59,16 +59,16 @@
 41=&Indent increase
 42=Indent selected text to right
 43=Indent reduce
-44=Deindent selected text to left
+44=Unindent selected text to left
 45=Comment block
 46=Comments out selected text
-47=UnComment block
-48=Uncomments selected text
+47=Uncomment block
+48=Uncomment selected text
 
 49=Find
 50=Find in the document
-51=Find Next
-52=Repeat lest search
+51=Find next
+52=Repeat last search
 53=Replace
 54=Replace text in the document
 55=Goto line...
@@ -85,17 +85,17 @@
 
 63=Compile
 64=Compile current file
-65=Compile && Run
+65=Compile && run
 66=Compile and run current file
 67=Run
 68=Run previously compiled file
-69=Quick Run
+69=Quick run
 70=Run program without saving (uses temp file)
-71=CMD Prompt
+71=CMD prompt
 72=Open command prompt
 73=&Parameters...
 74=Set parameters to pass to your program
-75=&Compiler Parameters...
+75=&Compiler parameters...
 76=Set compiler parameter list prototype
 77=&Show exit code
 78=Show\'s program exit code.
@@ -103,7 +103,7 @@
 79=&About...
 80=Show about dialog
 
-81=Close All
+81=Close all
 82=Close all opened files
 
 
@@ -112,7 +112,7 @@
 84=Open file (Ctrl+O)
 85=Save file (Ctrl+S)
 86=Save all files
-87=Close current file
+87=Close current file (Ctrl+F4)
 
 88=Cut (Ctrl+X)
 89=Copy (Ctrl+C)
@@ -123,13 +123,13 @@
 
 93=Compile (Ctrl+F9)
 94=Run (Ctrl+Shift+F9)
-95=Compile and Run (F9)
+95=Compile and run (F9)
 96=Quick run (F5)
 97=Open/Close output window
 
 
 ;FBIde Settings dialog box
-98=FBIde Settings
+98=FBIde settings
 99=General
 100=Themes
 101=Keywords
@@ -143,18 +143,18 @@
 106=Use syntax highlighting
 107=Show right margin
 108=Show line endings
-109=Show whitespaces
-110=Show indendantion guides
+109=Show whitespace
+110=Show indentation guides
 111=Fold margin
 112=Auto indent
-116=Rightmargin Width
+116=Right margin width
 117=Tab Size
 201=Language
 202=NB! Changing language needs restart of the FBIde!
-203=Select yout language:
+203=Select your language:
 
 ;Compile tab
-113=Compiler Settings
+113=Compiler settings
 114=Compiler path
 115=Command
 
@@ -163,12 +163,12 @@
 118=Comments
 119=Numbers
 120=Keywords 1
-121=String Closed
+121=String closed
 122=Preprocessor
 123=Operator
 124=Identifier
 125=Date (doesn't work)
-126=String Open
+126=String open
 127=Keywords 2
 128=Keywords 3
 129=Keywords 4
@@ -190,9 +190,9 @@
 143=Type
 144=Foreground
 145=Background
-146=Fontstyle
+146=Font style
 147=Font\r\n
-148=Fontsize\r\n
+148=Font size\r\n
 149=Keywords\r\n
 150=Select keyword group
 151=Group 1
@@ -222,11 +222,11 @@
 179=Error
 180=You need first to compile the program before you can run! Compile?
 181=Compile?
-182=An error occured when trying to rin \"
+182=An error occurred when trying to run \"
 183=File is modified and before continuing it needs to be saved!
 184=Save file?
 
-185=ExitCode
+185=Exit code
 
 ;File stuff
 186=Load file
@@ -251,8 +251,8 @@
 207=credits:
 208=programmers
 209=head programmer, project administrator and founder of the project
-210=project supervisor, network code (client and serverside)
-211=autocompletion code
+210=project supervisor, network code (client and server side)
+211=auto completion code
 212=code exporting and formatting routines
 213=internationalization (i18n) modules
 214=misc
@@ -262,7 +262,7 @@
 218=...and everyone we forgot. :D
 
 ;==================================
-;Additonal: (groups)
+;Additional: (groups)
 ;searching stuff
 219=Find Text
 220=Replace Text
@@ -284,5 +284,5 @@
 229=Untitled
 
 ;Saving
-230=Save Changes?
+230=Save changes?
 231=Save before exit?
