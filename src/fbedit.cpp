@@ -419,6 +419,17 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 
 void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     event.Skip();
+    if (event.ControlDown()) {
+        int key = event.GetKeyCode();
+        if (key>=48 && key <= 57) {
+            int tab = key-49;
+            if (tab!=(int)Parent->FBNotebook->GetSelection()&&
+                tab< (int)Parent->FBNotebook->GetPageCount()) {
+                Parent->FBNotebook->SetSelection(tab);
+            }
+            return;
+        }
+    }
     if (!event.ControlDown()) return;
     SetMouseDownCaptures(false);
     StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
