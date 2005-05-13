@@ -154,6 +154,7 @@ void BufferList::RemoveBuffer(int index)
  */
 void BufferList::SetBufferModified(int index, bool status)
 {
+    if (buffers[index]->GetModified()==status) return;
     buffers[index]->SetModified(status);
     if (status) modifiedCount++;
     else modifiedCount--;
@@ -166,8 +167,8 @@ void BufferList::SetBufferModified(int index, bool status)
  */
 void BufferList::SetBufferUnModified(int index)
 {
-    buffers[index]->SetModified(false);
-    modifiedCount--;
+//    buffers[index]->SetModified(false);
+//    modifiedCount--;
 }
 
 void BufferList::SetBuffer(int index, Buffer* buff) {
