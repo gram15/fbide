@@ -265,10 +265,10 @@ void Buffer::SetModified(bool modified)
 {
     this->modified = modified;
 
-    if (modified && !wasModified)
-    {
-        wasModified = true;
-    }
+//    if (modified && !wasModified)
+//    {
+//        wasModified = true;
+//    }
 }
 
 /**

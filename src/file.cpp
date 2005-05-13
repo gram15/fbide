@@ -122,6 +122,7 @@ void MyFrame::OnCloseAll        ( ) {
             if (result==wxCANCEL) return;
             else if (result==wxYES) {
                 if (SaveFile(buff)) CloseFile(0);
+                else return;
             }
             else if (result==wxNO) CloseFile(0);
             bufferList.DecrModCount();
