@@ -273,19 +273,28 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      
      for(int i=0;i<(int)guts.Len();i++)
      {
-         char j00_n00b=guts.GetChar(i);
+         unsigned char j00_n00b=guts.GetChar(i);
          curword+=j00_n00b;
-//         if(j00_n00b==' '||
-//            j00_n00b=='#'||
-//            (j00_n00b>='{'&&j00_n00b<='}')||    // {\}
-//            (j00_n00b>=39&&j00_n00b<=45)||      // '()*+,-
-//            j00_n00b=='/'||
-//            (j00_n00b>=58&&j00_n00b<=62)||      //:;<=>
-//            (j00_n00b>=91&&j00_n00b<=94)||      //[\]^
-//            guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-//            i+1==(int)guts.Len())
-//         {
-         if(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
+         if((j00_n00b>0&&j00_n00b<46)||
+            j00_n00b==47||
+            (j00_n00b>57&&j00_n00b<65)||
+            (j00_n00b>90&&j00_n00b<95)||
+            j00_n00b==96||
+            (j00_n00b>122&&j00_n00b<128)||
+            i+1==(int)guts.Len())
+         {
+         /*if(j00_n00b==' '||
+            j00_n00b=='#'||
+            j00_n00b=='{'||
+            j00_n00b=='}'||
+            (j00_n00b>=39&&j00_n00b<=45)||      // '()*+,-
+            j00_n00b=='/'||
+            (j00_n00b>=58&&j00_n00b<=62)||      //:;<=>
+            (j00_n00b>=91&&j00_n00b<=94)||      //[\]^
+            guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
+            i+1==(int)guts.Len())
+         {*/
+/*         if(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
             guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
             j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
             i+1==(int)guts.Len()||j00_n00b==')'||j00_n00b=='='||
@@ -294,18 +303,15 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
             j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
             j00_n00b=='#')
-         {
+         {*/
 
              curword=curword.Mid(0,curword.Len()-1);
-             if(i+1==(int)guts.Len()&&!(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
-                guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-                j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
-                j00_n00b==')'||j00_n00b=='='||
-                j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
-                j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
-                j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
-                j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
-                j00_n00b=='#')) { curword+=j00_n00b; dontadd=true; }
+             if(i+1==(int)guts.Len()&&!((j00_n00b>0&&j00_n00b<46)||
+            j00_n00b==47||
+            (j00_n00b>57&&j00_n00b<65)||
+            (j00_n00b>90&&j00_n00b<95)||
+            j00_n00b==96||
+            (j00_n00b>122&&j00_n00b<128))) { curword+=j00_n00b; dontadd=true; }
              if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0)
              {
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[kwtyp-1])+ \
@@ -340,7 +346,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  {
                      output=output.Mid(0,output.Len()-1);
                      output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[4])+ \
-                     (sel==4?"\"":"")+tagend+j00_n00b;
+                     (sel==4?"\"":"")+tagend;
+                     output+=j00_n00b;
                  }
              }
              else if((j00_n00b=='\n'||j00_n00b=='\r')&&commenting)
@@ -349,7 +356,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  if(dotags)
                  {
                      output=output.Mid(0,output.Len()-1);
-                     output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend+j00_n00b;
+                     output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend;
+                     output+=j00_n00b;
                  }
              }
              if(!commenting&&!quoting&&j00_n00b=='\"')
@@ -359,10 +367,11 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  {
                      output=output.Mid(0,output.Len()-1);
                      output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[6])+ \
-                             (sel==4?"\"":"")+tagend+j00_n00b;
+                             (sel==4?"\"":"")+tagend;
+                     output+=j00_n00b;
                  }
              }
-             else if(j00_n00b=='\"'&&quoting)
+             else if((j00_n00b=='\"'||j00_n00b=='\n'||j00_n00b=='\r')&&quoting)
              {
                  quoting=false;
                  if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
@@ -371,7 +380,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              {
                  output=output.Mid(0,output.Len()-1);
                  if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[8])+ \
-                        (sel==4?"\"":"")+tagend+j00_n00b;
+                        (sel==4?"\"":"")+tagend;
+                        output+=j00_n00b;
                  for(i++;guts.Mid(i,1)!="\r"&&guts.Mid(i,1)!="\n"&&i<(int)guts.Len();i++)
                  {
                      output+=guts.Mid(i,1);
@@ -382,16 +392,19 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              {
                  output=output.Mid(0,output.Len()-1);
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
-                         (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+                         (sel==4?"\"":"")+tagend;
+                 output+=j00_n00b;
+                 output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
              }
-             if(dotags&&(j00_n00b=='('||j00_n00b==')'||j00_n00b=='='||
-                j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
-                j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
-                j00_n00b=='-'||j00_n00b==';'||j00_n00b==',')&&!commenting&&!quoting)
+             if(dotags&&((j00_n00b>39&&j00_n00b<46)||j00_n00b==47||
+                (j00_n00b>57&&j00_n00b<64)||j00_n00b==92||j00_n00b==94||
+                (j00_n00b>122&&j00_n00b<128))&&!commenting&&!quoting)
              {
                  output=output.Mid(0,output.Len()-1);
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
-                         (sel==4?"\"":"")+tagend+j00_n00b+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+                         (sel==4?"\"":"")+tagend;
+                 output+=j00_n00b;
+                 output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
              }
          }
      }
