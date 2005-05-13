@@ -68,6 +68,8 @@ void about::VwXinit()
     myarr.Add("SJ Zero\t\tNexinarus");
     myarr.Add("Ak00ma\t\tshiftLynx");
     myarr.Add("");
+    myarr.Add("Language files by:"); //Language files by:
+    myarr.Add("");
     myarr.Add(Parent->Lang[218]);
     wxString tag="";
     wxTextAttr myattr=txm7->GetDefaultStyle();

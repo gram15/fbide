@@ -51,7 +51,7 @@ SFBrowser::SFBrowser(   wxWindow* parent,
         wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
         
     SearchLabel=new wxStaticText(Panel,-1, wxT(""),wxPoint(5,7),wxSize(60,13),wxST_NO_AUTORESIZE);
-    SearchLabel->SetLabel(wxT("Search:"));
+    SearchLabel->SetLabel(wxT(Parent->Lang[226])); //Search
     
     SearchBox=new wxTextCtrl(Panel, SearchBoxId,wxT(""),wxPoint(70,5),wxSize(220,21),wxTE_PROCESS_ENTER );
     wxBoxSizer * Sizer = new wxBoxSizer(wxVERTICAL);
@@ -82,15 +82,15 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     
     
     wxListItem itemCol;
-    itemCol.SetText(_T("Line"));
+    itemCol.SetText(_T(Parent->Lang[165]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(0, itemCol);
 
-    itemCol.SetText(_T("Type"));
+    itemCol.SetText(_T(Parent->Lang[227]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(1, itemCol);
     
-    itemCol.SetText(_T("Arguments"));
+    itemCol.SetText(_T(Parent->Lang[228]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(2, itemCol);
 
@@ -201,7 +201,7 @@ void SFBrowser::OnEnter ( wxCommandEvent& event ) {
 
 void SFBrowser::OnSelect ( wxListEvent& event ) {
     ChangePos = true;
-    FB_Edit * stc = Parent->stc;
+//    FB_Edit * stc = Parent->stc;
     int index = event.GetIndex();
     unsigned long linnr = 0;
     SFList->GetItemText(index).ToULong(&linnr);

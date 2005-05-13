@@ -185,7 +185,7 @@ int Buffer::GetSelectionStart()
  */
 bool Buffer::IsUntitled()
 {
-    return fileName == "Untitled";
+    return fileName == "Untitled"; //Untitled
 }
 
 /**
