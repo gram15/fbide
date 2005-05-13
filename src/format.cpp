@@ -305,7 +305,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             j00_n00b=='#')
          {*/
 
-             curword=curword.Mid(0,curword.Len()-1);
+             curword=curword.Left(curword.Len()-1);
              if(i+1==(int)guts.Len()&&!((j00_n00b>0&&j00_n00b<46)||
             j00_n00b==47||
             (j00_n00b>57&&j00_n00b<65)||
@@ -325,7 +325,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  switch(sel)
                  {
                       case 0:
-                          curword=curword.Mid(0,1).MakeUpper()+curword.Mid(1).MakeLower();
+                          curword=curword.Left(1).MakeUpper()+curword.Mid(1).MakeLower();
                           break;
                       case 1:
                            curword=curword.MakeUpper();
@@ -344,7 +344,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  commenting=true;
                  if(dotags)
                  {
-                     output=output.Mid(0,output.Len()-1);
+                     output=output.Left(output.Len()-1);
                      output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[4]+ \
                      (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
@@ -355,7 +355,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  commenting=false;
                  if(dotags)
                  {
-                     output=output.Mid(0,output.Len()-1);
+                     output=output.Left(output.Len()-1);
                      output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend;
                      output+=j00_n00b;
                  }
@@ -365,7 +365,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  quoting=true;
                  if(dotags)
                  {
-                     output=output.Mid(0,output.Len()-1);
+                     output=output.Left(output.Len()-1);
                      output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[6]+ \
                              (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
@@ -378,7 +378,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              }
              if(!commenting&&!quoting&&j00_n00b=='#'&&(i==0||(output.Mid(output.Len()-2,1)=="\n"||output.Mid(output.Len()-2,1)=="\r")))
              {
-                 output=output.Mid(0,output.Len()-1);
+                 output=output.Left(output.Len()-1);
                  if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[8]+ \
                         (sel==4?"\"":"")+tagend;
                         output+=j00_n00b;
@@ -390,7 +390,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              }
              else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')
              {
-                 output=output.Mid(0,output.Len()-1);
+                 output=output.Left(output.Len()-1);
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
@@ -400,7 +400,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                 (j00_n00b>57&&j00_n00b<64)||j00_n00b==92||j00_n00b==94||
                 (j00_n00b>122&&j00_n00b<128))&&!commenting&&!quoting)
              {
-                 output=output.Mid(0,output.Len()-1);
+                 output=output.Left(output.Len()-1);
                  output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
