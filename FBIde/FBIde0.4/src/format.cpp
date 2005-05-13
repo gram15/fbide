@@ -261,15 +261,15 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      int kwtyp=0;
      bool commenting=false,dontadd=false,quoting=false;
      
-     wxColour colours[]={GetClr(Style->Info[wxSTC_B_KEYWORD].foreground),
-                         GetClr(Style->Info[wxSTC_B_KEYWORD2].foreground),
-                         GetClr(Style->Info[wxSTC_B_KEYWORD3].foreground),
-                         GetClr(Style->Info[wxSTC_B_KEYWORD4].foreground),
-                         GetClr(Style->Info[wxSTC_B_COMMENT].foreground),
-                         GetClr(Style->Info[wxSTC_B_OPERATOR].foreground),
-                         GetClr(Style->Info[wxSTC_B_STRING].foreground),
-                         GetClr(Style->Info[wxSTC_B_NUMBER].foreground),
-                         GetClr(Style->Info[wxSTC_B_PREPROCESSOR].foreground)};
+     wxString colours[]={hex(GetClr(Style->Info[wxSTC_B_KEYWORD].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_KEYWORD2].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_KEYWORD3].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_KEYWORD4].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_COMMENT].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_OPERATOR].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_STRING].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_NUMBER].foreground)),
+                         hex(GetClr(Style->Info[wxSTC_B_PREPROCESSOR].foreground))};
      
      for(int i=0;i<(int)guts.Len();i++)
      {
@@ -314,11 +314,11 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
             (j00_n00b>122&&j00_n00b<128))) { curword+=j00_n00b; dontadd=true; }
              if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0)
              {
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[kwtyp-1])+ \
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[kwtyp-1]+ \
                          (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
              }
              else if(dotags&&!commenting&&!quoting&&isNumeric(curword))
-                 output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[7])+ \
+                 output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[7]+ \
                          (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
              else if(dokeyws&&!commenting&&!quoting&&isKeyword(curword)!=0)
              {
@@ -345,7 +345,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  if(dotags)
                  {
                      output=output.Mid(0,output.Len()-1);
-                     output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[4])+ \
+                     output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[4]+ \
                      (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
                  }
@@ -366,7 +366,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  if(dotags)
                  {
                      output=output.Mid(0,output.Len()-1);
-                     output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[6])+ \
+                     output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[6]+ \
                              (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
                  }
@@ -379,7 +379,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              if(!commenting&&!quoting&&j00_n00b=='#'&&(i==0||(output.Mid(output.Len()-2,1)=="\n"||output.Mid(output.Len()-2,1)=="\r")))
              {
                  output=output.Mid(0,output.Len()-1);
-                 if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[8])+ \
+                 if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[8]+ \
                         (sel==4?"\"":"")+tagend;
                         output+=j00_n00b;
                  for(i++;guts.Mid(i,1)!="\r"&&guts.Mid(i,1)!="\n"&&i<(int)guts.Len();i++)
@@ -391,7 +391,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')
              {
                  output=output.Mid(0,output.Len()-1);
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
                  output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
@@ -401,7 +401,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                 (j00_n00b>122&&j00_n00b<128))&&!commenting&&!quoting)
              {
                  output=output.Mid(0,output.Len()-1);
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+hex(colours[5])+ \
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
                  output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
