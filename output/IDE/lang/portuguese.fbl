@@ -8,7 +8,7 @@
 165=Linha
 166=Arquivo
 167=Erro nr
-168=Mensages
+168=Mensagens
 
 ;Menus
 4=&Arquivo
@@ -32,7 +32,7 @@
 21=&Fechar\tCtrl+F4
 22=Fecha o documento atual
 23=Nova &instância \tShift+Ctrl+N
-24=Abri uma nova instância do FBIde
+24=Abre uma nova instância do FBIde
 25=Sai&r\tCtrl+Q
 26=Sai do FBIde
 169=Carregar sessão...
@@ -43,9 +43,9 @@
 174=Fecha todos os documentos abertos
 
 27=&Desfazer\tCtrl+Z
-28=Desfaça a última ação
+28=Desfaz a última ação
 29=&Refazer\tCtrl+Shift+Z
-30=Refaça a última ação
+30=Refaz a última ação
 31=Co&rtar\tCtrl+X
 32=Corta o texto selecionado e copia para o clipboard
 33=&Copiar\tCtrl+C
@@ -66,13 +66,13 @@
 48=Remove os comentários do texto selecionado
 
 49=Procurar...\tCtrl+F
-50=Procura pelo texto específicado
+50=Procura pelo texto especificado
 51=Procurar Próximo \tF3
 52=Repete a última procura
 53=Substituir...\tCtrl+R
 54=Substitue um texto específico por outro
 55=Ir para linha...\tCtrl+G
-56=Vai para uma linha qualquer no documento
+56=Pula para uma linha qualquer no documento
 
 57=Configurações...
 58=Define as configurações da IDE
@@ -96,7 +96,7 @@
 73=&Parâmetros...
 74=Define os parâmetros que serão passados ao programa
 75=Parâmetros do &Compilador...
-76=Define os Parâmetros passados para o compilador
+76=Define os parâmetros passados para o compilador
 77=Mo&strar código de saída
 78=Mostra a resultado retornado pelo programa que foi executado
 
@@ -123,7 +123,7 @@
 
 93=Compilar (Ctrl+F9)
 94=Executar (Ctrl+Shift+F9)
-95=Compilar and Run (F9)
+95=Compilar e Executar (F9)
 96=Execução rápida (F5)
 97=Abrir/Fechar a janela de saída
 
@@ -148,7 +148,7 @@
 111=Dobrar à margem
 112=Auto indentação
 116=Largura da margem direita
-117=Lagura do Tab
+117=Largura da tabulação
 201=Linguagem
 202=Obs.: reinicie a IDE se a linguagem for modificada.
 203=Selecionar a linguagem:
@@ -172,7 +172,7 @@
 127=Palavras-chave 2
 128=Palavras-chave 3
 129=Palavras-chave 4
-130=Caret
+130=Til
 131=Númeração de linhas
 132=Texto selecionado
 133=Pares encontrados
@@ -208,7 +208,7 @@
 
 159=Tema \"
 160=\" já existe!\nDeseja sobrescrevê-lo?
-161=Message
+161=Mensagem
 
 
 ;Conversion stuff
@@ -223,7 +223,7 @@
 180=É preciso compilar o programa antes de executá-lo. Compilar?
 181=Compilar?
 182=Um erro ocorreu ao executar \"
-183=O documento foi modificado e é precisa salvá-lo antes de continuar.
+183=O documento foi modificado e é preciso salvá-lo antes de continuar.
 184=Salvar o documento?
 
 185=Código de saída
@@ -236,11 +236,11 @@
 190=O arquivo '%s' foi modificado.\nSalvar modificações?
 192=Arquivo modificado
 193=Códigos-fonte (*.bas)|*.bas|Cabeçalhos(*.bi)|*.bi|Arquivos HTML (*.html)|*.html|
-194=Todos os arquivo(*)|*.*|
+194=Todos os arquivos(*)|*.*|
 195=Salvar arquivo
 196=Usar o novo arquivo?
 197=Questão
-198=Sessão FBIde (*.fbs)|*.fbs|Todos os arquivo(*)|*.*|
+198=Sessão FBIde (*.fbs)|*.fbs|Todos os arquivos(*)|*.*|
 199=Salvar sessão
 200=Arquivos HTML (*.html)|*.html|
 
@@ -254,7 +254,7 @@
 210=supervisor do projeto, código de rede (cliente e servidor)
 211=código de auto-inserção
 212=rotinas de formatação e código de exportação
-213=módulos de internationalização (i18n)
+213=módulos de internacionalização (i18n)
 214=misc
 215=documentação e webmaster
 216=testes
