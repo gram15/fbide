@@ -429,7 +429,7 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
             }
             return;
         }
-        else if(key==WXK_F4) { Parent->OnCloseFile(); }
+//        else if(key==WXK_F4) { Parent->OnCloseFile(); }
     }
     if (!event.ControlDown()) return;
     SetMouseDownCaptures(false);
