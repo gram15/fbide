@@ -1,4 +1,5 @@
 [FBIde]
+; by v!ct0r
 
 ;Generic stuff
 1=Benvindo ao FBIde
@@ -257,5 +258,31 @@
 213=módulos de internacionalização (i18n)
 214=misc
 215=documentação e webmaster
-216=testes
-217=...e a todos de quem me esqueci. :D
+216=splash screen logo
+217=testes
+218=...e a todos de quem me esqueci. :D
+
+;Additional: (groups) 
+;searching stuff 
+219=Procurar Texto 
+220=Substituir Texto 
+221=Ir Para a Linha Nr: 
+222=Ir Para a Linha 
+226=Procurar: 
+;Type, as in "What type is the thing", to explain this 
+227=Tipo 
+228=Argumentos 
+
+;View 
+223=Mudar o formato 
+224=Navegador de Sub/Function 
+
+;About 
+225=Tradu?ões feitas por: 
+
+;Untitled filename :) 
+229=SemTitulo 
+
+;Saving 
+230=Salvar modifica?ões? 
+231=Salvar antes de sair?
