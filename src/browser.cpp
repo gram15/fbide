@@ -34,6 +34,7 @@ BEGIN_EVENT_TABLE( SFBrowser, wxDialog)
     EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
     EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
     EVT_LIST_ITEM_ACTIVATED(-1, SFBrowser::OnActivate)
+    EVT_KEY_UP( SFBrowser::OnKeyUp )
 END_EVENT_TABLE()
 
 SFBrowser::SFBrowser(   wxWindow* parent,
@@ -183,6 +184,11 @@ void SFBrowser::OnCharAdded ( wxCommandEvent& event ) {
     return;
 }
 
+void SFBrowser::OnKeyUp (wxKeyEvent &event) {
+//    wxMessageBox("Works");
+//    if(event.GetKeyCode()==27) Close(true);
+//    return;
+}
 
 void SFBrowser::OnEnter ( wxCommandEvent& event ) {
     ChangePos = true;

@@ -68,7 +68,7 @@ void MyFrame::LoadUI () {
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(2, itemCol);
 
-    itemCol.SetText(_T(Lang[168])); //"Messages"
+    itemCol.SetText(_T(Lang[161])); //"Messages"
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     FBConsole->InsertColumn(3, itemCol);
     

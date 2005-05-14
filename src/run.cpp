@@ -176,7 +176,7 @@ void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
 }
 
 void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
-    wxTextEntryDialog dialog(this, _T(Lang[178]), //"Parameters to pass to your program"
+    wxTextEntryDialog dialog(this, _T(Lang[177]), //"Parameters to pass to your program"
                                   _T(Lang[158]),
                                   _T(ParameterList),
                            wxOK | wxCANCEL);
