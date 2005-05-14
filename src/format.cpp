@@ -230,7 +230,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
      wxString guts=Parent->stc->GetText(),tagstart="",tagend="";
      int sel=chc15->GetSelection();
      bool dotags=false,dokeyws=false;
-     output="";
+     wxString output="";
      StyleInfo * Style = &(Parent->Style);
      switch(sel)
      {
@@ -386,7 +386,8 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  {
                      output+=guts.Mid(i,1);
                  }
-                 if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend+guts.Mid(i,1);
+                 if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
+                 output+=guts.Mid(i,1);
              }
              else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')
              {
@@ -408,7 +409,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              }
          }
      }
-     if (sel < 4) {
+     if (sel < 3) {
          buff = stc->buff;
          buff->SetPositions(stc->GetSelectionStart(), stc->GetSelectionEnd());
          buff->SetLine(stc->GetFirstVisibleLine());
@@ -452,6 +453,7 @@ void format::initkeywords()
     char j00_n00b;
     for(int i=0;i<4;i++)
     {
+        keyw[i].Clear();
         for(int j=0;j<(int)Parent->Keyword[i+1].Len();j++)
         {
             j00_n00b=(char)*Parent->Keyword[i+1].Mid(j,1);

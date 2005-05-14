@@ -404,7 +404,7 @@ void MyFrame::SetSTCPage ( int index ) {
             CurrentFileType = buff->GetFileType();
             stc->LoadSTCTheme( CurrentFileType );
         }
-    stc->LoadSTCSettings();
+        stc->LoadSTCSettings();
     stc->Thaw();
     if (SFDialog) SFDialog->Rebuild();
 }
