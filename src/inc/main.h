@@ -193,6 +193,8 @@ public:
     void OnGoToError        ( wxListEvent& event );
     void GoToError          ( int Linenr, wxString FileName );
     
+    void EnableMenus       ( bool state );
+    
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );
@@ -394,7 +396,6 @@ enum
 	Menu_QuickRun,
 	Menu_CmdPromt,
 	Menu_Parameters,
-	Menu_CompParam,
 	Menu_ShowExitCode
 };
 

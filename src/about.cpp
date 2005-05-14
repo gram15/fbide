@@ -47,7 +47,6 @@ void about::VwXinit()
     myarr.Add("");
     myarr.Add("[bold]"+Parent->Lang[207]);
     myarr.Add(Parent->Lang[208]+"[/bold]");
-    myarr.Add("");
     myarr.Add("VonGodric - "+Parent->Lang[209]);
     myarr.Add("marzec - "+Parent->Lang[210]);
     myarr.Add("dilyias - "+Parent->Lang[211]);
@@ -55,20 +54,20 @@ void about::VwXinit()
     myarr.Add("Madedog - "+Parent->Lang[213]);
     myarr.Add("");
     myarr.Add("[bold]"+Parent->Lang[214]+"[/bold]");
-    myarr.Add("");
     myarr.Add("aetherFox - "+Parent->Lang[215]);
     myarr.Add("Mecki - "+Parent->Lang[216]);
     myarr.Add("");
     myarr.Add("[bold]"+Parent->Lang[217]+"[/bold]");
-    myarr.Add("");
     myarr.Add("Shadowolf\tAetherFox");
     myarr.Add("Z!re\t\tak00ma");
-    myarr.Add("nodveidt\t\tWhitetiger");
-    myarr.Add("DrV\t\tAdosorken");
+    myarr.Add("Adosorken\tWhitetiger");
+    myarr.Add("DrV\t\tshiftLynx");
     myarr.Add("SJ Zero\t\tNexinarus");
-    myarr.Add("Ak00ma\t\tshiftLynx");
     myarr.Add("");
-    myarr.Add("Language files by:"); //Language files by:
+    myarr.Add("[bold]Language files by[/bold]"); //Language files by:
+    myarr.Add("v!ct0r\t\t- portuguese");
+    myarr.Add("Mecki\t\t- german");
+    myarr.Add("MystikShadows\t- french");
     myarr.Add("");
     myarr.Add(Parent->Lang[218]);
     wxString tag="";

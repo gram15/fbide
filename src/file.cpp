@@ -178,6 +178,7 @@ void MyFrame::CloseFile          ( int index ) {
         delete stc;
         stc = 0;
         FBNotebook->Hide();
+        EnableMenus(false);
     }
     else {
         SetSTCPage(FBNotebook->GetSelection());

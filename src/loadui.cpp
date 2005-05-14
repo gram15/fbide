@@ -100,6 +100,8 @@ void MyFrame::LoadUI () {
     FBNotebook->Hide();
     stc=0;
 
+    EnableMenus(false);
+    
     return;
 
 }
@@ -198,9 +200,10 @@ void MyFrame::LoadMenu () {
     MenuBar->Append(_FB_Edit,  _T(Lang[5]));
     MenuBar->Append(FB_Search,_T(Lang[6]));
     MenuBar->Append(FB_View,  _T(Lang[7]));
-//    MenuBar->Append(FB_Tools, _T(Lang[8]));
     MenuBar->Append(FB_Run,   _T(Lang[9]));
     MenuBar->Append(HelpMenu, _T(Lang[10]));
+    MenuBar->Enable(1, false);
+    
     
     SetMenuBar(MenuBar);
     return;
@@ -258,7 +261,29 @@ void MyFrame::LoadToolBar () {
     return;
 }
 
+void MyFrame::EnableMenus ( bool state ) {
+    for (int i=Menu_Save ; i<=(ProcessIsRunning ? Menu_Subs : Menu_QuickRun); i++) {
+        if (i==Menu_Result||i==Menu_Settings||
+            i==Menu_SessionLoad||i==Menu_FileHistory) continue;
+        MenuBar->Enable(i, state );
+    }
+    FB_Toolbar->EnableTool(Menu_Save, state);
+    FB_Toolbar->EnableTool(Menu_SaveAll, state);
+    FB_Toolbar->EnableTool(Menu_Close, state);
+    FB_Toolbar->EnableTool(Menu_Cut, state);
+    FB_Toolbar->EnableTool(Menu_Copy, state);
+    FB_Toolbar->EnableTool(Menu_Paste, state);
+    FB_Toolbar->EnableTool(Menu_Undo, state);
+    FB_Toolbar->EnableTool(Menu_Redo, state);
+    if ( !ProcessIsRunning ) {
+        FB_Toolbar->EnableTool(Menu_Compile, state);
+        FB_Toolbar->EnableTool(Menu_Run, state);
+        FB_Toolbar->EnableTool(Menu_CompileAndRun, state);
+        FB_Toolbar->EnableTool(Menu_QuickRun, state);
+    }
 
+    return;
+}
 
 //------------------------------------------------------------------------------
 // Load Statusbar
@@ -281,6 +306,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
 
     
     if (stc==NULL) {
+        EnableMenus(true);
         OldTabSelected = -1;
         stc = new FB_Edit( this, FBNotebook, -1, "" );
         stc->Freeze();
