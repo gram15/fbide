@@ -52,7 +52,8 @@ public:
 
     void GenerateList( wxString Search );
     
-    void OnClose (wxCloseEvent & event);
+    void OnClose ( wxCloseEvent & event);
+    void OnKeyUp ( wxKeyEvent &event );
 //    void SFBClose (  ) { delete this; }
     
     void Rebuild (  );
