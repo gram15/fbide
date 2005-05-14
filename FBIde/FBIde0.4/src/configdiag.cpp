@@ -158,7 +158,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     But_GetCompilerPath->SetLabel(wxT("..."));
     
     //Compiler command
-    st41=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,60),wxSize(200,13),wxST_NO_AUTORESIZE);
+    st41=new wxStaticText(CD_Compiler,-1,wxT(""),wxPoint(10,60),wxSize(70, 13),wxST_NO_AUTORESIZE);
     st41->SetLabel(wxT(Parent->Lang[115]));
     
     CompilerCommand=new wxTextCtrl(CD_Compiler,-1,wxT(""),wxPoint(85,58),wxSize(250,21));
