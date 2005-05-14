@@ -168,9 +168,10 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
 }
 
 void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
-    wxString OS=wxGetOsDescription();
-    if (OS.Find("NT")) wxExecute("cmd.exe");
-    else wxExecute("command.com");
+    int major = 0, minor = 0;
+    int result = wxGetOsVersion(&major, &minor);
+    if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
+    else if(result==wxWIN95) wxExecute("command.com");
     return;
 }
 
