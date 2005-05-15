@@ -75,7 +75,7 @@ void MyFrame::LoadUI () {
     
     FBConsole->SetColumnWidth( 0, 60 );
     FBConsole->SetColumnWidth( 1, 150 );
-    FBConsole->SetColumnWidth( 2, 60 );
+    FBConsole->SetColumnWidth( 2, 100 );
     FBConsole->SetColumnWidth( 3, 600 );
     
     s_Console->Add(FBConsole, 1, wxGROW | wxALL, 0);
