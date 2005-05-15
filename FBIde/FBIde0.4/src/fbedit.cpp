@@ -375,6 +375,9 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
                 else   { if (plineind<=lineInd) lineInd -= TabSize; } }
                 
         }
+        else if(clfkw == "next" && plfkw != "for")
+            if (plineind<=lineInd) lineInd -= TabSize;
+            
         SetLineIndentation (cLine-1, lineInd);
     }
     
@@ -387,6 +390,9 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
         }
         else if (clfkw == "while") {
             if (cllkw != "wend") lineInd += TabSize;
+        }
+        else if (clfkw == "for") {
+            if (cllkw != "next") lineInd += TabSize;
         }
         else if (clfkw == "type") {
             if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
