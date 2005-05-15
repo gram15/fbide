@@ -99,6 +99,7 @@ Language files by:
    - Mecki		- german
    - MystikShadows	- french
    - Vinicius Pontes	- spanish
+   - dutchtux		- dutch
 
 
 ...and everyone we forgot!
