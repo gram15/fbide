@@ -162,6 +162,8 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
                                  }
                             }              
                         }
+                        else if(clfkw == "next" && plfkw != "for")
+                            if (plineind<=lineInd) lineInd -= TabSize;
                     stc->SetLineIndentation (cLine-1, lineInd);
                 }  
                 if (stc->IsIndentWord(clfkw)) {
