@@ -58,7 +58,21 @@ void MyFrame::LoadSettings() {
     
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
-    if (CompilerPath == "") CompilerPath = EditorPath + "fbc.exe";
+    if (CompilerPath == ""||!wxFileExists(CompilerPath)) {
+        if (wxMessageBox("Compiler path not set or is currupt, set it now?", 
+                         "Warning",
+                         wxYES_NO |
+                         wxICON_HAND ) ==wxYES) {
+            wxFileDialog dlg (this,
+                _T("Open compiler"), //Open file
+                _T(""),
+                _T(".exe"),
+                _T("All programs (*.exe)|*.exe"), //"All programs (*.exe)|*.exe"
+            wxFILE_MUST_EXIST | wxCHANGE_DIR);
+            if (dlg.ShowModal() == wxID_OK)
+                CompilerPath=dlg.GetPath();
+        }
+    }
 
     SyntaxFile              = PrefsINI.Read("syntax",   "");
     if (SyntaxFile=="") SyntaxFile = "fbfull.lng";

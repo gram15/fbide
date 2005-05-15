@@ -50,7 +50,6 @@ F9		- Compile and run
 Ctrl+F9		- Compile
 Ctrl+Shift+F9	- Run
 F5		- Quick run
-F8		- Command prompt
 
 
 Misc
@@ -58,5 +57,5 @@ Misc
 F1		- About dialog
 F2		- Sub/Function browser
 F4		- Open/Close compiler output area
-
+F8		- Command prompt
 
