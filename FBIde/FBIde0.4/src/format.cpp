@@ -108,83 +108,86 @@ void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
 void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
      //[64b]Code event VwX...Don't modify[64a]//
      //add your code here
-     for(int i=0;i<Parent->stc->GetLineCount();i++)
-     {
-            //wxString line=Parent->stc->GetLine(i).Trim(false).Trim(true);
-            int cLine=i;
-            int lineInd=Parent->stc->GetLineIndentation(cLine-1);
-            int plineind=Parent->stc->GetLineIndentation(cLine-2);
-            int TabSize=Parent->Prefs.TabSize;
-            
-            //Previous line
-            wxString TempCL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-1));
-            wxString clfkw=Parent->stc->GetFirstKw(TempCL);
-            wxString cllkw=Parent->stc->GetLastKw(TempCL);
-            
-            //Line before previous
-            wxString TempPL=Parent->stc->ClearCmdLine(Parent->stc->GetLine(cLine-2));
-            wxString plfkw=Parent->stc->GetFirstKw(TempPL);
-            wxString pllkw=Parent->stc->GetLastKw(TempPL);
-            
-            
-            if (lineInd>0) {
-                if ( clfkw == "end" && Parent->stc->IsEndDeIndentWord(cllkw) ) {
-                    if (cllkw!=plfkw) { 
-                        if (cllkw == "select" && plfkw == "case") lineInd = plineind;
-                        else if (plineind<=lineInd) lineInd -= TabSize; 
-                    }
-                    else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
-                    else if (plfkw == "if" && pllkw!="then") {
-                        if (plineind<=lineInd) lineInd -= TabSize; }
-                        else lineInd = plineind;
-                    }
-                    else if (clfkw != pllkw) {
-                        if (( clfkw == "next" && plfkw != "for")||
-                            ( clfkw == "loop" && plfkw != "do")||
-                            ( clfkw == "wend" && plfkw != "while")) {
-                            if (plineind<=lineInd) lineInd -= TabSize;
+     FB_Edit * stc = Parent->stc;
+     stc->BeginUndoAction();
+         for(int i=0;i<stc->GetLineCount();i++)
+         {
+                //wxString line=Parent->stc->GetLine(i).Trim(false).Trim(true);
+                int cLine=i;
+                int lineInd=stc->GetLineIndentation(cLine-1);
+                int plineind=stc->GetLineIndentation(cLine-2);
+                int TabSize=Parent->Prefs.TabSize;
+                
+                //Previous line
+                wxString TempCL=stc->ClearCmdLine(stc->GetLine(cLine-1));
+                wxString clfkw=stc->GetFirstKw(TempCL);
+                wxString cllkw=stc->GetLastKw(TempCL);
+                
+                //Line before previous
+                wxString TempPL=stc->ClearCmdLine(stc->GetLine(cLine-2));
+                wxString plfkw=stc->GetFirstKw(TempPL);
+                wxString pllkw=stc->GetLastKw(TempPL);
+                
+                
+                if (lineInd>0) {
+                    if ( clfkw == "end" && stc->IsEndDeIndentWord(cllkw) ) {
+                        if (cllkw!=plfkw) { 
+                            if (cllkw == "select" && plfkw == "case") lineInd = plineind;
+                            else if (plineind<=lineInd) lineInd -= TabSize; 
                         }
-                        else if (( clfkw == "next" && plfkw == "for")||
-                                 ( clfkw == "loop" && plfkw == "do")||
-                                 ( clfkw == "wend" && plfkw == "while"))
-                                 lineInd = plineind;
-                        else if ( clfkw == "case" ) {
-                             if (plfkw == "case" || plfkw == "select") { lineInd = plineind; }
-                             else  { if (plineind<=lineInd) lineInd -= TabSize; }
+                        else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
+                        else if (plfkw == "if" && pllkw!="then") {
+                            if (plineind<=lineInd) lineInd -= TabSize; }
+                            else lineInd = plineind;
                         }
-                        else if ( clfkw == "else" || clfkw == "elseif" ) {
-                             if ((plfkw == "if" && pllkw == "then") ||
-                                 (plfkw == "elseif")) { lineInd = plineind; } 
-                             else {
-                                  if (plineind<=lineInd) lineInd -= TabSize;
-                             }
-                        }              
+                        else if (clfkw != pllkw) {
+                            if (( clfkw == "next" && plfkw != "for")||
+                                ( clfkw == "loop" && plfkw != "do")||
+                                ( clfkw == "wend" && plfkw != "while")) {
+                                if (plineind<=lineInd) lineInd -= TabSize;
+                            }
+                            else if (( clfkw == "next" && plfkw == "for")||
+                                     ( clfkw == "loop" && plfkw == "do")||
+                                     ( clfkw == "wend" && plfkw == "while"))
+                                     lineInd = plineind;
+                            else if ( clfkw == "case" ) {
+                                 if (plfkw == "case" || plfkw == "select") { lineInd = plineind; }
+                                 else  { if (plineind<=lineInd) lineInd -= TabSize; }
+                            }
+                            else if ( clfkw == "else" || clfkw == "elseif" ) {
+                                 if ((plfkw == "if" && pllkw == "then") ||
+                                     (plfkw == "elseif")) { lineInd = plineind; } 
+                                 else {
+                                      if (plineind<=lineInd) lineInd -= TabSize;
+                                 }
+                            }              
+                        }
+                    stc->SetLineIndentation (cLine-1, lineInd);
+                }  
+                if (stc->IsIndentWord(clfkw)) {
+                    if (clfkw == "if") {
+                        if (cllkw == "then") lineInd += TabSize;
                     }
-                Parent->stc->SetLineIndentation (cLine-1, lineInd);
-            }  
-            if (Parent->stc->IsIndentWord(clfkw)) {
-                if (clfkw == "if") {
-                    if (cllkw == "then") lineInd += TabSize;
-                }
-                else if (clfkw == "do") {
-                    if (cllkw != "loop") lineInd += TabSize;
-                }
-                else if (clfkw == "while") {
-                    if (cllkw != "wend") lineInd += TabSize;
-                }
-                else if (clfkw == "type") {
-                    if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
-                        (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
-                        lineInd += TabSize;
-                }
-                else if (clfkw=="function") {
-                    if (TempCL.Find('=')==-1) lineInd += TabSize;
-                }
-                else  lineInd += TabSize;
-            }  
-            Parent->stc->SetLineIndentation (cLine, lineInd);
-            //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
-     }
+                    else if (clfkw == "do") {
+                        if (cllkw != "loop") lineInd += TabSize;
+                    }
+                    else if (clfkw == "while") {
+                        if (cllkw != "wend") lineInd += TabSize;
+                    }
+                    else if (clfkw == "type") {
+                        if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
+                            (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
+                            lineInd += TabSize;
+                    }
+                    else if (clfkw=="function") {
+                        if (TempCL.Find('=')==-1) lineInd += TabSize;
+                    }
+                    else  lineInd += TabSize;
+                }  
+                stc->SetLineIndentation (cLine, lineInd);
+                //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
+         }
+    stc->EndUndoAction();
 } //end function
 
 void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init function
