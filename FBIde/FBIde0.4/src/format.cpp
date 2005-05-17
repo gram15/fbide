@@ -258,13 +258,13 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              dotags=true;
              tagstart="<";
              tagend=">";
-             output="<body style=\"font-size:12pt; background-color:#"+hex(GetClr(Style->DefaultBgColour))+"; color:#"+hex(GetClr(Style->DefaultFgColour))+"\"><pre>";
+             output="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=iso-8859-1\">\n<title></title>\n</head>\n<body style=\"font-size:12pt; background-color:#"+hex(GetClr(Style->DefaultBgColour))+"; color:#"+hex(GetClr(Style->DefaultFgColour))+"\"><pre>";
              break;
      }
      wxString curword="";
      initkeywords();
      int kwtyp=0;
-     bool commenting=false,dontadd=false,quoting=false;
+     bool commenting=false,dontadd=false,quoting=false,bold=false,italic=false;
      
      wxString colours[]={hex(GetClr(Style->Info[wxSTC_B_KEYWORD].foreground)),
                          hex(GetClr(Style->Info[wxSTC_B_KEYWORD2].foreground)),
@@ -275,56 +275,52 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                          hex(GetClr(Style->Info[wxSTC_B_STRING].foreground)),
                          hex(GetClr(Style->Info[wxSTC_B_NUMBER].foreground)),
                          hex(GetClr(Style->Info[wxSTC_B_PREPROCESSOR].foreground))};
-     
-     for(int i=0;i<(int)guts.Len();i++)
+     int teh_len=(int)guts.Len(),real_len=(int)guts.Len(),color=-1;
+     for(int i=0;i<teh_len;i++)
      {
          unsigned char j00_n00b=guts.GetChar(i);
          curword+=j00_n00b;
-         if((j00_n00b>0&&j00_n00b<46)||
+         if(j00_n00b!=38&&
+            (j00_n00b>0&&j00_n00b<46)||
             j00_n00b==47||
             (j00_n00b>57&&j00_n00b<65)||
             (j00_n00b>90&&j00_n00b<95)||
             j00_n00b==96||
-            (j00_n00b>122&&j00_n00b<128)||
-            i+1==(int)guts.Len())
+            (j00_n00b>122&&j00_n00b<128))
          {
-         /*if(j00_n00b==' '||
-            j00_n00b=='#'||
-            j00_n00b=='{'||
-            j00_n00b=='}'||
-            (j00_n00b>=39&&j00_n00b<=45)||      // '()*+,-
-            j00_n00b=='/'||
-            (j00_n00b>=58&&j00_n00b<=62)||      //:;<=>
-            (j00_n00b>=91&&j00_n00b<=94)||      //[\]^
-            guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-            i+1==(int)guts.Len())
-         {*/
-/*         if(j00_n00b=='('||j00_n00b==' '||j00_n00b==','||
-            guts.Mid(i,1).Trim(false).Trim(true)!=guts.Mid(i,1)||
-            j00_n00b=='['||j00_n00b=='\"'||j00_n00b=='\''||
-            i+1==(int)guts.Len()||j00_n00b==')'||j00_n00b=='='||
-            j00_n00b=='{'||j00_n00b=='}'||j00_n00b=='+'||
-            j00_n00b=='\\'||j00_n00b=='/'||j00_n00b=='*'||
-            j00_n00b=='-'||j00_n00b==';'||j00_n00b==','||
-            j00_n00b==':'||j00_n00b=='<'||j00_n00b=='>'||
-            j00_n00b=='#')
-         {*/
-
              curword=curword.Left(curword.Len()-1);
-             if(i+1==(int)guts.Len()&&!((j00_n00b>0&&j00_n00b<46)||
-            j00_n00b==47||
-            (j00_n00b>57&&j00_n00b<65)||
-            (j00_n00b>90&&j00_n00b<95)||
-            j00_n00b==96||
-            (j00_n00b>122&&j00_n00b<128))) { curword+=j00_n00b; dontadd=true; }
              if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0)
              {
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[kwtyp-1]+ \
-                         (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
+                 if(color!=kwtyp-1)
+                 {
+                     if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                     if(bold) output+=tagstart+"/b"+tagend;
+                     if(italic) output+=tagstart+"/i"+tagend;
+                     output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[kwtyp-1]+ \
+                         (sel==4?"\"":"")+tagend+curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                 }
+                 else
+                     output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                 color=kwtyp-1;
+                 bold=true;
+                 italic=false;
              }
              else if(dotags&&!commenting&&!quoting&&isNumeric(curword))
-                 output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[7]+ \
-                         (sel==4?"\"":"")+tagend+curword+tagstart+(sel==4?"/font":"/color")+tagend+(dontadd?"":wxString::Format("%c",j00_n00b));
+             {
+                 if(color!=7)
+                 {
+                     if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                     if(bold) output+=tagstart+"/b"+tagend;
+                     if(italic) output+=tagstart+"/i"+tagend;
+                     output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[7]+ \
+                         (sel==4?"\"":"")+tagend+curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                 }
+                 else
+                     output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                 color=7;
+                 bold=false;
+                 italic=false;
+             }
              else if(dokeyws&&!commenting&&!quoting&&isKeyword(curword)!=0)
              {
                  switch(sel)
@@ -342,15 +338,30 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
                  output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
              }
              else
+             {
+                 if(!commenting&&!quoting)
+                 {
+                     if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                     if(bold) output+=tagstart+"/b"+tagend;
+                     if(italic) output+=tagstart+"/i"+tagend;
+                     color=-1;
+                 }
+                 bold=false;
+                 italic=false;
                  output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+             }
              curword="";
+             int mylen=output.Len();
              if(!commenting&&!quoting&&j00_n00b=='\'')
              {
                  commenting=true;
                  if(dotags)
                  {
-                     output=output.Left(output.Len()-1);
-                     output+=tagstart+"i"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[4]+ \
+                     output=output.Left(mylen-1);
+                     if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                     if(bold) output+=tagstart+"/b"+tagend;
+                     if(italic) output+=tagstart+"/i"+tagend;
+                     output+=tagstart+"i"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[4]+ \
                      (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
                  }
@@ -358,61 +369,74 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
              else if((j00_n00b=='\n'||j00_n00b=='\r')&&commenting)
              {
                  commenting=false;
+                 color=-1;
+                 bold=false;
+                 italic=false;
                  if(dotags)
                  {
-                     output=output.Left(output.Len()-1);
-                     output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/i"+tagend;
+                     output=output.Left(mylen-1);
+                     output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/i"+tagend;
                      output+=j00_n00b;
                  }
              }
              if(!commenting&&!quoting&&j00_n00b=='\"')
              {
-                 quoting=true;
                  if(dotags)
                  {
-                     output=output.Left(output.Len()-1);
-                     output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[6]+ \
+                     output=output.Left(mylen-1);
+                     if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                     if(bold) output+=tagstart+"/b"+tagend;
+                     if(italic) output+=tagstart+"/i"+tagend;
+                     output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[6]+ \
                              (sel==4?"\"":"")+tagend;
                      output+=j00_n00b;
                  }
+                 quoting=true;
              }
              else if((j00_n00b=='\"'||j00_n00b=='\n'||j00_n00b=='\r')&&quoting)
              {
                  quoting=false;
-                 if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
+                 color=-1;
+                 bold=false;
+                 italic=false;
+                 if(dotags) output+=tagstart+(sel==4?"/span":"/color")+tagend;
              }
              if(!commenting&&!quoting&&j00_n00b=='#'&&(i==0||(output.Mid(output.Len()-2,1)=="\n"||output.Mid(output.Len()-2,1)=="\r")))
              {
-                 output=output.Left(output.Len()-1);
-                 if(dotags) output+=tagstart+(sel==4?"font color=\"#":"color=#")+colours[8]+ \
+                 output=output.Left(mylen-1);
+                 if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                 if(bold) output+=tagstart+"/b"+tagend;
+                 if(italic) output+=tagstart+"/i"+tagend;
+                 color=-1; bold=false; italic=false;
+                 if(dotags) output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[8]+ \
                         (sel==4?"\"":"")+tagend;
                         output+=j00_n00b;
-                 for(i++;guts.Mid(i,1)!="\r"&&guts.Mid(i,1)!="\n"&&i<(int)guts.Len();i++)
+                 for(i++;guts.GetChar(i)!='\r'&&guts.GetChar(i)!='\n'&&i<teh_len;i++)
                  {
                      output+=guts.Mid(i,1);
                  }
-                 if(dotags) output+=tagstart+(sel==4?"/font":"/color")+tagend;
-                 output+=guts.Mid(i,1);
+                 if(dotags) output << tagstart+(sel==4?"/span":"/color")+tagend << guts.GetChar(i);
              }
              else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')
              {
-                 output=output.Left(output.Len()-1);
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
+                 output=output.Left(mylen-1);
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
-                 output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+                 output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/b"+tagend;
              }
              if(dotags&&((j00_n00b>39&&j00_n00b<46)||j00_n00b==47||
                 (j00_n00b>57&&j00_n00b<64)||j00_n00b==92||j00_n00b==94||
                 (j00_n00b>122&&j00_n00b<128))&&!commenting&&!quoting)
              {
-                 output=output.Left(output.Len()-1);
-                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"font color=\"#":"color=#")+colours[5]+ \
+                 output=output.Left(mylen-1);
+                 output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[5]+ \
                          (sel==4?"\"":"")+tagend;
                  output+=j00_n00b;
-                 output+=tagstart+(sel==4?"/font":"/color")+tagend+tagstart+"/b"+tagend;
+                 output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/b"+tagend;
              }
          }
+         if(i+1==real_len) { guts+="\n"; teh_len++; dontadd=true; }
      }
      if (sel < 3) {
          buff = stc->buff;
@@ -426,7 +450,10 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
          stc->SetSelectionEnd(buff->GetSelectionEnd());
     }
     else { 
-        if     (sel==4) output+="</pre></body>";
+        if(color!=-1) output+=tagstart+(sel==4?"/span":"/color")+tagend;
+        if(bold) output+=tagstart+"/b"+tagend;
+        if(italic) output+=tagstart+"/i"+tagend;
+        if     (sel==4) output+="</pre></body></html>";
         else if(sel==3) output+="[/size][/quote]";
         Parent->NewSTCPage("",true, 1);
         stc->SetText(output);
@@ -436,13 +463,15 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
 inline int format::isKeyword(wxString kw)
 {
     kw=kw.MakeUpper();
+    unsigned int kwlen=kw.Len();
     for(int i=0;i<4;i++)
     {
-        for(int j=0;j<(int)keyw[i].Count()-1;j++)
+        int keywcount=(int)keyw[i].Count()-1;
+        for(int j=0;j<keywcount-1;j++)
         {
             //check the lenght of the kw and keyw, if matxhes then
             //check first char as well.
-            if (keyw[i][j].Len()==kw.Len()) {
+            if (keyw[i][j].Len()==kwlen) {
                 if(keyw[i][j].GetChar(0)==kw.GetChar(0)) {
                     if(keyw[i][j]==kw) return i+1;
                 }
@@ -461,7 +490,7 @@ void format::initkeywords()
         keyw[i].Clear();
         for(int j=0;j<(int)Parent->Keyword[i+1].Len();j++)
         {
-            j00_n00b=(char)*Parent->Keyword[i+1].Mid(j,1);
+            j00_n00b=Parent->Keyword[i+1].GetChar(j);
             curword+=j00_n00b;
             if(j00_n00b==' '||j00_n00b=='\n'||j00_n00b=='\r'||
                j+1==(int)Parent->Keyword[i+1].Len())
@@ -477,6 +506,21 @@ void format::initkeywords()
 inline bool format::isNumeric(wxString kw)
 {
      if(kw.Len()==0) return false;
+     if(kw.GetChar(0)=='&')
+     {
+         switch(kw.MakeLower().GetChar(1))
+         {
+             case 'b':
+                 kw=kw.Mid(2);
+                 break;
+             case 'o':
+                 kw=kw.Mid(2);
+                 break;
+             case 'h':
+                 kw=kw.Mid(2);
+                 break;
+         }
+     }
      char ch;
      for(int i=0;i<(int)kw.Len();i++)
      {
