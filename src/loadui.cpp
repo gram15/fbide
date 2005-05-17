@@ -370,6 +370,7 @@ void MyFrame::ChangeNBPage   ( wxNotebookEvent& event) {
     int index = event.GetSelection();
     if (FBNotebook->GetPageCount()>1) SaveDocumentStatus(event.GetOldSelection());
     SetSTCPage ( index );
+    SetTitle( "FBIde - " + bufferList[index]->GetFileName() );
     return;
 }
 
