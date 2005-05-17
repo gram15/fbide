@@ -51,6 +51,7 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
         if (result != -1) FBNotebook->SetSelection(result);
         else NewSTCPage(File[i], true);
     }
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return;
 }
 
@@ -129,6 +130,7 @@ void MyFrame::OnCloseAll        ( ) {
         }
         else CloseFile(0);
     }    
+    SetTitle( "FBIde" );
     return;
 }
 
@@ -157,7 +159,8 @@ void MyFrame::OnCloseFile       ( ) {
     }
     
     CloseFile ( index );
-    
+    if(bufferList.GetBufferCount()>0) SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    else SetTitle("FBIde");
 }
 
 void MyFrame::CloseFile          ( int index ) {
@@ -234,6 +237,7 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
     }
     
     stc->SaveFile (FileName);
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return true;
 }
 
@@ -250,6 +254,7 @@ void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
     wxString File = dlg.GetPath();
     
     SessionLoad(File);
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
 }
 
 void MyFrame::SessionLoad ( wxString File ) {
