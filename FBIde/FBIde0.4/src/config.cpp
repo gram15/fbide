@@ -138,7 +138,7 @@ void MyFrame::SaveSettings() {
 
     int winx, winy, winh, winw;
     
-    if (IsMaximized()) {
+    if (IsMaximized()||IsIconized()) {
         winw=-1;
         winh=-1;
         winx=0;
