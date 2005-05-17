@@ -1,0 +1,8 @@
+Version 0.4.1
+
+   * Fixed bug with closing IDE while it is minimized (Dumbledore)
+   * Updates HTML code generation (Dumbledore)
+   * Added filename to titlebar (Dumbledore)
+   * Updated html coloring in editor (VonGodric)
+   
+
