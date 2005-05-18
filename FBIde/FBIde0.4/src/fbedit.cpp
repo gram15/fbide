@@ -171,7 +171,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             StyleSetBold       (wxSTC_H_TAG, true);
             StyleSetBold       (wxSTC_H_ATTRIBUTE, true);
             SetKeyWords (0, "color font b i body style size pre html head body meta http-equiv" \
-                            "content charset span style" );
+                            "content charset span style title" );
         }
     }
     else {
