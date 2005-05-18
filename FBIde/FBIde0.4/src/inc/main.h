@@ -64,6 +64,7 @@ struct CommonInfo {
     int  TabSize;
     int  EdgeColumn;
     wxString Language;
+    bool SplashScreen;
 };
 
 

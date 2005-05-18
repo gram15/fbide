@@ -91,6 +91,7 @@ void MyFrame::LoadSettings() {
     winy                    = PrefsINI.Read("winy",             50),
     winw                    = PrefsINI.Read("winw",             350),
     winh                    = PrefsINI.Read("winh",             200);
+    Prefs.SplashScreen      = PrefsINI.Read("splashscreen",     b);
     
     if(winw==-1||winh==-1) Maximize();
     else {
@@ -154,6 +155,7 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("winy",             (long)winy),
     PrefsINI.Write("winw",             (long)winw),
     PrefsINI.Write("winh",             (long)winh);
+    PrefsINI.Write("splashscreen",     (bool)Prefs.SplashScreen);
     
     PrefsINI.Save(PrefsINIOS);
 
