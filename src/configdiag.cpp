@@ -89,7 +89,11 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     CB_LongLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,110),wxSize(165,13));
     CB_LongLine->SetTitle(wxT(Parent->Lang[107]));
     CB_LongLine->SetValue(Parent->Prefs.LongLine);
-    
+
+    CB_SplashScreen=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,130),wxSize(165,13));
+    CB_SplashScreen->SetTitle(wxT("Show splash screen")); //<-------- needs to be read from lang file
+    CB_SplashScreen->SetValue(Parent->Prefs.SplashScreen);
+        
     //is used for linenumbers
     CB_CurrentLine=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(180,30),wxSize(165,13));
     CB_CurrentLine->SetTitle(wxT(Parent->Lang[103]));
@@ -352,6 +356,7 @@ void ConfigDialog::Button_OK      (wxCommandEvent&  event) {
     Parent->CompilerPath            = TB_CompilerPath->GetValue();
     Parent->CMDPrototype            = CompilerCommand->GetValue();
     Parent->Prefs.Language          = CB_Langs->GetValue();
+    Parent->Prefs.SplashScreen      = CB_SplashScreen->GetValue();
     
     Parent->Style = Style;
     

@@ -118,6 +118,7 @@ public:
     wxCheckBox *CB_Bold;
     wxCheckBox *CB_Italic;
     wxCheckBox *CB_Underlined;
+    wxCheckBox *CB_SplashScreen;
     wxButton *But_SaveTheme;
     wxComboBox *CB_Themes;
     wxComboBox *CB_Langs;
