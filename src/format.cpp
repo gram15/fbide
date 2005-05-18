@@ -39,18 +39,6 @@ VwX_INIT_OBJECTS_format
     if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)){
         SetSize(405,210);
     }
-    VwXinit();
-}
-
-
-format::~format()
-{
-    Parent->formatDialog=0;
-}
-
-
-void format::VwXinit()
-{
     st5=new wxStaticText(this,-1,wxT(""),wxPoint(33,11),wxSize(218,19),wxST_NO_AUTORESIZE);
     st5->SetLabel(wxT(Parent->Lang[162])); //"Type of conversion:"
     
@@ -78,9 +66,11 @@ void format::VwXinit()
     Centre();
 }
 
-BEGIN_EVENT_TABLE(formatEvt,wxEvtHandler)
 
-END_EVENT_TABLE()
+format::~format()
+{
+    Parent->formatDialog=0;
+}
 
 BEGIN_EVENT_TABLE( format,wxDialog)
     EVT_BUTTON(-1,format::VwXVwXEvOnButtonClick)
@@ -103,11 +93,7 @@ void format::VwXVwXEvOnButtonClick(wxCommandEvent& event){
      event.Skip(true);
 }
 
-//[evtFunc]add your code here
-
-void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
-     //[64b]Code event VwX...Don't modify[64a]//
-     //add your code here
+void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){
      FB_Edit * stc = Parent->stc;
      stc->BeginUndoAction();
          for(int i=0;i<stc->GetLineCount();i++)
@@ -190,11 +176,9 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init fu
                 //Parent->stc->GotoPos(PositionFromLine (cLine) + lineInd);
          }
     stc->EndUndoAction();
-} //end function
+}
 
-void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init function
-     //[4a9]Code event VwX...Don't modify[4a8]//
-     //add your code here
+void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){
      switch(chc15->GetSelection())
      {
          case 0:
@@ -213,18 +197,13 @@ void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index){ //init 
               preview->SetLabel("<b>cls</b>:<b>locate</b> 1,1");
               break;
      }
-} //end function
+}
 
-void format::bt16_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
-     //[4aa]Code event VwX...Don't modify[4a9]//
-     //add your code here
+void format::bt16_VwXEvOnButtonClick(wxCommandEvent& event,int index){
      Close(true);
-} //end function
+}
 
-void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
-     //[3d7]Code event VwX...Don't modify[3d6]//
-     //add your code here
-     //here's where i write the conversion $h17....
+void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){
 
      FB_Edit * stc = Parent->stc;
      int idx = Parent->FBNotebook->GetSelection();
@@ -458,7 +437,7 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //in
         Parent->NewSTCPage("",true, 1);
         stc->SetText(output);
     }
-} //end function
+}
 
 inline int format::isKeyword(wxString kw)
 {
