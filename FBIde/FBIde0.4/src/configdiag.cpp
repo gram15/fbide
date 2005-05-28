@@ -119,6 +119,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     
     
     TB_Width=new wxSpinCtrl(CD_Settings,-1,wxT(""),wxPoint(275,110),wxSize(60,15));
+    TB_Width->SetRange(1, 1000);
     TB_Width->SetValue(Parent->Prefs.EdgeColumn);
     
     lno21=new wxStaticLine(CD_Settings,-1,wxPoint(10,20),wxSize(360,2));

@@ -426,7 +426,7 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 
 void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     event.Skip();
-    if (event.ControlDown()) {
+    if (event.ControlDown()&&!event.AltDown()) {
         int key = event.GetKeyCode();
         if (key>=48 && key <= 57) {
             int tab = (key-49) + (event.ShiftDown() ? 10 : 0);
