@@ -390,10 +390,11 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){
                  if(dotags) output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[8]+ \
                         (sel==4?"\"":"")+tagend;
                         output+=j00_n00b;
-                 for(i++;guts.GetChar(i)!='\r'&&guts.GetChar(i)!='\n'&&i<teh_len;i++)
+                 for(i++;guts.GetChar(i)!='\n'&&i<teh_len;i++)
                  {
                      output+=guts.Mid(i,1);
                  }
+                 output+='\n';
                  if(dotags) output << tagstart+(sel==4?"/span":"/color")+tagend << guts.GetChar(i);
              }
              else if(dotags&&!commenting&&!quoting&&j00_n00b=='#')

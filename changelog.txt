@@ -6,4 +6,5 @@ Version 0.4.1
    * Updated html coloring in editor (VonGodric)
    * Made splash screen disable-able (Dumbledore)
    * Fixed right margin range from 100 to 1000 (VonGodric)
+   * Formatter would sometimes brake the code on #preprocessor by not adding lineend char (VonGodric)
 
