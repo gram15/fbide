@@ -310,7 +310,8 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
         OldTabSelected = -1;
         stc = new FB_Edit( this, FBNotebook, -1, "" );
         stc->Freeze();
-        stc->LoadSTCTheme();
+        CurrentFileType = FileType;
+        stc->LoadSTCTheme( CurrentFileType );
         stc->LoadSTCSettings();
         buff = bufferList.AddFileBuffer("", "");
         buff->SetFileType(FileType);
