@@ -147,7 +147,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
         wxFileName File(FB_App->argv[i]);
         if(File.GetExt() == "fbs") { SessionLoad ( FB_App->argv[i] ); }
         else {
-            if (FB_App->argc>1)  NewSTCPage(FB_App->argv[i], true);
+            if (FB_App->argc>1) { NewSTCPage(FB_App->argv[i], true); SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() ); }
         }
     }
 
