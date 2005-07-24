@@ -61,7 +61,7 @@ void about::VwXinit()
     txm7=new wxTextCtrl(this,-1,wxT(""),wxPoint(23,103),wxSize(294,139),wxVSCROLL|wxHSCROLL|wxTE_READONLY|wxTE_RICH2|wxTE_DONTWRAP|wxTE_MULTILINE);
             txm7->SetLabel(wxT(""));
     wxArrayString myarr;
-    myarr.Add(wxString::Format("[bold]FBIde %d.%d[/bold]",VER_MAJOR,VER_MINOR));
+    myarr.Add(wxString::Format("[bold]FBIde %d.%d.%d[/bold]",VER_MAJOR,VER_MINOR,VER_RELEASE));
     myarr.Add(Parent->Lang[204]);
     myarr.Add(Parent->Lang[205]);
     myarr.Add(Parent->Lang[206]);

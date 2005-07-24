@@ -29,6 +29,7 @@
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
     NewSTCPage("", true);
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return;
 }
 

@@ -97,7 +97,11 @@ void MyFrame::GoToError ( int Linenr, wxString FileName ) {
                 FBNotebook->SetSelection(result);
             }
         }
-        else NewSTCPage(FileName, true);
+        else
+        {
+            NewSTCPage(FileName, true);
+            SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+        }
     }
 
     if (stc->GetCurrentLine()!=(int)Linenr) {
@@ -262,7 +266,20 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     
                     wxFileName tf(FileName);
                     if(!tf.HasVolume()) {
-                         FileName=FilePath+"\\"+FileName;
+                        wxString FBCPath = wxFileName(CompilerPath).GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+                        if (FileName!="") {
+                           if(wxFileName(FilePath+"\\"+FileName).FileExists()) {
+                               FileName=FilePath+"\\"+FileName;
+                           }
+                           else if(wxFileName(FBCPath+FileName).FileExists()) {
+                               FileName=FBCPath+FileName;
+                           }
+                           else if(wxFileName(FBCPath+"inc\\"+FileName).FileExists()) {
+                               FileName=FBCPath+"inc\\"+FileName;
+                           }
+                           //else FileName=FBCPath+"inc\\"+FileName;;
+                        }
+                        //FileName=FilePath+"\\"+FileName;
                     }
                                         
                     if (FirstFile=="") {
