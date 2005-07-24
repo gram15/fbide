@@ -324,15 +324,17 @@ inline bool FB_Edit::IsBrace(wxChar brace)
 
 
 void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
+    
     event.Skip();
     if (!Parent->Prefs.AutoIndent) return;
-
+    
     char        key     = event.GetKey();
     int         cLine   = GetCurrentLine();
     int         lineInd = GetLineIndentation(cLine - 1);
     int         plineind= GetLineIndentation(cLine - 2);
     int         TabSize = Parent->Prefs.TabSize;
-    if (key!='\n') return;
+    if (key!='\n' && key!='\r') return;
+    ConvertEOLs(wxSTC_EOL_CRLF);
 
     //Previous line
     wxString    TempCL  = ClearCmdLine(GetLine(cLine - 1));
@@ -495,7 +497,10 @@ void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
         if(FileExists(FileName)) {
             int result = Parent->bufferList.FileLoaded(FileName);
             if (result != -1) Parent->FBNotebook->SetSelection(result);
-            else Parent->NewSTCPage(FileName, true);
+            else {
+                 Parent->NewSTCPage(FileName, true);
+                 Parent->SetTitle( "FBIde - " + Parent->bufferList[Parent->FBNotebook->GetSelection()]->GetFileName() );
+            }
             return;
         }
 
