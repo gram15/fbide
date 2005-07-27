@@ -27,7 +27,82 @@
 #include <wx/image.h>
 #include <wx/splash.h>
 #include <wx/filename.h>
+#include <wx/snglinst.h>
 
+
+#include "wx/ipc.h"
+
+
+MyFrame * _myframe_;
+
+class stConnection : public wxConnection
+{
+public:
+    stConnection() {}
+    ~stConnection() {}
+
+    bool OnExecute(const wxString& topic, wxChar*data, int size,
+                   wxIPCFormat format);
+};
+
+class stServer: public wxServer
+{
+public:
+    wxConnectionBase *OnAcceptConnection(const wxString& topic);
+};
+
+
+class stClient: public wxClient
+{
+public:
+    stClient() {};
+    wxConnectionBase *OnMakeConnection() { return new stConnection; }
+};
+
+
+
+
+// Accepts a connection from another instance
+
+wxConnectionBase *stServer::OnAcceptConnection(const wxString& topic)
+{
+    if (topic.Lower() == wxT("myapp"))
+    {
+        // Check that there are no modal dialogs active
+        wxWindowList::Node* node = wxTopLevelWindows.GetFirst();
+        while (node)
+        {
+            wxDialog* dialog = wxDynamicCast(node->GetData(), wxDialog);
+            if (dialog && dialog->IsModal())
+            {
+                return false;
+            }
+
+            node = node->GetNext();
+        }
+        return new stConnection();
+    }
+    else
+        return NULL;
+}
+
+
+
+// Opens a file passed from another instance
+
+bool stConnection::OnExecute(const wxString& WXUNUSED(topic),
+                             wxChar *data,
+                             int WXUNUSED(size),
+                             wxIPCFormat WXUNUSED(format))
+{
+    wxString filename(data);
+    if (!filename.IsEmpty())
+        _myframe_->NewSTCPage(filename, true);
+    return true;
+}
+
+
+stServer * m_server;
 
 //------------------------------------------------------------------------------
 BEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -90,13 +165,63 @@ IMPLEMENT_APP(MyApp)
 //------------------------------------------------------------------------------
 
 
-
+wxSingleInstanceChecker * m_singleInstanceChecker;
 bool MyApp::OnInit()
 {
 
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
-    new MyFrame(this, GetAppName());
+    
+    m_singleInstanceChecker = new wxSingleInstanceChecker(wxT("MyApp"));
+
+    // If using a single instance, use IPC to
+    // communicate with the other instance
+    if (!m_singleInstanceChecker->IsAnotherRunning())
+    {
+        // Create a new server
+        m_server = new stServer;
+
+        if ( !m_server->Create(wxT("myapp") ) )
+        {
+            wxMessageBox(wxT("Failed to create an IPC service."));
+        }
+    }
+    else
+    {
+        wxString cmdFilename = argv[1];
+        wxLogNull logNull;
+
+        // OK, there IS another one running, so try to connect to it
+        // and send it any filename before exiting.
+        stClient* client = new stClient;
+
+        // ignored under DDE, host name in TCP/IP based classes
+        wxString hostName = wxT("localhost");
+
+        // Create the connection
+        wxConnectionBase* connection =
+                     client->MakeConnection(hostName,
+                                     wxT("myapp"), wxT("MyApp"));
+
+        if (connection)
+        {
+            // Ask the other instance to open a file or raise itself
+            connection->Execute(cmdFilename);
+            connection->Disconnect();
+            delete connection;
+        }
+        else
+        {
+            wxMessageBox(wxT("Sorry, the existing instance may be too busy too respond.\nPlease close any open dialogs and retry."),
+                wxT("My application"), wxICON_INFORMATION|wxOK);
+        }
+        delete client;
+        return false;
+    }
+
+    
+    //delete m_checker;
+    _myframe_ = new MyFrame(this, GetAppName());
 
     return true;
 }
