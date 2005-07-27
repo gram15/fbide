@@ -1,0 +1,3 @@
+to generate the files for the installer:
+create a new directory, preferably c:\freebasic with a clean install of fbc + fbide (don't run install.bat)
+copy the contents of out.txt into the installation section of the install script, and the uout.txt to the uninstaller section.  manually remove the install / uninstall for the text files, the .bas + .exe of dirlist, the nsi, and this howto (if applicable).  add the uninstall data for the uninstaller itself, then compile with nsis.
