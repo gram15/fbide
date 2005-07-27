@@ -1,3 +1,6 @@
+Version 0.4.2
+   * Added crappy supprt for single instance ( vongodric )
+
 Version 0.4.1
 
    * Fixed bug with closing IDE while it is minimized (Dumbledore)
