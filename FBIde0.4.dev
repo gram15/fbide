@@ -42,7 +42,7 @@ BuildCmd=
 [VersionInfo]
 Major=0
 Minor=4
-Release=1
+Release=2
 <<<<<<< FBIde0.4.dev
 Build=0
 =======
@@ -55,14 +55,14 @@ Build=1173
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=0.4
+FileVersion=0.4.2
 FileDescription=IDE for FreeBasic compiler
 InternalName=fbide
 LegalCopyright=Released under GPL
 LegalTrademarks=
 OriginalFilename=fbide.exe
 ProductName=FBIde
-ProductVersion=0.4
+ProductVersion=0.4.2
 AutoIncBuildNr=0
 
 [Unit2]
