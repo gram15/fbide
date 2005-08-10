@@ -72,9 +72,6 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetViewEOL (Prefs->DisplayEOL);
     
     SetIndentationGuides (Prefs->IndentGuide);
-    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0001"));
-    SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin: 0);
-    SetMarginWidth (1,0);
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
     SetViewWhiteSpace (Prefs->whiteSpace ? wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
     CmdKeyClear (wxSTC_KEY_TAB, 0);
@@ -209,6 +206,10 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
         SetSelBackground(true, wxColour(192,192,192));
         SetSelForeground(true, wxColour(255,255,255));
     }
+    
+    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0001"));
+    SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin: 0);
+    SetMarginWidth (1,0);
 
     
     //   SetCaretLineBack("RED");
@@ -231,7 +232,6 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 
 //   
     
-
    
    //Markers
     SetMarginType (2, wxSTC_MARGIN_SYMBOL);

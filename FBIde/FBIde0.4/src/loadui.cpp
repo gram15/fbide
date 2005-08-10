@@ -313,6 +313,9 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
         CurrentFileType = FileType;
         stc->LoadSTCTheme( CurrentFileType );
         stc->LoadSTCSettings();
+        stc->StyleClearAll();
+        stc->LoadSTCTheme( CurrentFileType );
+        stc->LoadSTCSettings();
         buff = bufferList.AddFileBuffer("", "");
         buff->SetFileType(FileType);
         doc = stc->GetDocPointer();

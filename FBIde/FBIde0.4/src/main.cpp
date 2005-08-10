@@ -34,7 +34,7 @@
 
 
 MyFrame * _myframe_;
-
+ 
 class stConnection : public wxConnection
 {
 public:
@@ -188,35 +188,38 @@ bool MyApp::OnInit()
     }
     else
     {
-        wxString cmdFilename = argv[1];
-        wxLogNull logNull;
-
-        // OK, there IS another one running, so try to connect to it
-        // and send it any filename before exiting.
-        stClient* client = new stClient;
-
-        // ignored under DDE, host name in TCP/IP based classes
-        wxString hostName = wxT("localhost");
-
-        // Create the connection
-        wxConnectionBase* connection =
-                     client->MakeConnection(hostName,
-                                     wxT("myapp"), wxT("MyApp"));
-
-        if (connection)
-        {
-            // Ask the other instance to open a file or raise itself
-            connection->Execute(cmdFilename);
-            connection->Disconnect();
-            delete connection;
+        if ( argc == 2 ) {
+            wxString cmdFilename = argv[1];
+            wxLogNull logNull;
+    
+            // OK, there IS another one running, so try to connect to it
+            // and send it any filename before exiting.
+            stClient* client = new stClient;
+    
+            // ignored under DDE, host name in TCP/IP based classes
+            wxString hostName = wxT("localhost");
+    
+            // Create the connection
+            wxConnectionBase* connection =
+                         client->MakeConnection(hostName,
+                                         wxT("myapp"), wxT("MyApp"));
+    
+            if (connection)
+            {
+                // Ask the other instance to open a file or raise itself
+                connection->Execute(cmdFilename);
+                connection->Disconnect();
+                delete connection;
+            }
+            else
+            {
+                wxMessageBox(wxT("Sorry, the existing instance may be too busy too respond.\nPlease close any open dialogs and retry."),
+                    wxT("My application"), wxICON_INFORMATION|wxOK);
+            }
+            delete client;
+            return false;
         }
-        else
-        {
-            wxMessageBox(wxT("Sorry, the existing instance may be too busy too respond.\nPlease close any open dialogs and retry."),
-                wxT("My application"), wxICON_INFORMATION|wxOK);
-        }
-        delete client;
-        return false;
+        delete m_singleInstanceChecker;
     }
 
     
