@@ -97,7 +97,10 @@ bool stConnection::OnExecute(const wxString& WXUNUSED(topic),
 {
     wxString filename(data);
     if (!filename.IsEmpty())
+    {
         _myframe_->NewSTCPage(filename, true);
+        _myframe_->RequestUserAttention();
+    }
     return true;
 }
 
