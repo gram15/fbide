@@ -3,6 +3,7 @@ Version 0.4.2
    * Fixed version number to 0.4.2 ( vongodric )
    * Fixed single instance handling ( vongodric )
    * Added crappy supprt for single instance ( vongodric )
+   * made title flash in taskbar when opening a new file under single instance ( dumbledore )
 
 Version 0.4.1
 
