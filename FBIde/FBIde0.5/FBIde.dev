@@ -1,7 +1,7 @@
 [Project]
 FileName=FBIde.dev
 Name=FBIde
-UnitCount=5
+UnitCount=6
 Type=0
 Ver=1
 ObjFiles=
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001101010000
+CompilerSettings=0000000001001001010100
 
 [Unit1]
 FileName=src\fb_frame.cpp
@@ -73,7 +73,7 @@ BuildCmd=
 Major=0
 Minor=5
 Release=0
-Build=55
+Build=77
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -91,6 +91,15 @@ AutoIncBuildNr=1
 FileName=rc\FBIde.rc
 Folder=rc
 Compile=1
+Link=0
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit6]
+FileName=rc\FBIde.exe.Manifest
+Folder=rc
+Compile=0
 Link=0
 Priority=1000
 OverrideBuildCmd=0
