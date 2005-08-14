@@ -1,0 +1,36 @@
+# Project: FBIde
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe -D__DEBUG__
+CC   = gcc.exe -D__DEBUG__
+WINDRES = windres.exe
+RES  = obj/FBIde_private.res
+OBJ  = obj/fb_frame.o obj/fbide.o $(RES)
+LINKOBJ  = obj/fb_frame.o obj/fbide.o $(RES)
+LIBS =  -L"C:/Dev-Cpp/lib" -L"C:/dev/wx/lib/gcc_lib" -mwindows -Wl,--subsystem,windows  -mthreads  -mwindows  -lwxmsw26_adv  -lwxmsw26_core  -lwxbase26  -lwsock32  -lcomctl32  -lole32  -loleaut32  -luuid  -lwxpng  -lwxzlib  -lmingw32    -lgmon -pg  -g3 
+INCS =  -I"C:/Dev-Cpp/include"  -I"C:/dev/wx/include"  -I"C:/dev/wx/include/wx"  -I"C:/dev/wx/contrib/include/wx" 
+CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"C:/dev/wx/include"  -I"C:/dev/wx/include/wx"  -I"C:/dev/wx/contrib/include/wx" 
+BIN  = output/FBIde.exe
+CXXFLAGS = $(CXXINCS) -D__WXMSW__  -mthreads  -DNO_GCC_PRAGMA  -Wall  -fno-pcc-struct-return  -O3  -Os  -fno-rtti  -fno-exceptions     -fexpensive-optimizations -O3 -pg -g3
+CFLAGS = $(INCS)   -fexpensive-optimizations -O3 -pg -g3
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before output/FBIde.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "output\FBIde.exe" $(LIBS)
+
+obj/fb_frame.o: src/fb_frame.cpp
+	$(CPP) -c src/fb_frame.cpp -o obj/fb_frame.o $(CXXFLAGS)
+
+obj/fbide.o: src/fbide.cpp
+	$(CPP) -c src/fbide.cpp -o obj/fbide.o $(CXXFLAGS)
+
+obj/FBIde_private.res: FBIde_private.rc 
+	$(WINDRES) -i FBIde_private.rc --input-format=rc -o obj/FBIde_private.res -O coff  --include-dir C:/dev/FBIde/FBIde0.5/rc
