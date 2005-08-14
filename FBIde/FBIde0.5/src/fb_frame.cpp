@@ -123,7 +123,7 @@ void FB_Frame::CreatePanels()
 
     wxSplitterWindow* splitter = new wxSplitterWindow( 
         this, 10, wxDefaultPosition, wxDefaultSize, 
-        wxSP_FULLSASH|wxNO_BORDER );
+        wxSP_FULLSASH|wxNO_BORDER|wxSP_LIVE_UPDATE );
  
     splitter->SetSashGravity( 1.0 );
     

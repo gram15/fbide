@@ -10,18 +10,35 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include "wx/wx.h"
-
 #include "inc/fb_console.h"
 
 FB_Console::FB_Console( wxWindow * parent ) :
     wxNotebook( parent, wxID_ANY, 
                 wxDefaultPosition, wxDefaultSize, 
-                wxNB_TOP | wxNB_NOPAGETHEME | wxCLIP_CHILDREN  )
+                wxNB_TOP | wxCLIP_CHILDREN  )
 {
+    wxImageList* imageList = new wxImageList(16, 16, true, 3);
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_compile));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_debug));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_search));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
+    AssignImageList( imageList );
+    
     CreateCompilerTab();
     CreateDebugTab();
     CreateSearchTab();
-
+    
 }
 
 
@@ -56,6 +73,13 @@ void FB_Console::CreateCompilerTab(  )
     this->AddPage(Compiler, _("Compiler"), false, 0);
 }
 
+void FB_Console::CreateDebugTab(  ) 
+{
+    Debug = new wxPanel( this, conID_DebugTab, 
+                         wxDefaultPosition, wxDefaultSize, 
+                         wxNO_BORDER|wxTAB_TRAVERSAL );
+    this->AddPage(Debug, _("Debug"), false, 1);
+}
 
 void FB_Console::CreateSearchTab(  ) 
 {
@@ -86,15 +110,5 @@ void FB_Console::CreateSearchTab(  )
     SearchResult->SetColumnWidth( 1, 50 );
     SearchResult->SetColumnWidth( 2, 100 );
     SearchResult->SetColumnWidth( 3, 500 );
-    this->AddPage(SearchResult, _("Search results"), false, 0);
+    this->AddPage(SearchResult, _("Search results"), false, 2);
 }
-
-
-void FB_Console::CreateDebugTab(  ) 
-{
-    Debug = new wxPanel( this, conID_DebugTab, 
-                         wxDefaultPosition, wxDefaultSize, 
-                         wxNO_BORDER|wxTAB_TRAVERSAL );
-    this->AddPage(Debug, _("Debug"), false, 0);
-}
-

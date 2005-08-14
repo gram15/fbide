@@ -59,27 +59,27 @@ void FB_About::CreateControls()
     itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxGROW|wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
     temp = ""; 
-    temp << "Version:   " << VER_MAJOR << "." << VER_MINOR << "." << VER_RELEASE;
+    temp << "Version:    " << VER_MAJOR << "." << VER_MINOR << "." << VER_RELEASE;
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText5->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, _T("Tahoma")));
+    itemStaticText5->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
     itemStaticBoxSizer4->Add(itemStaticText5, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
     temp = ""; 
-    temp << "Version:   " << VER_BUILD;
+    temp << "Build:      " << VER_BUILD;
     wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText6->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, _T("Tahoma")));
+    itemStaticText6->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
     itemStaticBoxSizer4->Add(itemStaticText6, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
     temp = "";
-    temp << "Build date:   " << _(__DATE__);
+    temp << "Build date: " << _(__DATE__);
     wxStaticText* itemStaticText7 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText7->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, _T("Tahoma")));
+    itemStaticText7->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
     itemStaticBoxSizer4->Add(itemStaticText7, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
     temp = "";
-    temp << "wxWidgets:   " << wxMAJOR_VERSION << "." << wxMINOR_VERSION << "." << wxRELEASE_NUMBER;
+    temp << "wxWidgets:  " << wxMAJOR_VERSION << "." << wxMINOR_VERSION << "." << wxRELEASE_NUMBER;
     wxStaticText* itemStaticText8 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
-    itemStaticText8->SetFont(wxFont(8, wxSWISS, wxNORMAL, wxBOLD, FALSE, _T("Tahoma")));
+    itemStaticText8->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
     itemStaticBoxSizer4->Add(itemStaticText8, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
     wxStaticLine* itemStaticLine9 = new wxStaticLine( itemDialog1, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
