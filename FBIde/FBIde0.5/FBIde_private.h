@@ -5,11 +5,11 @@
 #define FBIDE_PRIVATE_H
 
 /* VERSION DEFINITIONS */
-#define VER_STRING	"0.5.0.55"
+#define VER_STRING	"0.5.0.118"
 #define VER_MAJOR	0
 #define VER_MINOR	5
 #define VER_RELEASE	0
-#define VER_BUILD	55
+#define VER_BUILD	118
 #define COMPANY_NAME	""
 #define FILE_VERSION	"0.5"
 #define FILE_DESCRIPTION	"Developed using the Dev-C++ IDE"

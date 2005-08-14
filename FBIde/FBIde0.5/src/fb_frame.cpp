@@ -13,6 +13,7 @@
 #include "wx/wx.h"
 
 #include "inc/fb_frame.h"
+#include "inc/fb_about.h"
 
 /*!
  * FB_Frame type definition
@@ -106,7 +107,6 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
     return TRUE;
 
 }
-
 
 
 void FB_Frame::CreateMenus()
@@ -830,5 +830,6 @@ void FB_Frame::OnHelp( wxCommandEvent& event )
 
 void FB_Frame::OnAbout( wxCommandEvent& event )
 {
-    event.Skip();
+    FB_About About( this, wxID_ANY, "About" );
+    About.ShowModal();
 }
