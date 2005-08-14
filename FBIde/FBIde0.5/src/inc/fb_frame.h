@@ -84,68 +84,68 @@ class FB_Frame: public wxFrame
 
 public:
     /// Constructors
-    FB_Frame( );
     FB_Frame( wxWindow* parent, wxWindowID id = SYMBOL_FB_FRAME_IDNAME, const wxString& caption = SYMBOL_FB_FRAME_TITLE, const wxPoint& pos = SYMBOL_FB_FRAME_POSITION, const wxSize& size = SYMBOL_FB_FRAME_SIZE, long style = SYMBOL_FB_FRAME_STYLE );
-
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_FB_FRAME_IDNAME, const wxString& caption = SYMBOL_FB_FRAME_TITLE, const wxPoint& pos = SYMBOL_FB_FRAME_POSITION, const wxSize& size = SYMBOL_FB_FRAME_SIZE, long style = SYMBOL_FB_FRAME_STYLE );
 
     /// Creates the controls and sizers
-    void CreateControls();
+    void CreateMenus();
+    void CreateToolbar();
 
-
-    void OnNewClick( wxCommandEvent& event );
-    void OnFbideidNewprojectClick( wxCommandEvent& event );
-    void OnFbideidNewtemplateClick( wxCommandEvent& event );
-    void OnOpenClick( wxCommandEvent& event );
-    void OnSaveClick( wxCommandEvent& event );
-    void OnSaveasClick( wxCommandEvent& event );
-    void OnFbideidSaveprojectasClick( wxCommandEvent& event );
-    void OnSaveAllClick( wxCommandEvent& event );
-    void OnFbideidSessionloadClick( wxCommandEvent& event );
-    void OnFbideidSessionsaveClick( wxCommandEvent& event );
-    void OnCloseClick( wxCommandEvent& event );
-    void OnCloseAllClick( wxCommandEvent& event );
-    void OnFbideidCloseprojectClick( wxCommandEvent& event );
-    void OnFbideidNewinstanceClick( wxCommandEvent& event );
-    void OnExitClick( wxCommandEvent& event );
-    void OnUndoClick( wxCommandEvent& event );
-    void OnRedoClick( wxCommandEvent& event );
-    void OnCopyClick( wxCommandEvent& event );
-    void OnCutClick( wxCommandEvent& event );
-    void OnPasteClick( wxCommandEvent& event );
-    void OnSelectallClick( wxCommandEvent& event );
-    void OnFbideidSelectlineClick( wxCommandEvent& event );
-    void OnJustifyRightClick( wxCommandEvent& event );
-    void OnJustifyLeftClick( wxCommandEvent& event );
-    void OnFbideidCommentblockClick( wxCommandEvent& event );
-    void OnFbideidUncommentblockClick( wxCommandEvent& event );
-    void OnFindClick( wxCommandEvent& event );
-    void OnFbideidFindnextClick( wxCommandEvent& event );
-    void OnReplaceClick( wxCommandEvent& event );
-    void OnFbideidGotoClick( wxCommandEvent& event );
-    void OnFbideidIncrsearchClick( wxCommandEvent& event );
-    void OnFbideidOutputClick( wxCommandEvent& event );
-    void OnFbideidNewprojectfileClick( wxCommandEvent& event );
-    void OnFbideidProjectaddClick( wxCommandEvent& event );
-    void OnFbideidProjectremoveClick( wxCommandEvent& event );
-    void OnFbideidProjectoptionsClick( wxCommandEvent& event );
-    void OnFbideidCompileClick( wxCommandEvent& event );
-    void OnFbideidCompileandrunClick( wxCommandEvent& event );
-    void OnFbideidRebuildallClick( wxCommandEvent& event );
-    void OnFbideidQuickrunClick( wxCommandEvent& event );
-    void OnFbideidRunClick( wxCommandEvent& event );
-    void OnFbideidParametersClick( wxCommandEvent& event );
-    void OnFbideidDebugClick( wxCommandEvent& event );
-    void OnFbideidOpenconsoleClick( wxCommandEvent& event );
-    void OnFbideidProfileanalysisClick( wxCommandEvent& event );
-    void OnFbideidShowexitcodeClick( wxCommandEvent& event );
-    void OnPropertiesClick( wxCommandEvent& event );
-    void OnFbideidSrcformatterClick( wxCommandEvent& event );
-    void OnHelpClick( wxCommandEvent& event );
-    void OnAboutClick( wxCommandEvent& event );
+    /// Event handlers
+    void OnNew              ( wxCommandEvent& event );
+    void OnNewproject       ( wxCommandEvent& event );
+    void OnNewtemplate      ( wxCommandEvent& event );
+    void OnOpen             ( wxCommandEvent& event );
+    void OnSave             ( wxCommandEvent& event );
+    void OnSaveas           ( wxCommandEvent& event );
+    void OnSaveprojectas    ( wxCommandEvent& event );
+    void OnSaveAll          ( wxCommandEvent& event );
+    void OnSessionload      ( wxCommandEvent& event );
+    void OnSessionsave      ( wxCommandEvent& event );
+    void OnClose            ( wxCommandEvent& event );
+    void OnCloseAll         ( wxCommandEvent& event );
+    void OnCloseproject     ( wxCommandEvent& event );
+    void OnNewinstance      ( wxCommandEvent& event );
+    void OnExit             ( wxCommandEvent& event );
+    void OnUndo             ( wxCommandEvent& event );
+    void OnRedo             ( wxCommandEvent& event );
+    void OnCopy             ( wxCommandEvent& event );
+    void OnCut              ( wxCommandEvent& event );
+    void OnPaste            ( wxCommandEvent& event );
+    void OnSelectall        ( wxCommandEvent& event );
+    void OnSelectline       ( wxCommandEvent& event );
+    void OnJustifyRight     ( wxCommandEvent& event );
+    void OnJustifyLeft      ( wxCommandEvent& event );
+    void OnCommentblock     ( wxCommandEvent& event );
+    void OnUncommentblock   ( wxCommandEvent& event );
+    void OnFind             ( wxCommandEvent& event );
+    void OnFindnext         ( wxCommandEvent& event );
+    void OnReplace          ( wxCommandEvent& event );
+    void OnGoto             ( wxCommandEvent& event );
+    void OnIncrsearch       ( wxCommandEvent& event );
+    void OnOutput           ( wxCommandEvent& event );
+    void OnNewprojectfile   ( wxCommandEvent& event );
+    void OnProjectadd       ( wxCommandEvent& event );
+    void OnProjectremove    ( wxCommandEvent& event );
+    void OnProjectoptions   ( wxCommandEvent& event );
+    void OnCompile          ( wxCommandEvent& event );
+    void OnCompileandrun    ( wxCommandEvent& event );
+    void OnRebuildall       ( wxCommandEvent& event );
+    void OnQuickrun         ( wxCommandEvent& event );
+    void OnRun              ( wxCommandEvent& event );
+    void OnParameters       ( wxCommandEvent& event );
+    void OnDebug            ( wxCommandEvent& event );
+    void OnOpenconsole      ( wxCommandEvent& event );
+    void OnProfileanalysis  ( wxCommandEvent& event );
+    void OnShowexitcode     ( wxCommandEvent& event );
+    void OnProperties       ( wxCommandEvent& event );
+    void OnSrcformatter     ( wxCommandEvent& event );
+    void OnHelp             ( wxCommandEvent& event );
+    void OnAbout            ( wxCommandEvent& event );
 
     static bool ShowToolTips();
 
+    /// Data
     wxToolBar* FB_Toolbar;
 
 };

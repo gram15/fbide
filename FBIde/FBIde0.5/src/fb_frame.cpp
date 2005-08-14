@@ -22,75 +22,73 @@ IMPLEMENT_CLASS( FB_Frame, wxFrame )
 
 BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     // File menu
-    EVT_MENU( wxID_NEW,                 FB_Frame::OnNewClick )
-    EVT_MENU( fbideID_NewProject,       FB_Frame::OnFbideidNewprojectClick )
-    EVT_MENU( fbideID_NewTemplate,      FB_Frame::OnFbideidNewtemplateClick )
-    EVT_MENU( wxID_OPEN,                FB_Frame::OnOpenClick )
-    EVT_MENU( wxID_SAVE,                FB_Frame::OnSaveClick )
-    EVT_MENU( wxID_SAVEAS,              FB_Frame::OnSaveasClick )
-    EVT_MENU( fbideID_SaveProjectAS,    FB_Frame::OnFbideidSaveprojectasClick )
-    EVT_MENU( wxID_SAVE_ALL,            FB_Frame::OnSaveAllClick )
-    EVT_MENU( fbideID_SessionLoad,      FB_Frame::OnFbideidSessionloadClick )
-    EVT_MENU( fbideID_SessionSave,      FB_Frame::OnFbideidSessionsaveClick )
-    EVT_MENU( wxID_CLOSE,               FB_Frame::OnCloseClick )
-    EVT_MENU( wxID_CLOSE_ALL,           FB_Frame::OnCloseAllClick )
-    EVT_MENU( fbideID_CloseProject,     FB_Frame::OnFbideidCloseprojectClick )
-    EVT_MENU( fbideID_NewInstance,      FB_Frame::OnFbideidNewinstanceClick )
-    EVT_MENU( wxID_EXIT,                FB_Frame::OnExitClick )
+    EVT_MENU( wxID_NEW,                 FB_Frame::OnNew )
+    EVT_MENU( fbideID_NewProject,       FB_Frame::OnNewproject )
+    EVT_MENU( fbideID_NewTemplate,      FB_Frame::OnNewtemplate )
+    EVT_MENU( wxID_OPEN,                FB_Frame::OnOpen )
+    EVT_MENU( wxID_SAVE,                FB_Frame::OnSave )
+    EVT_MENU( wxID_SAVEAS,              FB_Frame::OnSaveas )
+    EVT_MENU( fbideID_SaveProjectAS,    FB_Frame::OnSaveprojectas )
+    EVT_MENU( wxID_SAVE_ALL,            FB_Frame::OnSaveAll )
+    EVT_MENU( fbideID_SessionLoad,      FB_Frame::OnSessionload )
+    EVT_MENU( fbideID_SessionSave,      FB_Frame::OnSessionsave )
+    EVT_MENU( wxID_CLOSE,               FB_Frame::OnClose )
+    EVT_MENU( wxID_CLOSE_ALL,           FB_Frame::OnCloseAll )
+    EVT_MENU( fbideID_CloseProject,     FB_Frame::OnCloseproject )
+    EVT_MENU( fbideID_NewInstance,      FB_Frame::OnNewinstance )
+    EVT_MENU( wxID_EXIT,                FB_Frame::OnExit )
 
     // Edit menu
-    EVT_MENU( wxID_UNDO,                FB_Frame::OnUndoClick )
-    EVT_MENU( wxID_REDO,                FB_Frame::OnRedoClick )
-    EVT_MENU( wxID_COPY,                FB_Frame::OnCopyClick )
-    EVT_MENU( wxID_CUT,                 FB_Frame::OnCutClick )
-    EVT_MENU( wxID_PASTE,               FB_Frame::OnPasteClick )
-    EVT_MENU( wxID_SELECTALL,           FB_Frame::OnSelectallClick )
-    EVT_MENU( fbideID_SelectLine,       FB_Frame::OnFbideidSelectlineClick )
-    EVT_MENU( wxID_JUSTIFY_RIGHT,       FB_Frame::OnJustifyRightClick )
-    EVT_MENU( wxID_JUSTIFY_LEFT,        FB_Frame::OnJustifyLeftClick )
-    EVT_MENU( fbideID_CommentBlock,     FB_Frame::OnFbideidCommentblockClick )
-    EVT_MENU( fbideID_UncommentBlock,   FB_Frame::OnFbideidUncommentblockClick )
+    EVT_MENU( wxID_UNDO,                FB_Frame::OnUndo )
+    EVT_MENU( wxID_REDO,                FB_Frame::OnRedo )
+    EVT_MENU( wxID_COPY,                FB_Frame::OnCopy )
+    EVT_MENU( wxID_CUT,                 FB_Frame::OnCut )
+    EVT_MENU( wxID_PASTE,               FB_Frame::OnPaste )
+    EVT_MENU( wxID_SELECTALL,           FB_Frame::OnSelectall )
+    EVT_MENU( fbideID_SelectLine,       FB_Frame::OnSelectline )
+    EVT_MENU( wxID_JUSTIFY_RIGHT,       FB_Frame::OnJustifyRight )
+    EVT_MENU( wxID_JUSTIFY_LEFT,        FB_Frame::OnJustifyLeft )
+    EVT_MENU( fbideID_CommentBlock,     FB_Frame::OnCommentblock )
+    EVT_MENU( fbideID_UncommentBlock,   FB_Frame::OnUncommentblock )
     
     // Search menu
-    EVT_MENU( wxID_FIND,                FB_Frame::OnFindClick )
-    EVT_MENU( fbideID_FindNext,         FB_Frame::OnFbideidFindnextClick )
-    EVT_MENU( wxID_REPLACE,             FB_Frame::OnReplaceClick )
-    EVT_MENU( fbideID_Goto,             FB_Frame::OnFbideidGotoClick )
-    EVT_MENU( fbideID_IncrSearch,       FB_Frame::OnFbideidIncrsearchClick )
+    EVT_MENU( wxID_FIND,                FB_Frame::OnFind )
+    EVT_MENU( fbideID_FindNext,         FB_Frame::OnFindnext )
+    EVT_MENU( wxID_REPLACE,             FB_Frame::OnReplace )
+    EVT_MENU( fbideID_Goto,             FB_Frame::OnGoto )
+    EVT_MENU( fbideID_IncrSearch,       FB_Frame::OnIncrsearch )
     
     // View menu
-    EVT_MENU( fbideID_OutPut,           FB_Frame::OnFbideidOutputClick )
+    EVT_MENU( fbideID_OutPut,           FB_Frame::OnOutput )
     
     // Project menu
-    EVT_MENU( fbideID_NewProjectFile,   FB_Frame::OnFbideidNewprojectfileClick )
-    EVT_MENU( fbideID_ProjectAdd,       FB_Frame::OnFbideidProjectaddClick )
-    EVT_MENU( fbideID_ProjectRemove,    FB_Frame::OnFbideidProjectremoveClick )
-    EVT_MENU( fbideID_ProjectOptions,   FB_Frame::OnFbideidProjectoptionsClick )
+    EVT_MENU( fbideID_NewProjectFile,   FB_Frame::OnNewprojectfile )
+    EVT_MENU( fbideID_ProjectAdd,       FB_Frame::OnProjectadd )
+    EVT_MENU( fbideID_ProjectRemove,    FB_Frame::OnProjectremove )
+    EVT_MENU( fbideID_ProjectOptions,   FB_Frame::OnProjectoptions )
     
     // Run menu
-    EVT_MENU( fbideID_Compile,          FB_Frame::OnFbideidCompileClick )
-    EVT_MENU( fbideID_CompileAndRun,    FB_Frame::OnFbideidCompileandrunClick )
-    EVT_MENU( fbideID_RebuildAll,       FB_Frame::OnFbideidRebuildallClick )
-    EVT_MENU( fbideID_QuickRun,         FB_Frame::OnFbideidQuickrunClick )
-    EVT_MENU( fbideID_Run,              FB_Frame::OnFbideidRunClick )
-    EVT_MENU( fbideID_Parameters,       FB_Frame::OnFbideidParametersClick )
-    EVT_MENU( fbideID_Debug,            FB_Frame::OnFbideidDebugClick )
-    EVT_MENU( fbideID_OpenConsole,      FB_Frame::OnFbideidOpenconsoleClick )
-    EVT_MENU( fbideID_ProfileAnalysis,  FB_Frame::OnFbideidProfileanalysisClick )
-    EVT_MENU( fbideID_ShowExitCode,     FB_Frame::OnFbideidShowexitcodeClick )
+    EVT_MENU( fbideID_Compile,          FB_Frame::OnCompile )
+    EVT_MENU( fbideID_CompileAndRun,    FB_Frame::OnCompileandrun )
+    EVT_MENU( fbideID_RebuildAll,       FB_Frame::OnRebuildall )
+    EVT_MENU( fbideID_QuickRun,         FB_Frame::OnQuickrun )
+    EVT_MENU( fbideID_Run,              FB_Frame::OnRun )
+    EVT_MENU( fbideID_Parameters,       FB_Frame::OnParameters )
+    EVT_MENU( fbideID_Debug,            FB_Frame::OnDebug )
+    EVT_MENU( fbideID_OpenConsole,      FB_Frame::OnOpenconsole )
+    EVT_MENU( fbideID_ProfileAnalysis,  FB_Frame::OnProfileanalysis )
+    EVT_MENU( fbideID_ShowExitCode,     FB_Frame::OnShowexitcode )
     
     // Tools menu
-    EVT_MENU( wxID_PROPERTIES,          FB_Frame::OnPropertiesClick )
-    EVT_MENU( fbideID_SrcFormatter,     FB_Frame::OnFbideidSrcformatterClick )
+    EVT_MENU( wxID_PROPERTIES,          FB_Frame::OnProperties )
+    EVT_MENU( fbideID_SrcFormatter,     FB_Frame::OnSrcformatter )
     
     // Help menu
-    EVT_MENU( wxID_HELP,                FB_Frame::OnHelpClick )
-    EVT_MENU( wxID_ABOUT,               FB_Frame::OnAboutClick )
+    EVT_MENU( wxID_HELP,                FB_Frame::OnHelp )
+    EVT_MENU( wxID_ABOUT,               FB_Frame::OnAbout )
 
 END_EVENT_TABLE()
 
-
-FB_Frame::FB_Frame( ) {   }
 
 FB_Frame::FB_Frame( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
@@ -102,7 +100,8 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 {
 
     wxFrame::Create( parent, id, caption, pos, size, style );
-    CreateControls();
+    CreateMenus();
+    CreateToolbar();
     Centre();
     return TRUE;
 
@@ -110,7 +109,7 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 
 
 
-void FB_Frame::CreateControls()
+void FB_Frame::CreateMenus()
 {    
     wxMenuBar* menuBar = new wxMenuBar;
     
@@ -490,8 +489,10 @@ void FB_Frame::CreateControls()
     }
     menuBar->Append(HelpMenu, _("Help"));
     this->SetMenuBar(menuBar);
+}
 
-
+void FB_Frame::CreateToolbar()
+{    
     // Toolbar construction
     FB_Toolbar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL|wxNO_BORDER, ID_TOOLBAR );
     FB_Toolbar->SetToolBitmapSize(wxSize(16, 16));
@@ -516,8 +517,8 @@ void FB_Frame::CreateControls()
     FB_Toolbar->AddTool(fbideID_QuickRun,       _T(""), wxBITMAP(bmp_next),     _T(""));
     FB_Toolbar->AddSeparator();
     FB_Toolbar->AddTool(fbideID_OutPut, _T(""), wxBITMAP(bmp_tile), _T(""));
-
     FB_Toolbar->Realize();
+
     this->SetToolBar(FB_Toolbar);
 
 }
@@ -531,302 +532,303 @@ bool FB_Frame::ShowToolTips()
 
 
 
-void FB_Frame::OnSaveClick( wxCommandEvent& event )
+void FB_Frame::OnSave( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnNewClick( wxCommandEvent& event )
+void FB_Frame::OnNew( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidNewprojectClick( wxCommandEvent& event )
+void FB_Frame::OnNewproject( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidNewtemplateClick( wxCommandEvent& event )
+void FB_Frame::OnNewtemplate( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnOpenClick( wxCommandEvent& event )
+void FB_Frame::OnOpen( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnSaveasClick( wxCommandEvent& event )
+void FB_Frame::OnSaveas( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidSaveprojectasClick( wxCommandEvent& event )
+void FB_Frame::OnSaveprojectas( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnSaveAllClick( wxCommandEvent& event )
+void FB_Frame::OnSaveAll( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidSessionloadClick( wxCommandEvent& event )
+void FB_Frame::OnSessionload( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidSessionsaveClick( wxCommandEvent& event )
+void FB_Frame::OnSessionsave( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnCloseClick( wxCommandEvent& event )
+void FB_Frame::OnClose( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnCloseAllClick( wxCommandEvent& event )
+void FB_Frame::OnCloseAll( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidCloseprojectClick( wxCommandEvent& event )
+void FB_Frame::OnCloseproject( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidNewinstanceClick( wxCommandEvent& event )
+void FB_Frame::OnNewinstance( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnExitClick( wxCommandEvent& event )
+void FB_Frame::OnExit( wxCommandEvent& event )
+{
+    event.Skip();
+    Close( true );
+}
+
+
+void FB_Frame::OnUndo( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnUndoClick( wxCommandEvent& event )
+void FB_Frame::OnRedo( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnRedoClick( wxCommandEvent& event )
+void FB_Frame::OnCopy( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnCopyClick( wxCommandEvent& event )
+void FB_Frame::OnCut( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnCutClick( wxCommandEvent& event )
+void FB_Frame::OnPaste( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnPasteClick( wxCommandEvent& event )
+void FB_Frame::OnSelectall( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnSelectallClick( wxCommandEvent& event )
+void FB_Frame::OnSelectline( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidSelectlineClick( wxCommandEvent& event )
+void FB_Frame::OnJustifyRight( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnJustifyRightClick( wxCommandEvent& event )
+void FB_Frame::OnJustifyLeft( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnJustifyLeftClick( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnFbideidCommentblockClick( wxCommandEvent& event )
+void FB_Frame::OnCommentblock( wxCommandEvent& event )
 {
     event.Skip();
 
 }
 
 
-void FB_Frame::OnFbideidUncommentblockClick( wxCommandEvent& event )
+void FB_Frame::OnUncommentblock( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFindClick( wxCommandEvent& event )
+void FB_Frame::OnFind( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidFindnextClick( wxCommandEvent& event )
+void FB_Frame::OnFindnext( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnReplaceClick( wxCommandEvent& event )
+void FB_Frame::OnReplace( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidGotoClick( wxCommandEvent& event )
+void FB_Frame::OnGoto( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidIncrsearchClick( wxCommandEvent& event )
+void FB_Frame::OnIncrsearch( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidNewprojectfileClick( wxCommandEvent& event )
+void FB_Frame::OnNewprojectfile( wxCommandEvent& event )
 {
     event.Skip();
 }
 
-void FB_Frame::OnFbideidProjectaddClick( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnFbideidProjectremoveClick( wxCommandEvent& event )
+void FB_Frame::OnProjectadd( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidProjectoptionsClick( wxCommandEvent& event )
+void FB_Frame::OnProjectremove( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidCompileClick( wxCommandEvent& event )
+void FB_Frame::OnProjectoptions( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidCompileandrunClick( wxCommandEvent& event )
+void FB_Frame::OnCompile( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidRebuildallClick( wxCommandEvent& event )
+void FB_Frame::OnCompileandrun( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidQuickrunClick( wxCommandEvent& event )
+void FB_Frame::OnRebuildall( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidRunClick( wxCommandEvent& event )
+void FB_Frame::OnQuickrun( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidParametersClick( wxCommandEvent& event )
+void FB_Frame::OnRun( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidDebugClick( wxCommandEvent& event )
+void FB_Frame::OnParameters( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidProfileanalysisClick( wxCommandEvent& event )
+void FB_Frame::OnDebug( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidShowexitcodeClick( wxCommandEvent& event )
+void FB_Frame::OnProfileanalysis( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidOutputClick( wxCommandEvent& event )
+void FB_Frame::OnShowexitcode( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidOpenconsoleClick( wxCommandEvent& event )
+void FB_Frame::OnOutput( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnPropertiesClick( wxCommandEvent& event )
+void FB_Frame::OnOpenconsole( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnFbideidSrcformatterClick( wxCommandEvent& event )
+void FB_Frame::OnProperties( wxCommandEvent& event )
+{
+    event.Skip();
+}
+
+
+void FB_Frame::OnSrcformatter( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
 
-void FB_Frame::OnHelpClick( wxCommandEvent& event )
+void FB_Frame::OnHelp( wxCommandEvent& event )
 {
     event.Skip();
 }
 
 
-void FB_Frame::OnAboutClick( wxCommandEvent& event )
+void FB_Frame::OnAbout( wxCommandEvent& event )
 {
     event.Skip();
 }
