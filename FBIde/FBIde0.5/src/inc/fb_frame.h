@@ -14,7 +14,7 @@
 
 #include "wx/frame.h"
 #include "wx/toolbar.h"
-#include "wx/sashwin.h"
+#include "wx/splitter.h"
 
 
 ////@begin control identifiers
@@ -90,6 +90,7 @@ public:
     /// Creates the controls and sizers
     void CreateMenus();
     void CreateToolbar();
+    void CreatePanels();
 
     /// Event handlers
     void OnNew              ( wxCommandEvent& event );

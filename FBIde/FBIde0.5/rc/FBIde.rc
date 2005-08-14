@@ -65,6 +65,9 @@ bmp_toolbar     BITMAP "bitmaps/toolbar.bmp"
 bmp_tools       BITMAP "bitmaps/tools.bmp" 
 bmp_tutor       BITMAP "bitmaps/tutor.bmp" 
 bmp_undo        BITMAP "bitmaps/undo.bmp" 
-
 bmp_update      BITMAP "bitmaps/update.bmp"
+
+//bmp_fbide       BITMAP "bitmaps/fbide.bmp"
+
 wxBITMAP_STD_COLOURS BITMAP "bitmaps/colours.bmp"
+

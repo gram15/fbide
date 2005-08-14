@@ -14,6 +14,7 @@
 
 #include "inc/fb_frame.h"
 #include "inc/fb_about.h"
+#include "inc/fb_console.h"
 
 /*!
  * FB_Frame type definition
@@ -103,9 +104,36 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
     wxFrame::Create( parent, id, caption, pos, size, style );
     CreateMenus();
     CreateToolbar();
+    CreatePanels();
+
+
+
     Centre();
     return TRUE;
 
+}
+
+#define ID_WINDOW_TOP       100
+#define ID_WINDOW_LEFT1     101
+#define ID_WINDOW_LEFT2     102
+#define ID_WINDOW_BOTTOM    103
+
+void FB_Frame::CreatePanels()
+{
+
+    wxSplitterWindow* splitter = new wxSplitterWindow( 
+        this, 10, wxDefaultPosition, wxDefaultSize, 
+        wxSP_FULLSASH|wxNO_BORDER );
+ 
+    splitter->SetSashGravity( 1.0 );
+    
+    wxPanel * p1 = new wxPanel( splitter, 12, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    p1->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+
+    FB_Console* Console_area = new FB_Console( splitter );
+    
+    splitter->SplitHorizontally( p1, Console_area, 150 );
+    
 }
 
 
