@@ -65,6 +65,8 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     // View menu
     EVT_MENU( fbideID_OutPut,           FB_Frame::OnOutput )
     EVT_MENU( fbideID_Project,          FB_Frame::OnProject )
+    EVT_MENU( fbideID_ToolBar,          FB_Frame::OnToolBar )
+    EVT_MENU( fbideID_StatusBar,        FB_Frame::OnStatusBar )
     
     // Project menu
     EVT_MENU( fbideID_NewProjectFile,   FB_Frame::OnNewprojectfile )
@@ -106,8 +108,10 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 
     wxFrame::Create( parent, id, caption, pos, size, style );
 
-    FBIde_Config.ShowConsole = false;
-    FBIde_Config.ShowProject = false;
+    FBIde_Config.ShowConsole    = false;
+    FBIde_Config.ShowProject    = false;
+    FBIde_Config.ShowToolBar    = true;
+    FBIde_Config.ShowStatusBar  = true;
     
     CreateMenus();
     CreateToolbar();
@@ -396,6 +400,16 @@ void FB_Frame::CreateMenus()
         ViewProject->SetMarginWidth( 16 );
         ViewMenu->Append(ViewProject);
     }
+    {
+        ViewToolBar = new wxMenuItem(ViewMenu, fbideID_ToolBar, _("View Toolbar"), _T(""), wxITEM_CHECK);
+        ViewToolBar->SetMarginWidth( 16 );
+        ViewMenu->Append(ViewToolBar);
+    }
+    {
+        ViewStatusBar = new wxMenuItem(ViewMenu, fbideID_StatusBar, _("View Statusbar"), _T(""), wxITEM_CHECK);
+        ViewStatusBar->SetMarginWidth( 16 );
+        ViewMenu->Append(ViewStatusBar);
+    }    
     menuBar->Append(ViewMenu, _("View"));
     
 
@@ -542,35 +556,37 @@ void FB_Frame::CreateMenus()
     this->SetMenuBar(menuBar);
 }
 
+
 void FB_Frame::CreateToolbar()
 {    
-    // Toolbar construction
-    FB_Toolbar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL|wxNO_BORDER, ID_TOOLBAR );
-    FB_Toolbar->SetToolBitmapSize(wxSize(16, 16));
+    
+    if ( !FBIde_Config.ShowToolBar ) return;
+    ViewToolBar->Check( true );
 
-    FB_Toolbar->AddTool(wxID_NEW,       _T(""), wxBITMAP(bmp_newsrc),   _T(""));
-    FB_Toolbar->AddTool(wxID_OPEN,      _T(""), wxBITMAP(bmp_opnproj),  _T(""));
-    FB_Toolbar->AddTool(wxID_SAVE,      _T(""), wxBITMAP(bmp_save),     _T(""));
-    FB_Toolbar->AddTool(wxID_SAVE_ALL,  _T(""), wxBITMAP(bmp_saveall),  _T(""));
-    FB_Toolbar->AddTool(wxID_CLOSE,     _T(""), wxBITMAP(bmp_closefl),  _T(""));
-    FB_Toolbar->AddSeparator();
-    FB_Toolbar->AddTool(wxID_CUT,       _T(""), wxBITMAP(bmp_cut),      _T(""));
-    FB_Toolbar->AddTool(wxID_COPY,      _T(""), wxBITMAP(bmp_copy),     _T(""));
-    FB_Toolbar->AddTool(wxID_PASTE,     _T(""), wxBITMAP(bmp_paste),    _T(""));
-    FB_Toolbar->AddSeparator();
-    FB_Toolbar->AddTool(wxID_UNDO,      _T(""), wxBITMAP(bmp_undo),     _T(""));
-    FB_Toolbar->AddTool(wxID_REDO,      _T(""), wxBITMAP(bmp_redo),     _T(""));
-    FB_Toolbar->AddSeparator();
-    FB_Toolbar->AddTool(fbideID_Compile,        _T(""), wxBITMAP(bmp_compile),  _T(""));
-    FB_Toolbar->AddTool(fbideID_Run,            _T(""), wxBITMAP(bmp_run),      _T(""));
-    FB_Toolbar->AddTool(fbideID_CompileAndRun,  _T(""), wxBITMAP(bmp_comprun),  _T(""));
-    FB_Toolbar->AddTool(fbideID_RebuildAll,     _T(""), wxBITMAP(bmp_rebuild),  _T(""));
-    FB_Toolbar->AddTool(fbideID_QuickRun,       _T(""), wxBITMAP(bmp_next),     _T(""));
-    FB_Toolbar->AddSeparator();
-    FB_Toolbar->AddTool(fbideID_OutPut, _T(""), wxBITMAP(bmp_tile), _T(""));
-    FB_Toolbar->Realize();
+    wxToolBarBase * toolbar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL|wxNO_BORDER, ID_TOOLBAR );
+    toolbar->SetToolBitmapSize(wxSize(16, 16));
 
-    this->SetToolBar(FB_Toolbar);
+    toolbar->AddTool(wxID_NEW,       _T(""), wxBITMAP(bmp_newsrc),   _T(""));
+    toolbar->AddTool(wxID_OPEN,      _T(""), wxBITMAP(bmp_opnproj),  _T(""));
+    toolbar->AddTool(wxID_SAVE,      _T(""), wxBITMAP(bmp_save),     _T(""));
+    toolbar->AddTool(wxID_SAVE_ALL,  _T(""), wxBITMAP(bmp_saveall),  _T(""));
+    toolbar->AddTool(wxID_CLOSE,     _T(""), wxBITMAP(bmp_closefl),  _T(""));
+    toolbar->AddSeparator();
+    toolbar->AddTool(wxID_CUT,       _T(""), wxBITMAP(bmp_cut),      _T(""));
+    toolbar->AddTool(wxID_COPY,      _T(""), wxBITMAP(bmp_copy),     _T(""));
+    toolbar->AddTool(wxID_PASTE,     _T(""), wxBITMAP(bmp_paste),    _T(""));
+    toolbar->AddSeparator();
+    toolbar->AddTool(wxID_UNDO,      _T(""), wxBITMAP(bmp_undo),     _T(""));
+    toolbar->AddTool(wxID_REDO,      _T(""), wxBITMAP(bmp_redo),     _T(""));
+    toolbar->AddSeparator();
+    toolbar->AddTool(fbideID_Compile,        _T(""), wxBITMAP(bmp_compile),  _T(""));
+    toolbar->AddTool(fbideID_Run,            _T(""), wxBITMAP(bmp_run),      _T(""));
+    toolbar->AddTool(fbideID_CompileAndRun,  _T(""), wxBITMAP(bmp_comprun),  _T(""));
+    toolbar->AddTool(fbideID_RebuildAll,     _T(""), wxBITMAP(bmp_rebuild),  _T(""));
+    toolbar->AddTool(fbideID_QuickRun,       _T(""), wxBITMAP(bmp_next),     _T(""));
+    toolbar->AddSeparator();
+    toolbar->AddTool(fbideID_OutPut, _T(""), wxBITMAP(bmp_tile), _T(""));
+    toolbar->Realize();
 
 }
 
@@ -871,6 +887,29 @@ void FB_Frame::OnProject( wxCommandEvent& event )
     else {
         VSplitter->SplitVertically( Browser_area, Code_area, Browser_area->GetSize() );
     }
+}
+
+
+void FB_Frame::OnToolBar( wxCommandEvent& event )
+{
+    wxToolBar *toolbar = GetToolBar();
+    if ( !toolbar )
+    {
+        FBIde_Config.ShowToolBar = true;
+        CreateToolbar();
+    }
+    else
+    {
+        FBIde_Config.ShowToolBar = false;
+        delete toolbar;
+        SetToolBar(NULL);
+    }
+}
+
+
+void FB_Frame::OnStatusBar( wxCommandEvent& event )
+{
+    event.Skip();
 }
 
 

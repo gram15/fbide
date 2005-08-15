@@ -45,6 +45,8 @@ enum fbideID_Enums {
     fbideID_Goto,
     fbideID_IncrSearch,
     fbideID_OutPut,
+    fbideID_ToolBar,
+    fbideID_StatusBar,
     fbideID_NewProjectFile,
     fbideID_Project,
     fbideID_ProjectAdd,
@@ -87,6 +89,7 @@ class FB_Frame: public wxFrame
     DECLARE_EVENT_TABLE()
     struct FBIde_Config {
         bool ShowConsole, ShowProject;
+        bool ShowToolBar, ShowStatusBar;
     } FBIde_Config;
 
 public:
@@ -133,6 +136,8 @@ public:
     void OnIncrsearch       ( wxCommandEvent& event );
     void OnOutput           ( wxCommandEvent& event );
     void OnProject          ( wxCommandEvent& event );
+    void OnToolBar          ( wxCommandEvent& event );
+    void OnStatusBar        ( wxCommandEvent& event );
     void OnNewprojectfile   ( wxCommandEvent& event );
     void OnProjectadd       ( wxCommandEvent& event );
     void OnProjectremove    ( wxCommandEvent& event );
@@ -155,14 +160,16 @@ public:
     static bool ShowToolTips();
 
     /// Data
-    wxToolBar* FB_Toolbar;
     wxSplitterWindow* HSplitter;
     wxSplitterWindow* VSplitter;
     FB_Console* Console_area;
     FB_Browser* Browser_area;
     wxPanel* Code_area;
+
     wxMenuItem* ViewProject;
     wxMenuItem* ViewConsole;
+    wxMenuItem* ViewToolBar;
+    wxMenuItem* ViewStatusBar;
 
 };
 
