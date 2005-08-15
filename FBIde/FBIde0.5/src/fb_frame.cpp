@@ -15,6 +15,7 @@
 #include "inc/fb_about.h"
 #include "inc/fb_console.h"
 #include "inc/fb_browser.h"
+#include "inc/fb_statusbar.h"
 #include "inc/fb_frame.h"
 
 
@@ -116,6 +117,8 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
     CreateMenus();
     CreateToolbar();
     CreatePanels();
+    CreateStatusBar();
+    
     Centre();
 
     return TRUE;
@@ -590,6 +593,22 @@ void FB_Frame::CreateToolbar()
 
 }
 
+void FB_Frame::CreateStatusBar() {
+    
+    StatusBar = new FB_StatusBar( this );
+    
+    if ( FBIde_Config.ShowStatusBar ) 
+    {
+        SetStatusBar( StatusBar );
+        ViewStatusBar->Check( true );
+    } 
+    else 
+    {
+        StatusBar->Hide();
+        SetStatusBar( NULL );
+    }
+    
+}
 
 bool FB_Frame::ShowToolTips()
 {
@@ -909,7 +928,18 @@ void FB_Frame::OnToolBar( wxCommandEvent& event )
 
 void FB_Frame::OnStatusBar( wxCommandEvent& event )
 {
-    event.Skip();
+    if ( !FBIde_Config.ShowStatusBar ) 
+    {
+        FBIde_Config.ShowStatusBar = true;
+        CreateStatusBar();
+    } 
+    else 
+    {
+        FBIde_Config.ShowStatusBar = false;
+        delete StatusBar;
+        StatusBar = NULL;
+        SetStatusBar( NULL );
+    }
 }
 
 

@@ -82,6 +82,7 @@ enum fbideID_Enums {
 
 class FB_Console;
 class FB_Browser;
+class FB_StatusBar;
 
 class FB_Frame: public wxFrame
 {    
@@ -101,6 +102,7 @@ public:
     void CreateMenus();
     void CreateToolbar();
     void CreatePanels();
+    void CreateStatusBar();
 
     /// Event handlers
     void OnNew              ( wxCommandEvent& event );
@@ -170,6 +172,8 @@ public:
     wxMenuItem* ViewConsole;
     wxMenuItem* ViewToolBar;
     wxMenuItem* ViewStatusBar;
+    
+    FB_StatusBar * StatusBar;
 
 };
 
