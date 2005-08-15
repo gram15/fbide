@@ -26,12 +26,15 @@ class FB_Console : public wxNotebook {
         wxListCtrl * Compiler;
         wxListCtrl * SearchResult;
         wxPanel * Debug;
+        int size;
         
     public:
         FB_Console( wxWindow * parent );
         void CreateCompilerTab(  );
         void CreateSearchTab(  );
         void CreateDebugTab(  );
+        void SetSize( int s )  { size = s; }
+        int  GetSize(  ) const { return (size == 0) ? -100 : size; }
 };
 
 

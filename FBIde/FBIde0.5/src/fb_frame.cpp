@@ -12,9 +12,10 @@
 
 #include "wx/wx.h"
 
-#include "inc/fb_frame.h"
 #include "inc/fb_about.h"
 #include "inc/fb_console.h"
+#include "inc/fb_frame.h"
+
 
 /*!
  * FB_Frame type definition
@@ -62,6 +63,7 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     
     // View menu
     EVT_MENU( fbideID_OutPut,           FB_Frame::OnOutput )
+    EVT_MENU( fbideID_Project,          FB_Frame::OnProject )
     
     // Project menu
     EVT_MENU( fbideID_NewProjectFile,   FB_Frame::OnNewprojectfile )
@@ -105,34 +107,38 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
     CreateMenus();
     CreateToolbar();
     CreatePanels();
-
-
-
     Centre();
     return TRUE;
 
 }
 
-#define ID_WINDOW_TOP       100
-#define ID_WINDOW_LEFT1     101
-#define ID_WINDOW_LEFT2     102
-#define ID_WINDOW_BOTTOM    103
-
 void FB_Frame::CreatePanels()
 {
 
-    wxSplitterWindow* splitter = new wxSplitterWindow( 
+    HSplitter = new wxSplitterWindow( 
         this, 10, wxDefaultPosition, wxDefaultSize, 
-        wxSP_FULLSASH|wxNO_BORDER|wxSP_LIVE_UPDATE );
- 
-    splitter->SetSashGravity( 1.0 );
-    
-    wxPanel * p1 = new wxPanel( splitter, 12, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    p1->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+        wxSP_FULLSASH|wxNO_BORDER );
+    HSplitter->SetSashGravity( 1.0 );
 
-    FB_Console* Console_area = new FB_Console( splitter );
     
-    splitter->SplitHorizontally( p1, Console_area, 150 );
+    VSplitter = new wxSplitterWindow( 
+        HSplitter, 100, wxDefaultPosition, wxDefaultSize, 
+        wxSP_FULLSASH|wxNO_BORDER );
+    //VSplitter->SetSplitMode( wxSPLIT_VERTICAL );
+    
+    wxPanel * p1 = new wxPanel( VSplitter, 12, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    p1->SetBackgroundColour( wxColour(0,192,192));
+
+    wxPanel * p2 = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
+    p2->SetBackgroundColour( wxColour(192,192,0));
+    VSplitter->SetMinimumPaneSize( 100 );
+    VSplitter->SplitVertically( p1, p2, -350 );
+
+    Console_area = new FB_Console( HSplitter );
+    
+    HSplitter->SetMinimumPaneSize( 100 );
+    HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
+    ViewConsole->Check( true );
     
 }
 
@@ -245,7 +251,7 @@ void FB_Frame::CreateMenus()
         FileMenu->Append(menuItem);
     }
     {
-        wxMenuItem* menuItem = new wxMenuItem(FileMenu, wxID_EXIT, _("Exit\\Ctrl+Q"), _T(""));
+        wxMenuItem* menuItem = new wxMenuItem(FileMenu, wxID_EXIT, _("Exit\tCtrl+Q"), _T(""));
         wxBitmap bitmap(wxBITMAP(bmp_close));
         bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
         menuItem->SetBitmap(bitmap);
@@ -338,7 +344,7 @@ void FB_Frame::CreateMenus()
         SearchMenu->Append(menuItem);
     }
     {
-        wxMenuItem* menuItem = new wxMenuItem(SearchMenu, fbideID_FindNext, _("Search again"), _T(""));
+        wxMenuItem* menuItem = new wxMenuItem(SearchMenu, fbideID_FindNext, _("Search again\tF3"), _T(""));
         wxBitmap bitmap(wxBITMAP(bmp_srcagain));
         bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
         menuItem->SetBitmap(bitmap);
@@ -369,9 +375,14 @@ void FB_Frame::CreateMenus()
     //View menu
     wxMenu* ViewMenu = new wxMenu;
     {
-        wxMenuItem* menuItem = new wxMenuItem(ViewMenu, fbideID_OutPut, _("Console Area\tF4"), _T(""), wxITEM_CHECK);
-        menuItem->SetMarginWidth( 16 );
-        ViewMenu->Append(menuItem);
+        ViewConsole = new wxMenuItem(ViewMenu, fbideID_OutPut, _("Console Area\tF4"), _T(""), wxITEM_CHECK);
+        ViewConsole->SetMarginWidth( 16 );
+        ViewMenu->Append(ViewConsole);
+    }
+    {
+        ViewProject = new wxMenuItem(ViewMenu, fbideID_Project, _("Project browser\tF2"), _T(""), wxITEM_CHECK);
+        ViewProject->SetMarginWidth( 16 );
+        ViewMenu->Append(ViewProject);
     }
     menuBar->Append(ViewMenu, _("View"));
     
@@ -827,7 +838,21 @@ void FB_Frame::OnShowexitcode( wxCommandEvent& event )
 
 void FB_Frame::OnOutput( wxCommandEvent& event )
 {
-    event.Skip();
+    if ( HSplitter->IsSplit() ) { 
+        Console_area->SetSize( HSplitter->GetSashPosition() );
+        HSplitter->Unsplit( Console_area );
+        ViewConsole->Check( false );
+    }
+    else { 
+        HSplitter->SplitHorizontally( VSplitter, Console_area, Console_area->GetSize() );
+        ViewConsole->Check( true );
+    }
+}
+
+
+void FB_Frame::OnProject( wxCommandEvent& event )
+{
+    
 }
 
 

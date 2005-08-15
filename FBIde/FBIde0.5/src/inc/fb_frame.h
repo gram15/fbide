@@ -46,6 +46,7 @@ enum fbideID_Enums {
     fbideID_IncrSearch,
     fbideID_OutPut,
     fbideID_NewProjectFile,
+    fbideID_Project,
     fbideID_ProjectAdd,
     fbideID_ProjectRemove,
     fbideID_ProjectOptions,
@@ -76,6 +77,8 @@ enum fbideID_Enums {
 /*!
  * FB_Frame class declaration
  */
+
+class FB_Console;
 
 class FB_Frame: public wxFrame
 {    
@@ -125,6 +128,7 @@ public:
     void OnGoto             ( wxCommandEvent& event );
     void OnIncrsearch       ( wxCommandEvent& event );
     void OnOutput           ( wxCommandEvent& event );
+    void OnProject          ( wxCommandEvent& event );
     void OnNewprojectfile   ( wxCommandEvent& event );
     void OnProjectadd       ( wxCommandEvent& event );
     void OnProjectremove    ( wxCommandEvent& event );
@@ -148,6 +152,11 @@ public:
 
     /// Data
     wxToolBar* FB_Toolbar;
+    wxSplitterWindow* HSplitter;
+    wxSplitterWindow* VSplitter;
+    FB_Console* Console_area;
+    wxMenuItem* ViewProject;
+    wxMenuItem* ViewConsole;
 
 };
 
