@@ -39,6 +39,8 @@ FB_Console::FB_Console( wxWindow * parent ) :
     CreateDebugTab();
     CreateSearchTab();
     
+    size = 0;
+    
 }
 
 

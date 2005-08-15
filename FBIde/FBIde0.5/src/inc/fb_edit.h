@@ -1,0 +1,18 @@
+/////////////////////////////////////////////////////////////////////////////
+// Name:        fb_frame.h
+// Purpose:     
+// Author:      VonGodric
+// Modified by: 
+// Created:     08/03/05 14:23:04
+// RCS-ID:      
+// Copyright:   
+// Licence:     
+/////////////////////////////////////////////////////////////////////////////
+
+#ifndef _FB_EDIT_H_
+#define _FB_EDIT_H_
+
+#include "wx/notebook.h"
+
+
+#endif

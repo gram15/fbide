@@ -24,7 +24,7 @@ class FB_Browser : public wxNotebook {
     public:
         FB_Browser( wxWindow * parent );
         void SetSize( int s )  { size = s; }
-        int  GetSize(  ) const { return (size == 0) ? -350 : size; }
+        int  GetSize(  ) const { return (size == 0) ? 150 : size; }
 };
 
 #endif

@@ -23,5 +23,6 @@ FB_Browser::FB_Browser( wxWindow * parent ) :
         
         this->AddPage(Project, _("Project"), true, 0);
         this->AddPage(SFTree, _("Sub/Function"), false, 1);
+        size = 0;
     
 }

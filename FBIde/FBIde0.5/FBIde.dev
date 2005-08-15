@@ -1,7 +1,7 @@
 [Project]
 FileName=FBIde.dev
 Name=FBIde
-UnitCount=13
+UnitCount=15
 Type=0
 Ver=1
 ObjFiles=
@@ -73,7 +73,7 @@ BuildCmd=
 Major=0
 Minor=5
 Release=0
-Build=264
+Build=272
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -167,6 +167,26 @@ BuildCmd=
 
 [Unit13]
 FileName=src\inc\fb_config.h
+CompileCpp=1
+Folder=inc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit14]
+FileName=src\fb_edit.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit15]
+FileName=src\inc\fb_edit.h
 CompileCpp=1
 Folder=inc
 Compile=1

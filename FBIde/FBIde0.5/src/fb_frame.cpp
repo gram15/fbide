@@ -139,7 +139,7 @@ void FB_Frame::CreatePanels()
     
    
     if ( FBIde_Config.ShowProject ) {
-        VSplitter->SplitVertically( Browser_area, Code_area, -350 );
+        VSplitter->SplitVertically( Browser_area, Code_area, 150 );
         ViewProject->Check( true );
     } else {
         VSplitter->Initialize( Code_area );
