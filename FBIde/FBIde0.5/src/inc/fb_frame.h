@@ -83,6 +83,7 @@ enum fbideID_Enums {
 class FB_Console;
 class FB_Browser;
 class FB_StatusBar;
+class FB_Tab;
 
 class FB_Frame: public wxFrame
 {    
@@ -97,7 +98,9 @@ public:
     /// Constructors
     FB_Frame( wxWindow* parent, wxWindowID id = SYMBOL_FB_FRAME_IDNAME, const wxString& caption = SYMBOL_FB_FRAME_TITLE, const wxPoint& pos = SYMBOL_FB_FRAME_POSITION, const wxSize& size = SYMBOL_FB_FRAME_SIZE, long style = SYMBOL_FB_FRAME_STYLE );
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_FB_FRAME_IDNAME, const wxString& caption = SYMBOL_FB_FRAME_TITLE, const wxPoint& pos = SYMBOL_FB_FRAME_POSITION, const wxSize& size = SYMBOL_FB_FRAME_SIZE, long style = SYMBOL_FB_FRAME_STYLE );
-
+    
+    ~FB_Frame();
+    
     /// Creates the controls and sizers
     void CreateMenus();
     void CreateToolbar();
@@ -166,7 +169,7 @@ public:
     wxSplitterWindow* VSplitter;
     FB_Console* Console_area;
     FB_Browser* Browser_area;
-    wxPanel* Code_area;
+    wxWindow * Code_area;
 
     wxMenuItem* ViewProject;
     wxMenuItem* ViewConsole;
@@ -174,6 +177,8 @@ public:
     wxMenuItem* ViewStatusBar;
     
     FB_StatusBar * StatusBar;
+    
+    FB_Tab * fbtab;
 
 };
 

@@ -30,7 +30,6 @@ FB_About::FB_About( wxWindow* parent, wxWindowID id, const wxString& caption, co
 
 bool FB_About::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
-
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
