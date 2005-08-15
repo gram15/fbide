@@ -15,7 +15,7 @@
 FB_Console::FB_Console( wxWindow * parent ) :
     wxNotebook( parent, wxID_ANY, 
                 wxDefaultPosition, wxDefaultSize, 
-                wxNB_TOP | wxCLIP_CHILDREN  )
+                wxNB_TOP | wxCLIP_CHILDREN | wxNO_BORDER )
 {
     wxImageList* imageList = new wxImageList(16, 16, true, 3);
     {

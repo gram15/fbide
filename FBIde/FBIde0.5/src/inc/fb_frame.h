@@ -79,6 +79,7 @@ enum fbideID_Enums {
  */
 
 class FB_Console;
+class FB_Browser;
 
 class FB_Frame: public wxFrame
 {    
@@ -155,6 +156,8 @@ public:
     wxSplitterWindow* HSplitter;
     wxSplitterWindow* VSplitter;
     FB_Console* Console_area;
+    FB_Browser* Browser_area;
+    wxPanel* Code_area;
     wxMenuItem* ViewProject;
     wxMenuItem* ViewConsole;
 

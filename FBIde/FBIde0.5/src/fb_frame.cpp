@@ -14,6 +14,7 @@
 
 #include "inc/fb_about.h"
 #include "inc/fb_console.h"
+#include "inc/fb_browser.h"
 #include "inc/fb_frame.h"
 
 
@@ -124,22 +125,21 @@ void FB_Frame::CreatePanels()
     VSplitter = new wxSplitterWindow( 
         HSplitter, 100, wxDefaultPosition, wxDefaultSize, 
         wxSP_FULLSASH|wxNO_BORDER );
-    //VSplitter->SetSplitMode( wxSPLIT_VERTICAL );
     
-    wxPanel * p1 = new wxPanel( VSplitter, 12, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    p1->SetBackgroundColour( wxColour(0,192,192));
+    Browser_area = new FB_Browser( VSplitter );
+    Code_area = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
 
-    wxPanel * p2 = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    p2->SetBackgroundColour( wxColour(192,192,0));
+    Code_area->SetBackgroundColour( wxColour(192,192,0));
+    
     VSplitter->SetMinimumPaneSize( 100 );
-    VSplitter->SplitVertically( p1, p2, -350 );
+    VSplitter->SplitVertically( Browser_area, Code_area, -350 );
 
     Console_area = new FB_Console( HSplitter );
     
     HSplitter->SetMinimumPaneSize( 100 );
     HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
     ViewConsole->Check( true );
-    
+    ViewProject->Check( true );
 }
 
 
@@ -852,7 +852,13 @@ void FB_Frame::OnOutput( wxCommandEvent& event )
 
 void FB_Frame::OnProject( wxCommandEvent& event )
 {
-    
+    if ( VSplitter->IsSplit() ) {
+        Browser_area->SetSize( VSplitter->GetSashPosition() );
+        VSplitter->Unsplit( Browser_area );
+    }
+    else {
+        VSplitter->SplitVertically( Browser_area, Code_area, Browser_area->GetSize() );
+    }
 }
 
 
