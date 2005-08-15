@@ -120,24 +120,22 @@ void FB_Frame::CreatePanels()
         this, 10, wxDefaultPosition, wxDefaultSize, 
         wxSP_FULLSASH|wxNO_BORDER );
     HSplitter->SetSashGravity( 1.0 );
-
+    HSplitter->SetMinimumPaneSize( 100 );
     
     VSplitter = new wxSplitterWindow( 
         HSplitter, 100, wxDefaultPosition, wxDefaultSize, 
         wxSP_FULLSASH|wxNO_BORDER );
+    VSplitter->SetMinimumPaneSize( 100 );
     
+    Console_area = new FB_Console( HSplitter );
     Browser_area = new FB_Browser( VSplitter );
     Code_area = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-
-    Code_area->SetBackgroundColour( wxColour(192,192,0));
+    Code_area->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
     
-    VSplitter->SetMinimumPaneSize( 100 );
+    
     VSplitter->SplitVertically( Browser_area, Code_area, -350 );
-
-    Console_area = new FB_Console( HSplitter );
-    
-    HSplitter->SetMinimumPaneSize( 100 );
     HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
+
     ViewConsole->Check( true );
     ViewProject->Check( true );
 }
