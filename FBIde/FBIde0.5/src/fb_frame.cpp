@@ -105,10 +105,15 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 {
 
     wxFrame::Create( parent, id, caption, pos, size, style );
+
+    FBIde_Config.ShowConsole = false;
+    FBIde_Config.ShowProject = false;
+    
     CreateMenus();
     CreateToolbar();
     CreatePanels();
     Centre();
+
     return TRUE;
 
 }
@@ -132,12 +137,21 @@ void FB_Frame::CreatePanels()
     Code_area = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
     Code_area->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
     
+   
+    if ( FBIde_Config.ShowProject ) {
+        VSplitter->SplitVertically( Browser_area, Code_area, -350 );
+        ViewProject->Check( true );
+    } else {
+        VSplitter->Initialize( Code_area );
+    }
     
-    VSplitter->SplitVertically( Browser_area, Code_area, -350 );
-    HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
+    if ( FBIde_Config.ShowConsole ) {
+        HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
+        ViewConsole->Check( true );
+    } else {
+        HSplitter->Initialize( VSplitter );
+    }
 
-    ViewConsole->Check( true );
-    ViewProject->Check( true );
 }
 
 

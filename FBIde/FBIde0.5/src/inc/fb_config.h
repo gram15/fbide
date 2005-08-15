@@ -9,31 +9,7 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _FBIDE_H_
-#define _FBIDE_H_
-
-#include "wx/image.h"
-
-class FBIde: public wxApp
-{    
-    DECLARE_CLASS( FBIde )
-
-public:
-
-    /// Initialises the application
-    virtual bool OnInit();
-
-    /// Called on exit
-    virtual int OnExit();
-
-};
-
-
-/*!
- * Application instance declaration 
- */
-
-DECLARE_APP(FBIde)
+#ifndef _FB_CONFIG_H_
+#define _FB_CONFIG_H_
 
 #endif
-    // _FBIDE_H_

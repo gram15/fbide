@@ -85,6 +85,9 @@ class FB_Frame: public wxFrame
 {    
     DECLARE_CLASS( FB_Frame )
     DECLARE_EVENT_TABLE()
+    struct FBIde_Config {
+        bool ShowConsole, ShowProject;
+    } FBIde_Config;
 
 public:
     /// Constructors
