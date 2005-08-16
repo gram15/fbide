@@ -167,9 +167,7 @@ void FB_Frame::OnSave( wxCommandEvent& event )
 
 void FB_Frame::OnNew( wxCommandEvent& event )
 {
-    Freeze();
-        DocMngr->AddPage();
-    Thaw();
+    DocMngr->AddPage();
 }
 
 

@@ -24,6 +24,7 @@ FB_DocMngr::FB_DocMngr( FB_Frame * parent, FB_Config * config )
 {
     Config = config;
     Parent = parent;
+    tablimit = Config->TabLimit;
     tab = NULL;
     Show( false );
     tabcount = 0;
@@ -50,11 +51,12 @@ void FB_DocMngr::AddPage()
     Show( true );
     tabcount++;
 
-    page = new FB_STC_FB( tab, NULL, Config );
-
-    tab->AddPage( page, "Untitled", true );
-    tab->Refresh();
-    tabvis = tab->GetSelection();
+    Parent->Freeze();
+        page = new FB_STC_FB( tab, NULL, Config );
+        tab->AddPage( page, "Untitled", true );
+        tab->Refresh();
+        tabvis = tab->GetSelection();
+    Parent->Thaw();
     
 }
 
