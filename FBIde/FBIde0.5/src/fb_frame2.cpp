@@ -36,8 +36,7 @@ void FB_Frame::CreatePanels()
     
     Console_area = new FB_Console( HSplitter );
     Browser_area = new FB_Browser( VSplitter );
-    DocMngr = new FB_DocMngr( this );
-    DocMngr->SetTabLimit( Config->TabLimit );
+    DocMngr = new FB_DocMngr( this, Config );
            
     if ( Config->ShowProject ) {
         VSplitter->SplitVertically( Browser_area, Code_area, 150 );

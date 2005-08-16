@@ -15,17 +15,19 @@
 #include "stc/stc.h"
 
 class FB_Doc;
+class FB_Config;
 
 // Base class - Also ordinary txt file
 class FB_STC : public wxStyledTextCtrl
 {
     private:
-        wxWindow * Parent;
-        FB_Doc * Doc;
         DECLARE_EVENT_TABLE()
         
     public:
-        FB_STC ( wxWindow * parent, FB_Doc * doc );
+        wxWindow    * Parent;
+        FB_Config   * Config;
+        FB_Doc      * Doc;
+        FB_STC ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
         virtual void LoadSettings ( );
         virtual void OnCharAdded ( wxStyledTextEvent &event );
         void SetDoc ( FB_Doc * doc ) { Doc = doc; }
@@ -36,7 +38,7 @@ class FB_STC : public wxStyledTextCtrl
 class FB_STC_FB : public FB_STC
 {
     public:
-    FB_STC_FB ( wxWindow * parent, FB_Doc * doc );
+    FB_STC_FB ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
     void OnCharAdded( wxStyledTextEvent &event );
     void LoadSettings ( );
 };

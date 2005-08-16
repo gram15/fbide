@@ -18,6 +18,7 @@
 class wxMyNotebook;
 class FB_Frame;
 class FB_STC;
+class FB_Config;
 
 class FB_DocMngr
 {
@@ -28,11 +29,11 @@ class FB_DocMngr
         int tabvis;
         FB_Frame * Parent;
         FB_STC * page;
+        FB_Config * Config;
         
     public:
-        FB_DocMngr          ( FB_Frame * parent );
+        FB_DocMngr          ( FB_Frame * parent, FB_Config * config );
         ~FB_DocMngr         (  );
-        void SetTabLimit( int tl ) { tablimit = tl; }
         void Create     ( wxWindow * parent );
         void AddPage    (  );
         void ClosePage  ( int idx = -1 );

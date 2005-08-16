@@ -20,23 +20,29 @@
 #include "wx/filename.h"
 #include "wx/app.h"
 
+#define mySTC_STYLE_BOLD 	1
+#define mySTC_STYLE_ITALIC 	2
+#define mySTC_STYLE_UNDERL 	4
+
 extern wxApp* wxGetApp();
 
 typedef unsigned int uint;
+
 struct Style_STC_FB {    
     struct Style{
         uint        Face;
         uint        Back;
-        wxString 	Font;
+        int    		Case;
         int    		Size;
         int    		Style;
-        int    		Case;
+        wxString 	Font;
     }Style[16];
     uint        LineNumberFace;
     uint        LineNumberBack;
     uint        SelectFace;
     uint        SelectBack;
     uint        CaretFace;
+    uint        CaretLine;
     uint        BraceFace;
     uint        BraceBack;
     int         BraceStyle;
@@ -70,8 +76,8 @@ class FB_Config
         
         int winx, winy, winw, winh;
         
-        Style_STC_FB STC_FB;
-        wxString FB_Keywords;
+        Style_STC_FB Style_FB;
+        wxString FB_Keywords[4];
         
         wxString CompilerPath;
         wxString EditorPath;
@@ -83,6 +89,11 @@ class FB_Config
         void LoadFBTheme ( wxString file );
         void LoadConfig  ( wxString file );
         void SaveConfig  ( wxString file );
+        void LoadKWFile  ( wxString file );
+        wxColour GetClr( uint c ) { 
+            wxColour clr((c >> 16) & 255, (c >> 8) & 255, c & 255);
+            return clr;
+        }
 };
 
 

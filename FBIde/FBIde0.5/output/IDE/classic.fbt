@@ -1,11 +1,3 @@
-[default]
-background=16777215
-foreground=0
-caret=0
-fontsize=12
-caretline=14540253
-fontstyle=0
-font=
 [linenumber]
 background=12632256
 foreground=16777215
@@ -20,6 +12,16 @@ fontstyle=1
 background=16711680
 foreground=16777215
 fonstyle=1
+[caret]
+caret=0
+caretline=14540253
+[default]
+background=16777215
+foreground=0
+font=Courier New
+fontsize=12
+capital=0
+fontstyle=0
 [comment]
 background=16777215
 foreground=8421504

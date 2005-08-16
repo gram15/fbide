@@ -23,8 +23,7 @@ IMPLEMENT_CLASS( FBIde, wxApp )
 
 bool FBIde::OnInit()
 {    
-
-    FB_Frame * MyFrame = new FB_Frame( NULL );
+    new FB_Frame( NULL );
     return true;
 }
 

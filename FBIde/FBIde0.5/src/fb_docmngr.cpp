@@ -16,11 +16,13 @@
 #include "inc/fb_frame.h"
 #include "inc/fb_stc.h"
 #include "inc/fb_doc.h"
+#include "inc/fb_config.h"
 #include "inc/fb_docmngr.h"
 
 
-FB_DocMngr::FB_DocMngr( FB_Frame * parent ) 
+FB_DocMngr::FB_DocMngr( FB_Frame * parent, FB_Config * config ) 
 {
+    Config = config;
     Parent = parent;
     tab = NULL;
     Show( false );
@@ -48,7 +50,7 @@ void FB_DocMngr::AddPage()
     Show( true );
     tabcount++;
 
-    page = new FB_STC_FB( tab, NULL );
+    page = new FB_STC_FB( tab, NULL, Config );
 
     tab->AddPage( page, "Untitled", true );
     tab->Refresh();
