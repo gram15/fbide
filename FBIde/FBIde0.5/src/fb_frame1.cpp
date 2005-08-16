@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.cpp
+// Name:        fb_frame1.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 
@@ -11,12 +11,13 @@
 
 
 #include "wx/wx.h"
+#include "inc/fb_config.h"
 #include "inc/fb_frame.h"
 
 void FB_Frame::CreateToolbar()
 {    
     
-    if ( !FBIde_Config.ShowToolBar ) return;
+    if ( !Config->ShowToolBar ) return;
     ViewToolBar->Check( true );
 
     wxToolBarBase * toolbar = CreateToolBar( wxTB_FLAT|wxTB_HORIZONTAL|wxNO_BORDER, ID_TOOLBAR );

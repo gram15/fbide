@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.cpp
+// Name:        fb_edit.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 

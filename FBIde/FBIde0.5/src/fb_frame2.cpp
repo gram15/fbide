@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.cpp
+// Name:        fb_frame2.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 
@@ -15,7 +15,8 @@
 #include "inc/fb_console.h"
 #include "inc/fb_browser.h"
 #include "inc/fb_statusbar.h"
-#include "inc/fb_tab.h"
+#include "inc/fb_docmngr.h"
+#include "inc/fb_config.h"
 #include "inc/fb_frame.h"
 
 
@@ -35,18 +36,17 @@ void FB_Frame::CreatePanels()
     
     Console_area = new FB_Console( HSplitter );
     Browser_area = new FB_Browser( VSplitter );
-    fbtab = new FB_Tab( this );
-    //Code_area = new wxPanel( VSplitter, 14, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxTAB_TRAVERSAL );
-    //Code_area->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+    DocMngr = new FB_DocMngr( this );
+    DocMngr->SetTabLimit( Config->TabLimit );
            
-    if ( FBIde_Config.ShowProject ) {
+    if ( Config->ShowProject ) {
         VSplitter->SplitVertically( Browser_area, Code_area, 150 );
         ViewProject->Check( true );
     } else {
         VSplitter->Initialize( Code_area );
     }
     
-    if ( FBIde_Config.ShowConsole ) {
+    if ( Config->ShowConsole ) {
         HSplitter->SplitHorizontally( VSplitter, Console_area, -100 );
         ViewConsole->Check( true );
     } else {
@@ -58,19 +58,12 @@ void FB_Frame::CreatePanels()
 
 void FB_Frame::CreateStatusBar() {
     
-    StatusBar = new FB_StatusBar( this );
-    
-    if ( FBIde_Config.ShowStatusBar ) 
+    if ( Config->ShowStatusBar ) 
     {
+        StatusBar = new FB_StatusBar( this );
         SetStatusBar( StatusBar );
         ViewStatusBar->Check( true );
     } 
-    else 
-    {
-        StatusBar->Hide();
-        SetStatusBar( NULL );
-    }
-    
 }
 
 

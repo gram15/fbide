@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.h
+// Name:        fb_statusbar.h
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 

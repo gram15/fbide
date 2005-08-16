@@ -1,18 +1,16 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_edit.h
+// Name:        fb_doc.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 
-// Created:     08/03/05 14:23:04
+// Created:     08/14/05 17:16:30
 // RCS-ID:      
 // Copyright:   
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _FB_EDIT_H_
-#define _FB_EDIT_H_
+#include "wx/wx.h"
 
-#include "wx/notebook.h"
+#include "inc/fb_docmngr.h"
+#include "inc/fb_doc.h"
 
-
-#endif

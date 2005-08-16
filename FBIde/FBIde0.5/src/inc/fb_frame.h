@@ -15,6 +15,7 @@
 #include "wx/frame.h"
 #include "wx/toolbar.h"
 #include "wx/splitter.h"
+#include "wx/filename.h"
 
 
 ////@begin control identifiers
@@ -83,16 +84,13 @@ enum fbideID_Enums {
 class FB_Console;
 class FB_Browser;
 class FB_StatusBar;
-class FB_Tab;
+class FB_DocMngr;
+class FB_Config;
 
 class FB_Frame: public wxFrame
 {    
     DECLARE_CLASS( FB_Frame )
     DECLARE_EVENT_TABLE()
-    struct FBIde_Config {
-        bool ShowConsole, ShowProject;
-        bool ShowToolBar, ShowStatusBar;
-    } FBIde_Config;
 
 public:
     /// Constructors
@@ -178,7 +176,8 @@ public:
     
     FB_StatusBar * StatusBar;
     
-    FB_Tab * fbtab;
+    FB_DocMngr * DocMngr;
+    FB_Config * Config;
 
 };
 

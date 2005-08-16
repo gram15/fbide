@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.h
+// Name:        wxmynotebook.h
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 

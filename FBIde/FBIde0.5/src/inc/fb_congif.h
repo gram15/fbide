@@ -12,16 +12,6 @@
 #ifndef _FB_CONFIG_H_
 #define _FB_CONFIG_H_
 
-#include "wx/fileconf.h"
-#include "wx/wfstream.h"
-#include "wx/filesys.h"
-#include "wx/datetime.h"
-#include "wx/file.h"
-#include "wx/filename.h"
-#include "wx/app.h"
-
-extern wxApp* wxGetApp();
-
 typedef unsigned int uint;
 struct Style_STC_FB {    
     struct Style{
@@ -52,38 +42,14 @@ class FB_Config
              IndentGuide,
              DisplayEOL,
              LineNumber,
-             WhiteSpace,
+             whiteSpace,
              AutoIndent,
              BraceHighlight,
              FolderMargin,
-             ShowConsole, 
-             ShowProject,
-             ShowToolBar, 
-             ShowStatusBar,
-             ShowExitCode,
-             CurrentLine,
-             RightMargin,
-             SplashScreen;
-        int  TabLimit;
         int  TabSize;
         int  EdgeColumn;
-        
-        int winx, winy, winw, winh;
-        
         Style_STC_FB STC_FB;
         wxString FB_Keywords;
         
-        wxString CompilerPath;
-        wxString EditorPath;
-        wxString SyntaxFile;
-        wxString ThemeFile;
-        
-        FB_Config(  );
-        ~FB_Config();
-        void LoadFBTheme ( wxString file );
-        void LoadConfig  ( wxString file );
-        void SaveConfig  ( wxString file );
+        FB_Config::FB_Config();
 };
-
-
-#endif

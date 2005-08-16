@@ -1,0 +1,261 @@
+[FBIde]
+
+;Generic stuff
+1=Bienvenue a FBIde!
+2=OK
+3=Annuler
+
+165=Ligne
+166=Fichier
+167=Erreur No
+168=Messages
+
+;Menus
+4=&Fichier
+5=&Editer
+6=&Rechercher
+7=&Voir
+8=Ou&tils
+9=&Exécuter
+10=&Aide
+
+11=&Nouveau ..
+12=Ouvrir nouveau document vide
+13=&Ouvrir ..
+14=Ouvrir nouveau document
+15=&Sauver
+16=Sauver document courant
+17=Sauver &Sous ..
+18=Sauver Document avec nouveau nom
+19=Sauver tous
+20=Sauver tous les fichiers ouvert
+21=Fermer
+22=fermer fichier courant
+23=Nouvelle &Fenêtre 
+24=Ouvrir nouvelle fenêtre d'édition
+25=&Quitter
+26=Quitter FBIde
+169=Load session
+170=Loads previously saved session
+171=Save session
+172=Saves current session
+173=Close All
+174=Close all opened files
+
+27=&Régresser
+28=Régresser dernière action
+29=&Refaire
+30=Refaire dernière action
+31=Co&uper
+32=Couper texte sélectionné vers le presse papier
+33=&Copier
+34=Copier text sélectionné vers le presse papier
+35=&Coller
+36=Coller depuis le presse papier
+37=&Sélectionner tous
+38=Sélectionner tous le document
+39=Sélectionner &lignes
+40=Sélectionner par ligne.
+41=&Indentation
+42=Indenter texte sélectionné vers la droite
+43=Annuler dernière indentation
+44=Désindenter le texte vers la gauche
+45=Commenter bloque 
+46=Commenter texte sélectionné
+47=Décommenter bloque
+48=Décommenter texte sélectionné
+
+49=Trouver 
+50=Trouver dans le document
+51=Chercher encore 
+52=Continuer a chercher la dernière recherche
+53=Remplacer 
+54=Remplacer le texte dans le document
+55=Aller à la Ligne...
+56=Se rendre sure la ligne désirée
+
+57=Paramêtres
+58=Régler les paramêtres de l'éditeur
+59=Voir fenêtre de résultâts
+60=Voir la table avec la sortie de console
+61=Poutines... 
+62=Ouvrir fenêtre du défureteur de fontions
+175=Format
+176=Changer le formattage du code source
+
+63=Compiler
+64=Compiler fichier courant
+65=Compiler et Exécuter
+66=Compiler et exécuter le fichier cournat
+67=Ex2cuter
+68=Exécuter dernier fichier compilé
+69=Exécution Accélérée
+70=Exécuter le programme sans compilation
+71=Ligne de commande
+72=Ouvrir fenêtre de commande
+73=&Paramêtres Ligne de commande...
+74=Assigner les paramêtres d'exécution du programme
+75=&Paramêtres de compilation...
+76=Assigner les paramêtres de compilation de programmes
+77=&Montrer valeur de système
+78=Montrer la valeur de retour au système.
+
+79=&A propos de...
+80=Montrer la fenêtre avec information sur FBIDE
+
+81=Fermer tous
+82=Fermer tous les fichiers présentement ouverts
+
+
+;Toolbar
+83=Nouveau Fichier (Ctrl+N)
+84=Ouvrir Fichier (Ctrl+O)
+85=Sauver Fichier (Ctrl+S)
+86=Sauver tous les fichiers
+87=Fermer fichier courant
+
+88=Cut (Ctrl+X)
+89=Copy (Ctrl+C)
+90=Paste (Ctrl+V)
+
+91=Annuer (Ctrl+Z)
+92=Refaire (Ctrl+Shift+Z)
+
+93=Compiler (Ctrl+F9)
+94=Exécuter (Ctrl+Shift+F9)
+95=Compiler et executer(F9)
+96=Exécution accélérée (F5)
+97=Ouvrir/fermer fenêtre de sortie
+
+
+;FBIde Settings dialog box
+98=Paramêtres de FBIde
+99=Générale
+100=Thèmes
+101=Mots clés
+102=Compilateur
+
+
+;General tab
+103=Voir numéros de lignes
+104=Paramêtres de l'éditeur
+105=surligner embrasse connectés
+106=Utilisation du surlignage de mots clés
+107=Montrer marge de droite
+108=Montrer fin de lignes
+109=Montrer espaces blancs
+110=Montrer guides d'indentations
+111=replier marge
+112=Indentation automatique
+116=Largeur de la marge de droite
+117=grandeur de tabulation
+201=Language
+202=NB: Changer de language necessite un réexécution de FBIDE
+203=Choix du language:
+
+;Compile tab
+113=Paramêtres de compilation
+114=Chemins de compilations
+115=Commande
+
+
+;Themes tab
+118=Commentairess
+119=Chiffres
+120=Mots clés 1
+121=Fermeture de chaîne
+122=Préprocesseur
+123=Opérateur
+124=Identificateur
+125=Date (ne fonctionne pas)
+126=Fermeture de chaîne
+127=Mots clés 2
+128=Mots clés 3
+129=Mots clés 4
+130=Curseur
+131=Numéros de lignes
+132=Sélection de texte
+133=Embrasse connectés
+134=Embrasse déconnectés
+135=Editeur
+
+136=Gras
+137=Italique
+138=Sousligné
+139=Sauve le thème
+140=Thème
+141=Créer nouveau theme
+
+142=Couleurs
+143=Type
+144=Couleur de caracères
+145=Couleur de fond
+146=Style de police
+147=Police\r\n
+148=Grosseur de police\r\n
+149=mots clés\r\n
+150=Choix de sélection de groupe
+151=Groupe 1
+152=Groupe 2
+153=Groupe 3
+154=Groupe 4
+
+155=Ouvrir fichier
+156=tous programmes (*.exe)|*.exe
+
+157=Entré le nom du thème:
+158=Paramètres...
+
+159=Thème \"
+160=\" déjà existant!\n Remplacer?
+161=Message
+
+
+;Conversion stuff
+162=Type de conversion:
+163=Aller!
+164=Prévisualizer!
+
+;Run stuff
+177=Paramètres de ligne de commande
+178=Rien a compiler!
+179=Erreur
+180=Vous devez d'abord compier le programme avant de l'exécuter, compiler?
+181=Compiler?
+182=Une erreur est survenue durant l'exécution \"
+183=Vous devez sauver le fichier avant de continuer!
+184=Sauver le fichier?
+
+185=Code de Retour
+
+;File stuff
+186=Charger le fichier
+187=Fichiers FB (*.bas)|*.bas|Fichier Entête FB (*.bi)|*.bi|Fichier HTML (*.html)|*.html|Tous les fichiers(*)|*.*|
+188=Fichier \"
+189=\" a été modifier, sauver?
+190=Le fichier '%s' a été modifié.\nVoulez-vous sauver les changements?
+192=Fichier Modifié
+193=Fichiers FB (*.bas)|*.bas|Fichier Entête FB (*.bi)|*.bi|Fichier HTML (*.html)|*.html|
+194=Tous les fichiers(*)|*.*|
+195=Sauver Fichier
+196=Utiliser le nouveau fichier?
+197=Question
+198=Session FBIde (*.fbs)|*.fbs|Tous les fichiers (*)|*.*|
+199=Sauver la session
+200=Fichiers HTML (*.html)|*.html|
+
+;About dialog stuff
+204=Un Logiciel Libre étant un Environnement de développement pour le compilateur FreeBasic
+205=(www.freebasic.net)
+206=Fait en C++ et utilisant wxWidgets et le controle d'édition de texte Scintilla.
+207=crédits:
+208=programmeurs
+209=Programmeur en chef, administrateur de programme et créateur du projet
+210=Superviseur de projet, code source pour reau (client et serveur)
+211=complétage de code source automatique
+212=Code d'exportation et de formattage de code
+213=internationalization (dans) modules
+214=Divers
+215=Administrateur de page web et documentation
+216=testeurs
+217=...et tout le monde qu'on a oubliés!

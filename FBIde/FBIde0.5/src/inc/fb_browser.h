@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_frame.h
+// Name:        fb_browser.h
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 

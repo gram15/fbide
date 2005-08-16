@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_about.cpp
+// Name:        wxmynotebook.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 

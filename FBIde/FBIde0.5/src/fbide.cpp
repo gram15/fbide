@@ -25,8 +25,6 @@ bool FBIde::OnInit()
 {    
 
     FB_Frame * MyFrame = new FB_Frame( NULL );
-    MyFrame->Show( true );
-    
     return true;
 }
 

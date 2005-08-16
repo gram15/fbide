@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_edit.h
+// Name:        fb_doc.h
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 
@@ -9,10 +9,14 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-#ifndef _FB_EDIT_H_
-#define _FB_EDIT_H_
+#ifndef _FB_DOC_H_
+#define _FB_DOC_H_
 
-#include "wx/notebook.h"
+#include "wx/filename.h"
 
+class FB_Doc {
+    private:
+        int t;
+};
 
 #endif

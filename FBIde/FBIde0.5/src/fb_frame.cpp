@@ -16,7 +16,8 @@
 #include "inc/fb_console.h"
 #include "inc/fb_browser.h"
 #include "inc/fb_statusbar.h"
-#include "inc/fb_tab.h"
+#include "inc/fb_docmngr.h"
+#include "inc/fb_config.h"
 #include "inc/fb_frame.h"
 
 
@@ -105,6 +106,17 @@ FB_Frame::FB_Frame( wxWindow* parent, wxWindowID id, const wxString& caption, co
 }
 
 FB_Frame::~FB_Frame() {
+    if (IsMaximized()||IsIconized()) {
+        Config->winw=-1;
+        Config->winh=-1;
+        Config->winx=0;
+        Config->winy=0;
+    }
+    else {
+        GetSize(&Config->winw, &Config->winh);
+        GetPosition(&Config->winx, &Config->winy);
+    }
+    delete Config;
     return;
 }
 
@@ -113,20 +125,27 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
 
     wxFrame::Create( parent, id, caption, pos, size, style );
 
-    FBIde_Config.ShowConsole    = true;
-    FBIde_Config.ShowProject    = true;
-    FBIde_Config.ShowToolBar    = true;
-    FBIde_Config.ShowStatusBar  = true;
+    Config = new FB_Config(  );
+        
+    if ( Config->winw==-1||Config->winh==-1 ) Maximize();
+    else 
+    {
+        wxFrame::Move(Config->winx, Config->winy);
+        wxFrame::SetSize(Config->winw, Config->winh);
+    }
+    Show( true );
+        
+    StatusBar = NULL;
     Code_area = NULL;
     
-    CreateMenus();
-    CreateToolbar();
-    CreatePanels();
-    CreateStatusBar();
-    
-    Centre();
-
-    return TRUE;
+    Freeze();
+        CreateMenus();
+        CreateToolbar();
+        CreatePanels();
+        CreateStatusBar();
+    Thaw();
+    SendSizeEvent();
+    return true;
 
 }
 
@@ -148,7 +167,7 @@ void FB_Frame::OnSave( wxCommandEvent& event )
 
 void FB_Frame::OnNew( wxCommandEvent& event )
 {
-    fbtab->AddPage();
+    DocMngr->AddPage();
 }
 
 
@@ -202,7 +221,7 @@ void FB_Frame::OnSessionsave( wxCommandEvent& event )
 
 void FB_Frame::OnClose( wxCommandEvent& event )
 {
-    fbtab->ClosePage();
+    DocMngr->ClosePage();
 }
 
 
@@ -412,12 +431,12 @@ void FB_Frame::OnOutput( wxCommandEvent& event )
         Console_area->SetSize( HSplitter->GetSashPosition() );
         HSplitter->Unsplit( Console_area );
         ViewConsole->Check( false );
-        FBIde_Config.ShowConsole = false;
+        Config->ShowConsole = false;
     }
     else { 
         HSplitter->SplitHorizontally( VSplitter, Console_area, Console_area->GetSize() );
         ViewConsole->Check( true );
-        FBIde_Config.ShowConsole = true;
+        Config->ShowConsole = true;
     }
 }
 
@@ -428,11 +447,11 @@ void FB_Frame::OnProject( wxCommandEvent& event )
     if ( VSplitter->IsSplit() ) {
         Browser_area->SetSize( VSplitter->GetSashPosition() );
         VSplitter->Unsplit( Browser_area );
-        FBIde_Config.ShowProject = false;
+        Config->ShowProject = false;
     }
     else {
         VSplitter->SplitVertically( Browser_area, Code_area, Browser_area->GetSize() );
-        FBIde_Config.ShowProject = true;
+        Config->ShowProject = true;
     }
 }
 
@@ -443,12 +462,12 @@ void FB_Frame::OnToolBar( wxCommandEvent& event )
     wxToolBar *toolbar = GetToolBar();
     if ( !toolbar )
     {
-        FBIde_Config.ShowToolBar = true;
+        Config->ShowToolBar = true;
         CreateToolbar();
     }
     else
     {
-        FBIde_Config.ShowToolBar = false;
+        Config->ShowToolBar = false;
         delete toolbar;
         SetToolBar(NULL);
     }
@@ -458,14 +477,14 @@ void FB_Frame::OnToolBar( wxCommandEvent& event )
 // Toggles StatusBar ON and OFF
 void FB_Frame::OnStatusBar( wxCommandEvent& event )
 {
-    if ( !FBIde_Config.ShowStatusBar ) 
+    if ( !Config->ShowStatusBar ) 
     {
-        FBIde_Config.ShowStatusBar = true;
+        Config->ShowStatusBar = true;
         CreateStatusBar();
     } 
     else 
     {
-        FBIde_Config.ShowStatusBar = false;
+        Config->ShowStatusBar = false;
         delete StatusBar;
         StatusBar = NULL;
         SetStatusBar( NULL );

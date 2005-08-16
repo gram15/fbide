@@ -1,7 +1,7 @@
 [Project]
 FileName=FBIde.dev
 Name=FBIde
-UnitCount=24
+UnitCount=29
 Type=0
 Ver=1
 ObjFiles=
@@ -12,7 +12,7 @@ ResourceIncludes=C:\dev\FBIde\FBIde0.5\rc
 MakeIncludes=
 Compiler=
 CppCompiler=-D__WXMSW__ _@@_-mthreads _@@_-DNO_GCC_PRAGMA _@@_-Wall _@@_-fno-pcc-struct-return _@@_-O3 _@@_-Os _@@_-fno-rtti _@@_-fno-exceptions _@@__@@_
-Linker=-Wl,--subsystem,windows _@@_-mthreads _@@_-mwindows _@@_-lwxmsw26_adv _@@_-lwxmsw26_core _@@_-lwxbase26 _@@_-lwsock32 _@@_-lcomctl32 _@@_-lole32 _@@_-loleaut32 _@@_-luuid _@@_-lwxpng _@@_-lwxzlib _@@_-lmingw32 _@@__@@_
+Linker=-Wl,--subsystem,windows _@@_-mwindows _@@_-mthreads _@@_-lwxmsw26_stc _@@_-lwxmsw26_core _@@_-lwxbase26 _@@_-lwxtiff _@@_-lwxjpeg _@@_-lwxpng _@@_-lwxzlib _@@_-lwxregex _@@_-lwxexpat _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lcomdlg32 _@@_-lwinspool _@@_-lwinmm _@@_-lshell32 _@@_-lcomctl32 _@@_-lole32 _@@_-loleaut32 _@@_-luuid _@@_-lrpcrt4 _@@_-ladvapi32 _@@_-lwsock32 _@@_-lodbc32_@@_
 IsCpp=1
 Icon=
 ExeOutput=C:\Dev\FBIde\FBIde0.5\output
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001001010100
+CompilerSettings=0000000001001000010100
 
 [Unit1]
 FileName=src\fb_frame.cpp
@@ -73,7 +73,7 @@ BuildCmd=
 Major=0
 Minor=5
 Release=0
-Build=442
+Build=591
 LanguageID=1033
 CharsetID=1252
 CompanyName=
@@ -166,9 +166,9 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=src\inc\fb_config.h
+FileName=src\fb_config.cpp
 CompileCpp=1
-Folder=inc
+Folder=src
 Compile=1
 Link=1
 Priority=1000
@@ -246,7 +246,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit21]
-FileName=src\fb_tab.cpp
+FileName=src\fb_docmngr.cpp
 CompileCpp=1
 Folder=src
 Compile=1
@@ -256,7 +256,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=src\inc\fb_tab.h
+FileName=src\inc\fb_docmngr.h
 CompileCpp=1
 Folder=inc
 Compile=1
@@ -277,6 +277,56 @@ BuildCmd=
 
 [Unit24]
 FileName=src\inc\wxmynotebook.h
+CompileCpp=1
+Folder=inc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit25]
+FileName=src\inc\fb_doc.h
+CompileCpp=1
+Folder=inc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit26]
+FileName=src\fb_doc.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit27]
+FileName=src\inc\fb_stc.h
+CompileCpp=1
+Folder=inc
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit28]
+FileName=src\fb_stc.cpp
+CompileCpp=1
+Folder=src
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit29]
+FileName=src\inc\fb_config.h
 CompileCpp=1
 Folder=inc
 Compile=1
