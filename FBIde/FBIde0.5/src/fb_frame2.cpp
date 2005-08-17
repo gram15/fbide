@@ -25,13 +25,13 @@ void FB_Frame::CreatePanels()
 
     HSplitter = new wxSplitterWindow( 
         this, 10, wxDefaultPosition, wxDefaultSize, 
-        wxSP_FULLSASH|wxNO_BORDER );
+        wxSP_FULLSASH|wxNO_BORDER|wxSP_LIVE_UPDATE );
     HSplitter->SetSashGravity( 1.0 );
     HSplitter->SetMinimumPaneSize( 100 );
     
     VSplitter = new wxSplitterWindow( 
         HSplitter, 100, wxDefaultPosition, wxDefaultSize, 
-        wxSP_FULLSASH|wxNO_BORDER );
+        wxSP_FULLSASH|wxNO_BORDER|wxSP_LIVE_UPDATE );
     VSplitter->SetMinimumPaneSize( 100 );
     
     Console_area = new FB_Console( HSplitter );

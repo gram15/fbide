@@ -48,6 +48,7 @@ enum fbideID_Enums {
     fbideID_OutPut,
     fbideID_ToolBar,
     fbideID_StatusBar,
+    fbideID_FullScreen,
     fbideID_NewProjectFile,
     fbideID_Project,
     fbideID_ProjectAdd,
@@ -141,6 +142,7 @@ public:
     void OnProject          ( wxCommandEvent& event );
     void OnToolBar          ( wxCommandEvent& event );
     void OnStatusBar        ( wxCommandEvent& event );
+    void OnFullScreen       ( wxCommandEvent& event );
     void OnNewprojectfile   ( wxCommandEvent& event );
     void OnProjectadd       ( wxCommandEvent& event );
     void OnProjectremove    ( wxCommandEvent& event );

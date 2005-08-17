@@ -263,7 +263,12 @@ void FB_Frame::CreateMenus()
         ViewStatusBar = new wxMenuItem(ViewMenu, fbideID_StatusBar, _("View Statusbar"), _T(""), wxITEM_CHECK);
         ViewStatusBar->SetMarginWidth( 16 );
         ViewMenu->Append(ViewStatusBar);
-    }    
+    }
+    {
+        wxMenuItem * menuitem = new wxMenuItem( ViewMenu, fbideID_FullScreen, _("View Fullscreen\tAlt+Enter"), _T(""), wxITEM_CHECK);
+        menuitem->SetMarginWidth( 16 );
+        ViewMenu->Append( menuitem );
+    }
     menuBar->Append(ViewMenu, _("View"));
     
 

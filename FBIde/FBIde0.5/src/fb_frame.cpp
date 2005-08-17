@@ -70,6 +70,7 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     EVT_MENU( fbideID_Project,          FB_Frame::OnProject )
     EVT_MENU( fbideID_ToolBar,          FB_Frame::OnToolBar )
     EVT_MENU( fbideID_StatusBar,        FB_Frame::OnStatusBar )
+    EVT_MENU( fbideID_FullScreen,       FB_Frame::OnFullScreen )
     
     // Project menu
     EVT_MENU( fbideID_NewProjectFile,   FB_Frame::OnNewprojectfile )
@@ -492,9 +493,21 @@ void FB_Frame::OnStatusBar( wxCommandEvent& event )
 }
 
 
+// Toggles fullscreen mode
+void FB_Frame::OnFullScreen( wxCommandEvent& event )
+{
+    ShowFullScreen( !IsFullScreen(), wxFULLSCREEN_NOCAPTION | wxFULLSCREEN_NOBORDER );
+    SendSizeEvent();
+}
+
+
+//Opens a console
 void FB_Frame::OnOpenconsole( wxCommandEvent& event )
 {
-    event.Skip();
+    int major = 0, minor = 0;
+    int result = wxGetOsVersion(&major, &minor);
+    if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
+    else if(result==wxWIN95) wxExecute("command.com");
 }
 
 

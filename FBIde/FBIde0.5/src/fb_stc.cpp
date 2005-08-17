@@ -129,8 +129,8 @@ void FB_STC_FB::LoadSettings (  )
             SetCaretForeground (Prefs->GetClr(Style->CaretFace));
             SetSelForeground(true, Prefs->GetClr(Style->SelectFace));
             SetSelBackground(true, Prefs->GetClr(Style->SelectBack));
-
         #undef STYLE
+
         SetKeyWords ( 0, Prefs->FB_Keywords[0] );
         SetKeyWords ( 1, Prefs->FB_Keywords[1] );
         SetKeyWords ( 2, Prefs->FB_Keywords[2] );
