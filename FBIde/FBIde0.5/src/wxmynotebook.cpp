@@ -11,6 +11,7 @@
 
 #include "wx/wx.h"
 #include "inc/wxmynotebook.h"
+#include "inc/fb_stc.h"
 
 BEGIN_EVENT_TABLE(wxMyNotebook,wxNotebook) 
     EVT_MOUSE_EVENTS(wxMyNotebook::OnMouseEvent) 
@@ -70,17 +71,22 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
         {
             if ( tabid==wxNOT_FOUND ) return;
             if ( tabid!=GetSelection() ) SetSelection( tabid );
-            
+            FB_STC * stc = (FB_STC*)GetCurrentPage();
             wxMenu popup("");
             popup.Append(wxID_CLOSE,        _("Close"));
             popup.Append(wxID_CLOSE_ALL,    _("Close all"));
             popup.AppendSeparator();
             popup.Append(wxID_UNDO,         _("Undo"));
+            popup.Enable(wxID_UNDO, stc->CanUndo());
             popup.Append(wxID_REDO,         _("Redo"));
+            popup.Enable(wxID_REDO, stc->CanRedo());
             popup.AppendSeparator();
             popup.Append(wxID_COPY,         _("Copy"));
+            popup.Enable(wxID_COPY, stc->HasSelection());
             popup.Append(wxID_CUT,          _("Cut"));
+            popup.Enable(wxID_CUT,  stc->HasSelection());
             popup.Append(wxID_PASTE,        _("Paste"));
+            popup.Enable(wxID_PASTE, stc->CanPaste());
             popup.Append(wxID_SELECTALL ,   _("Select All"));
             wxWindow::PopupMenu(&popup, m_X, m_Y);
             return;

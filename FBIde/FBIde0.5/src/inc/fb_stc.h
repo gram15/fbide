@@ -31,6 +31,7 @@ class FB_STC : public wxStyledTextCtrl
         virtual void LoadSettings ( );
         virtual void OnCharAdded ( wxStyledTextEvent &event );
         void SetDoc ( FB_Doc * doc ) { Doc = doc; }
+        bool HasSelection() { return ( GetSelectionEnd() - GetSelectionStart() ) > 0; }
         FB_Doc * GetDoc () const { return Doc; }
 };
 
