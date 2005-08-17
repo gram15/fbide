@@ -62,6 +62,9 @@ void FB_STC_FB::LoadSettings (  )
     // Clear all styles there might be defined
     StyleClearAll();
     
+    // Load lexer for syntax hilighting
+    SetLexer (wxSTC_LEX_VB);
+
     // Tab and indenting
     SetTabWidth             ( Prefs->TabSize );
     SetUseTabs              ( false );
@@ -82,55 +85,54 @@ void FB_STC_FB::LoadSettings (  )
     // Misc
     CmdKeyClear (wxSTC_KEY_TAB, 0);
     
-    // If Syntax HiLight is on then Load it.
-    if (Prefs->SyntaxHighlight) {
-        SetLexer (wxSTC_LEX_VB);
-        
-        //Initalise Highlighing colors, font styles and set lexer.
-        int Nr = 0;
-        int StyleNR[]={ wxSTC_B_DEFAULT,    wxSTC_B_COMMENT,
-                        wxSTC_B_NUMBER,     wxSTC_B_KEYWORD,
-                        wxSTC_B_STRING,     wxSTC_B_PREPROCESSOR,  
-                        wxSTC_B_OPERATOR,   wxSTC_B_IDENTIFIER,
-                        wxSTC_B_DATE,       wxSTC_B_STRINGEOL,
-                        wxSTC_B_KEYWORD2,   wxSTC_B_KEYWORD3,
-                        wxSTC_B_KEYWORD4,   wxSTC_B_CONSTANT,
-                        wxSTC_B_ASM };
-        
-        #define _STYLE(nr) Style->Style[nr]
-            for (int i=0;i<15;i++) 
-            {
-                Nr=StyleNR[i];
-                wxString fontname="";
-                
-                StyleSetForeground (Nr, Prefs->GetClr(_STYLE(i).Face));
-                StyleSetBackground (Nr, Prefs->GetClr(_STYLE(i).Back));
-                
-                wxFont font ( _STYLE(i).Size, wxMODERN, wxNORMAL, wxNORMAL, false, _STYLE(i).Font );
-                StyleSetFont (Nr, font);
-                
-                //Font attributes
-                StyleSetBold       (Nr, (_STYLE(i).Style & mySTC_STYLE_BOLD  ) > 0);
-                StyleSetItalic     (Nr, (_STYLE(i).Style & mySTC_STYLE_ITALIC) > 0);
-                StyleSetUnderline  (Nr, (_STYLE(i).Style & mySTC_STYLE_UNDERL) > 0);
-                StyleSetCase       (Nr,  _STYLE(i).Case );
-            }
+    //Initalise Highlighing colors, font styles and set lexer.
+    int StyleNR[]={ wxSTC_B_DEFAULT,    wxSTC_B_COMMENT,
+                    wxSTC_B_NUMBER,     wxSTC_B_KEYWORD,
+                    wxSTC_B_STRING,     wxSTC_B_PREPROCESSOR,  
+                    wxSTC_B_OPERATOR,   wxSTC_B_IDENTIFIER,
+                    wxSTC_B_DATE,       wxSTC_B_STRINGEOL,
+                    wxSTC_B_KEYWORD2,   wxSTC_B_KEYWORD3,
+                    wxSTC_B_KEYWORD4,   wxSTC_B_CONSTANT,
+                    wxSTC_B_ASM };
+    
+    #define _STYLE(nr) Style->Style[nr]
+        for (int i = 0; i < 15; i++) 
+        {
+            int Nr = StyleNR[i];
+            int idx = Prefs->SyntaxHighlight ? i : 0;
 
-            wxFont font ( _STYLE(0).Size, wxMODERN, wxNORMAL, wxNORMAL, false, _STYLE(0).Font );
-            StyleSetFont( wxSTC_STYLE_DEFAULT, font );
-
-            StyleSetForeground (wxSTC_STYLE_DEFAULT,    Prefs->GetClr(_STYLE(0).Face));
-            StyleSetBackground (wxSTC_STYLE_DEFAULT,    Prefs->GetClr(_STYLE(0).Back));
+            wxString fontname="";
             
-            StyleSetForeground (wxSTC_STYLE_LINENUMBER, Prefs->GetClr(Style->LineNumberFace));
-            StyleSetBackground (wxSTC_STYLE_LINENUMBER, Prefs->GetClr(Style->LineNumberBack));
-            StyleSetFont( wxSTC_STYLE_LINENUMBER, font );
-                        
-            SetCaretForeground (Prefs->GetClr(Style->CaretFace));
-            SetSelForeground(true, Prefs->GetClr(Style->SelectFace));
-            SetSelBackground(true, Prefs->GetClr(Style->SelectBack));
-        #undef STYLE
+            StyleSetForeground (Nr, Prefs->GetClr(_STYLE(idx).Face));
+            StyleSetBackground (Nr, Prefs->GetClr(_STYLE(idx).Back));
+            
+            wxFont font ( _STYLE(idx).Size, wxMODERN, wxNORMAL, wxNORMAL, false, _STYLE(idx).Font );
+            StyleSetFont (Nr, font);
+            
+            //Font attributes
+            StyleSetBold       (Nr, (_STYLE(idx).Style & mySTC_STYLE_BOLD  ) > 0);
+            StyleSetItalic     (Nr, (_STYLE(idx).Style & mySTC_STYLE_ITALIC) > 0);
+            StyleSetUnderline  (Nr, (_STYLE(idx).Style & mySTC_STYLE_UNDERL) > 0);
+            StyleSetCase       (Nr,  _STYLE(idx).Case );
+        }
 
+        wxFont font ( _STYLE(0).Size, wxMODERN, wxNORMAL, wxNORMAL, false, _STYLE(0).Font );
+        StyleSetFont( wxSTC_STYLE_DEFAULT, font );
+
+        StyleSetForeground (wxSTC_STYLE_DEFAULT,    Prefs->GetClr(_STYLE(0).Face));
+        StyleSetBackground (wxSTC_STYLE_DEFAULT,    Prefs->GetClr(_STYLE(0).Back));
+        
+        StyleSetForeground (wxSTC_STYLE_LINENUMBER, Prefs->GetClr(Style->LineNumberFace));
+        StyleSetBackground (wxSTC_STYLE_LINENUMBER, Prefs->GetClr(Style->LineNumberBack));
+        StyleSetFont( wxSTC_STYLE_LINENUMBER, font );
+                    
+        SetCaretForeground (Prefs->GetClr(Style->CaretFace));
+        SetSelForeground(true, Prefs->GetClr(Style->SelectFace));
+        SetSelBackground(true, Prefs->GetClr(Style->SelectBack));
+    #undef STYLE
+
+    if (Prefs->SyntaxHighlight)
+    {
         SetKeyWords ( 0, Prefs->FB_Keywords[0] );
         SetKeyWords ( 1, Prefs->FB_Keywords[1] );
         SetKeyWords ( 2, Prefs->FB_Keywords[2] );
@@ -140,6 +142,12 @@ void FB_STC_FB::LoadSettings (  )
     int LineNrMargin = TextWidth(wxSTC_STYLE_LINENUMBER, _T("0001"));
     SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin : 0);
     SetMarginWidth (1,0);
+
+    if ( Prefs->CurrentLine )
+    {
+        SetCaretLineVisible( true );
+        SetCaretLineBack( Prefs->GetClr( Style->CaretLine ) );
+    }
 
     StyleSetForeground (wxSTC_STYLE_BRACELIGHT, Prefs->GetClr(Style->BraceFace));
     StyleSetBackground (wxSTC_STYLE_BRACELIGHT, Prefs->GetClr(Style->BraceBack));

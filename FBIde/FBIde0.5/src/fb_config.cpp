@@ -118,7 +118,7 @@ void FB_Config::LoadConfig  ( wxString file ) {
     ShowExitCode        = PrefsINI.Read("showexitcode",     b);
     RightMargin         = PrefsINI.Read("rightmargin",      b);
     FolderMargin        = PrefsINI.Read("foldermargin",     b);
-    DisplayEOL          = PrefsINI.Read("Displayeol",       b);
+    DisplayEOL          = PrefsINI.Read("displayeol",       b);
     CurrentLine         = PrefsINI.Read("lightcursorline",  b);
     TabSize             = PrefsINI.Read("tabsize",          3L);
     EdgeColumn          = PrefsINI.Read("edgecolumn",       80L);
@@ -157,7 +157,7 @@ void FB_Config::SaveConfig  ( wxString file )
     PrefsINI.Write( "showexitcode",     (bool)ShowExitCode );
     PrefsINI.Write( "rightmargin",      (bool)RightMargin );
     PrefsINI.Write( "foldermargin",     (bool)FolderMargin );
-    PrefsINI.Write( "Displayeol",       (bool)DisplayEOL );
+    PrefsINI.Write( "displayeol",       (bool)DisplayEOL );
     PrefsINI.Write( "lightcursorline",  (bool)CurrentLine );
     PrefsINI.Write( "tabsize",          (long)TabSize );
     PrefsINI.Write( "edgecolumn",       (long)EdgeColumn );

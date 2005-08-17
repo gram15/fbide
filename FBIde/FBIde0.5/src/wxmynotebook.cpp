@@ -69,6 +69,12 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
         }
         else if (eventType==wxEVT_RIGHT_DOWN) 
         {
+            /*/
+             *  In the sake of integrity
+             *  this should be moved out of here... but How?
+             *  generate costom event and pass data along?
+             *  well for now it can stay here...
+            /*/
             if ( tabid==wxNOT_FOUND ) return;
             if ( tabid!=GetSelection() ) SetSelection( tabid );
             FB_STC * stc = (FB_STC*)GetCurrentPage();
