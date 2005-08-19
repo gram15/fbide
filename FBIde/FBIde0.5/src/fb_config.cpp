@@ -180,5 +180,4 @@ void FB_Config::SaveConfig  ( wxString file )
     PrefsINI.Write( "winh",             (long) winh);
     
     PrefsINI.Save(output);
-
 }

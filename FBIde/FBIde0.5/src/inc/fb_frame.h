@@ -107,6 +107,8 @@ public:
     void CreateStatusBar();
 
     /// Event handlers
+    void OnEdit             ( wxCommandEvent& event );
+    
     void OnNew              ( wxCommandEvent& event );
     void OnNewproject       ( wxCommandEvent& event );
     void OnNewtemplate      ( wxCommandEvent& event );
@@ -122,17 +124,6 @@ public:
     void OnCloseproject     ( wxCommandEvent& event );
     void OnNewinstance      ( wxCommandEvent& event );
     void OnExit             ( wxCommandEvent& event );
-    void OnUndo             ( wxCommandEvent& event );
-    void OnRedo             ( wxCommandEvent& event );
-    void OnCopy             ( wxCommandEvent& event );
-    void OnCut              ( wxCommandEvent& event );
-    void OnPaste            ( wxCommandEvent& event );
-    void OnSelectall        ( wxCommandEvent& event );
-    void OnSelectline       ( wxCommandEvent& event );
-    void OnJustifyRight     ( wxCommandEvent& event );
-    void OnJustifyLeft      ( wxCommandEvent& event );
-    void OnCommentblock     ( wxCommandEvent& event );
-    void OnUncommentblock   ( wxCommandEvent& event );
     void OnFind             ( wxCommandEvent& event );
     void OnFindnext         ( wxCommandEvent& event );
     void OnReplace          ( wxCommandEvent& event );

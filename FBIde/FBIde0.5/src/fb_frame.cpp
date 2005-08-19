@@ -18,6 +18,7 @@
 #include "inc/fb_statusbar.h"
 #include "inc/fb_docmngr.h"
 #include "inc/fb_config.h"
+#include "inc/fb_stc.h"
 #include "inc/fb_frame.h"
 
 
@@ -45,19 +46,19 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     EVT_MENU( fbideID_NewInstance,      FB_Frame::OnNewinstance )
     EVT_MENU( wxID_EXIT,                FB_Frame::OnExit )
 
-    // Edit menu
-    EVT_MENU( wxID_UNDO,                FB_Frame::OnUndo )
-    EVT_MENU( wxID_REDO,                FB_Frame::OnRedo )
-    EVT_MENU( wxID_COPY,                FB_Frame::OnCopy )
-    EVT_MENU( wxID_CUT,                 FB_Frame::OnCut )
-    EVT_MENU( wxID_PASTE,               FB_Frame::OnPaste )
-    EVT_MENU( wxID_SELECTALL,           FB_Frame::OnSelectall )
-    EVT_MENU( fbideID_SelectLine,       FB_Frame::OnSelectline )
-    EVT_MENU( wxID_JUSTIFY_RIGHT,       FB_Frame::OnJustifyRight )
-    EVT_MENU( wxID_JUSTIFY_LEFT,        FB_Frame::OnJustifyLeft )
-    EVT_MENU( fbideID_CommentBlock,     FB_Frame::OnCommentblock )
-    EVT_MENU( fbideID_UncommentBlock,   FB_Frame::OnUncommentblock )
-    
+    // Edit menu OnEdit
+    EVT_MENU( wxID_UNDO,                FB_Frame::OnEdit )
+    EVT_MENU( wxID_REDO,                FB_Frame::OnEdit )
+    EVT_MENU( wxID_COPY,                FB_Frame::OnEdit )
+    EVT_MENU( wxID_CUT,                 FB_Frame::OnEdit )
+    EVT_MENU( wxID_PASTE,               FB_Frame::OnEdit )
+    EVT_MENU( wxID_SELECTALL,           FB_Frame::OnEdit )
+    EVT_MENU( fbideID_SelectLine,       FB_Frame::OnEdit )
+    EVT_MENU( wxID_JUSTIFY_RIGHT,       FB_Frame::OnEdit )
+    EVT_MENU( wxID_JUSTIFY_LEFT,        FB_Frame::OnEdit )
+    EVT_MENU( fbideID_CommentBlock,     FB_Frame::OnEdit )
+    EVT_MENU( fbideID_UncommentBlock,   FB_Frame::OnEdit )
+
     // Search menu
     EVT_MENU( wxID_FIND,                FB_Frame::OnFind )
     EVT_MENU( fbideID_FindNext,         FB_Frame::OnFindnext )
@@ -157,8 +158,14 @@ bool FB_Frame::ShowToolTips()
     return TRUE;
 }
 
+//-------
 
+void FB_Frame::OnEdit( wxCommandEvent& event )
+{
+    if ( DocMngr->GetPage() ) DocMngr->GetPage()->ProcessEvent( event );
+}
 
+//-------
 
 void FB_Frame::OnSave( wxCommandEvent& event )
 {
@@ -250,72 +257,6 @@ void FB_Frame::OnExit( wxCommandEvent& event )
     Close( true );
 }
 
-
-void FB_Frame::OnUndo( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnRedo( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnCopy( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnCut( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnPaste( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnSelectall( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnSelectline( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnJustifyRight( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnJustifyLeft( wxCommandEvent& event )
-{
-    event.Skip();
-}
-
-
-void FB_Frame::OnCommentblock( wxCommandEvent& event )
-{
-    event.Skip();
-
-}
-
-
-void FB_Frame::OnUncommentblock( wxCommandEvent& event )
-{
-    event.Skip();
-}
 
 
 void FB_Frame::OnFind( wxCommandEvent& event )

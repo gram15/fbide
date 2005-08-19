@@ -33,6 +33,22 @@ class FB_STC : public wxStyledTextCtrl
         void SetDoc ( FB_Doc * doc ) { Doc = doc; }
         bool HasSelection() { return ( GetSelectionEnd() - GetSelectionStart() ) > 0; }
         FB_Doc * GetDoc () const { return Doc; }
+        
+        void OnUndo             ( wxCommandEvent& event );
+        void OnRedo             ( wxCommandEvent& event );
+        void OnCopy             ( wxCommandEvent& event );
+        void OnCut              ( wxCommandEvent& event );
+        void OnPaste            ( wxCommandEvent& event );
+        void OnSelectall        ( wxCommandEvent& event );
+        void OnSelectline       ( wxCommandEvent& event );
+        void OnJustifyRight     ( wxCommandEvent& event );
+        void OnJustifyLeft      ( wxCommandEvent& event );
+        
+        void ReplaceText        (int from, int to, const wxString& text);
+        
+        virtual void OnCommentblock     ( wxCommandEvent& event );
+        virtual void OnUncommentblock   ( wxCommandEvent& event );
+
 };
 
 
@@ -42,6 +58,8 @@ class FB_STC_FB : public FB_STC
     FB_STC_FB ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
     void OnCharAdded( wxStyledTextEvent &event );
     void LoadSettings ( );
+    void OnCommentblock     ( wxCommandEvent& event );
+    void OnUncommentblock   ( wxCommandEvent& event );
 };
 
 #endif

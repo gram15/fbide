@@ -43,6 +43,11 @@ void FB_DocMngr::Create( wxWindow* parent )
         wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT );
 }
 
+FB_STC *  FB_DocMngr::GetPage (  ) 
+{ 
+    return tabcount ? ((FB_STC *)tab->GetCurrentPage()) : 0; 
+}
+
 void FB_DocMngr::AddPage()
 {
     

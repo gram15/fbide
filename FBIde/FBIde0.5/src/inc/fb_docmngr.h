@@ -32,14 +32,16 @@ class FB_DocMngr
         FB_Config * Config;
         
     public:
-        FB_DocMngr          ( FB_Frame * parent, FB_Config * config );
-        ~FB_DocMngr         (  );
+        FB_DocMngr      ( FB_Frame * parent, FB_Config * config );
+        ~FB_DocMngr     (  );
         void Create     ( wxWindow * parent );
         void AddPage    (  );
         void ClosePage  ( int idx = -1 );
         void ClosePages ( int idx[] );
         void CloseAll   (  );
         void Show       ( bool status );
+        int PageCount   (  ) { return tabcount; }
+        FB_STC *  GetPage (  );
         
         bool NewPageVeto(  );
         

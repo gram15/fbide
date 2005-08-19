@@ -14,11 +14,24 @@
 #include "inc/fb_doc.h"
 #include "inc/fb_config.h"
 #include "inc/fb_stc.h"
+#include "inc/fb_frame.h"
 
 
 
 BEGIN_EVENT_TABLE (FB_STC, wxStyledTextCtrl)
     EVT_STC_CHARADDED   (-1,                FB_STC::OnCharAdded)
+    EVT_MENU( wxID_UNDO,                FB_STC::OnUndo )
+    EVT_MENU( wxID_REDO,                FB_STC::OnRedo )
+    EVT_MENU( wxID_COPY,                FB_STC::OnCopy )
+    EVT_MENU( wxID_CUT,                 FB_STC::OnCut )
+    EVT_MENU( wxID_PASTE,               FB_STC::OnPaste )
+    EVT_MENU( wxID_SELECTALL,           FB_STC::OnSelectall )
+    EVT_MENU( fbideID_SelectLine,       FB_STC::OnSelectline )
+    EVT_MENU( wxID_JUSTIFY_RIGHT,       FB_STC::OnJustifyRight )
+    EVT_MENU( wxID_JUSTIFY_LEFT,        FB_STC::OnJustifyLeft )
+    EVT_MENU( fbideID_CommentBlock,     FB_STC::OnCommentblock )
+    EVT_MENU( fbideID_UncommentBlock,   FB_STC::OnUncommentblock )
+
 END_EVENT_TABLE()
 
 
@@ -42,6 +55,91 @@ void FB_STC::OnCharAdded ( wxStyledTextEvent &event )
 }
 
 //----
+void FB_STC::OnUndo ( wxCommandEvent& event )
+{
+    if (!CanUndo()) return;
+    Undo ();
+}
+
+void FB_STC::OnRedo ( wxCommandEvent& event )
+{
+    if (!CanRedo()) return;
+    Redo ();
+}
+
+
+void FB_STC::OnCopy ( wxCommandEvent& event )
+{
+    if (GetSelectionEnd()-GetSelectionStart() <= 0) return;
+    Copy ();
+}
+
+
+void FB_STC::OnCut ( wxCommandEvent& event )
+{
+    if (GetReadOnly() || (GetSelectionEnd()-GetSelectionStart() <= 0)) return;
+    Cut ();
+}
+
+
+void FB_STC::OnPaste ( wxCommandEvent& event )
+{
+    if (!CanPaste()) return;
+    Paste ();
+}
+
+
+void FB_STC::OnSelectall ( wxCommandEvent& event )
+{
+    SetSelection (0, GetTextLength ());
+}
+
+
+void FB_STC::OnSelectline ( wxCommandEvent& event )
+{
+    int lineStart = PositionFromLine (GetCurrentLine());
+    int lineEnd = PositionFromLine (GetCurrentLine() + 1);
+    SetSelection (lineStart, lineEnd);
+}
+
+
+void FB_STC::OnJustifyRight ( wxCommandEvent& event )
+{
+    CmdKeyExecute (wxSTC_CMD_TAB);
+}
+
+
+void FB_STC::OnJustifyLeft ( wxCommandEvent& event )
+{
+    CmdKeyExecute (wxSTC_CMD_BACKTAB);
+}
+
+void FB_STC::ReplaceText(int from, int to, const wxString& text)
+{
+    if (from == to)
+    {
+        InsertText(to, text);
+        return;
+    }
+
+    SetTargetStart(from);
+    SetTargetEnd(to);
+    ReplaceTarget(text);
+}
+
+
+void FB_STC::OnCommentblock ( wxCommandEvent& event )
+{
+    return;
+}
+
+
+void FB_STC::OnUncommentblock ( wxCommandEvent& event )
+{
+    return;
+}
+
+
 
 FB_STC_FB::FB_STC_FB ( wxWindow * parent, FB_Doc * doc, FB_Config * config ) :
     FB_STC( parent, doc, config )
@@ -160,4 +258,47 @@ void FB_STC_FB::LoadSettings (  )
     StyleSetBold       (wxSTC_STYLE_BRACEBAD, (Style->BadBraceStyle & mySTC_STYLE_BOLD  ) > 0);
     StyleSetItalic     (wxSTC_STYLE_BRACEBAD, (Style->BadBraceStyle & mySTC_STYLE_ITALIC) > 0);
     StyleSetUnderline  (wxSTC_STYLE_BRACEBAD, (Style->BadBraceStyle & mySTC_STYLE_UNDERL) > 0);
+}
+
+void FB_STC_FB::OnCommentblock ( wxCommandEvent& event )
+{
+    int SelStart    = GetSelectionStart();
+    int SelEnd      = GetSelectionEnd();
+    int lineStart   = LineFromPosition (SelStart);
+    int lineEnd     = LineFromPosition (SelEnd);
+
+    BeginUndoAction();
+        for(int i = lineStart;i <= lineEnd; i++) {
+            InsertText(PositionFromLine( i ),"\'");
+        }
+    EndUndoAction();
+
+    if (lineStart!=lineEnd)
+        SetSelection( PositionFromLine( lineStart ), GetLineEndPosition( lineEnd ) );
+
+}
+
+
+void FB_STC_FB::OnUncommentblock ( wxCommandEvent& event )
+{
+    int lineStart = LineFromPosition (GetSelectionStart());
+    int lineEnd = LineFromPosition (GetSelectionEnd());
+    int x = 0;
+    wxString Temp;
+
+    BeginUndoAction();
+        for(;lineStart <= lineEnd; lineStart++) {
+            Temp = GetLine(lineStart);
+            Temp = Temp.Lower();
+            Temp = Temp.Trim(false);
+            Temp = Temp.Trim(true);
+            Temp+= " ";
+            x = PositionFromLine(lineStart) + GetLineIndentation(lineStart);
+            if (Temp.Left(4) == "rem "||Temp.Left(4) == "rem\t")
+                ReplaceText(x, x+3, "");
+            else if (Temp.Left(1) == "\'")
+                ReplaceText(x, x+1, "");
+        }
+    EndUndoAction();
+
 }

@@ -22,7 +22,8 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
     wxEventType eventType = event.GetEventType(); 
     
     if(m_TabID>=0) 
-    { 
+    {
+        wxMessageBox( "sss" ); 
         if(eventType==wxEVT_LEFT_UP) 
         { 
             int id=HitTest(wxPoint(event.GetX(), event.GetY())); 
@@ -93,7 +94,8 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
             popup.Enable(wxID_CUT,  stc->HasSelection());
             popup.Append(wxID_PASTE,        _("Paste"));
             popup.Enable(wxID_PASTE, stc->CanPaste());
-            popup.Append(wxID_SELECTALL ,   _("Select All"));
+            popup.Append(wxID_SELECTALL,    _("Select All"));
+            popup.Enable(wxID_SELECTALL, stc->GetLength());
             wxWindow::PopupMenu(&popup, m_X, m_Y);
             return;
         }
