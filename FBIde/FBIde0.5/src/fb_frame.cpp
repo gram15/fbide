@@ -47,6 +47,7 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     EVT_MENU( wxID_EXIT,                FB_Frame::OnExit )
 
     // Edit menu OnEdit
+    EVT_MENU_OPEN( FB_Frame::OnMenuOpen ) 
     EVT_MENU( wxID_UNDO,                FB_Frame::OnEdit )
     EVT_MENU( wxID_REDO,                FB_Frame::OnEdit )
     EVT_MENU( wxID_COPY,                FB_Frame::OnEdit )
@@ -163,6 +164,29 @@ bool FB_Frame::ShowToolTips()
 void FB_Frame::OnEdit( wxCommandEvent& event )
 {
     if ( DocMngr->GetPage() ) DocMngr->GetPage()->ProcessEvent( event );
+}
+
+//-------
+
+void FB_Frame::OnMenuOpen ( wxMenuEvent& event )
+{
+    if ( event.GetMenu() == EditMenu )
+    {
+        FB_STC * stc = DocMngr->GetPage();
+        #define _ENABLE( id, func ) EditMenu->Enable( id, ( stc != 0 ) ? stc -> func : false )
+            _ENABLE( wxID_UNDO,                 CanUndo() );
+            _ENABLE( wxID_REDO,                 CanRedo() );
+            _ENABLE( wxID_COPY,                 HasSelection() );
+            _ENABLE( wxID_CUT,                  HasSelection() );
+            _ENABLE( wxID_PASTE,                CanPaste() );
+            _ENABLE( wxID_SELECTALL,            GetLength() );
+            _ENABLE( fbideID_SelectLine,        GetLength() );
+            _ENABLE( fbideID_CommentBlock,      CanComment() );
+            _ENABLE( fbideID_UncommentBlock,    CanComment() );
+        #undef _ENABLE
+        EditMenu->Enable(wxID_JUSTIFY_RIGHT,    ( stc ) ? true : false );
+        EditMenu->Enable(wxID_JUSTIFY_LEFT,     ( stc ) ? true : false );
+    }
 }
 
 //-------

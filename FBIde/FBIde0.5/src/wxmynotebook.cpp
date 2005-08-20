@@ -23,7 +23,6 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
     
     if(m_TabID>=0) 
     {
-        wxMessageBox( "sss" ); 
         if(eventType==wxEVT_LEFT_UP) 
         { 
             int id=HitTest(wxPoint(event.GetX(), event.GetY())); 

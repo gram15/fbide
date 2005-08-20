@@ -144,6 +144,7 @@ void FB_STC::OnUncommentblock ( wxCommandEvent& event )
 FB_STC_FB::FB_STC_FB ( wxWindow * parent, FB_Doc * doc, FB_Config * config ) :
     FB_STC( parent, doc, config )
 {
+    canComment_ = true;
     LoadSettings();
 }
 

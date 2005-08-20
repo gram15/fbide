@@ -131,7 +131,7 @@ void FB_Frame::CreateMenus()
     
 
     // Edit menu
-    wxMenu* EditMenu = new wxMenu;
+    EditMenu = new wxMenu;
     {
         wxMenuItem* menuItem = new wxMenuItem(EditMenu, wxID_UNDO, _("Undo\tCtrl+Z"), _T(""));
         wxBitmap bitmap(wxBITMAP(bmp_undo));

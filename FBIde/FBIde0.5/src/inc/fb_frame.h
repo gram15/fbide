@@ -108,6 +108,7 @@ public:
 
     /// Event handlers
     void OnEdit             ( wxCommandEvent& event );
+    void OnMenuOpen         ( wxMenuEvent& event );
     
     void OnNew              ( wxCommandEvent& event );
     void OnNewproject       ( wxCommandEvent& event );
@@ -171,6 +172,8 @@ public:
     
     FB_DocMngr * DocMngr;
     FB_Config * Config;
+    
+    wxMenu* EditMenu;
 
 };
 

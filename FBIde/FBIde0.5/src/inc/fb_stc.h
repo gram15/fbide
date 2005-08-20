@@ -27,11 +27,13 @@ class FB_STC : public wxStyledTextCtrl
         wxWindow    * Parent;
         FB_Config   * Config;
         FB_Doc      * Doc;
+        bool        canComment_;
         FB_STC ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
         virtual void LoadSettings ( );
         virtual void OnCharAdded ( wxStyledTextEvent &event );
         void SetDoc ( FB_Doc * doc ) { Doc = doc; }
         bool HasSelection() { return ( GetSelectionEnd() - GetSelectionStart() ) > 0; }
+        bool CanComment() { return canComment_; }
         FB_Doc * GetDoc () const { return Doc; }
         
         void OnUndo             ( wxCommandEvent& event );
@@ -55,9 +57,9 @@ class FB_STC : public wxStyledTextCtrl
 class FB_STC_FB : public FB_STC
 {
     public:
-    FB_STC_FB ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
-    void OnCharAdded( wxStyledTextEvent &event );
-    void LoadSettings ( );
+    FB_STC_FB( wxWindow * parent, FB_Doc * doc, FB_Config * config );
+    void OnCharAdded        ( wxStyledTextEvent &event );
+    void LoadSettings       (  );
     void OnCommentblock     ( wxCommandEvent& event );
     void OnUncommentblock   ( wxCommandEvent& event );
 };

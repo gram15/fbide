@@ -78,6 +78,8 @@ class FB_Config
         
         Style_STC_FB Style_FB;
         wxString FB_Keywords[4];
+        wxArrayString FB_Kw;
+        int FB_KwTable[26][26];
         
         wxString CompilerPath;
         wxString EditorPath;
