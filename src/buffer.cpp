@@ -297,7 +297,7 @@ void Buffer::SetWasModified(bool wasModified)
 {
     this->wasModified = wasModified;
 }
-
+// bitmap->SetMask( new wxMask( *bitmap, wxColour( 192, 192, 192 ) ) );
 /**
  * Updates the modification time of the file to match the current one on
  * disk. This should be called after saving (so that Buffer::CheckModTime()

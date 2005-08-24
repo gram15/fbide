@@ -42,7 +42,7 @@ void MyFrame::LoadUI () {
     FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
 
     int style = wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT;
-    FBNotebook = new wxNotebook( FBCodePanel, wxID_ANY, wxDefaultPosition,
+    FBNotebook = new wxMyNotebook( FBCodePanel, wxID_ANY, wxDefaultPosition,
         wxDefaultSize, style);
 
     s_Console = new wxBoxSizer(wxVERTICAL);
@@ -236,8 +236,8 @@ void MyFrame::LoadToolBar () {
     toolBarBitmaps[13]= wxBITMAP(close);
     toolBarBitmaps[14]= wxBITMAP(output);
     
-    FB_Toolbar->AddTool(Menu_New, toolBarBitmaps[0], wxNullBitmap, FALSE, 100, 100, (wxObject *) NULL, _(Lang[83]));
-    FB_Toolbar->AddTool(Menu_Open, toolBarBitmaps[1], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[84]));
+    FB_Toolbar->AddTool(Menu_New, wxBITMAP(new), wxNullBitmap, FALSE, 100, 100, (wxObject *) NULL, _(Lang[83]));
+    FB_Toolbar->AddTool(Menu_Open, wxBITMAP(open), wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[84]));
     FB_Toolbar->AddTool(Menu_Save, toolBarBitmaps[2], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[85]));
     FB_Toolbar->AddTool(Menu_SaveAll, toolBarBitmaps[12], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[86]));
     FB_Toolbar->AddTool(Menu_Close, toolBarBitmaps[13], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[87]));

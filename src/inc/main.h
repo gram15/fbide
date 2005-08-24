@@ -30,6 +30,7 @@
 #include <wx/filename.h>
 #include <wx/fdrepdlg.h>
 #include <wx/notebook.h>
+#include "wxmynotebook.h"
 #include <wx/settings.h>
 #include <wx/dialog.h>
 #include <wx/colordlg.h>
@@ -196,6 +197,8 @@ public:
     
     void EnableMenus       ( bool state );
     
+    void OnMouseEvent       ( wxMouseEvent& event );
+    
     
     //FileMenu-event and related stuff
     void OnNew              ( wxCommandEvent& event );
@@ -299,7 +302,7 @@ public:
     MyApp               * FB_App;
     FB_Edit             * stc;
     wxToolBar           * FB_Toolbar;
-    wxNotebook          * FBNotebook;
+    wxMyNotebook        * FBNotebook;
     wxPanel             * FBCodePanel;
     wxPanel             * FBProjectPanel;
     wxPanel             * FBConsolePanel;

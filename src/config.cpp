@@ -96,7 +96,7 @@ void MyFrame::LoadSettings() {
     if(winw==-1||winh==-1) Maximize();
     else {
         Move(winx, winy);
-        SetClientSize(winw, winh);
+        SetSize(winw, winh);
     }
     
     PrefsINI.SetPath("/");
@@ -146,7 +146,7 @@ void MyFrame::SaveSettings() {
         winy=0;
     }
     else {
-        GetClientSize(&winw, &winh);
+        GetSize(&winw, &winh);
         GetPosition(&winx, &winy);
     }
     
