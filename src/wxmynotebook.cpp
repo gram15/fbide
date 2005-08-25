@@ -10,13 +10,22 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #include "wx/wx.h"
-#include "inc/wxmynotebook.h"
 #include "inc/main.h"
 #include "inc/fbedit.h"
+#include "inc/wxmynotebook.h"
 
 BEGIN_EVENT_TABLE(wxMyNotebook,wxNotebook) 
     EVT_MOUSE_EVENTS(wxMyNotebook::OnMouseEvent) 
 END_EVENT_TABLE() 
+
+wxMyNotebook::wxMyNotebook(MyFrame* mf, wxWindow *parent, wxWindowID id, 
+              const wxPoint& pos, const wxSize& size, 
+              long style, const wxString& name)
+              : wxNotebook(parent,id,pos,size,style,name) 
+{ 
+    p = mf;
+}
+
 
 void wxMyNotebook::OnMouseEvent(wxMouseEvent& event) 
 { 
@@ -38,21 +47,21 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event)
             if ( tabid!=GetSelection() ) SetSelection( tabid );
             FB_Edit * stc = (FB_Edit*)GetCurrentPage();
             wxMenu popup("");
-            popup.Append(Menu_Close,        _("Close"));
-            popup.Append(Menu_CloseAll,    _("Close all"));
+            popup.Append(Menu_Close,        _(p->Lang[21]));
+            popup.Append(Menu_CloseAll,    _(p->Lang[173]));
             popup.AppendSeparator();
-            popup.Append(Menu_Undo,         _("Undo"));
+            popup.Append(Menu_Undo,         _(p->Lang[27]));
             popup.Enable(Menu_Undo, stc->CanUndo());
-            popup.Append(Menu_Redo,         _("Redo"));
+            popup.Append(Menu_Redo,         _(p->Lang[29]));
             popup.Enable(Menu_Redo, stc->CanRedo());
             popup.AppendSeparator();
-            popup.Append(Menu_Copy,         _("Copy"));
+            popup.Append(Menu_Copy,         _(p->Lang[33]));
             popup.Enable(Menu_Copy, (stc->GetSelectionEnd()-stc->GetSelectionStart()));
-            popup.Append(Menu_Cut,          _("Cut"));
+            popup.Append(Menu_Cut,          _(p->Lang[31]));
             popup.Enable(Menu_Cut,   (stc->GetSelectionEnd()-stc->GetSelectionStart()));
-            popup.Append(Menu_Paste,        _("Paste"));
+            popup.Append(Menu_Paste,        _(p->Lang[35]));
             popup.Enable(Menu_Paste, stc->CanPaste());
-            popup.Append(Menu_SelectAll,    _("Select All"));
+            popup.Append(Menu_SelectAll,    _(p->Lang[37]));
             popup.Enable(Menu_SelectAll, stc->GetLength());
             wxWindow::PopupMenu(&popup, m_X, m_Y);
             return;

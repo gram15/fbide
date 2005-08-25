@@ -15,6 +15,7 @@
 #include "wx/notebook.h"
 #include "wx/menu.h"
 
+class MyFrame;
 class wxMyNotebook : public wxNotebook 
 { 
 private: 
@@ -25,16 +26,14 @@ protected:
     int m_TabID; 
     wxCoord m_X,m_Y; 
     void OnMouseEvent(wxMouseEvent& event);
+    MyFrame * p;
     
 public: 
-    wxMyNotebook(wxWindow *parent, 
-             wxWindowID id, 
-             const wxPoint& pos = wxDefaultPosition, 
-             const wxSize& size = wxDefaultSize, 
-             long style = 0, 
-             const wxString& name = wxNotebookNameStr) 
-             :wxNotebook(parent,id,pos,size,style,name), m_TabID(-1) 
-    {  }
+    wxMyNotebook(MyFrame* mf, wxWindow *parent, wxWindowID id, 
+                 const wxPoint& pos = wxDefaultPosition, 
+                 const wxSize& size = wxDefaultSize, 
+                 long style = 0, 
+                 const wxString& name = wxNotebookNameStr);
 
 }; 
 

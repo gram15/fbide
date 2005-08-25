@@ -1,10 +1,17 @@
 Version 0.4.2
-   * Fixed bug with settings loading ( vongodric )
-   * Fixed version number to 0.4.2 ( vongodric )
-   * Fixed single instance handling ( vongodric )
    * Added crappy supprt for single instance ( vongodric )
-   * made title flash in taskbar when opening a new file under single instance ( dumbledore )
-   * Added popup menu on tabs and made it possible to close a tab with middle mouse button.
+   * Added popup menu on tabs ( vongodric )
+   * Added possibility to close a tab with middle mouse button. ( vongodric )
+   * Added russian, chinese, greek, japanese, roumanian, finnish, slovak and bulgarian languages. ( vongodric )
+   * Fixed bug with settings loading ( vongodric )
+   * Fixed bug with error reporting - that coused fbide crash. ( vongodric )
+   * Fixed wrong error marker position in error-reporting ( vongodric )
+   * Fixed problem with compiling when long paths were used. ( vongodric )
+   * Fixed several bugs with Sub/function browser. ( vongodric )
+   * Changed title to flash in taskbar when opening a new file under single instance ( dumbledore )
+   * Changed Sub/Func browser to stay open until all tabs are closed ( vongodric )
+   * Changed FBIde to refresh apon exiting programs -on some videocards otherwise coused problems ( vongodric )
+
 
 Version 0.4.1
 

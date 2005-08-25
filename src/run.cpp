@@ -49,7 +49,6 @@ void MyFrame::AddListItem ( int Linenr, int ErrorNr, wxString FileName, wxString
 
     // FBConsole is a pointer to wxListCtrl control
     
-    Message=Message.Trim(true).Trim(false);
     wxString lnr;
     if (Linenr!=-1)
         lnr << Linenr;
@@ -61,6 +60,7 @@ void MyFrame::AddListItem ( int Linenr, int ErrorNr, wxString FileName, wxString
     if (ErrorNr!=-1)
         lnr << ErrorNr;
     FBConsole->SetItem(Itemcount, 2, lnr);
+    
     FBConsole->SetItem(Itemcount, 3, Message);
 }
 
@@ -187,7 +187,7 @@ void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
     
     if (dialog.ShowModal() == wxID_OK)
     {
-    ParameterList = dialog.GetValue();
+        ParameterList = dialog.GetValue();
     }   
     return;
 }
@@ -215,6 +215,9 @@ int  MyFrame::Compile            ( wxString FileName ) {
     int answer = wxExecute(Temp, output, erroutput);
     bool errline = false;
     
+//    print "hello world"
+//    sleep
+    
     int FirstLine = 0;
     wxString FirstFile;
 
@@ -230,7 +233,8 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     if (Temp.Mid(i,1)=="(") {
                         for (x=i+1;x<Temp.Len();x++) {
                    	        if (Temp.Mid(x,1)==")") {
-                                errline = true;
+                                if ( NumTemp.Len() )
+                                    errline = true;
                                 break;
                             }
                             NumTemp+=Temp.Mid(x,1);
@@ -263,7 +267,6 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     }
                 }
                 if (errline) {
-                    
                     wxFileName tf(FileName);
                     if(!tf.HasVolume()) {
                         wxString FBCPath = wxFileName(CompilerPath).GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
@@ -328,10 +331,9 @@ int  MyFrame::Compile            ( wxString FileName ) {
         if (!FBConsole->IsShown()) {
             FB_View->Check(Menu_Result, true);
             FBConsole->Show();
-            s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
+            s_Code->Add(s_Console, 0, wxEXPAND | wxALL, 0);
             s_Code->Layout();
         }
-        
         return 0;
     }
     
@@ -399,6 +401,8 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
     Buffer * buff = bufferList[index];
     
     if (FileName=="") FileName = buff->GetFileName();
+    ::wxSetWorkingDirectory( ::wxPathOnly( FileName ) );
+    FileName = ::wxFileNameFromPath( FileName );
     
     Temp=CMDPrototype;
     Temp=Temp.Trim(false).Lower();
@@ -408,7 +412,6 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
     CompiledFile="";
 
     TempCmdPath = CompilerPath;
-
     if (Temp.Len()>0) {
         for (unsigned int i=0;i<Temp.Len()+1;i++) {
 
@@ -465,7 +468,7 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
             CompiledFile+=".exe";
         }
     }
-	return Cmd;
+    return Cmd;
 }
 
 
@@ -515,7 +518,8 @@ void MyProcess::OnTerminate(int pid, int status)
     m_parent->FB_Run->Enable(Menu_CompileAndRun, true);
     m_parent->FB_Run->Enable(Menu_Run, true);
     m_parent->FB_Run->Enable(Menu_QuickRun, true);
-    
+    m_parent->Refresh();
+    m_parent->Update();
     delete this;
 }
 

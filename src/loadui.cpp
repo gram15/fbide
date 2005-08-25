@@ -42,7 +42,7 @@ void MyFrame::LoadUI () {
     FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
 
     int style = wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT;
-    FBNotebook = new wxMyNotebook( FBCodePanel, wxID_ANY, wxDefaultPosition,
+    FBNotebook = new wxMyNotebook( this, FBCodePanel, wxID_ANY, wxDefaultPosition,
         wxDefaultSize, style);
 
     s_Console = new wxBoxSizer(wxVERTICAL);
@@ -203,7 +203,6 @@ void MyFrame::LoadMenu () {
     MenuBar->Append(FB_Run,   _T(Lang[9]));
     MenuBar->Append(HelpMenu, _T(Lang[10]));
     MenuBar->Enable(1, false);
-    
     
     SetMenuBar(MenuBar);
     return;
