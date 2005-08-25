@@ -277,6 +277,7 @@ public:
     void Run                ( wxString FileName = "" );
     wxString GetCompileData ( wxString FileName = "" );
 	
+	void OnGetFocus( wxFocusEvent & event );
 	
 
     wxFindReplaceData*      FindData;

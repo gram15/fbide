@@ -98,8 +98,13 @@ bool stConnection::OnExecute(const wxString& WXUNUSED(topic),
     wxString filename(data);
     if (!filename.IsEmpty())
     {
-        _myframe_->NewSTCPage(filename, true);
-        _myframe_->RequestUserAttention();
+        int result = _myframe_->bufferList.FileLoaded(filename);
+        if ( result != -1 )
+            _myframe_->FBNotebook->SetSelection(result);
+        else
+            _myframe_->NewSTCPage(filename, true);
+
+        _myframe_->SetFocus();
     }
     return true;
 }

@@ -69,7 +69,6 @@ void about::VwXinit()
     myarr.Add("[bold]"+Parent->Lang[207]);
     myarr.Add(Parent->Lang[208]+"[/bold]");
     myarr.Add("VonGodric - "+Parent->Lang[209]);
-    myarr.Add("marzec - "+Parent->Lang[210]);
     myarr.Add("dilyias - "+Parent->Lang[211]);
     myarr.Add("dumbledore - "+Parent->Lang[212]);
     myarr.Add("Madedog - "+Parent->Lang[213]);
@@ -90,6 +89,13 @@ void about::VwXinit()
     myarr.Add("Mecki\t\t- german");
     myarr.Add("MystikShadows\t- french");
     myarr.Add("Dutchtux\t\t- dutch");
+    myarr.Add("E. Gerfanow \t- russion");
+    myarr.Add("Rojalus Kele \t- chinese");
+    myarr.Add("Drakontas\t- greek");
+    myarr.Add("Shion\t\t- japanese");
+    myarr.Add("Nicolae Panaitoiu \t- romanian");
+    myarr.Add("lurah \t\t- finnish");
+    myarr.Add("etko \t\t- slovak");
     myarr.Add("");
     myarr.Add(Parent->Lang[218]);
     wxString tag="";

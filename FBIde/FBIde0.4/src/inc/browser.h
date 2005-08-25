@@ -49,7 +49,7 @@ public:
     void OnEnter     ( wxCommandEvent& event );
     void OnSelect    ( wxListEvent& event );
     void OnActivate  ( wxListEvent& event );
-
+    
     void GenerateList( wxString Search );
     
     void OnClose ( wxCloseEvent & event);

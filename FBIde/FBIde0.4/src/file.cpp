@@ -166,7 +166,8 @@ void MyFrame::OnCloseFile       ( ) {
 
 void MyFrame::CloseFile          ( int index ) {
 
-    if (SFDialog)       { SFDialog->Close(true); }
+    if ( SFDialog && FBNotebook->GetPageCount()==1 )
+       { SFDialog->Close(true); }
     if (FindDialog)     { FindDialog->Close(true); }
     if (ReplaceDialog)  { ReplaceDialog->Close(true); }
     if (formatDialog)   { formatDialog->Close(true); }

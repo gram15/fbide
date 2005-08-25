@@ -270,7 +270,7 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &WXUNUSED(event) ) {
             Parent->SetModified(-1, !buff->GetModified()); 
         }
     }
-    if(Parent->SFDialog) { if (Parent->SFDialog->ChangePos == false) Parent->SFDialog->Rebuild(); }
+    //if(Parent->SFDialog) { if (Parent->SFDialog->ChangePos == false) Parent->SFDialog->Rebuild(); }
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
