@@ -59,15 +59,13 @@ void MyFrame::LoadSettings() {
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
     if (CompilerPath == ""||!wxFileExists(CompilerPath)) {
-        if (wxMessageBox("Compiler path not set or is currupt, set it now?", 
-                         "Warning",
-                         wxYES_NO |
-                         wxICON_HAND ) ==wxYES) {
+        if (wxMessageBox("Compiler path is either not set or is corrupt. Set correct path now?",
+                         "Compiler error", wxYES_NO | wxICON_HAND ) ==wxYES) {
             wxFileDialog dlg (this,
                 _T("Open compiler"), //Open file
                 _T(""),
-                _T(".exe"),
-                _T("All programs (*.exe)|*.exe"), //"All programs (*.exe)|*.exe"
+                _T("fbc.exe"),
+                _T("FreeBASIC (fbc.exe)|fbc.exe|All programs (*.exe)|*.exe"),
             wxFILE_MUST_EXIST | wxCHANGE_DIR);
             if (dlg.ShowModal() == wxID_OK)
                 CompilerPath=dlg.GetPath();
