@@ -372,13 +372,12 @@ void ConfigDialog::Button_Cancel  (wxCommandEvent&  event){
 }
 
 
-
 void ConfigDialog::Button_GetCompPath   (wxCommandEvent&  event) {
 
     wxFileDialog dlg (this,
         _T(Parent->Lang[155]), //Open file
         _T(""),
-        _T(".exe"),
+        _T("fbc.exe"),
         _T(Parent->Lang[156]), //"All programs (*.exe)|*.exe"
     wxFILE_MUST_EXIST | wxCHANGE_DIR);
     if (dlg.ShowModal() != wxID_OK) return;

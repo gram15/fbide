@@ -21,22 +21,18 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-// Don't modify comment 
 #include "inc/main.h"
 #include "inc/about.h"
-//[inc]add your include files here
-
-
-//[inc]end your include
     
+BEGIN_EVENT_TABLE( about,wxDialog)
+    EVT_BUTTON(-1,  about::On_button_ok)
+END_EVENT_TABLE()
 
 about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint& pos,const wxSize& size,long style,const wxString& name)
-        VwX_INIT_OBJECTS_about
+    : wxDialog(parent,id,title,pos,size,style,name)
 {
     Parent = ( MyFrame * ) parent;
-    OnPreCreate();
-    Create(parent,id,title,pos,size,style,name);
-
+    
     if((pos==wxDefaultPosition)&&(size==wxDefaultSize)){
                     SetSize(0,0,350,320);
     }
@@ -44,17 +40,9 @@ about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint&
     if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)){
                     SetSize(350,320);
     }
-    initBefore();
     fileImgBuf[0]=wxBITMAP(fbide);
     bm3Img0=&fileImgBuf[0];
-    VwXinit();initAfter();
-}
-about::~about()
-{
-        Dabout();
-}
-void about::VwXinit()
-{
+
     bm3=new wxStaticBitmap(this,-1,*bm3Img0,wxPoint(22,15),wxSize(300,75));
     button_ok=new wxButton(this,-1,wxT(""),wxPoint(100,254),wxSize(123,24));
             button_ok->SetLabel(wxT("Ok"));
@@ -94,8 +82,8 @@ void about::VwXinit()
     myarr.Add("Drakontas\t- greek");
     myarr.Add("Shion\t\t- japanese");
     myarr.Add("Nicolae Panaitoiu \t- romanian");
-    myarr.Add("lurah \t\t- finnish");
-    myarr.Add("etko \t\t- slovak");
+    myarr.Add("Lurah \t\t- finnish");
+    myarr.Add("Etko \t\t- slovak");
     myarr.Add("");
     myarr.Add(Parent->Lang[218]);
     wxString tag="";
@@ -136,54 +124,14 @@ void about::VwXinit()
         txm7->WriteText("\r\n");
     }
     Refresh();
-}
-
-BEGIN_EVENT_TABLE(aboutEvt,wxEvtHandler)
-//[evtEvt]add your code here
-
-
-//[evtEvt]end your code
-END_EVENT_TABLE()
-    
-BEGIN_EVENT_TABLE( about,wxDialog)
-        EVT_BUTTON(-1,about::VwXVwXEvOnButtonClick)
-//[evtwin]add your code here
-
-
-//[evtwin]end your code
-END_EVENT_TABLE()
-void about::VwXVwXEvOnButtonClick(wxCommandEvent& event){
-    wxObject *m_wxWin = event.m_eventObject ;
-    if(m_wxWin==button_ok){button_ok_VwXEvOnButtonClick(event,-1);return;}
-    event.Skip(true);
-}
-
-//[evtFunc]add your code here
-
-void about::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index){ //init function
-    //[74a]Code event VwX...Don't modify[749]//
-    //add your code here
-    this->Close();
-} //end function
-
-void about::initBefore(){
-    //add your code here
-
-}
-
-void about::initAfter(){
-    //add your code here
     Centre();
 }
 
-void about::OnPreCreate(){
-    //add your code here
-
+about::~about()
+{
+    return;
 }
 
-void about::Dabout(){
-    //add your code here
-
+void about::On_button_ok(wxCommandEvent& event){
+    this->EndModal(true);
 }
-
-//[evtFunc]end your code
