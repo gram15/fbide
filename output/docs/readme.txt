@@ -1,6 +1,6 @@
 FBIde 0.4:
 
-   FBIde - is a free open sourse IDE for FreeBasic compiler written using 
+   FBIde - is a free open source IDE for FreeBasic compiler written using 
    Dev-Cpp and wxWidgetsframework library.
    Copyright (C) 2004-2005 Albert Varaksin [ vongodric@hotmail.com ]
 
@@ -68,8 +68,6 @@ Links:
 
 Credits:
 
-   - marzec - project supervisor, network code (client and server side)
-   - dilyias - auto completion code
    - dumbledore - code exporting and formatting routines
    - Madedog - internationalization (i18n) modules
 
@@ -95,11 +93,17 @@ Betatesters:
 
 Language files by:
 
-   - v!ct0r		- portuguese
-   - Mecki		- german
-   - MystikShadows	- french
-   - Vinicius Pontes	- spanish
-   - dutchtux		- dutch
+   - v!ct0r          - portuguese
+   - Mecki           - german
+   - MystikShadows   - french
+   - Dutchtux        - dutch
+   - E. Gerfanow     - russion
+   - Rojalus Kele    - chinese
+   - Drakontas       - greek
+   - Shion           - japanese
+   - N. Panaitoiu    - romanian
+   - lurah           - finnish
+   - etko            - slovak
 
 
 ...and everyone we forgot!
