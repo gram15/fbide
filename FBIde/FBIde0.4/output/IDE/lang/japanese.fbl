@@ -201,7 +201,7 @@
 154=グループ 4
 
 155=ファイルを開く
-156=全てのプログラム (*.exe)|*.exe
+156=FreeBASIC (fbc.exe)|fbc.exe|全てのプログラム (*.exe)|*.exe
 
 157=Enter theme name:
 158=Parameters...
