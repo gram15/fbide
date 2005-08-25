@@ -199,7 +199,7 @@
 154=Grupp 4
 
 155=Ava fail
-156=Kõik programmid (*.exe)|*.exe
+156=FreeBASIC (fbc.exe)|fbc.exe|Kõik programmid (*.exe)|*.exe
 
 157=Sisesta teema nimi:
 158=Parameetrid

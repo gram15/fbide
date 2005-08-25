@@ -203,7 +203,7 @@
 154=Ryhmä 4
 
 155=Avaa tiedosto
-156=Kaikki ohjelmat (*.exe)|*.exe
+156=FreeBASIC (fbc.exe)|fbc.exe|Kaikki ohjelmat (*.exe)|*.exe
 
 157=Anna teeman nimi
 158=Parametrit...

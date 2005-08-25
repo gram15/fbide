@@ -201,7 +201,7 @@
 154=Grupo 4
 
 155=Abrir archivo
-156=Todos los programas (*.exe)|*.exe
+156=FreeBASIC (fbc.exe)|fbc.exe|Todos los programas (*.exe)|*.exe
 
 157=Escribir nombre de tema:
 158=Parametros...
