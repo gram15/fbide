@@ -3,6 +3,7 @@ Version 0.4.2
    * Added popup menu on tabs ( vongodric )
    * Added possibility to close a tab with middle mouse button. ( vongodric )
    * Added russian, chinese, greek, japanese, roumanian, finnish, slovak and bulgarian languages. ( vongodric )
+   * Added Sub/Func browser closing with esc ( vongodric )
    * Fixed bug with settings loading ( vongodric )
    * Fixed bug with error reporting - that coused fbide crash. ( vongodric )
    * Fixed wrong error marker position in error-reporting ( vongodric )
@@ -11,6 +12,8 @@ Version 0.4.2
    * Changed title to flash in taskbar when opening a new file under single instance ( dumbledore )
    * Changed Sub/Func browser to stay open until all tabs are closed ( vongodric )
    * Changed FBIde to refresh apon exiting programs -on some videocards otherwise coused problems ( vongodric )
+   * Changed in Sub/Func browser subs and functions are colored in different colors ( vongodric )
+   * Changed Sub/Functon now refreshes much faster ( vongodric )
 
 
 Version 0.4.1

@@ -96,15 +96,19 @@ bool stConnection::OnExecute(const wxString& WXUNUSED(topic),
                              wxIPCFormat WXUNUSED(format))
 {
     wxString filename(data);
+    wxFileName file ( filename );
     if (!filename.IsEmpty())
     {
-        int result = _myframe_->bufferList.FileLoaded(filename);
-        if ( result != -1 )
-            _myframe_->FBNotebook->SetSelection(result);
-        else
-            _myframe_->NewSTCPage(filename, true);
-
-        _myframe_->SetFocus();
+        if ( file.GetExt() == "fbs"  ) _myframe_->SessionLoad( filename );
+        else {
+            int result = _myframe_->bufferList.FileLoaded(filename);
+            if ( result != -1 )
+                _myframe_->FBNotebook->SetSelection(result);
+            else
+                _myframe_->NewSTCPage(filename, true);
+    
+            _myframe_->SetFocus();
+        }
     }
     return true;
 }

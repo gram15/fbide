@@ -34,7 +34,7 @@ BEGIN_EVENT_TABLE( SFBrowser, wxDialog)
     EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
     EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
     EVT_LIST_ITEM_ACTIVATED(-1, SFBrowser::OnActivate)
-    EVT_KEY_UP( SFBrowser::OnKeyUp )
+    EVT_HOTKEY( 1985, SFBrowser::OnKeyUp )
 END_EVENT_TABLE()
 
 SFBrowser::SFBrowser(   wxWindow* parent,
@@ -100,19 +100,22 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     SFList->SetColumnWidth( 2, 400 );
 
     Refresh();
+    RegisterHotKey( 1985, 0, 27 );
     
     Rebuild();
 }
 
 void SFBrowser::Rebuild (  ) {
+
     if (ChangePos) return;
     wxString Temp;
     wxString fkw;
     wxString skw;
-    int type = 0;
+    bool type = false;
     wxString Arg;
     bool Add = false;
     FB_Edit * stc = Parent->stc;
+    char ch;
 
     Original.Clear();
     OriginalArg.Clear();
@@ -123,41 +126,46 @@ void SFBrowser::Rebuild (  ) {
     for ( int i = 0; i < stc->GetLineCount(); i++ ) {
         Temp = stc->GetLine(i);
         Temp = stc->ClearCmdLine( Temp );
-        fkw = stc->GetFirstKw( Temp );
-        skw = stc->GetSecondKw( Temp );
-        
-        if (fkw == "private"||fkw == "static") {
-            if (skw=="sub") { type = 1; Add = true; }
-            else if (skw =="function") { type = 2; Add = true; }
-            Arg = Temp.Mid(Temp.Find(' '));
-            Arg = Arg.Trim(false).Trim(true);
-            Arg = Arg.Mid(Arg.Find(' '));
-        }
-        else if (fkw == "sub") { 
-            type= 1; 
-            Add = true; 
-            Arg = Temp.Mid(Temp.Find(' '));
-            Arg = Arg.Trim(false).Trim(true);
-        }
-        else if (fkw == "function" && skw.Left(1)!="=") {
-            type= 2; 
-            Add = true; 
-            Arg = Temp.Mid(Temp.Find(' '));
-            Arg = Arg.Trim(false).Trim(true);
-        }
-        
-        if (Add) {
-            Add = false;
-            Temp = "";
-            if (type==1) Temp << "sub";
-            else  Temp << "func";
-            Temp  << " " << Arg;
+        ch = Temp.GetChar( 0 );
+        if ( ch == 'p' || ch == 's' ||
+             ch == 's' || ch == 'f' )
+        { 
+            fkw = stc->GetFirstKw( Temp );
+            skw = stc->GetSecondKw( Temp );
             
-            Original.Add(Temp);
-            OriginalArg.Add(Arg);
+            if (fkw == "private"||fkw == "static") {
+                if (skw=="sub") { type = false; Add = true; }
+                else if (skw =="function") { type = true; Add = true; }
+                Arg = Temp.Mid(Temp.Find(' '));
+                Arg = Arg.Trim(false).Trim(true);
+                Arg = Arg.Mid(Arg.Find(' '));
+            }
+            else if (fkw == "sub") { 
+                type= false; 
+                Add = true; 
+                Arg = Temp.Mid(Temp.Find(' '));
+                Arg = Arg.Trim(false).Trim(true);
+            }
+            else if (fkw == "function" && skw.Left(1)!="=") {
+                type= true; 
+                Add = true; 
+                Arg = Temp.Mid(Temp.Find(' '));
+                Arg = Arg.Trim(false).Trim(true);
+            }
             
-            OrigLineNr.push_back(i);
-            OrigType.push_back(type);
+            if (Add) {
+                Add = false;
+                Temp = "";
+                if (type) Temp << "func";
+                else  Temp << "sub";
+                Temp  << " " << Arg;
+                
+                Original.Add(Temp);
+                OriginalArg.Add(Arg);
+                
+                OrigLineNr.push_back(i);
+                OrigType.push_back(type);
+            }
         }
     }
 
@@ -165,7 +173,7 @@ void SFBrowser::Rebuild (  ) {
     return;
 }
 
-void SFBrowser::AddListItem ( int Linenr, wxString Type, wxString Message ) {
+void SFBrowser::AddListItem ( int Linenr, bool Type, wxString Message ) {
 
     Message=Message.Trim(true).Trim(false);
     wxString lnr;
@@ -173,7 +181,20 @@ void SFBrowser::AddListItem ( int Linenr, wxString Type, wxString Message ) {
     int Itemcount = SFList->GetItemCount();
     long tmp = SFList->InsertItem(Itemcount, lnr, 0);
     SFList->SetItemData(tmp, 0);
-    SFList->SetItem(Itemcount, 1, Type.Trim(true).Trim(false));
+
+    wxListItem t;
+    t.SetColumn( 1 );
+    t.SetId( Itemcount );
+    if( Type ) {
+        t.SetText( "Func" );
+        t.SetTextColour( wxColour( 0, 128, 0) );
+    }
+    else  {
+        t.SetTextColour(  wxColour( 0, 0, 128) );
+        t.SetText( "Sub" );
+    }
+    
+    SFList->SetItem( t );
     SFList->SetItem(Itemcount, 2, Message.Trim(true).Trim(false));
 }
 
@@ -185,9 +206,7 @@ void SFBrowser::OnCharAdded ( wxCommandEvent& event ) {
 }
 
 void SFBrowser::OnKeyUp (wxKeyEvent &event) {
-//    wxMessageBox("Works");
-//    if(event.GetKeyCode()==27) Close(true);
-//    return;
+    if(event.GetKeyCode()==27) Close(true);
 }
 
 void SFBrowser::OnEnter ( wxCommandEvent& event ) {
@@ -207,12 +226,9 @@ void SFBrowser::OnEnter ( wxCommandEvent& event ) {
 
 void SFBrowser::OnSelect ( wxListEvent& event ) {
     ChangePos = true;
-//    FB_Edit * stc = Parent->stc;
     int index = event.GetIndex();
     unsigned long linnr = 0;
     SFList->GetItemText(index).ToULong(&linnr);
-//    stc->GotoLine(stc->GetLineCount());
-//    stc->GotoLine(linnr-1);
     ChangePos = false;
     return;
 }
@@ -237,13 +253,13 @@ void SFBrowser::GenerateList ( wxString Search ) {
     if (Search.Len()) {
         for( unsigned int i = 0; i < Original.Count(); i++) {
             if (Original[i].Contains(Search)) {
-                AddListItem(OrigLineNr[i] + 1, (OrigType[i] == 1) ? "Sub" : "Func", OriginalArg[i]);
+                AddListItem(OrigLineNr[i] + 1, OrigType[i], OriginalArg[i]);
             }
         }
     }
     else {
         for( unsigned int i = 0; i < Original.Count(); i++) {
-            AddListItem(OrigLineNr[i] + 1, (OrigType[i] == 1) ? "Sub" : "Func", OriginalArg[i]);
+            AddListItem(OrigLineNr[i] + 1, OrigType[i], OriginalArg[i]);
         }
     }
     return;
@@ -253,7 +269,7 @@ void SFBrowser::GenerateList ( wxString Search ) {
 SFBrowser::~SFBrowser () {
     delete Panel;
     Parent->SFDialog=0;
-//    delete this;
+    UnregisterHotKey( 1985 );
     return;
 }
 
