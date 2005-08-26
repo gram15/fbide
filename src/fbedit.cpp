@@ -194,6 +194,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
                         false,
                         Style->DefaultFont );
         StyleSetFont (wxSTC_STYLE_DEFAULT, font);
+        StyleSetFont (wxSTC_STYLE_LINENUMBER, font); 
     }
     else {
         StyleSetForeground (wxSTC_STYLE_DEFAULT,    *wxBLACK );
@@ -207,7 +208,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
         SetSelForeground(true, wxColour(255,255,255));
     }
     
-    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("0001"));
+    int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T("00001"));
     SetMarginWidth (0, Prefs->LineNumber ? LineNrMargin: 0);
     SetMarginWidth (1,0);
 
@@ -264,30 +265,25 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 }
 
 //Stc events
-void FB_Edit::OnModified        ( wxStyledTextEvent &WXUNUSED(event) ) {
-    if(buff!=0) {
+void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
+    if(buff==0) return;
+    int mod = event.GetModificationType();
+    if ( mod & wxSTC_MOD_INSERTTEXT ||
+         mod & wxSTC_MOD_DELETETEXT ||
+         mod & wxSTC_PERFORMED_UNDO ||
+         mod & wxSTC_PERFORMED_REDO ) 
+    {
         if(GetModify()!=buff->GetModified()) { 
             Parent->SetModified(-1, !buff->GetModified()); 
         }
+        if(Parent->SFDialog) 
+        { 
+            if (Parent->SFDialog->ChangePos == false) Parent->SFDialog->Rebuild(); 
+        }
     }
-    //if(Parent->SFDialog) { if (Parent->SFDialog->ChangePos == false) Parent->SFDialog->Rebuild(); }
 }
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
-//    if (exitUUI) { event.Skip(); return; }
-//
-//    if (Parent->Prefs.LineNumber) {
-//        exitUUI = true;
-//        int t = GetCurrentLine();
-//        wxString st;
-//        st << t << "0";
-//    
-//        int LineNrMargin = TextWidth (wxSTC_STYLE_LINENUMBER, _T(st));
-//    
-//        SetMarginWidth (0, LineNrMargin);
-//        SetMarginWidth (1,0);
-//        exitUUI = false;
-//    }
 
     if (Parent->Prefs.BraceHighlight) {
       if (IsBrace(GetCharAt(GetCurrentPos()))) {

@@ -40,11 +40,12 @@ public:
                              wxDEFAULT_DIALOG_STYLE|
                              wxMINIMIZE_BOX|
                              wxRESIZE_BOX|
-                             wxRESIZE_BORDER ,
+                             wxRESIZE_BORDER|
+                             wxWANTS_CHARS ,
                 const wxString& name = wxT("sfbrower") );
     ~SFBrowser();
     
-    void AddListItem ( int Linenr, wxString Type, wxString Message );
+    void AddListItem ( int Linenr, bool Type, wxString Message );
     void OnCharAdded ( wxCommandEvent& event );
     void OnEnter     ( wxCommandEvent& event );
     void OnSelect    ( wxListEvent& event );
@@ -67,7 +68,7 @@ public:
     wxArrayString Original;
     wxArrayString OriginalArg;
     vector <int> OrigLineNr;
-    vector <int> OrigType;
+    vector <bool> OrigType;
     
     wxString SearchString;
     bool     ChangePos;

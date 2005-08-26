@@ -256,7 +256,6 @@ void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
     wxString File = dlg.GetPath();
     
     SessionLoad(File);
-    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
 }
 
 void MyFrame::SessionLoad ( wxString File ) {
@@ -283,6 +282,8 @@ void MyFrame::SessionLoad ( wxString File ) {
     FBNotebook->SetSelection(selectedtab);
     
     TextFile.Close();
+    
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     
     return;
 }
