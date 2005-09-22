@@ -401,8 +401,8 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
     Buffer * buff = bufferList[index];
     
     if (FileName=="") FileName = buff->GetFileName();
-    ::wxSetWorkingDirectory( ::wxPathOnly( FileName ) );
-    FileName = ::wxFileNameFromPath( FileName );
+//    ::wxSetWorkingDirectory( ::wxPathOnly( FileName ) );
+    FileName = FileName;
     
     Temp=CMDPrototype;
     Temp=Temp.Trim(false).Lower();
