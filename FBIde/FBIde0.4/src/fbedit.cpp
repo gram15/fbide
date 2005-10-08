@@ -325,90 +325,177 @@ void FB_Edit::OnCharAdded  		( wxStyledTextEvent &event ) {
     if (!Parent->Prefs.AutoIndent) return;
     
     char        key     = event.GetKey();
+    if (key!='\r') return;
+    
     int         cLine   = GetCurrentLine();
     int         lineInd = GetLineIndentation(cLine - 1);
-    int         plineind= GetLineIndentation(cLine - 2);
-    int         TabSize = Parent->Prefs.TabSize;
-    if (key!='\n' && key!='\r') return;
-    ConvertEOLs(wxSTC_EOL_CRLF);
+    
+    IndentLine ( lineInd, cLine );
 
-    //Previous line
-    wxString    TempCL  = ClearCmdLine(GetLine(cLine - 1));
-    wxString    clfkw   = GetFirstKw(TempCL);
-    wxString    cllkw   = GetLastKw(TempCL);
-
-    //Line before previous
-    wxString    TempPL  = ClearCmdLine(GetLine(cLine - 2));
-    wxString    plfkw   = GetFirstKw(TempPL);
-    wxString    pllkw   = GetLastKw(TempPL);
-    
-    
-    if (lineInd>0) {
-        if ( clfkw == "end" && IsEndDeIndentWord(cllkw) ) {
-            if (cllkw!=plfkw) { 
-                if (cllkw == "select" && plfkw == "case") lineInd = plineind;
-                else if (plineind<=lineInd) lineInd -= TabSize; 
-            }
-            else if (cllkw=="function" && TempPL.Find('=')!=-1) lineInd -= TabSize;
-            else if (plfkw== "if" && pllkw!="then") {
-                if (plineind<=lineInd) lineInd -= TabSize; }
-            else lineInd = plineind;
-        }
-        
-        else if (clfkw != pllkw) {
-            if (( clfkw == "next" && plfkw != "for")||
-                ( clfkw == "loop" && plfkw != "do")||
-                ( clfkw == "wend" && plfkw != "while")) {
-                    if (plineind<=lineInd) lineInd -= TabSize;
-                }
-            else if (( clfkw == "next" && plfkw == "for")||
-                 ( clfkw == "loop" && plfkw == "do")||
-                 ( clfkw == "wend" && plfkw == "while"))
-                lineInd = plineind;
-            else if ( clfkw == "case" ) {
-                if (plfkw == "case" || plfkw == "select") { lineInd = plineind; }
-                else  { if (plineind<=lineInd) lineInd -= TabSize; } }
-            else if ( clfkw == "else" || clfkw == "elseif" ) {
-                if ((plfkw == "if" && pllkw == "then") ||
-                    (plfkw == "elseif")) { lineInd = plineind; } 
-                else   { if (plineind<=lineInd) lineInd -= TabSize; } }
-                
-        }
-        else if(clfkw == "next" && plfkw != "for")
-            if (plineind<=lineInd) lineInd -= TabSize;
-            
-        SetLineIndentation (cLine-1, lineInd);
-    }
-    
-    if (IsIndentWord(clfkw)) {
-        if      (clfkw == "if") {
-            if (cllkw == "then") lineInd += TabSize;
-        }
-        else if (clfkw == "do") {
-            if (cllkw != "loop") lineInd += TabSize;
-        }
-        else if (clfkw == "while") {
-            if (cllkw != "wend") lineInd += TabSize;
-        }
-        else if (clfkw == "for") {
-            if (cllkw != "next") lineInd += TabSize;
-        }
-        else if (clfkw == "type") {
-            if ((!TempCL.Contains(" as "))&&(!TempCL.Contains("\tas "))&&
-                (!TempCL.Contains(" as\t"))&&(!TempCL.Contains("\tas\t")))
-                lineInd += TabSize;
-        }
-        else if (clfkw=="function") {
-            if (TempCL.Find('=')==-1) lineInd += TabSize;
-        }
-        else  lineInd += TabSize;
-    }
-    
-    SetLineIndentation (cLine, lineInd);
     GotoPos(PositionFromLine (cLine) + lineInd);
-    
+            
 }
 
+void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
+    
+    int TabSize = Parent->Prefs.TabSize;
+    wxString TempLine( ClearCmdLine( cLine - 1 ) );
+    int FirstKW( GetID( GetFirstKw( TempLine ) ) );
+    int LastKW( GetID( GetLastKw( TempLine ) ) );
+        
+    switch ( FirstKW ) {
+        case kw::UNION :
+        case kw::ENUM :
+        case kw::WITH :
+        case kw::SUB : {
+            lineInd+=TabSize;
+            break;
+        }
+        case kw::STATIC :
+        case kw::PRIVATE : {
+            int SecondKW( GetID( GetSecondKw( TempLine ) ) );
+            if ( SecondKW == kw::SUB ) 
+                lineInd+=TabSize;
+            else if( SecondKW == kw::FUNCTION )
+                if ( TempLine.Find('=')==-1 ) lineInd += TabSize;
+            break;
+        }
+        case kw::FUNCTION : {
+            if ( TempLine.Find('=')==-1 ) lineInd += TabSize;
+            break;
+        }
+        case kw::IF : {
+            if ( LastKW == kw::THEN )  lineInd += TabSize;
+            break;
+        }
+        case kw::ELSE : {
+            if ( LastKW == kw::THEN || LastKW == FirstKW ) {
+                int i = cLine - 2;
+                wxString pLine = ClearCmdLine( i );
+                while ( pLine.Len() == 0 && i ) {
+                    i--;
+                    pLine = ClearCmdLine( i );
+                }
+                int plineInd = GetLineIndentation( i );
+                int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+            
+                if ( lineInd > 0 && lineInd >= plineInd ) {
+                    if ( pFirstKW==kw::IF||pFirstKW==kw::ELSE) lineInd=plineInd;
+                    else lineInd -= TabSize;
+                    SetLineIndentation ( cLine - 1, lineInd );
+                }
+                lineInd += TabSize;
+            }
+            break;
+        }
+        case kw::CASE : {
+            int i = cLine - 2;
+            wxString pLine = ClearCmdLine( i );
+            while ( pLine.Len() == 0 && i ) {
+                i--;
+                pLine = ClearCmdLine( i );
+            }
+            int plineInd = GetLineIndentation( i );
+            int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+
+            if ( lineInd > 0 && lineInd >= plineInd ) {
+                if ( pFirstKW != kw::CASE && pFirstKW != kw::SELECT ) {
+                    lineInd -= TabSize;
+                }
+                else lineInd = plineInd;
+                SetLineIndentation ( cLine - 1, lineInd );
+            }
+            if ( TempLine.Find(':')==-1 ) lineInd += TabSize;
+            break;
+        }
+        case kw::TYPE : {
+            if ((!TempLine.Contains(" as "))&&(!TempLine.Contains("\tas "))&&
+                (!TempLine.Contains(" as\t"))&&(!TempLine.Contains("\tas\t"))&&
+                LastKW!=FirstKW)
+                lineInd += TabSize;
+            break;
+        }
+        case kw::ASM : {
+            if ( LastKW == FirstKW && TempLine.Find(':')==-1 ) lineInd += TabSize;
+            break;
+        }
+        case kw::DO : {
+            if ( LastKW!=kw::LOOP ) lineInd += TabSize;
+            break;
+        }
+        case kw::FOR : {
+            if ( LastKW!=kw::NEXT ) lineInd += TabSize;
+            break;
+        }
+        case kw::WHILE : {
+            if ( LastKW!=kw::WEND ) lineInd += TabSize;
+            break;
+        }
+        case kw::NEXT :
+        case kw::WEND :
+        case kw::LOOP : {
+            int i = cLine - 2;
+            wxString pLine = ClearCmdLine( i );
+            while ( pLine.Len() == 0 && i ) {
+                i--;
+                pLine = ClearCmdLine( i );
+            }
+            int plineInd = GetLineIndentation( i );
+            int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+
+            if ( lineInd > 0 && lineInd >= plineInd ) {
+                if ( pFirstKW!=FirstKW ) {
+                    lineInd -= TabSize;
+                }
+                else lineInd = plineInd;
+                SetLineIndentation ( cLine - 1, lineInd );
+            }
+            break;
+        }
+        case kw::END : {
+            int i = cLine - 2;
+            wxString pLine = ClearCmdLine( i );
+            while ( pLine.Len() == 0 && i ) {
+                i--;
+                pLine = ClearCmdLine( i );
+            }
+            int plineInd = GetLineIndentation( i );
+
+            if ( lineInd > 0 && lineInd >= plineInd ) {
+                int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+                int SecondKW( GetID( GetSecondKw( TempLine ) ) );
+                switch ( SecondKW ) {
+                    case kw::SUB :
+                    case kw::FUNCTION :
+                    case kw::IF :
+                    case kw::SELECT :
+                    case kw::WITH :
+                    case kw::ASM :
+                    case kw::TYPE :
+                    case kw::UNION :
+                    case kw::ENUM : {
+                        if ( SecondKW == kw::FUNCTION && 
+                             pFirstKW == kw::FUNCTION && 
+                             pLine.Find('=') > -1 ) lineInd -= TabSize;
+                        else if ( pFirstKW == SecondKW  || 
+                                ( SecondKW == kw::IF && pFirstKW == kw::ELSE ) ||
+                                ( SecondKW == kw::SELECT && pFirstKW == kw::CASE ) ) {
+                             lineInd = plineInd;
+                        }
+                        else lineInd -= TabSize;
+                        SetLineIndentation ( cLine - 1, lineInd );
+                        break;
+                    }
+                } // switch
+            } // if
+            break;
+        } // case
+        default : {
+            break;
+        }
+    }
+    SetLineIndentation (cLine, lineInd);
+}
 
 
 void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
@@ -453,7 +540,7 @@ void FB_Edit::OnKeyUp            ( wxKeyEvent &event ) {
 void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
 
     ChangeTab = LineFromPosition(event.GetPosition());
-    wxString FileName = ClearCmdLine(GetLine(ChangeTab));
+    wxString FileName = ClearCmdLine( ChangeTab );
     wxString fkw = GetFirstKw(FileName);
 
     if (fkw!="#include") return;

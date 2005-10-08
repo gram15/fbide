@@ -5,14 +5,14 @@ UnitCount=29
 Type=0
 Ver=1
 ObjFiles=
-Includes=C:\dev\wx2.5.4\include;C:\dev\wx2.5.4\include\wx;C:\dev\wx2.5.4\contrib\include
-Libs=C:\dev\wx2.5.4\lib\gcc_lib
+Includes=C:\dev\wx2.6.2\include;C:\dev\wx2.6.2\include\wx;C:\dev\wx2.6.2\contrib\include
+Libs=C:\dev\wx2.6.2\lib\gcc_dll
 PrivateResource=FBIde0.4_private.rc
 ResourceIncludes=C:\Dev\FBIde\FBIde0.4\rc
 MakeIncludes=
 Compiler=_@@__@@_
-CppCompiler=-D__WXMSW__ _@@_-mthreads _@@_-DNO_GCC_PRAGMA_@@_-Wall _@@_-fno-pcc-struct-return _@@_-O4 _@@_-Os _@@_-fno-rtti _@@_-fno-exceptions_@@_
-Linker=-Wl,--subsystem,windows _@@_-mthreads _@@_-mwindows  _@@_-lwxmsw25_adv _@@_-lwxmsw25_stc_@@_-lwxmsw25_core_@@_-lwxbase25_@@_-lwsock32 _@@_-lcomctl32  _@@_-lole32 _@@_-loleaut32 _@@_-luuid_@@_-lwxpng _@@_-lwxzlib_@@_-lmingw32_@@_
+CppCompiler=-D__WXMSW__ _@@_-mthreads _@@_-DNO_GCC_PRAGMA _@@_-DWXUSINGDLL _@@_-Wall _@@_-fno-pcc-struct-return _@@_-O3 _@@_-Os _@@_-fno-rtti _@@_-fno-exceptions _@@_
+Linker=-Wl,--subsystem,windows _@@_-mwindows _@@_-mthreads _@@_-lwxmsw26_stc _@@_-lwxmsw26_core _@@_-lwxbase26 _@@_-lwxtiff _@@_-lwxjpeg _@@_-lwxpng _@@_-lwxzlib _@@_-lwxregex _@@_-lwxexpat _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lcomdlg32 _@@_-lwinspool _@@_-lwinmm _@@_-lshell32 _@@_-lcomctl32 _@@_-lole32 _@@_-loleaut32 _@@_-luuid _@@_-lrpcrt4 _@@_-ladvapi32 _@@_-lwsock32 _@@_-lodbc32_@@_-lwxmsw26_media_@@_-lwxmsw26_adv_@@_
 IsCpp=1
 Icon=
 ExeOutput=C:\Dev\FBIde\FBIde0.4\output
@@ -27,7 +27,7 @@ CustomMakefile=
 IncludeVersionInfo=1
 SupportXPThemes=1
 CompilerSet=0
-CompilerSettings=0000000001001000001100
+CompilerSettings=0000000000000000001000
 
 [Unit1]
 FileName=src\main.cpp
@@ -42,7 +42,7 @@ BuildCmd=
 [VersionInfo]
 Major=0
 Minor=4
-Release=2
+Release=3
 <<<<<<< FBIde0.4.dev
 Build=0
 =======
@@ -55,14 +55,14 @@ Build=0
 LanguageID=1033
 CharsetID=1252
 CompanyName=
-FileVersion=0.4.2
+FileVersion=0.4.3
 FileDescription=IDE for FreeBasic compiler
 InternalName=fbide
 LegalCopyright=Released under GPL
 LegalTrademarks=
 OriginalFilename=fbide.exe
 ProductName=FBIde
-ProductVersion=0.4.2
+ProductVersion=0.4.3
 AutoIncBuildNr=0
 
 [Unit2]
