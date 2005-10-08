@@ -27,6 +27,39 @@
 
 #include <wx/stc/stc.h>
 
+namespace kw {
+    enum {
+        SUB         = 1, 
+        FUNCTION,
+        IF,
+        THEN,
+        ELSE,
+        ELSEIF,
+        CASE,
+        SELECT,
+        WITH,
+        ASM,
+        TYPE,
+        UNION,
+        ENUM,
+        DO,
+        FOR,
+        WHILE,
+        //------
+        LOOP,
+        NEXT,
+        WEND,
+        END,
+        STATIC,
+        PRIVATE
+    };
+    const int word_count = 22;
+    const wxString words[word_count] = { 
+            "sub", "function", "if", "then", "else", "elseif",
+            "case", "select", "with", "asm", "type", "union",
+            "enum", "do", "for", "while", "loop", "next",
+            "wend", "end", "static", "private" };
+}
 
 class FB_Edit: public wxStyledTextCtrl {
 public:
@@ -51,40 +84,36 @@ public:
     void OnKeyDown          ( wxKeyEvent &event );
     void OnKeyUp            ( wxKeyEvent &event );
     void OnHotSpot          ( wxStyledTextEvent &event );
+    
+    void FB_Edit::IndentLine ( int & lineInd, int cLine );
 
     wxString    DocumentName;
     int braceLoc;
     int ChangeTab;
     bool exitUUI;
-    
-    inline bool IsIndentWord ( wxString word ) {
-        return  (word == "if" || word == "for" || word=="sub" ||
-                word == "asm" || word == "type" || word=="union" ||
-                word == "enum" || word == "function" || word=="case" ||
-                word == "else" || word == "do" || word=="while" ||
-                word == "elseif" || word == "select" || word=="with");
+
+    int GetID( wxString kw ) {
+        for( int i = 0; i < kw::word_count; i++ ) {
+            if( kw[0] == kw::words[i][0] ) {
+                if ( kw == kw::words[i] ) {
+                    if ( i != kw::ELSE ) i++;
+                    return i;
+                }                    
+            }
+        }
+        return 0;
     }
     
-    inline bool IsEndDeIndentWord ( wxString word ) {
-        return (word == "if"   || word == "sub"     || word == "asm"    || 
-                word == "type" || word == "union"   || word == "enum"   || 
-                word == "with" || word == "select"  || word == "function");
-    }
-    
-    inline bool IsDeIndentWord ( wxString word ) {
-        return (word == "next" || word == "loop" || word == "wend");
-    }
-    
-    inline wxString ClearCmdLine ( wxString cmdline ) {
-        cmdline = cmdline.Trim(false).Lower();
+    inline wxString ClearCmdLine ( int cLine ) {
+        wxString cmdline( GetLine(cLine).Trim(false).Lower() );
         bool instring =false;
-        wxString temp;
+        int len = 0;
         for (unsigned int i=0; i < cmdline.Len(); i++) {
             if (cmdline[i] == '\"') instring = !instring;
             else if (cmdline[i] == '\'' && !instring) break;
-            temp << cmdline[i];
+            len++;
         }
-        return temp.Trim(true);
+        return cmdline.Left( len ).Trim(true);
     }
     
     inline wxString GetFirstKw ( wxString cmdline ) {

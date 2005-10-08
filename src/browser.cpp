@@ -124,11 +124,10 @@ void SFBrowser::Rebuild (  ) {
     OrigType.clear();
 
     for ( int i = 0; i < stc->GetLineCount(); i++ ) {
-        Temp = stc->GetLine(i);
-        Temp = stc->ClearCmdLine( Temp );
+        //Temp = stc->GetLine(i);
+        Temp = stc->ClearCmdLine( i );
         ch = Temp.GetChar( 0 );
-        if ( ch == 'p' || ch == 's' ||
-             ch == 's' || ch == 'f' )
+        if ( ch == 'p' || ch == 's' || ch == 'f' )
         { 
             fkw = stc->GetFirstKw( Temp );
             skw = stc->GetSecondKw( Temp );
