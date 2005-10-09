@@ -305,12 +305,8 @@ public:
     wxToolBar           * FB_Toolbar;
     wxMyNotebook        * FBNotebook;
     wxPanel             * FBCodePanel;
-    wxPanel             * FBProjectPanel;
     wxPanel             * FBConsolePanel;
-    wxSizer             * s_Code;
-    wxSizer             * s_Project;
-    wxSizer             * s_Console;
-    wxSplitterWindow    * s_MainArea;
+    wxSplitterWindow    * HSplitter;
     wxListCtrl          * FBConsole;
     
     wxMenu              * HelpMenu;
@@ -324,6 +320,7 @@ public:
     
     bool                IDE_Modified;
     int                 braceLoc;
+    int                 ConsoleSize;
     bool                ProcessIsRunning;
     bool                IsTemp;
     bool                InitState;
@@ -342,7 +339,7 @@ public:
     int lastTabCreated;
     int OldTabSelected;
     int CurrentFileType;
-    
+   
 private:
     DECLARE_EVENT_TABLE()
 };

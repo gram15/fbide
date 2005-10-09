@@ -182,7 +182,14 @@ void MyFrame::CloseFile          ( int index ) {
     if (bufferList.GetBufferCount() == 0) {
         delete stc;
         stc = 0;
-        FBNotebook->Hide();
+
+        FBCodePanel = new wxPanel(HSplitter, wxID_ANY,
+            wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
+        FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+
+        HSplitter->ReplaceWindow( FBNotebook, FBCodePanel );
+        delete FBNotebook;
+        FBNotebook = 0;
         EnableMenus(false);
     }
     else {

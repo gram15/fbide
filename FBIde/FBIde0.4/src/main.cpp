@@ -306,7 +306,8 @@ void MyFrame::OnClose 	(wxCloseEvent &event) {
         }
     }
     
-    if (FBCodePanel)     delete FBCodePanel;
+    if (FBCodePanel)    delete FBCodePanel;
+    if (FBNotebook)     delete FBNotebook;
 
     SaveSettings();
     event.Skip();

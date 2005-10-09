@@ -155,11 +155,11 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
         wxFileName w(buff->GetFileName());
         CurFolder = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
     }
-
     stc->SaveFile (CurFolder + "FBIDETEMP.bas");
     FBConsole->DeleteAllItems();
-
-    if (Compile(CurFolder + "FBIDETEMP.bas")==0) Run();
+    if (Compile(CurFolder + "FBIDETEMP.bas")==0) {
+        Run();
+    }
     else {
         wxRemoveFile(CurFolder + "FBIDETEMP.bas");
         wxRemoveFile(CurFolder + "fbidetemp.asm");
@@ -214,9 +214,6 @@ int  MyFrame::Compile            ( wxString FileName ) {
     wxArrayString output, erroutput;
     int answer = wxExecute(Temp, output, erroutput);
     bool errline = false;
-    
-//    print "hello world"
-//    sleep
     
     int FirstLine = 0;
     wxString FirstFile;
@@ -309,14 +306,13 @@ int  MyFrame::Compile            ( wxString FileName ) {
                 AddListItem(-1, -1, "", erroutput[ii]);
             }
         }
-                    
-        if (!FBConsole->IsShown()) {
+
+
+        if ( !HSplitter->IsSplit() ) { 
+            HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
             FB_View->Check(Menu_Result, true);
-            FBConsole->Show();
-            s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
-            s_Code->Layout();
         }
-        
+    
         if (FirstFile!="") {
             GoToError(FirstLine-1, FirstFile);
         }
@@ -328,22 +324,18 @@ int  MyFrame::Compile            ( wxString FileName ) {
             AddListItem(-1, -1, "", output[ii]);
         }
         
-        if (!FBConsole->IsShown()) {
+        if ( !HSplitter->IsSplit() ) { 
+            HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
             FB_View->Check(Menu_Result, true);
-            FBConsole->Show();
-            s_Code->Add(s_Console, 0, wxEXPAND | wxALL, 0);
-            s_Code->Layout();
         }
         return 0;
     }
     
-    if (FBConsole->IsShown()) {
+    if ( HSplitter->IsSplit() ) { 
+        ConsoleSize = HSplitter->GetSashPosition();
+        HSplitter->Unsplit( FBConsole );
         FB_View->Check(Menu_Result, false);
-        FBConsole->Hide();
-        s_Code->Detach(s_Console);
-        s_Code->Layout();
     }
-    
     return 0;
 }
 
@@ -379,7 +371,6 @@ void MyFrame::Run                ( wxString FileName ) {
     FB_Toolbar->EnableTool(Menu_CompileAndRun, false);
     FB_Toolbar->EnableTool(Menu_Run, false);
     FB_Toolbar->EnableTool(Menu_QuickRun, false);
-    FB_Toolbar->Realize();
     
     FB_Run->Enable(Menu_Compile, false);
     FB_Run->Enable(Menu_CompileAndRun, false);
@@ -401,7 +392,6 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
     Buffer * buff = bufferList[index];
     
     if (FileName=="") FileName = buff->GetFileName();
-//    ::wxSetWorkingDirectory( ::wxPathOnly( FileName ) );
     FileName = FileName;
     
     Temp=CMDPrototype;
@@ -512,7 +502,6 @@ void MyProcess::OnTerminate(int pid, int status)
     m_parent->FB_Toolbar->EnableTool(Menu_CompileAndRun, true);
     m_parent->FB_Toolbar->EnableTool(Menu_Run, true);
     m_parent->FB_Toolbar->EnableTool(Menu_QuickRun, true);
-    m_parent->FB_Toolbar->Realize();
     
     m_parent->FB_Run->Enable(Menu_Compile, true);
     m_parent->FB_Run->Enable(Menu_CompileAndRun, true);

@@ -61,18 +61,20 @@ void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
 
 void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
 
-    if (FBConsole->IsShown()) {
-        FB_View->Check(Menu_Result, false);
-        FBConsole->Hide();
-        s_Code->Detach(s_Console);
-        s_Code->Layout();
-    }
-    else {
-        FB_View->Check(Menu_Result, true);
-        FBConsole->Show();
-        s_Code->Add(s_Console, 0,  wxEXPAND | wxALL, 0);
-        s_Code->Layout();
-    }    
+    Freeze();
+        if ( HSplitter->IsSplit() ) { 
+            ConsoleSize = HSplitter->GetSashPosition();
+            HSplitter->Unsplit( FBConsole );
+            FB_View->Check(Menu_Result, false);
+        }
+        else {
+            if ( stc )
+                HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
+            else 
+                HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
+            FB_View->Check(Menu_Result, true);
+        }
+    Thaw();
     return;
 }
 
