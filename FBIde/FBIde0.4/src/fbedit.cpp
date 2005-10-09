@@ -545,14 +545,20 @@ void FB_Edit::OnKeyUp            ( wxKeyEvent &event ) {
 void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
 
     ChangeTab = LineFromPosition(event.GetPosition());
-    wxString FileName = ClearCmdLine( ChangeTab );
-    wxString fkw = GetFirstKw(FileName);
-
-    if (fkw!="#include") return;
-
-
-    FileName = FileName.Left(FileName.Len()-1);
-    FileName = FileName.Mid(FileName.Find('\"', true)+1);
+    wxString Temp = ClearCmdLine( ChangeTab );
+    wxString FileName;
+    
+    if ( Temp[0] == '\'' ) Temp = Temp.Mid( 2 );
+    
+    FileName = Temp.AfterFirst( '\"' );
+    FileName = FileName.BeforeFirst( '\"' );
+    
+    if ( !FileName.Len() ) {
+        FileName = Temp.AfterFirst( '\'' );
+        FileName = FileName.BeforeFirst( '\'' );
+    }
+    
+    FileName = FileName.MakeLower();
     wxFileName File(FileName);
     
     if (!File.HasVolume()) {
@@ -583,6 +589,8 @@ void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
     
     if(FileName!="") {
         if(FileExists(FileName)) {
+            if ( FileName.Right(4) == ".exe" || FileName.Right(2) == ".o" || 
+            FileName.Right(4) == ".dll" || FileName.Right(2) == ".a" ) return;
             int result = Parent->bufferList.FileLoaded(FileName);
             if (result != -1) Parent->FBNotebook->SetSelection(result);
             else {

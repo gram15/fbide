@@ -108,6 +108,8 @@ public:
         wxString cmdline( GetLine(cLine).Trim(false).Lower() );
         bool instring =false;
         int len = 0;
+        if ( cmdline[0]=='#'||(cmdline[0]=='\''&&cmdline[1]=='$')) 
+            return cmdline.Trim( true );
         for (unsigned int i=0; i < cmdline.Len(); i++) {
             if (cmdline[i] == '\"') instring = !instring;
             else if (cmdline[i] == '\'' && !instring) break;
