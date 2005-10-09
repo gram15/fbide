@@ -42,6 +42,7 @@ namespace kw {
         TYPE,
         UNION,
         ENUM,
+        SCOPE,
         DO,
         FOR,
         WHILE,
@@ -53,11 +54,11 @@ namespace kw {
         STATIC,
         PRIVATE
     };
-    const int word_count = 22;
+    const int word_count = 23;
     const wxString words[word_count] = { 
             "sub", "function", "if", "then", "else", "elseif",
             "case", "select", "with", "asm", "type", "union",
-            "enum", "do", "for", "while", "loop", "next",
+            "enum", "scope", "do", "for", "while", "loop", "next",
             "wend", "end", "static", "private" };
 }
 

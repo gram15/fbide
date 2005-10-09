@@ -347,6 +347,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
         case kw::UNION :
         case kw::ENUM :
         case kw::WITH :
+        case kw::SCOPE :
         case kw::SUB : {
             lineInd+=TabSize;
             break;
@@ -475,6 +476,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
                     case kw::ASM :
                     case kw::TYPE :
                     case kw::UNION :
+                    case kw::SCOPE :
                     case kw::ENUM : {
                         if ( SecondKW == kw::FUNCTION && 
                              pFirstKW == kw::FUNCTION && 
@@ -526,7 +528,6 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
             }
             return;
         }
-//        else if(key==WXK_F4) { Parent->OnCloseFile(); }
     }
     if (!event.ControlDown()) return;
     SetMouseDownCaptures(false);
@@ -602,4 +603,3 @@ void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
 
     }
 }
-
