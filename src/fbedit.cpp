@@ -378,9 +378,10 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
                 }
                 int plineInd = GetLineIndentation( i );
                 int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+                int pLastKW( GetID( GetFirstKw( pLine ) ) );
             
                 if ( lineInd > 0 && lineInd >= plineInd ) {
-                    if ( pFirstKW==kw::IF||pFirstKW==kw::ELSE) lineInd=plineInd;
+                    if ( (pFirstKW==kw::IF||pFirstKW==kw::ELSE)&&pLastKW==kw::THEN) lineInd=plineInd;
                     else lineInd -= TabSize;
                     SetLineIndentation ( cLine - 1, lineInd );
                 }
@@ -441,7 +442,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
                 pLine = ClearCmdLine( i );
             }
             int plineInd = GetLineIndentation( i );
-            int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+            int pFirstKW( GetID( GetFirstKw( pLine ) ) + 3 );
 
             if ( lineInd > 0 && lineInd >= plineInd ) {
                 if ( pFirstKW!=FirstKW ) {
@@ -463,6 +464,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
 
             if ( lineInd > 0 && lineInd >= plineInd ) {
                 int pFirstKW( GetID( GetFirstKw( pLine ) ) );
+                int pLastKW( GetID( GetLastKw( pLine ) ) );
                 int SecondKW( GetID( GetSecondKw( TempLine ) ) );
                 switch ( SecondKW ) {
                     case kw::SUB :
@@ -477,6 +479,9 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
                         if ( SecondKW == kw::FUNCTION && 
                              pFirstKW == kw::FUNCTION && 
                              pLine.Find('=') > -1 ) lineInd -= TabSize;
+                        else if ( SecondKW == kw::IF &&
+                             ( pFirstKW == kw::IF || pFirstKW == kw::ELSE ) &&
+                             pLastKW != kw::THEN ) lineInd -= TabSize;
                         else if ( pFirstKW == SecondKW  || 
                                 ( SecondKW == kw::IF && pFirstKW == kw::ELSE ) ||
                                 ( SecondKW == kw::SELECT && pFirstKW == kw::CASE ) ) {

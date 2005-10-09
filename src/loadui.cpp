@@ -34,74 +34,53 @@ void MyFrame::LoadUI () {
     LoadToolBar();
     LoadMenu();
     LoadStatusBar();
+    
+    ConsoleSize = -100;
 
     FB_App->SetTopWindow(this);
+    Freeze();
     
-    FBCodePanel = new wxPanel(this, wxID_ANY,
-        wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
-    FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+        HSplitter = new wxSplitterWindow( 
+            this, 10, wxDefaultPosition, wxDefaultSize, 
+            wxSP_FULLSASH|wxNO_BORDER );
+        HSplitter->SetSashGravity( 1.0 );
+        HSplitter->SetMinimumPaneSize( 100 );
+        
+        FBConsole = new wxListCtrl(HSplitter, 
+                                   wxID_ANY, 
+                                   wxDefaultPosition, 
+                                   wxDefaultSize, 
+                                   wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
+                wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
+            	FBConsole->SetFont(LbFont);
+                wxListItem itemCol;
+                itemCol.SetText(_T(Lang[165])); //"Line"
+                itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+                FBConsole->InsertColumn(0, itemCol);
+                itemCol.SetText(_T(Lang[166])); //"File"
+                itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+                FBConsole->InsertColumn(1, itemCol);
+                itemCol.SetText(_T(Lang[167])); //"Error nr"
+                itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+                FBConsole->InsertColumn(2, itemCol);
+                itemCol.SetText(_T(Lang[161])); //"Messages"
+                itemCol.SetAlign(wxLIST_FORMAT_LEFT);
+                FBConsole->InsertColumn(3, itemCol);
+                FBConsole->SetColumnWidth( 0, 60 );
+                FBConsole->SetColumnWidth( 1, 150 );
+                FBConsole->SetColumnWidth( 2, 100 );
+                FBConsole->SetColumnWidth( 3, 600 );
+                FBConsole->Hide();
+        
+        FBCodePanel = new wxPanel(HSplitter, wxID_ANY,
+            wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
+        FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
+        HSplitter->Initialize( FBCodePanel );
 
-    int style = wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT;
-    FBNotebook = new wxMyNotebook( this, FBCodePanel, wxID_ANY, wxDefaultPosition,
-        wxDefaultSize, style);
-
-    s_Console = new wxBoxSizer(wxVERTICAL);
-    FBConsole = new wxListCtrl(FBCodePanel, 
-                               wxID_ANY, 
-                               wxDefaultPosition, 
-                               wxDefaultSize, 
-                               wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
-
-    wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
-	FBConsole->SetFont(LbFont);
-
-    wxListItem itemCol;
-    itemCol.SetText(_T(Lang[165])); //"Line"
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    FBConsole->InsertColumn(0, itemCol);
-
-    itemCol.SetText(_T(Lang[166])); //"File"
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    FBConsole->InsertColumn(1, itemCol);
-    
-    itemCol.SetText(_T(Lang[167])); //"Error nr"
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    FBConsole->InsertColumn(2, itemCol);
-
-    itemCol.SetText(_T(Lang[161])); //"Messages"
-    itemCol.SetAlign(wxLIST_FORMAT_LEFT);
-    FBConsole->InsertColumn(3, itemCol);
-    
-    
-    FBConsole->SetColumnWidth( 0, 60 );
-    FBConsole->SetColumnWidth( 1, 150 );
-    FBConsole->SetColumnWidth( 2, 100 );
-    FBConsole->SetColumnWidth( 3, 600 );
-    
-    s_Console->Add(FBConsole, 1, wxGROW | wxALL, 0);
-    s_Console->SetMinSize(400, 150);
-    FBConsole->Hide();
-
-    s_Code = new wxBoxSizer(wxVERTICAL);
-    s_Code->Add(FBNotebook, 3, wxGROW | wxALL, 0);
-    
-    
-
-    int w, h;
-    GetClientSize(&w, &h);
-    FBCodePanel->SetSizer(s_Code);
-    
-    s_Code->Fit(this);
-    s_Code->SetSizeHints(this);
-    
-    SetClientSize(w, h);
-    SetMinSize(wxSize(400, 400));
-    
-    FBNotebook->Hide();
-    stc=0;
-
+    Thaw();
+    SendSizeEvent();
+    stc = 0;
     EnableMenus(false);
-    
     return;
 
 }
@@ -185,7 +164,6 @@ void MyFrame::LoadMenu () {
     FB_Run->Append (Menu_QuickRun,      _(Lang[69] + "\tF5"), _(Lang[70]));
     FB_Run->Append (Menu_CmdPromt,      _(Lang[71] + "\tF8"), _(Lang[72]));
     FB_Run->Append (Menu_Parameters,    _(Lang[73]), _(Lang[74]));
-//    FB_Run->Append (Menu_CompParam,     _(Lang[75]), _(Lang[76]));
     FB_Run->AppendCheckItem (Menu_ShowExitCode, _(Lang[77]), _(Lang[78]));
 	FB_Run->Check  (Menu_ShowExitCode,  Prefs.ShowExitCode);
 
@@ -205,6 +183,7 @@ void MyFrame::LoadMenu () {
     MenuBar->Enable(1, false);
     
     SetMenuBar(MenuBar);
+    
     return;
 }
 
@@ -214,10 +193,10 @@ void MyFrame::LoadMenu () {
 // Load toolbar
 void MyFrame::LoadToolBar () {
 	
-//    FB_Toolbar = GetToolBar();
+    // FB_Toolbar = GetToolBar();
     FB_Toolbar = CreateToolBar();
     
-    //Add controls:
+    // Add controls:
     wxBitmap toolBarBitmaps[15];
     toolBarBitmaps[0] = wxBITMAP(new);
     toolBarBitmaps[1] = wxBITMAP(open);
@@ -303,12 +282,19 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     
     if(File.GetExt() == "html"||File.GetExt() == "htm") { FileType = 1; }
 
-    
     if (stc==NULL) {
         EnableMenus(true);
         OldTabSelected = -1;
-        stc = new FB_Edit( this, FBNotebook, -1, "" );
-        stc->Freeze();
+        Freeze();
+            int style = wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT;
+            FBNotebook = new wxMyNotebook( this, HSplitter, wxID_ANY, wxDefaultPosition,
+                wxDefaultSize, style);
+        
+            HSplitter->ReplaceWindow( FBCodePanel, FBNotebook );
+            delete FBCodePanel;
+            FBCodePanel = NULL;
+        
+            stc = new FB_Edit( this, FBNotebook, -1, "" );
         CurrentFileType = FileType;
         stc->LoadSTCTheme( CurrentFileType );
         stc->LoadSTCSettings();
@@ -322,12 +308,10 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
         stc->SetDocPointer(doc);
         if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
         FBNotebook->AddPage( stc, wxFileNameFromPath(InitFile), true );
-        FBNotebook->Refresh();
-        FBNotebook->Show();
+        Thaw();
     }
     else {
         stc->SetBuffer( (Buffer *) 0 );
-        stc->Freeze();
         buff = bufferList.AddFileBuffer("", "");
         buff->SetFileType(FileType);
         SaveDocumentStatus(FBNotebook->GetSelection());
@@ -351,7 +335,6 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     buff->SetDocument(doc);
     stc->SetBuffer( (Buffer *) buff );
     stc->SetFocus();
-    stc->Thaw();
     
     if (SFDialog) SFDialog->Rebuild();
 
