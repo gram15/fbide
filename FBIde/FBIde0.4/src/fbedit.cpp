@@ -373,6 +373,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
         case kw::ELSE : {
             if ( LastKW == kw::THEN || LastKW == FirstKW ) {
                 int i = cLine - 2;
+                if ( i < 0 ) return;
                 wxString pLine = ClearCmdLine( i );
                 while ( pLine.Len() == 0 && i ) {
                     i--;
@@ -393,6 +394,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
         }
         case kw::CASE : {
             int i = cLine - 2;
+            if ( i < 0 ) return;
             wxString pLine = ClearCmdLine( i );
             while ( pLine.Len() == 0 && i ) {
                 i--;
@@ -438,6 +440,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
         case kw::WEND :
         case kw::LOOP : {
             int i = cLine - 2;
+            if ( i < 0 ) return;
             wxString pLine = ClearCmdLine( i );
             while ( pLine.Len() == 0 && i ) {
                 i--;
@@ -457,8 +460,9 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
         }
         case kw::END : {
             int i = cLine - 2;
+            if ( i < 0 ) return;
             wxString pLine = ClearCmdLine( i );
-            while ( pLine.Len() == 0 && i ) {
+            while ( pLine.Len() == 0 && i > 0 ) {
                 i--;
                 pLine = ClearCmdLine( i );
             }
