@@ -289,11 +289,16 @@ public:
     wxString                findText;
     wxString                replaceText;
     wxString                findString;
+    wxArrayString           kwList;
     int                     FindFlags;
 
     
     
     void OnAbout        ( wxCommandEvent& event );
+    void OnHelp         ( wxCommandEvent& event );
+    void OnQuickKeys    ( wxCommandEvent& event );
+    void OnReadMe       ( wxCommandEvent& event );
+    void OnFpp          ( wxCommandEvent& event );
     
     void NewSTCPage         ( wxString InitFile, bool select = false, int FileType = 0 );
     void ChangeNBPage       ( wxNotebookEvent& event );
@@ -348,6 +353,7 @@ enum
 {
     Menu_Quit           = wxID_EXIT,
     Menu_About          = wxID_ABOUT,
+    Menu_Help           = wxID_HELP,
     
     //File-menu
     Menu_New            = wxID_HIGHEST,
@@ -398,7 +404,12 @@ enum
 	Menu_QuickRun,
 	Menu_CmdPromt,
 	Menu_Parameters,
-	Menu_ShowExitCode
+	Menu_ShowExitCode,
+	
+	//Help menu
+	Menu_QuickKeys,
+	Menu_ReadMe,
+	Menu_Fpp,
 };
 
 #endif

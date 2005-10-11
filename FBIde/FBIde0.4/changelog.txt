@@ -1,3 +1,19 @@
+Version 0.4.3
+   * Fixed bug with opening illegal tab. ( F9 ) ( vongodric )
+   * Fixed fbide now tries to detect FBC on it's own -before asking the user ( vongodric )
+   * Fixed seperators in toolbar ( vongodric )
+   * Fixed several syntax highlighting errors ( vongodric )
+   * Fixed FBIde no longer empties it's clipboard apon exit ( vongodric )
+   * Changed FBIde is now compiled with wxWidgets 2.6.2 ( vongodric )
+   * Changed New indent mopdule -faster, smarter. ( vongodric )
+   * Chacged Console area is now resizeable using splitters ( vongodric )
+   * Changed '$ - is now recognised as preprocessor statament ( vongodric )
+   * Changed Cleaned up keywords, added missing ones ( vongodric )
+   * Added Compilation now takes place through FPP extender ( Eric Cowles )
+   * Added several help file shortcut's into help menu ( vongodric )
+   * Added Context help via wiki. ( vongodric )
+   
+
 Version 0.4.2
    * Added crappy supprt for single instance ( vongodric )
    * Added popup menu on tabs ( vongodric )

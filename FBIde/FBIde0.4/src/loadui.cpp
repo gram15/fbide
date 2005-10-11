@@ -170,7 +170,12 @@ void MyFrame::LoadMenu () {
 
     //Help
     HelpMenu = new wxMenu;
-    HelpMenu->Append(Menu_About,   _T(Lang[79] + "\tF1"),    _T(Lang[80]));
+    HelpMenu->Append(Menu_Help, _T(Lang[ 10 ] + "\tF1" ) );
+    HelpMenu->Append(Menu_QuickKeys, _T("QuickKeys.txt") );
+    HelpMenu->Append(Menu_ReadMe, _T("ReadMe.txt") );
+    HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
+    HelpMenu->AppendSeparator();
+    HelpMenu->Append(Menu_About,   _T(Lang[79]),    _T(Lang[80]));
 
 
     //Implement menus
@@ -281,6 +286,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     wxFileName File(InitFile);
     
     if(File.GetExt() == "html"||File.GetExt() == "htm") { FileType = 1; }
+    else if( File.GetExt() == "txt" ) { FileType = 2; }
 
     if (stc==NULL) {
         EnableMenus(true);

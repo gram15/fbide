@@ -1,0 +1,157 @@
+FPP - FreeBASIC Pre-Parser v1.07.0050
+Eric Cowles <cowles1e@uregina.ca>
+Copyleft Saturday, March 12th, 2005
+
+
+
+This program makes compiling large projects with fbc a lot simpler since there
+are no easy to use or maintain make-file systems.  They all suck.
+See FPP.BAS for an example.
+
+NOTE:  All meta-statements start with "'$", "REM $" or "#"
+       Example:  '$Dynamic
+       Example:  REM $Dynamic
+       Example:  #Dynamic
+
+NOTE:  meta-statements are not case sensitive.
+
+NOTE:  If you miss a meta-statement parameter, the meta-statement will just be
+       ignored.  ie:  $Stack:
+
+Paths:
+
+   FPP will look for the files in the  FreeBASIC  folder.    You should set an
+   environment variables  FBCDOS,  FBCWIN  and FBCLINUX to point to the proper
+   FB compiler.
+   
+   ie:  SET FBCWIN=E:\FreeBASIC\
+
+   If no environment variable is set, then fpp assumes that fbc is in the
+   current directory.
+
+
+Additional meta-statements:
+
+   Compiler Control:
+
+      $console                 This is only on Windows systems, other systems
+                               it is ignored.  It tells FBC to compiler as a
+                               console application.
+
+      $gui                     This is only on Windows systems, other systems
+                               it is ignored.  It tells FBC to compiler as a
+                               qui application.
+
+      $win                     Sets the target to Windows.  FBCWIN must be set.
+                               This will set the default target to win32 if it
+                               has not already been set.
+
+      $dos                     Sets the target to DOS.  FBCDOS must be set.
+                               This will set the default target to dos32 if it
+                               has not already been set.
+
+      $linux                   Sets the target to Linux.  FBCLINUX must be set.
+                               This will set the default target to linux if it
+                               has not already been set.
+
+      $fbc_path: 'pathname'    Overrides the environment variable and forces
+                               use of the compiler specified.
+
+      $debug                   Tells FBC to add debug info to the executable.
+
+      $add_error               Tells FBC to add error checking code.
+
+      $add_resume              Tells FBC to add resume code.
+
+      $add_bounds              Tells FBC to add bounds checking and null-pointer
+                               checking.
+
+      $noerrorline             Tells FBC not to tell you the line which an error
+                               is found in.
+
+      $export                  Tells FBC to export symbols for dynamic linking.
+
+      $profile                 Tells FBC to generate profiling code for
+                               debugging purposes.
+
+      $thread                  Tells FBC to use the thread-safe library.
+
+      $target: platform        Tells FBC to generate output files for a specific
+                               platform.  This is ignored under all compilers
+                               except for the win32 compiler and valid platforms
+                               are as follows:
+
+                               dos, dos32
+                               win, win32, windows
+                               lin, linux
+                               xbox
+
+      $no_default_library      Tells the FBC to ignore library names in object
+                               modules.
+
+      $stack                   Sets stack size.  Default is 1M, min is 32K
+
+      $386                     Tells FBC to target an 80386 CPU.
+                               386SX, 386DX
+
+      $486                     Tells FBC to target an 80486 CPU.
+                               486SX, 486DX, 486SX-2, 486DX-2, 486DX-4, 5x86
+
+      $586                     Tells FBC to target an 80586 CPU.
+                               Pentium, Pentium-MMX, Amd-K6 Amd-K6-2,
+                               Amd-K6-III, Amd-K6-2+, Amd-K6-III+,
+                               Cirrus MI, Cirrus MII
+                               
+      $686                     Tells FBC to target an 80686 CPU.
+                               Pentium Pro, Pentium II, Celron, Pentium III,
+                               Athlon, Athlon XP, Athlon MP, Duron, Duron XP
+
+      $786                     Tells FBC to target an 80786 CPU.
+                               Pentium IV, Opteron, Itanium
+
+      $886                     Tells FBC to target an 80886 CPU.
+                               Here for future CPUs.
+
+      $986                     Tells FBC to target an 80986 CPU.
+                               Here for future CPUs.
+
+      $warning: xxx            Sets the minimum warning level for FBC.
+
+      $keep_asm                Tells FBC to not delete the assembler output.
+
+      $verbose                 Tells FBC to be verbose.
+
+      $version                 Tells FBC to be display it's version.
+
+      $exeout: 'filename'      Specifies the pathname for the output
+                               executable.
+
+      $module: 'filename'      Specifies an basic code module to be compiled
+                               and linked into the final library or executable.
+                               This child module will be scanned to retrieve
+                               it's $objout: pathname or, if it doesn't have
+                               one it will use the module name -".ext"+".obj"
+
+      $object: 'filename'      Specifies an object module to be linked into
+                               the final library or executable.
+
+      $objout: 'filename'      Specifies the pathname for the output object
+                               module.
+
+      $static_library          Tells FBC create a static library.
+
+      $dynamic_library         Tells FBC create a dynamic library and import
+                               library.
+
+      $entry_mod: 'filename'   Tells FBC the module which contains the main
+                               entry point.
+
+   Removed:
+
+      $entry_func: 'function'  Tells FBC the procedure which is the main
+                               entry point.
+
+                               This has been removed as FBC now uses
+                               void Main CDECL as the entry point.  Also, it
+                               executes all main procedures in all modules
+                               before loading the main modules main procedure.
