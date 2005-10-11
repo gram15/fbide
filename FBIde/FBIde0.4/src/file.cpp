@@ -114,7 +114,7 @@ void MyFrame::OnCloseAll        ( ) {
     
     Buffer* buff;
     
-    while ( FBNotebook->GetPageCount() ) {
+    while ( FBNotebook ) {
         buff = bufferList[0];
         FBNotebook->SetSelection(0);
         if (buff->GetModified()) {
@@ -189,7 +189,7 @@ void MyFrame::CloseFile          ( int index ) {
 
         HSplitter->ReplaceWindow( FBNotebook, FBCodePanel );
         delete FBNotebook;
-        FBNotebook = 0;
+        FBNotebook = NULL;
         EnableMenus(false);
     }
     else {

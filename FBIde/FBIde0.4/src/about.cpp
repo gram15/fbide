@@ -68,7 +68,7 @@ about::about(wxWindow* parent,wxWindowID id,const wxString& title,const wxPoint&
     myarr.Add("[bold]"+Parent->Lang[217]+"[/bold]");
     myarr.Add("Shadowolf\tAetherFox");
     myarr.Add("Z!re\t\tak00ma");
-    myarr.Add("Adosorken\tWhitetiger");
+    myarr.Add("Nodtveidt\t\tWhitetiger");
     myarr.Add("DrV\t\tshiftLynx");
     myarr.Add("SJ Zero\t\tNexinarus");
     myarr.Add("");
