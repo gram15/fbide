@@ -23,22 +23,95 @@
 
 #include "inc/main.h"
 #include "inc/about.h"
+#include "inc/fbedit.h"
 
 //------------------------------------------------------------------------------
 // Show about dialog
 void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-    /*wxString aboutText = wxString::Format(_(PRODUCT_NAME 
-        " %d.%d\n"
-        "Build: %d\n"
-        "By VonGodric\n\n"
-        "An editor for FreeBasic compiler \n"
-        "(http://www.freebasic.net).\n"
-        "Written in C++, using wxWidgets and the\n"
-        "Scintilla rich edit control.\n\n"
-        "Licensed under the GPL License."),
-        VER_MAJOR, VER_MINOR, VER_BUILD);
-    wxMessageBox(aboutText, _("About"), wxOK | wxICON_INFORMATION);*/
     about dlg(this);
     dlg.ShowModal();
 }
+
+void MyFrame::OnHelp         ( wxCommandEvent& event )
+{
+    if ( stc == 0 ) return;
+    wxString temp( GetTextUnderCursor().Trim( false ).Trim( true ).MakeLower() );
+    wxString url( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=KeyPg\"" );
+    wxString urlp( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=KeyPgPp\"" );
+
+    if (!temp.Len()) return;
+    char t = temp.GetChar(0);
+    wxString fkw( stc->ClearCmdLine( stc->GetCurrentLine() ) );
+    
+    bool pp = false;
+    if ( fkw[0] == '#' ) {
+        fkw = fkw.Mid( 1 );
+        fkw = fkw.Trim( false ).Trim( true );
+        pp = true;
+    }
+
+    fkw = stc->GetFirstKw( fkw );    
+    fkw = fkw.Trim( false ).Trim( true );
+    
+    if( fkw == temp && pp )
+        wxExecute( urlp + temp, wxEXEC_ASYNC );
+    else if ( temp == "if" || temp == "then" )
+        wxExecute( url + "ifthen" , wxEXEC_ASYNC );
+    else if( temp == "do" || temp == "loop" )
+        wxExecute( url + "doloop" , wxEXEC_ASYNC );
+    else if( temp == "for" || temp == "next" )
+        wxExecute( url + "fornext" , wxEXEC_ASYNC );
+    else if( temp == "select" || temp == "case" )
+        wxExecute( url + "selectcase" , wxEXEC_ASYNC );
+    else if( temp == "while" || temp == "wend" )
+        wxExecute( url + "whilewend" , wxEXEC_ASYNC );
+    else if( temp == "with" )
+        wxExecute( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=CrtlWith\"", wxEXEC_ASYNC );
+    else {   
+        for( int unsigned i = 0; i < kwList.GetCount(); i++ ) {
+            char c = kwList[i].GetChar(0);
+            if ( t == c ) {
+                if ( kwList[i] == temp ) {
+                    wxExecute( url + temp , wxEXEC_ASYNC );
+                    return;
+                }
+            }
+            else if ( c > t ) return;
+        }
+    }
+}
+
+
+void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
+{
+    wxString FileName( EditorPath + "ide\\quickkeys.txt" );
+    if( bufferList.FileLoaded( FileName ) ) {
+        NewSTCPage( FileName, true );
+        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    }
+}
+
+
+void MyFrame::OnReadMe       ( wxCommandEvent& event )
+{
+    wxString FileName( EditorPath + "ide\\readme.txt" );
+    if( bufferList.FileLoaded( FileName ) ) {
+        NewSTCPage( FileName, true );
+        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    }
+
+}
+
+
+void MyFrame::OnFpp          ( wxCommandEvent& event )
+{
+    wxString FileName( EditorPath + "ide\\fpp.txt" );
+    if( bufferList.FileLoaded( FileName ) ) {
+        NewSTCPage( FileName, true );
+        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    }
+
+}
+
+

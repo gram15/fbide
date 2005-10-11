@@ -95,7 +95,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
         StyleSetCase (Nr, 0);
     }
 
-    if (Prefs->SyntaxHighlight) {
+    if (Prefs->SyntaxHighlight&&FileType!=2) {
         if (FileType == 0) {
             SetLexer (wxSTC_LEX_VB);
             //Initalise Highlighing colors, font styles and set lexer.
@@ -176,7 +176,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
             SetKeyWords (Nr, "");
     }
     
-    if (FileType==0||!Prefs->SyntaxHighlight) {
+    if (FileType==0||!Prefs->SyntaxHighlight||FileType==2) {
         StyleSetForeground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultFgColour));
         StyleSetBackground (wxSTC_STYLE_DEFAULT,    GetClr(Style->DefaultBgColour));
         
@@ -362,7 +362,8 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
             break;
         }
         case kw::FUNCTION : {
-            if ( TempLine.Find('=')==-1 ) lineInd += TabSize;
+            TempLine = TempLine.Mid( 8 ).Trim( false );
+            if ( TempLine[0]!= '=' ) lineInd += TabSize;
             break;
         }
         case kw::IF : {
@@ -478,9 +479,10 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
                     case kw::UNION :
                     case kw::SCOPE :
                     case kw::ENUM : {
+                        TempLine = TempLine.Mid( 8 ).Trim( false );
                         if ( SecondKW == kw::FUNCTION && 
                              pFirstKW == kw::FUNCTION && 
-                             pLine.Find('=') > -1 ) lineInd -= TabSize;
+                             TempLine[0]!= '=' ) lineInd -= TabSize;
                         else if ( SecondKW == kw::IF &&
                              ( pFirstKW == kw::IF || pFirstKW == kw::ELSE ) &&
                              pLastKW != kw::THEN ) lineInd -= TabSize;

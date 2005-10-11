@@ -31,6 +31,7 @@
 
 
 #include "wx/ipc.h"
+#include "wx/clipbrd.h"
 
 
 MyFrame * _myframe_;
@@ -166,6 +167,11 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_CmdPromt,             MyFrame::OnCmdPromt)
     EVT_MENU(Menu_Parameters,           MyFrame::OnParameters)
     EVT_MENU(Menu_ShowExitCode,         MyFrame::OnShowExitCode)
+    
+    EVT_MENU(Menu_Help,                 MyFrame::OnHelp)
+    EVT_MENU(Menu_QuickKeys,            MyFrame::OnQuickKeys)
+    EVT_MENU(Menu_ReadMe,               MyFrame::OnReadMe)
+    EVT_MENU(Menu_Fpp,                  MyFrame::OnFpp)
     
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
     
@@ -308,7 +314,7 @@ void MyFrame::OnClose 	(wxCloseEvent &event) {
     
     if (FBCodePanel)    delete FBCodePanel;
     if (FBNotebook)     delete FBNotebook;
-
+    wxTheClipboard->Flush();
     SaveSettings();
     event.Skip();
 }

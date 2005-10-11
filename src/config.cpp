@@ -294,7 +294,29 @@ void MyFrame::LoadkwFile( wxString SyntaxFile ) {
     Keyword[2]            = Syntax.Read("kw2", "");
     Keyword[3]            = Syntax.Read("kw3", "");
     Keyword[4]            = Syntax.Read("kw4", "");
-
+    
+    kwList.Clear();
+    char c;
+    wxString curword;
+    for(int i=0;i<4;i++)
+    {
+        for(int j=0;j<(int)Keyword[i+1].Len();j++)
+        {
+            c = Keyword[i+1].GetChar(j);
+            curword += c;
+            if(c == ' ' || c == '\n' || c == '\r' ||
+               j + 1 == (int)Keyword[i+1].Len() )
+            {
+                if(curword.Trim(false).Trim(true).Len()>0) {
+                    kwList.Add( curword );
+                }
+                curword="";
+            }
+        }
+    }
+    
+    kwList.Sort();
+    
     return;    
 }
 
