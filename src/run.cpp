@@ -119,7 +119,10 @@ void MyFrame::OnCompile (wxCommandEvent& WXUNUSED(event)) {
     if (ProcessIsRunning) return;
     if (Proceed()!=1) return;
     FBConsole->DeleteAllItems();
-    Compile();
+    SetStatusText( "Compiling..." );
+    if (Compile()==0)
+        SetStatusText( "Compilation Complete." );
+    SetStatusText( "Compilation Failed!" );
     return;
 }
 
@@ -128,8 +131,14 @@ void MyFrame::OnCompileAndRun (wxCommandEvent& WXUNUSED(event)) {
     if (ProcessIsRunning) return;
     if (Proceed()!=1) return;
     FBConsole->DeleteAllItems();
-    if (Compile()==0)
-   	    Run();
+    SetStatusText( "Compiling..." );
+    if (Compile()==0) {
+        SetStatusText( "Compilation Complete." );
+        Run();
+    } 
+    else
+        SetStatusText( "Compilation Failed!" );
+   	
     return;
 }
 
@@ -157,10 +166,13 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     }
     stc->SaveFile (CurFolder + "FBIDETEMP.bas");
     FBConsole->DeleteAllItems();
+    SetStatusText( "Compiling..." );
     if (Compile(CurFolder + "FBIDETEMP.bas")==0) {
+        SetStatusText( "Compilation Complete." );
         Run();
     }
     else {
+        SetStatusText( "Compilation Failed!" );
         wxRemoveFile(CurFolder + "FBIDETEMP.bas");
         wxRemoveFile(CurFolder + "fbidetemp.asm");
         wxRemoveFile(CurFolder + "fbidetemp.o");

@@ -189,7 +189,7 @@ bool MyApp::OnInit()
 
     SetVendorName(_T("FBIde"));
     SetAppName(_T("FBIde"));
-    
+        
     m_singleInstanceChecker = new wxSingleInstanceChecker(wxT("MyApp"));
 
     // If using a single instance, use IPC to
@@ -288,6 +288,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 
     CurrentFileType = 0;
     LoadUI();
+    SetIcon( wxICON(fbicon) );
 
     for (int i = 1; i < FB_App->argc; i++) {
         wxFileName File(FB_App->argv[i]);
