@@ -89,7 +89,7 @@ void MyFrame::OnHelp         ( wxCommandEvent& event )
 void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
 {
     wxString FileName( EditorPath + "ide\\quickkeys.txt" );
-    if( bufferList.FileLoaded( FileName ) ) {
+    if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
@@ -99,7 +99,7 @@ void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
 void MyFrame::OnReadMe       ( wxCommandEvent& event )
 {
     wxString FileName( EditorPath + "ide\\readme.txt" );
-    if( bufferList.FileLoaded( FileName ) ) {
+    if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
@@ -110,7 +110,7 @@ void MyFrame::OnReadMe       ( wxCommandEvent& event )
 void MyFrame::OnFpp          ( wxCommandEvent& event )
 {
     wxString FileName( EditorPath + "ide\\fpp.txt" );
-    if( bufferList.FileLoaded( FileName ) ) {
+    if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
