@@ -54,7 +54,10 @@ void MyFrame::OnHelp         ( wxCommandEvent& event )
     fkw = stc->GetFirstKw( fkw );    
     fkw = fkw.Trim( false ).Trim( true );
     
-    if( fkw == temp && pp )
+    if ( temp == "include" || temp == "dynamic" || temp == "static" || 
+         temp == "inclib" )
+        wxExecute( url + temp , wxEXEC_ASYNC );
+    else if( fkw == temp && pp )
         wxExecute( urlp + temp, wxEXEC_ASYNC );
     else if ( temp == "if" || temp == "then" )
         wxExecute( url + "ifthen" , wxEXEC_ASYNC );
