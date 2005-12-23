@@ -12,7 +12,5 @@
 #ifndef _FB_EDIT_H_
 #define _FB_EDIT_H_
 
-#include "wx/notebook.h"
-
 
 #endif

@@ -9,7 +9,7 @@
 // Licence:     GPL
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+#include "inc/wxall.h"
 #include "inc/fb_console.h"
 
 FB_Console::FB_Console( wxWindow * parent ) :
@@ -17,7 +17,7 @@ FB_Console::FB_Console( wxWindow * parent ) :
                 wxDefaultPosition, wxDefaultSize, 
                 wxNB_TOP | wxCLIP_CHILDREN | wxNO_BORDER )
 {
-    wxImageList* imageList = new wxImageList(16, 16, true, 3);
+    wxImageList* imageList = new wxImageList(16, 16, true, 4);
     {
         wxBitmap bitmap(wxBITMAP(bmp_compile));
         bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
@@ -33,9 +33,15 @@ FB_Console::FB_Console( wxWindow * parent ) :
         bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
         imageList->Add(bitmap);
     }
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_dos));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
     AssignImageList( imageList );
     
     CreateCompilerTab();
+    CreateCompilerLogTab(  );
     CreateDebugTab();
     CreateSearchTab();
     
@@ -44,8 +50,18 @@ FB_Console::FB_Console( wxWindow * parent ) :
 }
 
 
-void FB_Console::CreateCompilerTab(  ) 
-{
+void FB_Console::CreateCompilerLogTab(  ) {
+    CompilerLog = new wxTextCtrl( this, conID_CompilerLogTab, "",
+                                  wxDefaultPosition, wxDefaultSize, 
+                                  wxTE_MULTILINE | wxTE_READONLY );
+    wxFont LbFont (8, wxMODERN, wxNORMAL, wxNORMAL, false);
+    CompilerLog->SetFont(LbFont);
+    this->AddPage(CompilerLog, _("Compiler log"), false, 3);
+}
+
+
+
+void FB_Console::CreateCompilerTab(  ) {
     Compiler = new wxListCtrl( this, conID_CompileTab, 
                                wxDefaultPosition, wxDefaultSize, 
                                wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
@@ -75,6 +91,7 @@ void FB_Console::CreateCompilerTab(  )
     this->AddPage(Compiler, _("Compiler"), false, 0);
 }
 
+
 void FB_Console::CreateDebugTab(  ) 
 {
     Debug = new wxPanel( this, conID_DebugTab, 
@@ -82,6 +99,7 @@ void FB_Console::CreateDebugTab(  )
                          wxNO_BORDER|wxTAB_TRAVERSAL );
     this->AddPage(Debug, _("Debug"), false, 1);
 }
+
 
 void FB_Console::CreateSearchTab(  ) 
 {

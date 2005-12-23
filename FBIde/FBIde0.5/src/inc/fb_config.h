@@ -12,17 +12,11 @@
 #ifndef _FB_CONFIG_H_
 #define _FB_CONFIG_H_
 
-#include "wx/fileconf.h"
-#include "wx/wfstream.h"
-#include "wx/filesys.h"
-#include "wx/datetime.h"
-#include "wx/file.h"
-#include "wx/filename.h"
-#include "wx/app.h"
-
 #define mySTC_STYLE_BOLD 	1
 #define mySTC_STYLE_ITALIC 	2
 #define mySTC_STYLE_UNDERL 	4
+
+#include "wx/docview.h"
 
 extern wxApp* wxGetApp();
 
@@ -51,8 +45,7 @@ struct Style_STC_FB {
     int         BadBraceStyle;
 };
 
-class FB_Config
-{
+class FB_Config {
     public:
         bool SyntaxHighlight,
              IndentGuide,
@@ -85,6 +78,8 @@ class FB_Config
         wxString EditorPath;
         wxString SyntaxFile;
         wxString ThemeFile;
+        
+        wxFileHistory  * m_FileHistory;
         
         FB_Config(  );
         ~FB_Config();

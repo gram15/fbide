@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 
-#include "wx/wx.h"
+#include "wxall.h"
 #include "inc/fb_tab.h"
 
 FB_Tab::FB_Tab( wxWindow * parent ) 

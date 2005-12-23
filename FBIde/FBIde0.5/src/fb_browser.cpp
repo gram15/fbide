@@ -9,7 +9,7 @@
 // Licence:     GPL
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+#include "inc/wxall.h"
 #include "inc/fb_browser.h"
 
 FB_Browser::FB_Browser( wxWindow * parent ) :
@@ -17,12 +17,25 @@ FB_Browser::FB_Browser( wxWindow * parent ) :
                 wxDefaultPosition, wxDefaultSize, 
                 wxNB_TOP | wxCLIP_CHILDREN | wxNO_BORDER )
 {
-    
-        Project = new wxTreeCtrl( this, wxID_ANY );
-        SFTree = new wxTreeCtrl( this, wxID_ANY );
+
+    m_Project = new wxTreeCtrl( this, wxID_ANY );
+    m_SFTree = new wxTreeCtrl( this, wxID_ANY );
+
+    wxImageList* imageList = new wxImageList(16, 16, true, 2);
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_opnproj));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
+    {
+        wxBitmap bitmap(wxBITMAP(bmp_newsrc));
+        bitmap.SetMask( new wxMask( bitmap, wxColour( 191, 191, 191) ) );
+        imageList->Add(bitmap);
+    }
+    m_Project->AssignImageList( imageList );
         
-        this->AddPage(Project, _("Project"), true, 0);
-        this->AddPage(SFTree, _("Sub/Function"), false, 1);
-        size = 0;
+    this->AddPage(m_Project, _("Project"), true, 0);
+    this->AddPage(m_SFTree, _("Sub/Function"), false, 1);
+    size = 0;
     
 }

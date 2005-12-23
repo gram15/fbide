@@ -16,24 +16,7 @@
 #pragma interface "fb_about.cpp"
 #endif
 
-/*!
- * Includes
- */
 
-////@begin includes
-#include "wx/statline.h"
-////@end includes
-
-/*!
- * Forward declarations
- */
-
-////@begin forward declarations
-////@end forward declarations
-
-/*!
- * Control identifiers
- */
 
 ////@begin control identifiers
 #define ID_DIALOG 10000

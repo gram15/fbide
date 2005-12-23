@@ -12,8 +12,6 @@
 #ifndef _FB_TAB_H_
 #define _FB_TAB_H_
 
-#include "wx/notebook.h"
-#include "wx/textctrl.h"
 #include "fb_frame.h"
 #include "wxmynotebook.h"
 

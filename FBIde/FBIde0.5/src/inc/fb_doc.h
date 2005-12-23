@@ -12,22 +12,49 @@
 #ifndef _FB_DOC_H_
 #define _FB_DOC_H_
 
-#include "wx/filename.h"
-#include "stc/stc.h"
-
 enum fbDoc_Enums {
-    fbDoc_Single,
-    fbDoc_Project,
-    fbDoc_Html,
-    fbDoc_Other // txt...
+    fbDoc_UNKNOWN = -1,
+    fbDoc_FBDoc,
+    fbDoc_RC,
+    fbDoc_HTML,
+    fbDoc_TXT
 };
 
 class FB_Doc {
     public:
-        wxStyledTextCtrl * stc;
-        wxString FileName;
-        int DocStyle;
-        bool modified;
+        wxFileName  m_File;
+        bool        m_IsModified;
+        bool        m_IsNewFile;
+        int         m_FileType;
+    
+    FB_Doc( wxFileName File = "", int FileType = fbDoc_UNKNOWN );
+    
+    wxString GetFileName() const {
+        return m_File.GetFullName();
+    }
+    
+    wxString GetFullPath() const {
+        return m_File.GetFullPath();
+    }
+    
+    wxFileName GetFile() const {
+        return  m_File;
+    }
+    
+    void SetFile( wxFileName File, int FileType = fbDoc_UNKNOWN );
+    
+    int DetectFileType( wxFileName File );
+    
+    bool IsNewDoc() const {
+        return m_IsNewFile;
+    }
+    
+    int GetDocType(  ) const {
+        return m_FileType;
+    }
+    
+    bool IsModified( ) const { return m_IsModified; }
+    void SetModified( bool state ) { m_IsModified = state; }
 };
 
 #endif

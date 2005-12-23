@@ -12,11 +12,20 @@
 #ifndef _FB_STATUSBAR_H_
 #define _FB_STATUSBAR_H_
 
-#include "wx/statusbr.h"
+class FB_Frame;
 
-class FB_StatusBar : public wxStatusBar {
+class FB_StatusBar {
+    private:
+        FB_Frame    * m_Parent;
+        wxStatusBar * m_StatusBar;
+        void CreateStatusBar();
+        void DestroyStatusBar();
+        
     public:
-        FB_StatusBar( wxWindow * parent );
+        FB_StatusBar( FB_Frame * parent );
+        ~FB_StatusBar();
+        void Show( bool status = true );
+        void SetStatusText( const wxString& text, int i = 0 );
 };
 
 #endif

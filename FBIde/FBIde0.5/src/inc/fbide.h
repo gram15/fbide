@@ -12,7 +12,6 @@
 #ifndef _FBIDE_H_
 #define _FBIDE_H_
 
-#include "wx/image.h"
 
 class FBIde: public wxApp
 {    

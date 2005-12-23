@@ -9,7 +9,7 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+#include "inc/wxall.h"
 #include "inc/fbide.h"
 #include "inc/fb_frame.h"
 

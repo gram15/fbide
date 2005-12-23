@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////////
-// Name:        fb_edit.cpp
+// Name:        fb_frame1.cpp
 // Purpose:     
 // Author:      VonGodric
 // Modified by: 
@@ -11,5 +11,11 @@
 
 
 #include "inc/wxall.h"
+#include "inc/fb_config.h"
+#include "inc/fb_toolbar.h"
+#include "inc/fb_frame.h"
 
-#include "inc/fb_edit.h"
+void FB_Frame::CreateToolbar() {    
+    m_ViewToolBar->Check( m_Config->ShowToolBar );
+    m_ToolBar->Show( m_Config->ShowToolBar );
+}

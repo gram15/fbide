@@ -5,16 +5,16 @@
 #define FBIDE_PRIVATE_H
 
 /* VERSION DEFINITIONS */
-#define VER_STRING	"0.5.0.258"
+#define VER_STRING	"0.5.0.1142"
 #define VER_MAJOR	0
 #define VER_MINOR	5
 #define VER_RELEASE	0
-#define VER_BUILD	258
-#define COMPANY_NAME	""
+#define VER_BUILD	1142
+#define COMPANY_NAME	"WizINC"
 #define FILE_VERSION	"0.5"
-#define FILE_DESCRIPTION	"Developed using the Dev-C++ IDE"
-#define INTERNAL_NAME	"fbide"
-#define LEGAL_COPYRIGHT	""
+#define FILE_DESCRIPTION	"IDE for FreeBASIC compiler"
+#define INTERNAL_NAME	"fbide.exe"
+#define LEGAL_COPYRIGHT	"Copyright WizINC Software"
 #define LEGAL_TRADEMARKS	""
 #define ORIGINAL_FILENAME	"fbide.exe"
 #define PRODUCT_NAME	"FBIde"

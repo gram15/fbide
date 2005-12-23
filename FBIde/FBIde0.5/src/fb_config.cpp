@@ -9,7 +9,7 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-#include "wx/wx.h"
+#include "inc/wxall.h"
 
 #include "inc/fb_config.h"
 
@@ -17,6 +17,12 @@ FB_Config::FB_Config(  )
 {
     wxApp * App = wxGetApp();
     EditorPath = wxPathOnly(App->argv[0]);
+    
+    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileConfig History(input);
+    m_FileHistory = new wxFileHistory;
+    m_FileHistory->Load( History );
+    
     LoadConfig( EditorPath + "/ide/prefs.ini" );
     LoadFBTheme( EditorPath + "/ide/" + ThemeFile + ".fbt" );
     LoadKWFile( EditorPath + "/ide/" + SyntaxFile );
@@ -24,6 +30,14 @@ FB_Config::FB_Config(  )
 
 FB_Config::~FB_Config()
 {
+    
+    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileConfig History(input);
+    wxFileOutputStream output( EditorPath + "/ide/history.ini" );
+    m_FileHistory->Save( History );
+    History.Save( output );
+    
+    delete m_FileHistory;
     SaveConfig( EditorPath + "/ide/prefs.ini" );
 }
 
@@ -39,6 +53,7 @@ void FB_Config::LoadKWFile ( wxString file )
     FB_Keywords[1] = Syntax.Read("kw2", "");
     FB_Keywords[2] = Syntax.Read("kw3", "");
     FB_Keywords[3] = Syntax.Read("kw4", "");
+    
 }
 
 
@@ -55,8 +70,6 @@ void FB_Config::LoadFBTheme ( wxString file )
                             "stringeol",    "keyword2",    "keyword3",
                             "keyword4",     "constant",    "asm" };
 
-	//Default:
-	
     #define _STYLE(nr) Style_FB.Style[nr]
         Theme.SetPath("/default");
         _STYLE(0).Face          = Theme.Read("foreground",  0L);

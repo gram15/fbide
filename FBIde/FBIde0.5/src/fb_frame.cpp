@@ -4,29 +4,31 @@
 // Author:      VonGodric
 // Modified by: 
 // Created:     08/03/05 14:23:04
-// RCS-ID:      
-// Copyright:   
 // Licence:     GPL
 /////////////////////////////////////////////////////////////////////////////
 
-
-#include "wx/wx.h"
+#include "wx/docview.h"
+#include "inc/wxall.h"
+#include "inc/wxfb_notebook.h"
 
 #include "inc/fb_about.h"
 #include "inc/fb_console.h"
 #include "inc/fb_browser.h"
 #include "inc/fb_statusbar.h"
-#include "inc/fb_docmngr.h"
 #include "inc/fb_config.h"
 #include "inc/fb_stc.h"
+#include "inc/fb_doc.h"
+#include "inc/fb_doclist.h"
+#include "inc/fb_toolbar.h"
 #include "inc/fb_frame.h"
+#include <wx/sysopt.h>
 
 
 /*!
  * FB_Frame type definition
  */
 
-IMPLEMENT_CLASS( FB_Frame, wxFrame )
+//IMPLEMENT_CLASS( FB_Frame, wxFrame )
 
 BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     // File menu
@@ -42,6 +44,7 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     EVT_MENU( fbideID_SessionSave,      FB_Frame::OnSessionsave )
     EVT_MENU( wxID_CLOSE,               FB_Frame::OnClose )
     EVT_MENU( wxID_CLOSE_ALL,           FB_Frame::OnCloseAll )
+    EVT_MENU( fbideID_CloseAET,         FB_Frame::OnCloseAET )
     EVT_MENU( fbideID_CloseProject,     FB_Frame::OnCloseproject )
     EVT_MENU( fbideID_NewInstance,      FB_Frame::OnNewinstance )
     EVT_MENU( wxID_EXIT,                FB_Frame::OnExit )
@@ -99,47 +102,43 @@ BEGIN_EVENT_TABLE( FB_Frame, wxFrame )
     // Help menu
     EVT_MENU( wxID_HELP,                FB_Frame::OnHelp )
     EVT_MENU( wxID_ABOUT,               FB_Frame::OnAbout )
-
+    
+    // Tab handling
+    EVT_MENU( fbideID_TabAreaPopUp,     FB_Frame::OnTabPopUp )
+    
+    // File history
+    EVT_MENU_RANGE( wxID_FILE1, wxID_FILE9, FB_Frame::OnFileHistory )
+    
+    // tab changing
+    EVT_NOTEBOOK_PAGE_CHANGED( fbideID_Notebook, FB_Frame::OnTabChanged )
+    
+    //on close
+    EVT_CLOSE( FB_Frame::OnProgramClose )
+    
 END_EVENT_TABLE()
 
 
-FB_Frame::FB_Frame( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-    Create( parent, id, caption, pos, size, style );
-}
-
-FB_Frame::~FB_Frame() {
-    if (IsMaximized()||IsIconized()) {
-        Config->winw=-1;
-        Config->winh=-1;
-        Config->winx=0;
-        Config->winy=0;
+FB_Frame::FB_Frame( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) :
+    wxFrame( parent, id, caption, pos, size, style ) {
+    wxSystemOptions::SetOption(wxT("msw.notebook.themed-background"), 0);
+    m_Config = new FB_Config(  );
+    m_DocList = new FB_DocList;
+    m_StatusBar = new FB_StatusBar( this );
+    m_ToolBar = new FB_ToolBar( this );
+        
+    if ( m_Config->winw==-1||m_Config->winh==-1 ) {
+        SetSize(300, 200);
+        Centre();
+        Maximize();
     }
     else {
-        GetSize(&Config->winw, &Config->winh);
-        GetPosition(&Config->winx, &Config->winy);
-    }
-    delete Config;
-    return;
-}
-
-bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
-
-    wxFrame::Create( parent, id, caption, pos, size, style );
-
-    Config = new FB_Config(  );
-        
-    if ( Config->winw==-1||Config->winh==-1 ) Maximize();
-    else 
-    {
-        wxFrame::Move(Config->winx, Config->winy);
-        wxFrame::SetSize(Config->winw, Config->winh);
+        Move(m_Config->winx, m_Config->winy);
+        SetSize(m_Config->winw, m_Config->winh);
     }
     Show( true );
         
-    StatusBar = NULL;
-    Code_area = NULL;
+    m_Code_area = NULL;
+    m_ActiveTabID = -1;
     
     Freeze();
         CreateMenus();
@@ -147,33 +146,50 @@ bool FB_Frame::Create( wxWindow* parent, wxWindowID id, const wxString& caption,
         CreatePanels();
         CreateStatusBar();
     Thaw();
+
     SendSizeEvent();
-    return true;
-
+    SetStatus();
+    m_Config->m_FileHistory->AddFilesToMenu();
 }
 
-
-
-bool FB_Frame::ShowToolTips()
-{
-    return TRUE;
+FB_Frame::~FB_Frame() {
+    if (IsMaximized()||IsIconized()) {
+        m_Config->winw=-1;
+        m_Config->winh=-1;
+        m_Config->winx=0;
+        m_Config->winy=0;
+    } else {
+        GetSize(&m_Config->winw, &m_Config->winh);
+        GetPosition(&m_Config->winx, &m_Config->winy);
+    }
+    
+    delete m_Config;
+    delete m_DocList;
+    delete m_StatusBar;
+    delete m_ToolBar;
+    
+    return;
 }
 
-//-------
 
 void FB_Frame::OnEdit( wxCommandEvent& event )
 {
-    if ( DocMngr->GetPage() ) DocMngr->GetPage()->ProcessEvent( event );
+    if( m_Code_areaTab ) {
+        m_Code_areaTab->GetCurrentPage()->ProcessEvent( event );
+    }
 }
 
 //-------
 
 void FB_Frame::OnMenuOpen ( wxMenuEvent& event )
 {
-    if ( event.GetMenu() == EditMenu )
+    if ( event.GetMenu() == m_EditMenu )
     {
-        FB_STC * stc = DocMngr->GetPage();
-        #define _ENABLE( id, func ) EditMenu->Enable( id, ( stc != 0 ) ? stc -> func : false )
+        FB_STC * stc = 0;
+        if( m_Code_areaTab != 0 )
+            stc = reinterpret_cast<FB_STC *>( m_Code_areaTab->GetCurrentPage() );
+
+        #define _ENABLE( id, func ) m_EditMenu->Enable( id, ( stc != 0 ) ? stc -> func : false )
             _ENABLE( wxID_UNDO,                 CanUndo() );
             _ENABLE( wxID_REDO,                 CanRedo() );
             _ENABLE( wxID_COPY,                 HasSelection() );
@@ -184,22 +200,21 @@ void FB_Frame::OnMenuOpen ( wxMenuEvent& event )
             _ENABLE( fbideID_CommentBlock,      CanComment() );
             _ENABLE( fbideID_UncommentBlock,    CanComment() );
         #undef _ENABLE
-        EditMenu->Enable(wxID_JUSTIFY_RIGHT,    ( stc ) ? true : false );
-        EditMenu->Enable(wxID_JUSTIFY_LEFT,     ( stc ) ? true : false );
+        m_EditMenu->Enable(wxID_JUSTIFY_RIGHT,    ( stc ) ? true : false );
+        m_EditMenu->Enable(wxID_JUSTIFY_LEFT,     ( stc ) ? true : false );
     }
 }
 
 //-------
 
-void FB_Frame::OnSave( wxCommandEvent& event )
-{
-    event.Skip();
+void FB_Frame::OnSave( wxCommandEvent& event ) {
+    SaveDocument(  );
 }
 
 
 void FB_Frame::OnNew( wxCommandEvent& event )
 {
-    DocMngr->AddPage();
+    CreateDocument(  );
 }
 
 
@@ -215,15 +230,36 @@ void FB_Frame::OnNewtemplate( wxCommandEvent& event )
 }
 
 
-void FB_Frame::OnOpen( wxCommandEvent& event )
-{
-    event.Skip();
+void FB_Frame::OnOpen( wxCommandEvent& event ) {
+    wxFileDialog dlg (this,
+        _T("Load file"),
+        _T(""),
+        _T(".bas"),
+        _T("FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*|"),
+    wxFILE_MUST_EXIST | wxCHANGE_DIR | wxMULTIPLE);
+    
+    if (dlg.ShowModal() != wxID_OK) return;
+    
+    wxArrayString File;
+    dlg.GetPaths(File);
+    
+    for(int i = 0; i < static_cast<int>( File.Count() ); i++ ) {
+        m_Config->m_FileHistory->AddFileToHistory( File[i] );
+        CreateDocument( File[i] );
+    }
+    
+    return;
+}
+
+
+void FB_Frame::OnFileHistory( wxCommandEvent& event ) {
+    CreateDocument( m_Config->m_FileHistory->GetHistoryFile(( event.GetId() - wxID_FILE1 ) ) );
 }
 
 
 void FB_Frame::OnSaveas( wxCommandEvent& event )
 {
-    event.Skip();
+    SaveDocumentAs();
 }
 
 
@@ -235,7 +271,7 @@ void FB_Frame::OnSaveprojectas( wxCommandEvent& event )
 
 void FB_Frame::OnSaveAll( wxCommandEvent& event )
 {
-    event.Skip();
+    SaveAllDocuments( );
 }
 
 
@@ -253,14 +289,21 @@ void FB_Frame::OnSessionsave( wxCommandEvent& event )
 
 void FB_Frame::OnClose( wxCommandEvent& event )
 {
-    DocMngr->ClosePage();
+    CloseDocument();
 }
 
 
 void FB_Frame::OnCloseAll( wxCommandEvent& event )
 {
-    event.Skip();
+    CloseAllDocument();
 }
+
+
+void FB_Frame::OnCloseAET( wxCommandEvent& event )
+{
+    CloseAET();
+}
+
 
 
 void FB_Frame::OnCloseproject( wxCommandEvent& event )
@@ -277,8 +320,14 @@ void FB_Frame::OnNewinstance( wxCommandEvent& event )
 
 void FB_Frame::OnExit( wxCommandEvent& event )
 {
-    event.Skip();
     Close( true );
+}
+
+
+void FB_Frame::OnProgramClose( wxCloseEvent &event )
+{
+    if ( !CloseAllDocument() ) return;
+    event.Skip();    
 }
 
 
@@ -389,20 +438,20 @@ void FB_Frame::OnShowexitcode( wxCommandEvent& event )
     event.Skip();
 }
 
-
+    
 // Toggles Console Area ON and OFF
 void FB_Frame::OnOutput( wxCommandEvent& event )
 {
-    if ( HSplitter->IsSplit() ) { 
-        Console_area->SetSize( HSplitter->GetSashPosition() );
-        HSplitter->Unsplit( Console_area );
-        ViewConsole->Check( false );
-        Config->ShowConsole = false;
+    if ( m_HSplitter->IsSplit() ) { 
+        m_Console_area->SetSize( m_HSplitter->GetSashPosition() );
+        m_HSplitter->Unsplit( m_Console_area );
+        m_ViewConsole->Check( false );
+        m_Config->ShowConsole = false;
     }
     else { 
-        HSplitter->SplitHorizontally( VSplitter, Console_area, Console_area->GetSize() );
-        ViewConsole->Check( true );
-        Config->ShowConsole = true;
+        m_HSplitter->SplitHorizontally( m_VSplitter, m_Console_area, m_Console_area->GetSize() );
+        m_ViewConsole->Check( true );
+        m_Config->ShowConsole = true;
     }
 }
 
@@ -410,65 +459,44 @@ void FB_Frame::OnOutput( wxCommandEvent& event )
 // Toggles Project Panel ON and OFF
 void FB_Frame::OnProject( wxCommandEvent& event )
 {
-    if ( VSplitter->IsSplit() ) {
-        Browser_area->SetSize( VSplitter->GetSashPosition() );
-        VSplitter->Unsplit( Browser_area );
-        Config->ShowProject = false;
-    }
-    else {
-        VSplitter->SplitVertically( Browser_area, Code_area, Browser_area->GetSize() );
-        Config->ShowProject = true;
-    }
+    Freeze();
+        if ( m_VSplitter->IsSplit() ) {
+            m_Browser_area->SetSize( m_VSplitter->GetSashPosition() );
+            m_VSplitter->Unsplit( m_Browser_area );
+            m_Config->ShowProject = false;
+        }
+        else {
+            m_VSplitter->SplitVertically( m_Browser_area, m_Code_area, m_Browser_area->GetSize() );
+            m_Config->ShowProject = true;
+        }
+    Thaw();
 }
 
 
 // Toggles ToolBar ON and OFF
 void FB_Frame::OnToolBar( wxCommandEvent& event )
 {
-    wxToolBar *toolbar = GetToolBar();
-    if ( !toolbar )
-    {
-        Config->ShowToolBar = true;
-        CreateToolbar();
-    }
-    else
-    {
-        Config->ShowToolBar = false;
-        delete toolbar;
-        SetToolBar(NULL);
-    }
+    m_Config->ShowToolBar = !m_Config->ShowToolBar;
+    m_ToolBar->Show( m_Config->ShowToolBar );
 }
 
 
 // Toggles StatusBar ON and OFF
-void FB_Frame::OnStatusBar( wxCommandEvent& event )
-{
-    if ( !Config->ShowStatusBar ) 
-    {
-        Config->ShowStatusBar = true;
-        CreateStatusBar();
-    } 
-    else 
-    {
-        Config->ShowStatusBar = false;
-        delete StatusBar;
-        StatusBar = NULL;
-        SetStatusBar( NULL );
-    }
+void FB_Frame::OnStatusBar( wxCommandEvent& event ) {
+    m_Config->ShowStatusBar = !m_Config->ShowStatusBar;
+    m_StatusBar->Show( m_Config->ShowStatusBar );
 }
 
 
 // Toggles fullscreen mode
-void FB_Frame::OnFullScreen( wxCommandEvent& event )
-{
+void FB_Frame::OnFullScreen( wxCommandEvent& event ) {
     ShowFullScreen( !IsFullScreen(), wxFULLSCREEN_NOCAPTION | wxFULLSCREEN_NOBORDER );
     SendSizeEvent();
 }
 
 
 //Opens a console
-void FB_Frame::OnOpenconsole( wxCommandEvent& event )
-{
+void FB_Frame::OnOpenconsole( wxCommandEvent& event ) {
     int major = 0, minor = 0;
     int result = wxGetOsVersion(&major, &minor);
     if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
@@ -476,27 +504,23 @@ void FB_Frame::OnOpenconsole( wxCommandEvent& event )
 }
 
 
-void FB_Frame::OnProperties( wxCommandEvent& event )
-{
+void FB_Frame::OnProperties( wxCommandEvent& event ) {
     event.Skip();
 }
 
 
-void FB_Frame::OnSrcformatter( wxCommandEvent& event )
-{
+void FB_Frame::OnSrcformatter( wxCommandEvent& event ) {
     event.Skip();
 }
 
 
 
-void FB_Frame::OnHelp( wxCommandEvent& event )
-{
+void FB_Frame::OnHelp( wxCommandEvent& event ) {
     event.Skip();
 }
 
 
-void FB_Frame::OnAbout( wxCommandEvent& event )
-{
+void FB_Frame::OnAbout( wxCommandEvent& event ) {
     FB_About About( this, wxID_ANY, "About" );
     About.ShowModal();
 }

@@ -12,19 +12,18 @@
 #ifndef _FB_CONSOLE_H_
 #define _FB_CONSOLE_H_
 
-#include "wx/notebook.h"
-#include "wx/listctrl.h"
-
 enum consoleID {
     conID_CompileTab = 200,
     conID_DebugTab,
-    conID_SearchTab
+    conID_SearchTab,
+    conID_CompilerLogTab
 };
 
 class FB_Console : public wxNotebook {
     private:
         wxListCtrl * Compiler;
         wxListCtrl * SearchResult;
+        wxTextCtrl * CompilerLog;
         wxPanel * Debug;
         int size;
         
@@ -33,6 +32,7 @@ class FB_Console : public wxNotebook {
         void CreateCompilerTab(  );
         void CreateSearchTab(  );
         void CreateDebugTab(  );
+        void CreateCompilerLogTab(  );
         void SetSize( int s )  { size = s; }
         int  GetSize(  ) const { return (size == 0) ? -100 : size; }
 };

@@ -12,30 +12,14 @@
 #ifndef _FB_STC_H_
 #define _FB_STC_H_
 
-#include "stc/stc.h"
-
 class FB_Doc;
-class FB_Config;
+class FB_Frame;
 
 // Base class - Also ordinary txt file
-class FB_STC : public wxStyledTextCtrl
-{
+class FB_STC : public wxStyledTextCtrl {
     private:
         DECLARE_EVENT_TABLE()
-        
-    public:
-        wxWindow    * Parent;
-        FB_Config   * Config;
-        FB_Doc      * Doc;
-        bool        canComment_;
-        FB_STC ( wxWindow * parent, FB_Doc * doc, FB_Config * config );
-        virtual void LoadSettings ( );
-        virtual void OnCharAdded ( wxStyledTextEvent &event );
-        void SetDoc ( FB_Doc * doc ) { Doc = doc; }
-        bool HasSelection() { return ( GetSelectionEnd() - GetSelectionStart() ) > 0; }
-        bool CanComment() { return canComment_; }
-        FB_Doc * GetDoc () const { return Doc; }
-        
+
         void OnUndo             ( wxCommandEvent& event );
         void OnRedo             ( wxCommandEvent& event );
         void OnCopy             ( wxCommandEvent& event );
@@ -45,23 +29,39 @@ class FB_STC : public wxStyledTextCtrl
         void OnSelectline       ( wxCommandEvent& event );
         void OnJustifyRight     ( wxCommandEvent& event );
         void OnJustifyLeft      ( wxCommandEvent& event );
-        
-        void ReplaceText        (int from, int to, const wxString& text);
-        
         virtual void OnCommentblock     ( wxCommandEvent& event );
         virtual void OnUncommentblock   ( wxCommandEvent& event );
+        virtual void OnCharAdded        ( wxStyledTextEvent &event );
+        virtual void OnModified         ( wxStyledTextEvent& event );
+        virtual void OnUpdateUI         ( wxStyledTextEvent& event );
 
-};
-
-
-class FB_STC_FB : public FB_STC
-{
+    protected:
+        FB_Doc      * m_Doc;
+        FB_Frame    * m_Ide;
+        bool        m_CanComment;
+        
+        void CreateSTC( wxWindow * parent, FB_Doc * Doc, FB_Frame * Ide );
+        
     public:
-    FB_STC_FB( wxWindow * parent, FB_Doc * doc, FB_Config * config );
-    void OnCharAdded        ( wxStyledTextEvent &event );
-    void LoadSettings       (  );
-    void OnCommentblock     ( wxCommandEvent& event );
-    void OnUncommentblock   ( wxCommandEvent& event );
+        FB_STC ( wxWindow * parent, FB_Doc * Doc, FB_Frame * Ide );
+        FB_STC (  );
+        
+        virtual ~FB_STC();
+        
+        virtual void CreateDoc ( wxWindow * parent, FB_Doc * Doc, FB_Frame * Ide );
+        virtual void LoadSettings  ( );
+
+        bool HasSelection() { 
+            return ( GetSelectionEnd() - GetSelectionStart() ) > 0;
+        }
+        
+        void ReplaceText ( int from, int to, const wxString& text );
+
+        bool CanComment() { 
+            return m_CanComment;
+        }
+
+        FB_Doc * GetDoc () const { return m_Doc; }
 };
 
 #endif
