@@ -379,7 +379,7 @@ void ConfigDialog::Button_GetCompPath   (wxCommandEvent&  event) {
         _T(""),
         _T("fbc.exe"),
         _T(Parent->Lang[156]), //"All programs (*.exe)|*.exe"
-    wxFILE_MUST_EXIST | wxCHANGE_DIR);
+    wxFILE_MUST_EXIST );
     if (dlg.ShowModal() != wxID_OK) return;
     
     TB_CompilerPath->SetValue(dlg.GetPath());

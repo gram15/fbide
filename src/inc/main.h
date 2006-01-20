@@ -38,6 +38,9 @@
 #include <wx/datetime.h>
 #include <wx/splitter.h>
 #include <wx/listctrl.h>
+#include <wx/help.h>
+#include <wx/cshelp.h>
+#include <wx/msw/helpchm.h>
 
 #include "../../FBIde0.4_private.h"
 #define FBUNNAMED "Unnamed"
@@ -160,6 +163,7 @@ wxColour GetClr         ( uint color );
 class MyApp : public wxApp
 {
 public:
+    wxCHMHelpController help;
     virtual bool OnInit();
 };
 
@@ -344,6 +348,8 @@ public:
     int lastTabCreated;
     int OldTabSelected;
     int CurrentFileType;
+    
+
    
 private:
     DECLARE_EVENT_TABLE()

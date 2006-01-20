@@ -377,7 +377,7 @@ void MyFrame::SaveDocumentStatus ( int docID ) {
 void MyFrame::SetSTCPage ( int index ) {
     if (stc == 0) return;
     
-    stc->Freeze();
+    //stc->Freeze();
                 
         stc->SetBuffer( (Buffer *) 0 );
         
@@ -396,9 +396,10 @@ void MyFrame::SetSTCPage ( int index ) {
         if ( buff->GetFileType() != CurrentFileType ) {
             CurrentFileType = buff->GetFileType();
             stc->LoadSTCTheme( CurrentFileType );
+            stc->LoadSTCSettings();
         }
-        stc->LoadSTCSettings();
-    stc->Thaw();
+        
+    //stc->Thaw();
     if (SFDialog) SFDialog->Rebuild();
 }
 

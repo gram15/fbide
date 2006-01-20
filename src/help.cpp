@@ -33,56 +33,24 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
     dlg.ShowModal();
 }
 
-void MyFrame::OnHelp         ( wxCommandEvent& event )
-{
-    if ( stc == 0 ) return;
-    wxString temp( GetTextUnderCursor().Trim( false ).Trim( true ).MakeLower() );
-    wxString url( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=KeyPg\"" );
-    wxString urlp( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=KeyPgPp\"" );
-
-    if (!temp.Len()) return;
-    char t = temp.GetChar(0);
-    wxString fkw( stc->ClearCmdLine( stc->GetCurrentLine() ) );
+void MyFrame::OnHelp ( wxCommandEvent& event ) {
     
-    bool pp = false;
-    if ( fkw[0] == '#' ) {
-        fkw = fkw.Mid( 1 );
-        fkw = fkw.Trim( false ).Trim( true );
-        pp = true;
+    if( !stc ) {
+        FB_App->help.DisplayContents();
+        return;
     }
-
-    fkw = stc->GetFirstKw( fkw );    
-    fkw = fkw.Trim( false ).Trim( true );
     
-    if ( temp == "include" || temp == "dynamic" || temp == "static" || 
-         temp == "inclib" )
-        wxExecute( url + temp , wxEXEC_ASYNC );
-    else if( fkw == temp && pp )
-        wxExecute( urlp + temp, wxEXEC_ASYNC );
-    else if ( temp == "if" || temp == "then" )
-        wxExecute( url + "ifthen" , wxEXEC_ASYNC );
-    else if( temp == "do" || temp == "loop" )
-        wxExecute( url + "doloop" , wxEXEC_ASYNC );
-    else if( temp == "for" || temp == "next" )
-        wxExecute( url + "fornext" , wxEXEC_ASYNC );
-    else if( temp == "select" || temp == "case" )
-        wxExecute( url + "selectcase" , wxEXEC_ASYNC );
-    else if( temp == "while" || temp == "wend" )
-        wxExecute( url + "whilewend" , wxEXEC_ASYNC );
-    else if( temp == "with" )
-        wxExecute( "explorer \"http://www.freebasic.net/wiki/wikka.php?wakka=CrtlWith\"", wxEXEC_ASYNC );
-    else {   
-        for( int unsigned i = 0; i < kwList.GetCount(); i++ ) {
-            char c = kwList[i].GetChar(0);
-            if ( t == c ) {
-                if ( kwList[i] == temp ) {
-                    wxExecute( url + temp , wxEXEC_ASYNC );
-                    return;
-                }
-            }
-            else if ( c > t ) return;
-        }
+    int start=0, end=0;
+    wxString strKw = GetTextUnderCursor( start, end ).Trim( false ).Trim( true ).MakeLower();
+    
+    if( strKw.Len() ) {
+        if( stc->GetCharAt( start - 1 ) == '#' ) strKw = "#" + strKw;
+        
+        FB_App->help.KeywordSearch( strKw );
     }
+    else
+        FB_App->help.DisplayContents();
+
 }
 
 
