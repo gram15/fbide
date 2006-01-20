@@ -69,7 +69,7 @@ void MyFrame::LoadSettings() {
                     _T(""),
                     _T("fbc.exe"),
                     _T("FreeBASIC (fbc.exe)|fbc.exe|All programs (*.exe)|*.exe"),
-                wxFILE_MUST_EXIST | wxCHANGE_DIR);
+                wxFILE_MUST_EXIST );
                 if (dlg.ShowModal() == wxID_OK)
                     CompilerPath=dlg.GetPath();
             }

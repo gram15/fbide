@@ -41,7 +41,7 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
         _T(""),
         _T(".bas"),
         _T(Lang[187]),//Types
-    wxFILE_MUST_EXIST | wxCHANGE_DIR | wxMULTIPLE);
+    wxFILE_MUST_EXIST | wxMULTIPLE);
     if (dlg.ShowModal() != wxID_OK) return;
     wxArrayString File;
     dlg.GetPaths(File);
@@ -85,11 +85,12 @@ void MyFrame::OnSaveAs (wxCommandEvent& WXUNUSED(event)) {
 void MyFrame::OnSaveAll (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0) return;
     
-    unsigned int index = 0;
+    //unsigned int index = 0;
     int selectpage = FBNotebook->GetSelection();
     Buffer* buff;
     
-    while (bufferList.GetModifiedCount()) {
+    //while (bufferList.GetModifiedCount()) {
+    for( int index = 0; index < bufferList.GetModifiedCount(); index++ ) {
         buff = bufferList[index];
         if (buff->GetModified()) {
             FBNotebook->SetSelection(index);
@@ -97,7 +98,7 @@ void MyFrame::OnSaveAll (wxCommandEvent& WXUNUSED(event)) {
                 SetModified ( index, false );
             }
         }
-        index++;
+        //index++;
     }
     
     FBNotebook->SetSelection(selectpage);
@@ -258,7 +259,7 @@ void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
         _T(""),
         _T(".bas"),
         _T(Lang[198]), //FBIde Session
-    wxFILE_MUST_EXIST | wxCHANGE_DIR);
+    wxFILE_MUST_EXIST );
     if (dlg.ShowModal() != wxID_OK) return;
     wxString File = dlg.GetPath();
     

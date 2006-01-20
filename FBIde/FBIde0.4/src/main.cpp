@@ -241,8 +241,21 @@ bool MyApp::OnInit()
     }
 
     
+//    wxHelpControllerHelpProvider* provider = new wxHelpControllerHelpProvider;
+//    wxHelpProvider::Set(provider);
+
+    
     //delete m_checker;
     _myframe_ = new MyFrame(this, GetAppName());
+
+//    provider->SetHelpController( & help );
+        
+    wxFileName w( argv[0] );
+    wxString file = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
+    file += "ide\\fb-manual.chm";
+    
+    help.Initialize( file );
+
 
     return true;
 }
@@ -297,9 +310,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
             if (FB_App->argc>1) { NewSTCPage(FB_App->argv[i], true); SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() ); }
         }
     }
-
     Show();
-
 }
 
 void MyFrame::OnClose 	(wxCloseEvent &event) {
