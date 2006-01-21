@@ -1,3 +1,12 @@
+Version 0.4.4
+   * Added filehistory ( vongodric )
+   * Added FreeBASIC chm help integration ( vongodric )
+   * Fixed FBIde no longer changes default folders - coused troubles ( vongodric )
+   * Fixed bug with 'save as' cancelling ( vongodric )
+   * Removed fpp default support ( vongodric)
+   * Removed WIKI help integration - CHM is much better and faster ( vongodric )
+
+
 Version 0.4.3
    * Added Compilation now takes place through FPP extender ( Eric Cowles )
    * Added several help file shortcut's into help menu ( vongodric )

@@ -1,15 +1,15 @@
 [Editor_5]
-CursorCol=57
-CursorRow=114
-TopLine=98
+CursorCol=26
+CursorRow=180
+TopLine=151
 LeftChar=1
 Open=0
 Top=0
 [Editor_6]
 <<<<<<< FBIde0.4.layout
-CursorCol=21
-CursorRow=24
-TopLine=10
+CursorCol=1
+CursorRow=184
+TopLine=169
 =======
 CursorCol=5
 CursorRow=28
@@ -19,10 +19,10 @@ LeftChar=1
 Open=0
 Top=0
 [Editor_3]
-CursorCol=47
+CursorCol=27
 <<<<<<< FBIde0.4.layout
-CursorRow=21
-TopLine=18
+CursorRow=49
+TopLine=46
 =======
 CursorRow=25
 TopLine=9
@@ -34,7 +34,7 @@ Top=0
 <<<<<<< FBIde0.4.layout
 CursorCol=5
 CursorRow=123
-TopLine=6
+TopLine=104
 =======
 CursorCol=2
 CursorRow=5
@@ -46,9 +46,9 @@ Top=0
 [Editor_0]
 <<<<<<< FBIde0.4.layout
 <<<<<<< FBIde0.4.layout
-CursorCol=1
-CursorRow=30
-TopLine=13
+CursorCol=5
+CursorRow=308
+TopLine=258
 =======
 CursorCol=18
 CursorRow=87
@@ -65,9 +65,9 @@ Top=0
 [Editor_1]
 <<<<<<< FBIde0.4.layout
 <<<<<<< FBIde0.4.layout
-CursorCol=23
-CursorRow=328
-TopLine=316
+CursorCol=41
+CursorRow=295
+TopLine=261
 =======
 CursorCol=8
 CursorRow=105
@@ -82,16 +82,16 @@ LeftChar=1
 Open=0
 Top=0
 [Editors]
-Focused=26
+Focused=-1
 Order=
 [Editor_2]
 Open=0
 Top=0
 <<<<<<< FBIde0.4.layout
 <<<<<<< FBIde0.4.layout
-CursorCol=59
-CursorRow=163
-TopLine=28
+CursorCol=1
+CursorRow=29
+TopLine=22
 =======
 CursorCol=26
 CursorRow=30
@@ -113,17 +113,17 @@ LeftChar=1
 [Editor_8]
 Open=0
 Top=0
-CursorCol=24
-CursorRow=219
-TopLine=210
+CursorCol=19
+CursorRow=255
+TopLine=246
 LeftChar=1
 [Editor_9]
 Open=0
 Top=0
 <<<<<<< FBIde0.4.layout
-CursorCol=1
-CursorRow=27
-TopLine=1
+CursorCol=9
+CursorRow=76
+TopLine=50
 =======
 CursorCol=8
 CursorRow=45
@@ -136,7 +136,7 @@ Open=0
 Top=0
 CursorCol=1
 CursorRow=396
-TopLine=374
+TopLine=58
 =======
 Open=1
 Top=0
@@ -151,7 +151,7 @@ Top=0
 <<<<<<< FBIde0.4.layout
 CursorCol=18
 CursorRow=28
-TopLine=97
+TopLine=5
 =======
 CursorCol=23
 CursorRow=31
@@ -175,9 +175,9 @@ LeftChar=1
 <<<<<<< FBIde0.4.layout
 Open=0
 Top=0
-CursorCol=60
-CursorRow=353
-TopLine=111
+CursorCol=12
+CursorRow=387
+TopLine=360
 =======
 Open=1
 <<<<<<< FBIde0.4.layout
@@ -245,16 +245,16 @@ Top=0
 [Editor_19]
 Open=0
 Top=0
-CursorCol=31
-CursorRow=488
-TopLine=476
+CursorCol=18
+CursorRow=398
+TopLine=347
 LeftChar=1
 [Editor_20]
 Open=0
 Top=0
-CursorCol=1
-CursorRow=195
-TopLine=221
+CursorCol=17
+CursorRow=187
+TopLine=13
 LeftChar=1
 =======
 =======
@@ -304,7 +304,7 @@ Open=0
 Top=0
 CursorCol=1
 CursorRow=348
-TopLine=63
+TopLine=1
 LeftChar=1
 [Editor_23]
 Open=0
@@ -319,7 +319,7 @@ Open=0
 Top=0
 CursorCol=18
 CursorRow=88
-TopLine=116
+TopLine=118
 LeftChar=1
 [Editor_25]
 Open=0
@@ -335,3 +335,9 @@ CursorCol=1
 CursorRow=1
 TopLine=1
 LeftChar=1
+[Editor_27]
+Open=0
+Top=0
+[Editor_28]
+Open=0
+Top=0

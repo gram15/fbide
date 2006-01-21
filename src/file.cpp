@@ -50,13 +50,23 @@ void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
         int result = bufferList.FileLoaded(File[i]);
         
         if (result != -1) FBNotebook->SetSelection(result);
-        else NewSTCPage(File[i], true);
+        else {
+            m_FileHistory->AddFileToHistory( File[i] );
+            NewSTCPage(File[i], true);
+        }
     }
     SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return;
 }
 
-
+void MyFrame::OnFileHistory( wxCommandEvent& event ) {
+    wxString file = m_FileHistory->GetHistoryFile( event.GetId() - wxID_FILE1 );
+    if( ::wxFileExists( file ) ) {
+        int result = bufferList.FileLoaded( file );
+        if( result != -1 ) FBNotebook->SetSelection(result);
+        else NewSTCPage( file, true );
+    }
+}
 
 void MyFrame::OnSave (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0) return;

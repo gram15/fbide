@@ -55,7 +55,7 @@ void MyFrame::LoadSettings() {
     Prefs.TabSize           = PrefsINI.Read("tabsize",          3l);
     Prefs.EdgeColumn        = PrefsINI.Read("edgecolumn",       80L);
     Prefs.Language          = PrefsINI.Read("language",         "English");
-    
+        
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
     if (CompilerPath == ""||!wxFileExists(CompilerPath)) {
@@ -75,6 +75,9 @@ void MyFrame::LoadSettings() {
             }
         }
     }
+    
+    Prefs.HelpFile          = PrefsINI.Read("helpfile",         "");
+    Prefs.UseHelp = ::wxFileExists( EditorPath + "ide\\" + Prefs.HelpFile );
 
     SyntaxFile              = PrefsINI.Read("syntax",   "");
     if (SyntaxFile=="") SyntaxFile = "fbfull.lng";
@@ -103,6 +106,12 @@ void MyFrame::LoadSettings() {
     
     PrefsINI.SetPath("/");
     OpenLangFile(Prefs.Language);
+
+    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileConfig History(input);
+    m_FileHistory = new wxFileHistory;
+    m_FileHistory->Load( History );
+
     return;
 }
 
@@ -129,6 +138,7 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("tabsize",           (long)Prefs.TabSize);
     PrefsINI.Write("edgecolumn",        (long)Prefs.EdgeColumn);
     PrefsINI.Write("language",          Prefs.Language);
+    PrefsINI.Write("helpfile",          Prefs.HelpFile);
 
     PrefsINI.SetPath("/paths");
     PrefsINI.Write("fbc",               CompilerPath);
@@ -160,6 +170,14 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("splashscreen",     (bool)Prefs.SplashScreen);
     
     PrefsINI.Save(PrefsINIOS);
+    
+    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileConfig History(input);
+    wxFileOutputStream output( EditorPath + "/ide/history.ini" );
+    m_FileHistory->Save( History );
+    History.Save( output );
+    
+    delete m_FileHistory;
 
     return;
 }

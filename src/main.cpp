@@ -105,8 +105,12 @@ bool stConnection::OnExecute(const wxString& WXUNUSED(topic),
             int result = _myframe_->bufferList.FileLoaded(filename);
             if ( result != -1 )
                 _myframe_->FBNotebook->SetSelection(result);
-            else
-                _myframe_->NewSTCPage(filename, true);
+            else {
+                if( ::wxFileExists( filename ) ) {
+                    _myframe_->NewSTCPage(filename, true);
+                    _myframe_->m_FileHistory->AddFileToHistory( filename );
+                }
+            }
     
             _myframe_->SetFocus();
         }
@@ -172,6 +176,8 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_QuickKeys,            MyFrame::OnQuickKeys)
     EVT_MENU(Menu_ReadMe,               MyFrame::OnReadMe)
     EVT_MENU(Menu_Fpp,                  MyFrame::OnFpp)
+    
+        EVT_MENU_RANGE( wxID_FILE1, wxID_FILE9, MyFrame::OnFileHistory )
     
     EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
     
@@ -241,21 +247,7 @@ bool MyApp::OnInit()
     }
 
     
-//    wxHelpControllerHelpProvider* provider = new wxHelpControllerHelpProvider;
-//    wxHelpProvider::Set(provider);
-
-    
-    //delete m_checker;
     _myframe_ = new MyFrame(this, GetAppName());
-
-//    provider->SetHelpController( & help );
-        
-    wxFileName w( argv[0] );
-    wxString file = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
-    file += "ide\\fb-manual.chm";
-    
-    help.Initialize( file );
-
 
     return true;
 }
@@ -266,9 +258,6 @@ bool MyApp::OnInit()
 MyFrame::MyFrame(MyApp * App, const wxString& title)
        : wxFrame( 0, wxID_ANY, title )
 {
-    
-    
-//    App->wxYield();
     
     FB_App = App;
     SetIcon(wxIcon(_T("icon")));
@@ -297,6 +286,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     FindDialog      = NULL;
     ReplaceDialog   = NULL;
     SFDialog        = NULL;
+    formatDialog    = NULL;
 
 
     CurrentFileType = 0;
@@ -307,9 +297,21 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
         wxFileName File(FB_App->argv[i]);
         if(File.GetExt() == "fbs") { SessionLoad ( FB_App->argv[i] ); }
         else {
-            if (FB_App->argc>1) { NewSTCPage(FB_App->argv[i], true); SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() ); }
+            if (FB_App->argc>1) { 
+                if( ::wxFileExists( FB_App->argv[i] ) ) {
+                    m_FileHistory->AddFileToHistory( FB_App->argv[i] );
+                    NewSTCPage(FB_App->argv[i], true); 
+                    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() ); 
+                }
+            }
         }
     }
+    
+    if( Prefs.UseHelp )
+        help.Initialize( EditorPath + "ide\\" + Prefs.HelpFile );
+    
+    m_FileHistory->AddFilesToMenu();
+    
     Show();
 }
 

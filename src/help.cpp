@@ -36,7 +36,7 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 void MyFrame::OnHelp ( wxCommandEvent& event ) {
     
     if( !stc ) {
-        FB_App->help.DisplayContents();
+        help.DisplayContents();
         return;
     }
     
@@ -46,10 +46,12 @@ void MyFrame::OnHelp ( wxCommandEvent& event ) {
     if( strKw.Len() ) {
         if( stc->GetCharAt( start - 1 ) == '#' ) strKw = "#" + strKw;
         
-        FB_App->help.KeywordSearch( strKw );
+        help.KeywordSearch( strKw );
+        //help.DisplayTextPopup( strKw, wxPoint(300, 200 ) );
+        //help.DisplayContextPopup( 1 );
     }
     else
-        FB_App->help.DisplayContents();
+        help.DisplayContents();
 
 }
 
