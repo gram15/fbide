@@ -41,6 +41,7 @@
 #include <wx/help.h>
 #include <wx/cshelp.h>
 #include <wx/msw/helpchm.h>
+#include <wx/docview.h>
 
 #include "../../FBIde0.4_private.h"
 #define FBUNNAMED "Unnamed"
@@ -68,7 +69,9 @@ struct CommonInfo {
     int  TabSize;
     int  EdgeColumn;
     wxString Language;
+    wxString HelpFile;
     bool SplashScreen;
+    bool UseHelp;
 };
 
 
@@ -163,7 +166,6 @@ wxColour GetClr         ( uint color );
 class MyApp : public wxApp
 {
 public:
-    wxCHMHelpController help;
     virtual bool OnInit();
 };
 
@@ -222,6 +224,7 @@ public:
     void CloseFile          ( int index );
     int  Proceed            ( void );
     void SessionLoad        ( wxString File );
+    void OnFileHistory      ( wxCommandEvent& event );
     
     
     //Editmenu-events and related stuff
@@ -297,7 +300,6 @@ public:
     int                     FindFlags;
 
     
-    
     void OnAbout        ( wxCommandEvent& event );
     void OnHelp         ( wxCommandEvent& event );
     void OnQuickKeys    ( wxCommandEvent& event );
@@ -349,7 +351,8 @@ public:
     int OldTabSelected;
     int CurrentFileType;
     
-
+    wxCHMHelpController help;
+    wxFileHistory  * m_FileHistory;
    
 private:
     DECLARE_EVENT_TABLE()
@@ -357,30 +360,34 @@ private:
 
 enum
 {
-    Menu_Quit           = wxID_EXIT,
-    Menu_About          = wxID_ABOUT,
-    Menu_Help           = wxID_HELP,
+    Menu_Quit          = wxID_EXIT,
+    Menu_About         = wxID_ABOUT,
+    Menu_Help          = wxID_HELP,
     
     //File-menu
-    Menu_New            = wxID_HIGHEST,
-    Menu_NewEditor,
-    Menu_Open,
-    Menu_Save,
-    Menu_SaveAS,
+    Menu_New           = wxID_NEW,
+    Menu_Open          = wxID_OPEN,
+    Menu_Save          = wxID_SAVE,
+    Menu_SaveAS        = wxID_SAVEAS,
+    Menu_Close         = wxID_CLOSE,
+	Menu_Undo          = wxID_UNDO,
+	Menu_Redo          = wxID_REDO,
+	Menu_Cut           = wxID_CUT,
+	Menu_Copy          = wxID_COPY,
+	Menu_Paste         = wxID_PASTE,
+	Menu_SelectAll     = wxID_SELECTALL,
+    Menu_Find          = wxID_FIND,
+	Menu_Replace       = wxID_REPLACE,
+	Menu_Settings      = wxID_PROPERTIES,	
+        
+    Menu_NewEditor     = wxID_HIGHEST,
     Menu_SaveAll,
-    Menu_Close,
-    Menu_CloseAll,
     Menu_FileHistory,
     Menu_SessionSave,
     Menu_SessionLoad,
+    Menu_CloseAll,
     
 	//EditMenu:
-	Menu_Undo,
-	Menu_Redo,
-	Menu_Cut,
-	Menu_Copy,
-	Menu_Paste,
-	Menu_SelectAll,
 	Menu_SelectLine,
 	Menu_IndentIncrease,
 	Menu_IndentDecrease,
@@ -388,14 +395,11 @@ enum
 	Menu_UnComment,
 
 	//Search:
-	Menu_Find,
 	Menu_FindNext,
-	Menu_Replace,
 	Menu_GotoLine,
 	Menu_FindPrevious,
 	
 	//ViewMenu:
-	Menu_Settings,
     Menu_Format,
 	Menu_Result,
 	
@@ -413,7 +417,7 @@ enum
 	Menu_ShowExitCode,
 	
 	//Help menu
-	Menu_QuickKeys,
+    Menu_QuickKeys,
 	Menu_ReadMe,
 	Menu_Fpp,
 };

@@ -93,8 +93,12 @@ void MyFrame::LoadMenu () {
     
     //File
     FB_File = new wxMenu;
+    wxMenu * file_history = new wxMenu;
+    m_FileHistory->UseMenu( file_history );
+    
     FB_File->Append (Menu_New, _T(Lang[11] + "\tCtrl+N"), _T(Lang[12]));
     FB_File->Append (Menu_Open, _T(Lang[13] + "\tCtrl+O"), _T(Lang[14]));
+    FB_File->Append (Menu_FileHistory, _T(Lang[13]) + "...", file_history );
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Save,	_T(Lang[15] + "\tCtrl+S"), _T(Lang[16]));
@@ -171,6 +175,7 @@ void MyFrame::LoadMenu () {
     //Help
     HelpMenu = new wxMenu;
     HelpMenu->Append(Menu_Help, _T(Lang[ 10 ] + "\tF1" ) );
+    if( !Prefs.UseHelp ) HelpMenu->Enable( Menu_Help, false );
     HelpMenu->Append(Menu_QuickKeys, _T("QuickKeys.txt") );
     HelpMenu->Append(Menu_ReadMe, _T("ReadMe.txt") );
     HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
@@ -240,16 +245,29 @@ void MyFrame::LoadToolBar () {
     
     FB_Toolbar->Realize();
 
-
     return;
 }
 
 void MyFrame::EnableMenus ( bool state ) {
-    for (int i=Menu_Save ; i<=(ProcessIsRunning ? Menu_Subs : Menu_QuickRun); i++) {
-        if (i==Menu_Result||i==Menu_Settings||
-            i==Menu_SessionLoad||i==Menu_FileHistory) continue;
-        MenuBar->Enable(i, state );
+
+    int arrMenus[] = { 
+        Menu_Undo, Menu_Redo, Menu_Cut, Menu_Copy, Menu_Paste, 
+        Menu_SelectAll, Menu_Find, Menu_Replace, Menu_Save, Menu_SaveAll, 
+        Menu_SaveAS, Menu_Close, Menu_SessionSave, Menu_CloseAll, Menu_SelectLine, 
+        Menu_IndentIncrease, Menu_IndentDecrease, Menu_Comment, Menu_UnComment, Menu_FindNext, 
+        Menu_GotoLine, Menu_Format, Menu_Subs };
+    
+    for( int idx = 0; idx < 23; idx++ ) {
+        MenuBar->Enable( arrMenus[idx], state );
     }
+
+    if ( !ProcessIsRunning ) {
+        MenuBar->Enable(Menu_Compile, state);
+        MenuBar->Enable(Menu_Run, state);
+        MenuBar->Enable(Menu_CompileAndRun, state);
+        MenuBar->Enable(Menu_QuickRun, state);
+    }
+    
     FB_Toolbar->EnableTool(Menu_Save, state);
     FB_Toolbar->EnableTool(Menu_SaveAll, state);
     FB_Toolbar->EnableTool(Menu_Close, state);

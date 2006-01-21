@@ -10,14 +10,14 @@
 // THIS WILL MAKE THE PROGRAM USE THE COMMON CONTROLS
 // LIBRARY VERSION 6.0 (IF IT IS AVAILABLE)
 //
-1 24 "C:/Dev/FBIde/FBIde0.4/output/FBIde04.exe.Manifest"
+1 24 "C:/Dev/FBIde/FBIde0.4/output/FBIde.exe.Manifest"
 
 //
 // TO CHANGE VERSION INFORMATION, EDIT PROJECT OPTIONS...
 //
 1 VERSIONINFO
-FILEVERSION 0,4,0,1173
-PRODUCTVERSION 0,4,0,1173
+FILEVERSION 0,4,4,0
+PRODUCTVERSION 0,4,4,0
 FILETYPE VFT_APP
 {
   BLOCK "StringFileInfo"
@@ -25,14 +25,14 @@ FILETYPE VFT_APP
 		 BLOCK "040904E4"
 		 {
 			 VALUE "CompanyName", ""
-			 VALUE "FileVersion", "0.4"
+			 VALUE "FileVersion", "0.4.4"
 			 VALUE "FileDescription", "IDE for FreeBasic compiler"
 			 VALUE "InternalName", "fbide"
 			 VALUE "LegalCopyright", "Released under GPL"
 			 VALUE "LegalTrademarks", ""
 			 VALUE "OriginalFilename", "fbide.exe"
 			 VALUE "ProductName", "FBIde"
-			 VALUE "ProductVersion", "0.4"
+			 VALUE "ProductVersion", "0.4.4"
 		 }
 	 }
   BLOCK "VarFileInfo"
