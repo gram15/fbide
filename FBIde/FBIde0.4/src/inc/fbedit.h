@@ -145,6 +145,9 @@ public:
         return w.FileExists();
     }
     
+    int m_CursorPos;
+    char m_CharAtCur;
+    
     
 //   ~FB_Edit ();
 private:

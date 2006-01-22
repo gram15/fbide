@@ -24,6 +24,7 @@
 
 #include "inc/main.h"
 #include "inc/configdiag.h"
+#include <wx/fontenum.h>
 
 BEGIN_EVENT_TABLE( ConfigDialog, wxDialog)
     EVT_BUTTON(CDID_OK,             ConfigDialog::Button_OK)
@@ -91,7 +92,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     CB_LongLine->SetValue(Parent->Prefs.LongLine);
 
     CB_SplashScreen=new wxCheckBox(CD_Settings,-1,wxT(""),wxPoint(10,130),wxSize(165,13));
-    CB_SplashScreen->SetTitle(wxT("Show splash screen")); //<-------- needs to be read from lang file
+    CB_SplashScreen->SetTitle(wxT(Parent->Lang[232]));
     CB_SplashScreen->SetValue(Parent->Prefs.SplashScreen);
         
     //is used for linenumbers
@@ -178,7 +179,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     //Compiler path
     
     //Tab Size
-    st43=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,130),wxSize(45,13),wxST_NO_AUTORESIZE);
+    st43=new wxStaticText(CD_Settings,-1,wxT(""),wxPoint(180,130),wxSize(95,13),wxST_NO_AUTORESIZE);
     st43->SetLabel(wxT(Parent->Lang[117]));
 
     spc44=new wxSpinCtrl(CD_Settings,-1,wxT(""),wxPoint(275,130),wxSize(60,15));
@@ -280,19 +281,14 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     
     
     wxArrayString Fonts;
-    Fonts.Add("Courier");
-    Fonts.Add("Courier New");
-    Fonts.Add("Fixedsys");
-    Fonts.Add("Lucida Console");
-    Fonts.Add("Modern");
-    Fonts.Add("Terminal");
-    Fonts.Add("Arial");
-
+    wxFontEnumerator fn;
+    fn.EnumerateFacenames(  );
+    Fonts = *fn.GetFacenames();
     
-    cmb69=new wxComboBox(CD_Theme,-1, wxT("Courier"),wxPoint(135,180),wxSize(145,21),Fonts, wxCB_READONLY | wxCB_DROPDOWN );
+    cmb69=new wxComboBox(CD_Theme,-1, wxT("Courier"),wxPoint(135,180),wxSize(145,21),Fonts, wxCB_READONLY | wxCB_DROPDOWN | wxCB_SORT );
     cmb69->Select(1);
     
-    st70=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint(300,165),wxSize(70,13),wxST_NO_AUTORESIZE);
+    st70=new wxStaticText(CD_Theme,-1,wxT(""),wxPoint( 300,165 ),wxSize(70,13),wxST_NO_AUTORESIZE);
     st70->SetLabel(wxT(Parent->Lang[148])); //"Fontsize\r\n"
     
     //
@@ -478,21 +474,11 @@ void ConfigDialog::ListBox_Select (wxCommandEvent &event) {
 
     if (ModFont) {
         cmb69->Enable();
-        if (SetFont.Lower() == "courier")
-            cmb69->Select(0);
-        else if (SetFont.Lower() == "courier new")
-            cmb69->Select(1);
-        else if (SetFont.Lower() == "fixedsys")
-            cmb69->Select(2);
-        else if (SetFont.Lower() == "lucida console")
-            cmb69->Select(3);
-        else if (SetFont.Lower() == "modern")
-            cmb69->Select(4);
-        else if (SetFont.Lower() == "terminal")
-            cmb69->Select(5);
-        else if (SetFont.Lower() == "arial")
-            cmb69->Select(6);
-        else cmb69->Select(1);
+        if( cmb69->FindString( SetFont ) == wxNOT_FOUND )
+            cmb69->SetValue( "Courier New" );
+        else
+            cmb69->SetValue( SetFont );
+        
     }
     else cmb69->Disable();
     

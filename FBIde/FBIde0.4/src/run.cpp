@@ -362,10 +362,12 @@ void MyFrame::Run                ( wxString FileName ) {
                                   Lang[181],
                                    wxYES_NO | wxICON_QUESTION);
        if (Question==wxNO) return;
-       if (Compile()!=0)   return;
+       wxCommandEvent t;
+       OnCompileAndRun( t );
+       return;
     }
     wxString Temp;
-    Temp<<FileName<<" "<<ParameterList;
+    Temp << "\"" + FileName << "\" " << ParameterList;
     
     MyProcess * process = new MyProcess(this, Temp);
     int m_pidLast = wxExecute(Temp, wxEXEC_ASYNC, process);

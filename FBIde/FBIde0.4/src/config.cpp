@@ -176,9 +176,6 @@ void MyFrame::SaveSettings() {
     wxFileOutputStream output( EditorPath + "/ide/history.ini" );
     m_FileHistory->Save( History );
     History.Save( output );
-    
-    delete m_FileHistory;
-
     return;
 }
 

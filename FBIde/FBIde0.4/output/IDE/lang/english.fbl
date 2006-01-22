@@ -152,6 +152,7 @@
 201=Language
 202=NB! Changing language needs restart of the FBIde!
 203=Select your language:
+232=Show splash screen
 
 ;Compile tab
 113=Compiler settings

@@ -59,10 +59,9 @@ Basic features:
 
 Links:
 
-   - Official site: http://fbide.sourceforge.net
-   - Sourceforge page: http://www.sourceforge.net/projects/fbc
-   - QBN Forum: http://forum.qbasicnews.com
-   - FreeBasic official site: http://www.freebasic.net
+   - Official site: http://fbide.sourceforge.net or http://fbide.freebasic.net/
+   - Sourceforge project page: http://www.sourceforge.net/projects/fbide/
+   - FreeBasic official site: http://www.freebasic.net/
 
 
 
@@ -70,8 +69,6 @@ Credits:
 
    - dumbledore - code exporting and formatting routines
    - Madedog - internationalization (i18n) modules
-
-   - aetherFox - webmaster and documentation
    - Mecki - splash screen logo
 
 

@@ -286,15 +286,41 @@ void MyFrame::SessionLoad ( wxString File ) {
     int result = 0;
     unsigned long selectedtab = 0;    
     
-    for( unsigned int i=1; i< TextFile.GetLineCount();i++ ) {
+    Temp = TextFile[0];
+    int ver = 1;
+    if( Temp.Trim( false ).Trim( true ).Lower() == "<fbide:session:version = \"0.2\"/>" )
+        ver = 2;
+    
+    for( unsigned int i = ver; i < TextFile.GetLineCount(); i++) {
         Temp = TextFile[i];
-        if(Temp!=""&&wxFileExists(Temp)) {
+        if( Temp != "" && ::wxFileExists( Temp ) ) {
             result = bufferList.FileLoaded(Temp);
-            if (result == -1) NewSTCPage(Temp, false);
+            if (result == -1) {
+                NewSTCPage(Temp, false);
+                if( ver == 2 ) {
+                    unsigned long t = 0;
+                    i++;
+                    Temp = TextFile[i];
+                    Temp.ToULong( &t );
+                    stc->ScrollToLine( t );
+                    
+                    i++;
+                    Temp = TextFile[i];
+                    Temp.ToULong ( &t );
+                    stc->SetCurrentPos( t );
+                    stc->SetSelectionStart( t );
+                    stc->SetSelectionEnd( t );
+                }
+            }
         }
+        
     }
     
-    Temp=TextFile[0];
+    if( ver == 2 )
+        Temp = TextFile[1];
+    else
+        Temp = TextFile[0];
+        
     Temp.ToULong(&selectedtab);
     
     FBNotebook->SetSelection(selectedtab);
@@ -330,7 +356,7 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
     bool header = true;
     
     int SelectedTab = FBNotebook->GetSelection();
-    
+    TextFile.AddLine( "<fbide:session:version = \"0.2\"/>" );
     for (unsigned int i=0; i < FBNotebook->GetPageCount();i++ ) {
         buff = bufferList[i];
         if (buff->GetModified()) {
@@ -359,8 +385,15 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
                 t << SelectedTab;
                 TextFile.AddLine(t);
             }
+            wxString Temp;
             session = false;
             TextFile.AddLine(buff->GetFileName());
+            if( i == (unsigned int)FBNotebook->GetSelection() ) SaveDocumentStatus( i );
+            Temp << buff->GetLine();
+            TextFile.AddLine( Temp );
+            Temp = "";
+            Temp << buff->GetCaretPos();
+            TextFile.AddLine( Temp );
         }
     } 
     

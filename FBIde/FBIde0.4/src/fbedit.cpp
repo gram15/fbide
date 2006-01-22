@@ -285,15 +285,22 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
     
 void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
 
+    int tempPos = GetCurrentPos();
+    char tempChr = GetCharAt(tempPos);
+    
+    if( m_CursorPos == tempPos && m_CharAtCur == tempChr ) return;
+    m_CursorPos = tempPos;
+    m_CharAtCur = tempChr;
+    
     if (Parent->Prefs.BraceHighlight) {
-      if (IsBrace(GetCharAt(GetCurrentPos()))) {
-        braceLoc = BraceMatch(GetCurrentPos());
+      if (IsBrace(m_CharAtCur)) {
+        braceLoc = BraceMatch(m_CursorPos);
 
         if (braceLoc != -1) 
-            BraceHighlight(GetCurrentPos(), braceLoc);
+            BraceHighlight(m_CursorPos, braceLoc);
         else {
-            BraceBadLight(GetCurrentPos());
-            braceLoc = GetCurrentPos();
+            BraceBadLight(m_CursorPos);
+            braceLoc = m_CursorPos;
         }
       }
       else {
@@ -305,8 +312,8 @@ void FB_Edit::OnUpdateUI	    ( wxStyledTextEvent &event ) {
    }
     
     wxString pos;
-    pos.Printf("  %d : %d", LineFromPosition(GetCurrentPos()) + 1,
-                GetColumn(GetCurrentPos()) + 1);
+    pos.Printf("  %d : %d", LineFromPosition(m_CursorPos) + 1,
+                GetColumn(m_CursorPos) + 1);
     Parent->SetStatusText(pos, 1);
 }
 

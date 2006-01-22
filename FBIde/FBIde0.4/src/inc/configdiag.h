@@ -44,7 +44,8 @@ enum ConfigENUMS {
     CDID_Background,
     CDID_SaveTheme,
     CDID_ThemeSelector,
-    CDID_KeywordSelector    
+    CDID_KeywordSelector,
+    CDID_FontSelect,
 };
 
 
@@ -144,6 +145,8 @@ public:
     wxTextCtrl *TB_KeywordFile;
     wxButton *But_KeywordFile;
     wxTextCtrl *TA_Keywords;
+    
+    wxButton * font_button;
  
     ~ConfigDialog   (  );
 

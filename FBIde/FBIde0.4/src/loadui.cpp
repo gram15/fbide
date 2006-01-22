@@ -93,12 +93,12 @@ void MyFrame::LoadMenu () {
     
     //File
     FB_File = new wxMenu;
-    wxMenu * file_history = new wxMenu;
-    m_FileHistory->UseMenu( file_history );
+    //wxMenu * file_history = new wxMenu;
+    m_FileHistory->UseMenu( FB_File );
     
     FB_File->Append (Menu_New, _T(Lang[11] + "\tCtrl+N"), _T(Lang[12]));
     FB_File->Append (Menu_Open, _T(Lang[13] + "\tCtrl+O"), _T(Lang[14]));
-    FB_File->Append (Menu_FileHistory, _T(Lang[13]) + "...", file_history );
+    //FB_File->Append (Menu_FileHistory, _T(Lang[13]) + "...", file_history );
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Save,	_T(Lang[15] + "\tCtrl+S"), _T(Lang[16]));
@@ -178,7 +178,7 @@ void MyFrame::LoadMenu () {
     if( !Prefs.UseHelp ) HelpMenu->Enable( Menu_Help, false );
     HelpMenu->Append(Menu_QuickKeys, _T("QuickKeys.txt") );
     HelpMenu->Append(Menu_ReadMe, _T("ReadMe.txt") );
-    HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
+    //HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
     HelpMenu->AppendSeparator();
     HelpMenu->Append(Menu_About,   _T(Lang[79]),    _T(Lang[80]));
 
