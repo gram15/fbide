@@ -287,6 +287,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     ReplaceDialog   = NULL;
     SFDialog        = NULL;
     formatDialog    = NULL;
+    FBNotebook      = NULL;
 
 
     CurrentFileType = 0;
@@ -330,6 +331,7 @@ void MyFrame::OnClose 	(wxCloseEvent &event) {
     if (FBNotebook)     delete FBNotebook;
     wxTheClipboard->Flush();
     SaveSettings();
+    if (m_FileHistory ) delete m_FileHistory;
     event.Skip();
 }
 

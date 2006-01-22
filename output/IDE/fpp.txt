@@ -3,7 +3,6 @@ Eric Cowles <cowles1e@uregina.ca>
 Copyleft Saturday, March 12th, 2005
 
 
-
 This program makes compiling large projects with fbc a lot simpler since there
 are no easy to use or maintain make-file systems.  They all suck.
 See FPP.BAS for an example.

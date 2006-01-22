@@ -248,6 +248,7 @@ void SFBrowser::OnActivate ( wxListEvent& event ) {
 
 void SFBrowser::GenerateList ( wxString Search ) {
     
+    this->Freeze();
     SFList->DeleteAllItems();
     if (Search.Len()) {
         for( unsigned int i = 0; i < Original.Count(); i++) {
@@ -261,6 +262,7 @@ void SFBrowser::GenerateList ( wxString Search ) {
             AddListItem(OrigLineNr[i] + 1, OrigType[i], OriginalArg[i]);
         }
     }
+    this->Thaw();
     return;
 }
 

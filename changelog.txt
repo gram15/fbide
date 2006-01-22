@@ -1,10 +1,15 @@
 Version 0.4.4
    * Added filehistory ( vongodric )
    * Added FreeBASIC chm help integration ( vongodric )
+   * Added lots of fonts into settings dialog ( vongodric )
    * Fixed FBIde no longer changes default folders - coused troubles ( vongodric )
    * Fixed bug with 'save as' cancelling ( vongodric )
+   * Fixed bug with running uncompiled file ( vongodric )
    * Removed fpp default support ( vongodric)
    * Removed WIKI help integration - CHM is much better and faster ( vongodric )
+   * Changed sessions now remember cursor and page scroll positions. Older versions will fail laoding new sessions! ( vongodric )
+   * Changed files that are executed are passed in quotes ( vongodric )
+   * Changed internal event ID's -so keyboards with special keys will probably function with FBIde ( vongodric )
 
 
 Version 0.4.3
@@ -43,7 +48,6 @@ Version 0.4.2
 
 
 Version 0.4.1
-
    * Fixed bug with closing IDE while it is minimized (Dumbledore)
    * Updated HTML code generation (Dumbledore)
    * Added filename to titlebar (Dumbledore)

@@ -38,9 +38,10 @@ void MyFrame::OpenLangFile( wxString FileName ){
      
      //And GO!
      wxString temp;
-     for (int i=0; i < 232; i++){
+     for (int i=0; i < 233; i++){
          temp="";
          temp<<i;
+         //Lang.Add(FileINI.Read(temp,""));
          Lang.Add(FileINI.Read(temp,""));
      }
      
