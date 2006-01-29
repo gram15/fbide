@@ -195,7 +195,7 @@ void wxTabbedCtrl::SetPageImage(int pg, int img) {
 int wxTabbedCtrl::HitTest(const wxPoint &p, long *flags) { 
    int height, width, pom; 
    bool mirror = style & wxTB_BOTTOM; 
-   bool drawx = style & wxTB_X; 
+//   bool drawx = style & wxTB_X; 
    wxSize size = GetSize(); 
    wxClientDC dc(this); 
 

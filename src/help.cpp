@@ -35,30 +35,32 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnHelp ( wxCommandEvent& event ) {
     
-    if( !stc ) {
-        help.DisplayContents();
-        return;
-    }
-    
-    int start=0, end=0;
-    wxString strKw = GetTextUnderCursor( start, end ).Trim( false ).Trim( true ).MakeLower();
-    
-    if( strKw.Len() ) {
-        if( stc->GetCharAt( start - 1 ) == '#' ) strKw = "#" + strKw;
+    #ifdef __WXMSW__
+        if( !stc ) {
+            help.DisplayContents();
+            return;
+        }
         
-        help.KeywordSearch( strKw );
-        //help.DisplayTextPopup( strKw, wxPoint(300, 200 ) );
-        //help.DisplayContextPopup( 1 );
-    }
-    else
-        help.DisplayContents();
+        int start=0, end=0;
+        wxString strKw = GetTextUnderCursor( start, end ).Trim( false ).Trim( true ).MakeLower();
+        
+        if( strKw.Len() ) {
+            if( stc->GetCharAt( start - 1 ) == '#' ) strKw = "#" + strKw;
+            
+            help.KeywordSearch( strKw );
+            //help.DisplayTextPopup( strKw, wxPoint(300, 200 ) );
+            //help.DisplayContextPopup( 1 );
+        }
+        else
+            help.DisplayContents();
+    #endif
 
 }
 
 
 void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
 {
-    wxString FileName( EditorPath + "ide\\quickkeys.txt" );
+    wxString FileName( EditorPath + "ide/quickkeys.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
@@ -68,7 +70,7 @@ void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
 
 void MyFrame::OnReadMe       ( wxCommandEvent& event )
 {
-    wxString FileName( EditorPath + "ide\\readme.txt" );
+    wxString FileName( EditorPath + "ide/readme.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
@@ -79,7 +81,7 @@ void MyFrame::OnReadMe       ( wxCommandEvent& event )
 
 void MyFrame::OnFpp          ( wxCommandEvent& event )
 {
-    wxString FileName( EditorPath + "ide\\fpp.txt" );
+    wxString FileName( EditorPath + "ide/fpp.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
         SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );

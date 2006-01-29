@@ -34,7 +34,9 @@ BEGIN_EVENT_TABLE( SFBrowser, wxDialog)
     EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
     EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
     EVT_LIST_ITEM_ACTIVATED(-1, SFBrowser::OnActivate)
-    EVT_HOTKEY( 1985, SFBrowser::OnKeyUp )
+    #ifdef __WXMSW__    
+        EVT_HOTKEY( 1985, SFBrowser::OnKeyUp )
+    #endif
 END_EVENT_TABLE()
 
 SFBrowser::SFBrowser(   wxWindow* parent,
@@ -100,7 +102,9 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     SFList->SetColumnWidth( 2, 400 );
 
     Refresh();
-    RegisterHotKey( 1985, 0, 27 );
+    #ifdef __WXMSW__
+        RegisterHotKey( 1985, 0, 27 );
+    #endif
     
     Rebuild();
 }
@@ -270,7 +274,9 @@ void SFBrowser::GenerateList ( wxString Search ) {
 SFBrowser::~SFBrowser () {
     delete Panel;
     Parent->SFDialog=0;
-    UnregisterHotKey( 1985 );
+    #ifdef __WXMSW__
+        UnregisterHotKey( 1985 );
+    #endif
     return;
 }
 

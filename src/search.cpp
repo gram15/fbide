@@ -312,7 +312,7 @@ bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags)
             targetStart = stc->GetSelectionEnd();
 
         else if ((stc->GetSelectedText().Lower() == findStr.Lower()) && (direc == 1))
-            targetStart = (stc->GetSelectionStart() <? stc->GetSelectionEnd()) - 1;
+            targetStart = (stc->GetSelectionStart() < stc->GetSelectionEnd()) - 1;
     }
 
     // Set some search parameters

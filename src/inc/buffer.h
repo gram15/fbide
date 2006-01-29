@@ -63,11 +63,20 @@ class Buffer
         int GetLine();
         void SetFileType(int i) { FileMode = i; }
         int GetFileType() { return FileMode; }
+        
+        void SetCompiledFile ( wxString CompiledFile ) {
+            m_CompiledFile = CompiledFile;
+        }
+        
+        wxString GetCompiledFile() {
+            return m_CompiledFile;
+        }
 
     private:
         wxDateTime modTime;
         wxString fileName;
         wxString highlighter;
+        wxString m_CompiledFile;
 
         bool wasModified;
         bool modified;
