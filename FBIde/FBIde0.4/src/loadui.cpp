@@ -21,7 +21,25 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-#include <filename.h>
+#ifndef __WXMSW__
+    #include "../rc/bitmaps/open.xpm"
+    #include "../rc/bitmaps/save.xpm"
+    #include "../rc/bitmaps/cut.xpm"
+    #include "../rc/bitmaps/copy.xpm"
+    #include "../rc/bitmaps/paste.xpm"
+    #include "../rc/bitmaps/undo.xpm"
+    #include "../rc/bitmaps/redo.xpm"
+    #include "../rc/bitmaps/compile.xpm"
+    #include "../rc/bitmaps/run.xpm"
+    #include "../rc/bitmaps/compnrun.xpm"
+    #include "../rc/bitmaps/qrun.xpm"
+    #include "../rc/bitmaps/saveall.xpm"
+    #include "../rc/bitmaps/close.xpm"
+    #include "../rc/bitmaps/output.xpm"
+    #include "../rc/bitmaps/new.xpm"
+#endif
+
+#include <wx/filename.h>
 #include "inc/main.h"
 #include "inc/fbedit.h"
 #include "inc/browser.h"
@@ -50,7 +68,7 @@ void MyFrame::LoadUI () {
                                    wxID_ANY, 
                                    wxDefaultPosition, 
                                    wxDefaultSize, 
-                                   wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
+                                   wxLC_REPORT| wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
                 wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
             	FBConsole->SetFont(LbFont);
                 wxListItem itemCol;
@@ -98,6 +116,7 @@ void MyFrame::LoadMenu () {
     
     FB_File->Append (Menu_New, _T(Lang[11] + "\tCtrl+N"), _T(Lang[12]));
     FB_File->Append (Menu_Open, _T(Lang[13] + "\tCtrl+O"), _T(Lang[14]));
+    //FB_File->Append (Menu_FileHistory, _T(Lang[13]) + "...", file_history );
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Save,	_T(Lang[15] + "\tCtrl+S"), _T(Lang[16]));
@@ -169,6 +188,9 @@ void MyFrame::LoadMenu () {
     FB_Run->Append (Menu_Parameters,    _(Lang[73]), _(Lang[74]));
     FB_Run->AppendCheckItem (Menu_ShowExitCode, _(Lang[77]), _(Lang[78]));
 	FB_Run->Check  (Menu_ShowExitCode,  Prefs.ShowExitCode);
+	
+    FB_Run->AppendCheckItem ( Menu_ActivePath, _(Lang[234]), _(Lang[235]));
+    FB_Run->Check  ( Menu_ActivePath,   Prefs.ActivePath );
 
 
     //Help
@@ -177,6 +199,7 @@ void MyFrame::LoadMenu () {
     if( !Prefs.UseHelp ) HelpMenu->Enable( Menu_Help, false );
     HelpMenu->Append(Menu_QuickKeys, _T("QuickKeys.txt") );
     HelpMenu->Append(Menu_ReadMe, _T("ReadMe.txt") );
+    //HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
     HelpMenu->AppendSeparator();
     HelpMenu->Append(Menu_About,   _T(Lang[79]),    _T(Lang[80]));
 
@@ -188,8 +211,6 @@ void MyFrame::LoadMenu () {
     MenuBar->Append(FB_View,  _T(Lang[7]));
     MenuBar->Append(FB_Run,   _T(Lang[9]));
     MenuBar->Append(HelpMenu, _T(Lang[10]));
-//    MenuBar->Enable(-1, false);
-    
     SetMenuBar(MenuBar);
     
     return;
@@ -221,9 +242,10 @@ void MyFrame::LoadToolBar () {
     toolBarBitmaps[12]= wxBITMAP(saveall);
     toolBarBitmaps[13]= wxBITMAP(close);
     toolBarBitmaps[14]= wxBITMAP(output);
+
     
-    FB_Toolbar->AddTool(Menu_New, wxBITMAP(new), wxNullBitmap, FALSE, 100, 100, (wxObject *) NULL, _(Lang[83]));
-    FB_Toolbar->AddTool(Menu_Open, wxBITMAP(open), wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[84]));
+    FB_Toolbar->AddTool(Menu_New, toolBarBitmaps[0], wxNullBitmap, FALSE, 100, 100, (wxObject *) NULL, _(Lang[83]));
+    FB_Toolbar->AddTool(Menu_Open, toolBarBitmaps[1], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[84]));
     FB_Toolbar->AddTool(Menu_Save, toolBarBitmaps[2], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[85]));
     FB_Toolbar->AddTool(Menu_SaveAll, toolBarBitmaps[12], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[86]));
     FB_Toolbar->AddTool(Menu_Close, toolBarBitmaps[13], wxNullBitmap, FALSE, -1, -1, (wxObject *) NULL, _(Lang[87]));
@@ -372,16 +394,16 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     return;
 }
 
+
 void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
     return;
 }
 
-void MyFrame::ChangeNBPage   ( wxTabbedCtrlEvent & event) {
+void MyFrame::ChangeNBPage   ( wxTabbedCtrlEvent& event) {
     if (OldTabSelected==-1) {
         OldTabSelected = 0 ;
         return;
     }
-    
     if (stc==0) return;
     
     int index = event.GetSelection();
@@ -436,7 +458,7 @@ void MyFrame::SetModified ( int index, bool status ) {
 
     buff->SetWasModified(buff->GetModified());
     wxString NewName;
-    if(status) NewName << "[*] ";            
+    if(status) NewName << "[*] ";
     
     bufferList.SetBufferModified(index, status);
     NewName << wxFileNameFromPath(buff->GetFileName());

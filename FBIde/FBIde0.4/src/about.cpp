@@ -9,7 +9,9 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 
-
+#ifndef __WXMSW__
+    #include "../rc/bitmaps/fbide.xpm"
+#endif
 #include "inc/main.h"
 #include "inc/about.h"
 #include "wx/statline.h"
@@ -51,7 +53,7 @@ void about::CreateControls()
     itemDialog1->SetSizer(itemBoxSizer2);
 
     wxBitmap itemStaticBitmap3Bitmap(wxBITMAP(fbide));
-    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC, itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(300, 75), 0 );
+    wxStaticBitmap* itemStaticBitmap3 = new wxStaticBitmap( itemDialog1, wxID_STATIC,   itemStaticBitmap3Bitmap, wxDefaultPosition, wxSize(300, 75), 0 );
     itemBoxSizer2->Add(itemStaticBitmap3, 0, wxALIGN_CENTER_HORIZONTAL, 5);
 
     wxStaticBox* itemStaticBoxSizer4Static = new wxStaticBox(itemDialog1, wxID_ANY, _("FBIde information"));
@@ -84,11 +86,6 @@ void about::CreateControls()
 
     wxStaticLine* itemStaticLine9 = new wxStaticLine( itemDialog1, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemStaticBoxSizer4->Add(itemStaticLine9, 0, wxGROW|wxTOP|wxBOTTOM, 5);
-
-//    wxTextCtrl* itemTextCtrl10 = new wxTextCtrl( itemDialog1, ID_TEXTCTRL, 
-//        _("FBIde is an open source IDE for FreeBASIC compile. This program is under GNU GPL licence. If you notice any problems then please contact me at: vongodric@hotmail.com\n\nThis program is written in C++ and uses wxWidhets framework library for GUI and scintilla textediting control for syntax. Also we use icons from dev-cpp project.\n\nHomepage: http://fbide.sourceforge.net\ncontact: vongodric@hotmail.com"), 
-//        wxDefaultPosition, wxSize(-1, 100), wxTE_MULTILINE|wxTE_READONLY|wxTE_RICH );
-//    itemStaticBoxSizer4->Add(itemTextCtrl10, 0, wxGROW, 5);
 
     wxTextCtrl*txm7=new wxTextCtrl( itemDialog1, ID_TEXTCTRL, 
         _(""), 

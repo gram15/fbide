@@ -303,7 +303,7 @@ ConfigDialog::ConfigDialog( wxWindow* parent,
     st77=new wxStaticText(CD_Keywords,-1,wxT(""),wxPoint(10,30),wxSize(200,13),wxST_NO_AUTORESIZE);
     st77->SetLabel(wxT(Parent->Lang[150]));//"Select keyword group"
     
-    CB_KeywordGroup=new wxChoice(CD_Keywords,CDID_KeywordSelector,wxPoint(10,45),wxSize(150,21),0,NULL);
+    CB_KeywordGroup=new wxChoice(CD_Keywords,CDID_KeywordSelector,wxPoint(10,45),wxSize(150,21),0);
     CB_KeywordGroup->Append(Parent->Lang[151]);//"Group 1"
     CB_KeywordGroup->Append(Parent->Lang[152]);//"Group 2"
     CB_KeywordGroup->Append(Parent->Lang[153]);//"Group 3"

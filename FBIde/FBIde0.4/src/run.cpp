@@ -100,7 +100,6 @@ void MyFrame::GoToError ( int Linenr, wxString FileName ) {
         else
         {
             NewSTCPage(FileName, true);
-            SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
         }
     }
 
@@ -113,6 +112,7 @@ void MyFrame::GoToError ( int Linenr, wxString FileName ) {
     stc->EnsureCaretVisible();
 }
 
+//------------------------------------------------------------------------------
 
 void MyFrame::OnCompile (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0) return;
@@ -120,9 +120,10 @@ void MyFrame::OnCompile (wxCommandEvent& WXUNUSED(event)) {
     if (Proceed()!=1) return;
     FBConsole->DeleteAllItems();
     SetStatusText( "Compiling..." );
-    if (Compile()==0)
+    if (Compile( FBNotebook->GetSelection() )==0)
         SetStatusText( "Compilation Complete." );
-    SetStatusText( "Compilation Failed!" );
+    else
+        SetStatusText( "Compilation Failed!" );
     return;
 }
 
@@ -132,9 +133,10 @@ void MyFrame::OnCompileAndRun (wxCommandEvent& WXUNUSED(event)) {
     if (Proceed()!=1) return;
     FBConsole->DeleteAllItems();
     SetStatusText( "Compiling..." );
-    if (Compile()==0) {
+    if (Compile( FBNotebook->GetSelection() )==0) {
         SetStatusText( "Compilation Complete." );
-        Run();
+        wxString strFile = bufferList[ FBNotebook->GetSelection() ]->GetCompiledFile();
+        Run( strFile );
     } 
     else
         SetStatusText( "Compilation Failed!" );
@@ -144,9 +146,332 @@ void MyFrame::OnCompileAndRun (wxCommandEvent& WXUNUSED(event)) {
 
 void MyFrame::OnRun (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0) return;
-    Run();
+    
+    wxString strFile = bufferList[ FBNotebook->GetSelection() ]->GetCompiledFile();
+    Run( strFile );
+    
     return;
 }
+
+
+void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
+    int major = 0, minor = 0;
+    int result = wxGetOsVersion(&major, &minor);
+    if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
+    else if(result==wxWIN95) wxExecute("command.com");
+    return;
+}
+
+void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
+    wxTextEntryDialog dialog(this, _T(Lang[177]), //"Parameters to pass to your program"
+                                  _T(Lang[158]),
+                                  _T(ParameterList),
+                           wxOK | wxCANCEL);
+    
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        ParameterList = dialog.GetValue();
+    }   
+    return;
+}
+
+void MyFrame::OnShowExitCode (wxCommandEvent& WXUNUSED(event)) {
+    Prefs.ShowExitCode = !Prefs.ShowExitCode;
+    return;
+}
+
+void MyFrame::OnActivePath( wxCommandEvent& WXUNUSED(event)) {
+    Prefs.ActivePath = !Prefs.ActivePath;
+}
+
+int MyFrame::Proceed   	(void) {
+    int index = FBNotebook->GetSelection();
+    Buffer * buff = bufferList[index]; 
+    
+    if (buff->GetModified()) {
+        if (wxMessageBox(Lang[183], 
+                         Lang[184], 
+                         wxICON_EXCLAMATION|wxYES_NO) == wxYES) {
+            if (SaveFile(buff)) {
+                SetModified ( index, false );
+                return 1;
+            }
+        }
+        return 0;
+    }
+    return 1;
+}
+
+
+// -----------------------------------------------------------------------------
+
+/**
+ * MyFrame::Compile
+ * This function compiles given src file. It calls MyFrame::GetCompileData to
+ * receave data.
+ * @param index about file from buffer list
+ * @return 0 on success, 1 on failure
+ */
+int MyFrame::Compile ( int index ) {
+    
+    //Safety checks
+    if ( !stc ) return 1;
+    if ( ProcessIsRunning ) return 1;
+    
+    // File that we are about to compile
+    wxFileName objFile( bufferList[ index ]->GetFileName() );
+    objFile.Normalize();
+    
+    // Get compiler cmdline and check it. if empty return.
+    wxString strCompile( GetCompileData( index ) );
+    if( !strCompile.Len() ) return 1;
+    
+    // If Active path is activated then set current working path
+    // to show to the location of the src file.
+    if( Prefs.ActivePath )
+        ::wxSetWorkingDirectory( objFile.GetPath() );
+    
+    // Execute fbc and retreave results.
+    wxArrayString arrError, arrErrOutput;
+    int intCompileResult = wxExecute( strCompile, arrError, arrErrOutput );
+    
+    // if there was an error fbc returns 1. Now get error messages and put them 
+    // into console area
+    if ( intCompileResult  ) {
+        // define variables
+        wxString        strError;
+        wxString        strTemp;
+        wxFileName      objErrorFile;
+        long            intError;
+        long            intLine;
+        int             intBraceStart;
+        int             intBraceEnd;
+        bool            isErrorHeader = false;
+        
+        wxString        strDebug;
+        
+        // Becouse fbc returns errors via both std and error channels,
+        // we need to join them here.
+        WX_APPEND_ARRAY( arrError, arrErrOutput );
+        
+        // Loop through arrError
+        for( unsigned int cnt = 0; cnt < arrError.Count(); cnt++ ) {
+            if( !arrError[cnt].Len() ) continue;
+            intBraceStart = arrError[cnt].Find( '(' );
+            intBraceEnd = arrError[cnt].Find( ')' );
+            
+            // if intBraceStart is not -1 then hopefully line number was found.
+            // as fbc returns things: file(linenumber): error nr : error message
+            if( intBraceStart != -1 && intBraceEnd != -1 ) {
+                // Get possible file name and check if it is indeed a filename
+                objErrorFile = arrError[cnt].Left( intBraceStart );
+                objErrorFile.Normalize();
+                if( objErrorFile.IsOk() && objErrorFile.FileExists() ) {
+                    //Now that it's indeed is a filename, get line, error number
+                    // and error message on that line
+                    strTemp = arrError[cnt].Mid( intBraceStart + 1, intBraceEnd - intBraceStart - 1);
+                    strTemp.ToLong( &intLine );
+                    
+                    strTemp = arrError[cnt].Mid( intBraceEnd + 10);
+                    strError = strTemp.Mid( strTemp.Find( ':' ) + 2 );
+                    strTemp = strTemp.Left( strTemp.Find( ':' ) );
+                    strTemp.ToLong( &intError );
+                    
+                    isErrorHeader = true;
+                }
+            }
+            
+            // If is error header ( includes filename, error number and line number then
+            // add generated values. Else just add original message.
+            if( isErrorHeader ) {
+                isErrorHeader = false;
+                AddListItem(intLine, intError, objErrorFile.GetFullPath(), strError);
+            } else {
+                AddListItem(-1, -1, "", arrError[cnt]);
+            }
+            
+        }
+        
+        // Open console area
+        if ( !HSplitter->IsSplit() ) { 
+            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
+            FB_View->Check(Menu_Result, true);
+        }    
+        
+        return 1;
+    }
+    
+    // Close console area -if no error then it is not needed.
+    if ( HSplitter->IsSplit() ) { 
+        ConsoleSize = HSplitter->GetSashPosition();
+        HSplitter->Unsplit( FBConsole );
+        FB_View->Check(Menu_Result, false);
+    }
+    
+    // Set newly compiled filename:
+    if( objFile.GetExt() == "bas" || objFile.GetExt() == "bi" ) {
+        objFile.SetExt( "exe" );
+        bufferList[ index ]->SetCompiledFile( objFile.GetFullPath() );
+    }
+    
+    return 0;
+}
+
+
+
+/**
+ * MyFrame::Run
+ * This function executes compiled file and adds optional parameters.
+ * @param wxFileName file - file to be executed
+ * @return none
+ */
+void MyFrame::Run ( wxFileName file ) {
+    
+    //Safety checks
+    if ( !stc ) return;
+    if ( ProcessIsRunning ) return;
+    
+    // Check if passed filename is valid. If not then it's probably not saved yet!
+    if ( !file.IsOk() )  {
+        if ( wxMessageBox (Lang[180], Lang[181], wxYES_NO | wxICON_QUESTION) == wxNO )
+            return;
+       // hack... ugly !
+       wxCommandEvent temp;
+       OnCompileAndRun( temp );
+       return;
+    }
+    
+    // If Active path is activated then set current working path
+    // to show to the location of the src file.
+    if( Prefs.ActivePath )
+        ::wxSetWorkingDirectory( file.GetPath() );
+    
+    // Generate string that get's executed
+    wxString strCommand( "\"" + file.GetFullPath() + "\" " + ParameterList );
+    
+    
+    // Create new process
+    MyProcess * objProcess = new MyProcess(this, strCommand);
+    
+    // Execute
+    int result = wxExecute( strCommand, wxEXEC_ASYNC, objProcess );
+    
+    // if process is not created... something is wrong!
+    // Delete object, show error message and return
+    if ( !result ) {
+        delete objProcess;
+        ProcessIsRunning = false;
+        wxMessageBox ( Lang[182] + strCommand + "\"", Lang[179], wxICON_ERROR );
+        return;
+    }
+    
+    FB_Toolbar->EnableTool(Menu_Compile,        false);
+    FB_Toolbar->EnableTool(Menu_CompileAndRun,  false);
+    FB_Toolbar->EnableTool(Menu_Run,            false);
+    FB_Toolbar->EnableTool(Menu_QuickRun,       false);
+    
+    FB_Run->Enable(Menu_Compile,        false);
+    FB_Run->Enable(Menu_CompileAndRun,  false);
+    FB_Run->Enable(Menu_Run,            false);
+    FB_Run->Enable(Menu_QuickRun,       false);
+    
+    ProcessIsRunning = true;
+    return;
+    
+}
+
+
+
+/**
+ * MyFrame::OnQuickRun
+ * This function compiles active tab as a temorary file and executes it,
+ * when execution is terminated then temporary file is deleted.
+ * @return none
+ */
+void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
+    
+    //Safety checks
+    if ( !stc ) return;
+    if ( ProcessIsRunning ) return;
+    
+    // Get data
+    int index = FBNotebook->GetSelection();
+    Buffer* buff = bufferList[index];
+    
+    wxString OldRunFileName = buff->GetCompiledFile();
+    wxString OldFileName = buff->GetFileName();
+    
+    // Get working directory
+    if ( OldFileName == "" || OldFileName == FBUNNAMED ) {
+        if( CompilerPath.Len() )
+            CurFolder = ::wxPathOnly( CompilerPath );
+        else
+            CurFolder = ::wxPathOnly( EditorPath );
+    } else {
+        CurFolder = ::wxPathOnly( OldFileName );
+    }
+    
+    CurFolder << "/";
+    
+    // Set new temprary data
+    stc->SaveFile( CurFolder + "FBIDETEMP.bas" );
+    buff->SetFileName( CurFolder + "FBIDETEMP.bas" );
+    
+    // Set status
+    FBConsole->DeleteAllItems();
+    SetStatusText( "Compiling..." );
+    
+    
+    // Compile it
+    if ( Compile( index ) == 0 ) {
+        SetStatusText( "Compilation Complete." );
+        Run( buff->GetCompiledFile() );
+    } else {
+        SetStatusText( "Compilation Failed!" );
+        wxRemoveFile( CurFolder + "FBIDETEMP.bas" );
+        wxRemoveFile( CurFolder + "fbidetemp.asm" );
+        wxRemoveFile( CurFolder + "fbidetemp.o" );
+    }
+
+    // Restore original data
+    buff->SetCompiledFile( OldRunFileName );
+    buff->SetFileName( OldFileName );
+
+    // is temprary file
+    IsTemp = true;
+    return;
+}
+
+
+
+/**
+ * MyFrame::GetCompileData
+ * Generates compildation data that is used in compilation process
+ * @param index about file from buffer list
+ * @return compiler cmd-line
+ */
+wxString MyFrame::GetCompileData ( int index ) {
+    
+    // Retreave file original name and validate it
+    wxFileName objFilePath( bufferList[ index ]->GetFileName() );
+    objFilePath.Normalize();
+    if( objFilePath.GetExt() != "bas" && objFilePath.GetExt() != "bi" &&
+        objFilePath.GetExt() != "rc" ) return "";
+    
+    wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );
+    wxFileName ObjCompilerPath( CompilerPath );
+    ObjCompilerPath.Normalize();
+    
+    strReturn.Replace( "<fbc>", "\"" + ObjCompilerPath.GetFullPath() + "\"" );
+    strReturn.Replace( "<filename>", "\"" + objFilePath.GetFullPath() + "\"" );
+    
+    return strReturn;
+}
+
+/*
+
+
+
 
 void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0) return;
@@ -183,31 +508,6 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     return;
 }
 
-void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
-    int major = 0, minor = 0;
-    int result = wxGetOsVersion(&major, &minor);
-    if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
-    else if(result==wxWIN95) wxExecute("command.com");
-    return;
-}
-
-void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
-    wxTextEntryDialog dialog(this, _T(Lang[177]), //"Parameters to pass to your program"
-                                  _T(Lang[158]),
-                                  _T(ParameterList),
-                           wxOK | wxCANCEL);
-    
-    if (dialog.ShowModal() == wxID_OK)
-    {
-        ParameterList = dialog.GetValue();
-    }   
-    return;
-}
-
-void MyFrame::OnShowExitCode (wxCommandEvent& WXUNUSED(event)) {
-    Prefs.ShowExitCode = !Prefs.ShowExitCode;
-    return;
-}
 
 int  MyFrame::Compile            ( wxString FileName ) {
     if (stc->GetLength()==0) {
@@ -280,18 +580,18 @@ int  MyFrame::Compile            ( wxString FileName ) {
                     if(!tf.HasVolume()) {
                         wxString FBCPath = wxFileName(CompilerPath).GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
                         if (FileName!="") {
-                           if(wxFileName(FilePath+"\\"+FileName).FileExists()) {
-                               FileName=FilePath+"\\"+FileName;
+                            if(wxFileName(FilePath+"/"+FileName).FileExists()) {
+                                FileName=FilePath+"/"+FileName;
                            }
                            else if(wxFileName(FBCPath+FileName).FileExists()) {
                                FileName=FBCPath+FileName;
                            }
-                           else if(wxFileName(FBCPath+"inc\\"+FileName).FileExists()) {
-                               FileName=FBCPath+"inc\\"+FileName;
+                           else if(wxFileName(FBCPath+"inc/"+FileName).FileExists()) {
+                               FileName=FBCPath+"inc/"+FileName;
                            }
-                           //else FileName=FBCPath+"inc\\"+FileName;;
+                           //else FileName=FBCPath+"inc/"+FileName;;
                         }
-                        //FileName=FilePath+"\\"+FileName;
+                        //FileName=FilePath+"/"+FileName;
                     }
                                         
                     if (FirstFile=="") {
@@ -321,7 +621,7 @@ int  MyFrame::Compile            ( wxString FileName ) {
 
 
         if ( !HSplitter->IsSplit() ) { 
-            HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
+            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
             FB_View->Check(Menu_Result, true);
         }
     
@@ -337,7 +637,7 @@ int  MyFrame::Compile            ( wxString FileName ) {
         }
         
         if ( !HSplitter->IsSplit() ) { 
-            HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
+            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
             FB_View->Check(Menu_Result, true);
         }
         return 0;
@@ -406,7 +706,6 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
     Buffer * buff = bufferList[index];
     
     if (FileName=="") FileName = buff->GetFileName();
-    FileName = FileName;
     
     Temp=CMDPrototype;
     Temp=Temp.Trim(false).Lower();
@@ -476,28 +775,13 @@ wxString MyFrame::GetCompileData ( wxString FileName ) {
 }
 
 
-int MyFrame::Proceed   	(void) {
-    int index = FBNotebook->GetSelection();
-    Buffer * buff = bufferList[index]; 
-    
-    if (buff->GetModified()) {
-        if (wxMessageBox(Lang[183], 
-                         Lang[184], 
-                         wxICON_EXCLAMATION|wxYES_NO) == wxYES) {
-            if (SaveFile(buff)) {
-                SetModified ( index, false );
-                return 1;
-            }
-        }
-        return 0;
-    }
-    return 1;
-}
+*/
 
+//------------------------------------------------------------------------------
 
-void MyProcess::OnTerminate(int pid, int status)
+void MyProcess::OnTerminate( int pid, int status )
 {
-    m_parent->ProcessIsRunning=false;
+    m_parent->ProcessIsRunning = false;
     if (m_parent->Prefs.ShowExitCode) {
         wxString Temp;
         Temp<<status;

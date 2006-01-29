@@ -40,8 +40,12 @@
 #include <wx/listctrl.h>
 #include <wx/help.h>
 #include <wx/cshelp.h>
-#include <wx/msw/helpchm.h>
+#include <wx/filename.h>
+#ifdef __WXMSW__
+    #include <wx/msw/helpchm.h>
+#endif
 #include <wx/docview.h>
+
 
 #include "../../FBIde0.4_private.h"
 #define FBUNNAMED "Unnamed"
@@ -72,6 +76,7 @@ struct CommonInfo {
     wxString HelpFile;
     bool SplashScreen;
     bool UseHelp;
+    bool ActivePath;
 };
 
 
@@ -280,9 +285,10 @@ public:
     void OnCmdPromt         ( wxCommandEvent &event );
     void OnParameters       ( wxCommandEvent &event );
     void OnShowExitCode     ( wxCommandEvent &event );
-    int  Compile            ( wxString FileName = "" );
-    void Run                ( wxString FileName = "" );
-    wxString GetCompileData ( wxString FileName = "" );
+    int  Compile            ( int index );
+    void Run                ( wxFileName file = "" );
+    wxString GetCompileData ( int index );
+    void OnActivePath       ( wxCommandEvent & event );
 	
 	void OnGetFocus( wxFocusEvent & event );
 	
@@ -307,7 +313,7 @@ public:
     void OnFpp          ( wxCommandEvent& event );
     
     void NewSTCPage         ( wxString InitFile, bool select = false, int FileType = 0 );
-    void ChangeNBPage       ( wxTabbedCtrlEvent& event );
+    void ChangeNBPage       ( wxTabbedCtrlEvent & event );
     void ChangingNBPage     ( wxNotebookEvent& event );
     
     //Pointers
@@ -350,10 +356,15 @@ public:
     int lastTabCreated;
     int OldTabSelected;
     int CurrentFileType;
+    #ifdef __WXMSW__
+        wxCHMHelpController help;
+    #endif
     
-    wxCHMHelpController help;
+
     wxFileHistory  * m_FileHistory;
     wxBoxSizer     * m_TabStcSizer;
+
+	
    
 private:
     DECLARE_EVENT_TABLE()
@@ -416,6 +427,7 @@ enum
 	Menu_CmdPromt,
 	Menu_Parameters,
 	Menu_ShowExitCode,
+	Menu_ActivePath,
 	
 	//Help menu
     Menu_QuickKeys,

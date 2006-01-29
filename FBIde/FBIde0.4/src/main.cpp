@@ -171,6 +171,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_CmdPromt,             MyFrame::OnCmdPromt)
     EVT_MENU(Menu_Parameters,           MyFrame::OnParameters)
     EVT_MENU(Menu_ShowExitCode,         MyFrame::OnShowExitCode)
+    EVT_MENU(Menu_ActivePath,           MyFrame::OnActivePath)
     
     EVT_MENU(Menu_Help,                 MyFrame::OnHelp)
     EVT_MENU(Menu_QuickKeys,            MyFrame::OnQuickKeys)
@@ -179,7 +180,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     
     EVT_MENU_RANGE( wxID_FILE1, wxID_FILE9, MyFrame::OnFileHistory )
     
-    EVT_TABBEDCTRL_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
+    EVT_TABBEDCTRL_PAGE_CHANGED(-1,     MyFrame::ChangeNBPage)
     
     EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError)
 
@@ -267,7 +268,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     wxImage::AddHandler(new wxPNGHandler);
 
     wxBitmap bitmap;
-    if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"\\ide\\splash.png"), wxBITMAP_TYPE_PNG))
+    if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"/ide/splash.png"), wxBITMAP_TYPE_PNG))
     {
       new wxSplashScreen(bitmap,
           wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
@@ -292,7 +293,9 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
 
     CurrentFileType = 0;
     LoadUI();
-    SetIcon( wxICON(fbicon) );
+    #ifdef __WXMSW__
+        SetIcon( wxICON(fbicon) );
+    #endif
 
     for (int i = 1; i < FB_App->argc; i++) {
         wxFileName File(FB_App->argv[i]);
@@ -307,9 +310,10 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
             }
         }
     }
-    
-    if( Prefs.UseHelp )
-        help.Initialize( EditorPath + "ide\\" + Prefs.HelpFile );
+    #ifdef __WXMSW__
+        if( Prefs.UseHelp )
+    help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
+    #endif
     
     m_FileHistory->AddFilesToMenu();
     

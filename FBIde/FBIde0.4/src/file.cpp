@@ -29,6 +29,7 @@
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
     NewSTCPage("", true);
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return;
 }
 
@@ -123,7 +124,7 @@ void MyFrame::OnCloseAll        ( ) {
     
     Buffer* buff;
     
-    while ( FBNotebook->GetPageCount() ) {
+    while ( FBNotebook ) {
         buff = bufferList[0];
         FBNotebook->SetSelection(0);
         if (buff->GetModified()) {
@@ -173,6 +174,7 @@ void MyFrame::OnCloseFile       ( ) {
     else SetTitle("FBIde");
 }
 
+
 void MyFrame::CloseFile          ( int index ) {
 
     if ( SFDialog && FBNotebook->GetPageCount()==1 )
@@ -195,14 +197,8 @@ void MyFrame::CloseFile          ( int index ) {
         delete FBNotebook;
         FBCodePanel->SetSizer( NULL );
         stc = 0;
-        
-        
-        //FBCodePanel = new wxPanel(HSplitter, wxID_ANY,
-        //    wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
-        //FBCodePanel->SetBackgroundColour(wxSystemSettings::GetColour( wxSYS_COLOUR_APPWORKSPACE ));
-
-        //HSplitter->ReplaceWindow( FBNotebook, FBCodePanel );
-        //FBNotebook = NULL;
+        FBNotebook = 0;
+    	m_TabStcSizer = 0;
         EnableMenus(false);
     }
     else {
@@ -256,10 +252,10 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
                 buff->SetFileName( FileName );
         }
         else { buff->SetFileName( FileName ); }
-        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
     
     stc->SaveFile (FileName);
+    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return true;
 }
 
