@@ -179,13 +179,15 @@ void BufferList::SetBuffer(int index, Buffer* buff) {
 int BufferList::FileLoaded ( wxString FileName ) {
     int counter = 0;
     Buffer * buff;
-    wxString name;
     FileName = FileName.Lower().Trim(true).Trim(false);
+    
+    wxFileName file( FileName );
     
     while (counter < GetBufferCount()) {
         buff = buffers[counter];
-        name = buff->GetFileName().Lower().Trim(true).Trim(false);
-        if (name==FileName) return counter;
+        wxFileName name( buff->GetFileName().Lower().Trim(true).Trim(false) );
+        
+        if( name == file ) return counter;
         counter ++;
     }
     return -1;
