@@ -68,10 +68,7 @@ void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
             FB_View->Check(Menu_Result, false);
         }
         else {
-            if ( stc )
-                HSplitter->SplitHorizontally( FBNotebook, FBConsole, ConsoleSize );
-            else 
-                HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
+            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
             FB_View->Check(Menu_Result, true);
         }
     Thaw();

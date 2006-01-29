@@ -98,7 +98,6 @@ void MyFrame::LoadMenu () {
     
     FB_File->Append (Menu_New, _T(Lang[11] + "\tCtrl+N"), _T(Lang[12]));
     FB_File->Append (Menu_Open, _T(Lang[13] + "\tCtrl+O"), _T(Lang[14]));
-    //FB_File->Append (Menu_FileHistory, _T(Lang[13]) + "...", file_history );
     
     FB_File->AppendSeparator();
     FB_File->Append (Menu_Save,	_T(Lang[15] + "\tCtrl+S"), _T(Lang[16]));
@@ -178,7 +177,6 @@ void MyFrame::LoadMenu () {
     if( !Prefs.UseHelp ) HelpMenu->Enable( Menu_Help, false );
     HelpMenu->Append(Menu_QuickKeys, _T("QuickKeys.txt") );
     HelpMenu->Append(Menu_ReadMe, _T("ReadMe.txt") );
-    //HelpMenu->Append(Menu_Fpp, _T("Fpp.txt") );
     HelpMenu->AppendSeparator();
     HelpMenu->Append(Menu_About,   _T(Lang[79]),    _T(Lang[80]));
 
@@ -190,7 +188,7 @@ void MyFrame::LoadMenu () {
     MenuBar->Append(FB_View,  _T(Lang[7]));
     MenuBar->Append(FB_Run,   _T(Lang[9]));
     MenuBar->Append(HelpMenu, _T(Lang[10]));
-    MenuBar->Enable(1, false);
+//    MenuBar->Enable(-1, false);
     
     SetMenuBar(MenuBar);
     
@@ -307,31 +305,37 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     else if( File.GetExt() == "txt" ) { FileType = 2; }
 
     if (stc==NULL) {
-        EnableMenus(true);
-        OldTabSelected = -1;
         Freeze();
-            int style = wxNO_FULL_REPAINT_ON_RESIZE|wxCLIP_CHILDREN|wxBC_DEFAULT;
-            FBNotebook = new wxMyNotebook( this, HSplitter, wxID_ANY, wxDefaultPosition,
-                wxDefaultSize, style);
-        
-            HSplitter->ReplaceWindow( FBCodePanel, FBNotebook );
-            delete FBCodePanel;
-            FBCodePanel = NULL;
-        
-            stc = new FB_Edit( this, FBNotebook, -1, "" );
-        CurrentFileType = FileType;
-        stc->LoadSTCTheme( CurrentFileType );
-        stc->LoadSTCSettings();
-        stc->StyleClearAll();
-        stc->LoadSTCTheme( CurrentFileType );
-        stc->LoadSTCSettings();
-        buff = bufferList.AddFileBuffer("", "");
-        buff->SetFileType(FileType);
-        doc = stc->GetDocPointer();
-        stc->AddRefDocument(doc);
-        stc->SetDocPointer(doc);
-        if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
-        FBNotebook->AddPage( stc, wxFileNameFromPath(InitFile), true );
+            EnableMenus(true);
+            OldTabSelected = -1;
+    
+            m_TabStcSizer = new wxBoxSizer( wxVERTICAL );
+                
+            FBNotebook = new wxMyNotebook( this, FBCodePanel, wxID_ANY, wxDefaultPosition,
+                wxDefaultSize, wxSTATIC_BORDER|wxTB_TOP|wxTB_X);
+    
+            stc = new FB_Edit( this, FBCodePanel, -1, "" );
+            FBNotebook->SetSizeHints( wxSize(-1, 22) );
+            m_TabStcSizer->Add( FBNotebook, 0, wxTOP | wxLEFT | wxRIGHT | wxEXPAND | wxALIGN_TOP, 0 );
+            m_TabStcSizer->Add( stc, 1, wxBOTTOM | wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 0 );
+            FBCodePanel->SetSizer( m_TabStcSizer );
+            FBCodePanel->Layout();
+                            
+            CurrentFileType = FileType;
+            stc->LoadSTCTheme( CurrentFileType );
+            stc->LoadSTCSettings();
+            stc->StyleClearAll();
+            stc->LoadSTCTheme( CurrentFileType );
+            stc->LoadSTCSettings();
+            buff = bufferList.AddFileBuffer("", "");
+            buff->SetFileType(FileType);
+            doc = stc->GetDocPointer();
+            stc->AddRefDocument(doc);
+            stc->SetDocPointer(doc);
+            if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
+            FBNotebook->AddPage( wxFileNameFromPath(InitFile), true );
+            
+            SendSizeEvent();
         Thaw();
     }
     else {
@@ -344,7 +348,7 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
         stc->SetDocPointer(doc);
         OldTabSelected = -1;
         if (InitFile!=FBUNNAMED) stc->LoadFile(InitFile);
-        FBNotebook->InsertPage(FBNotebook->GetPageCount(), stc, wxFileNameFromPath(InitFile), true);
+        FBNotebook->AddPage( wxFileNameFromPath(InitFile), true);
         
         if ( FileType != CurrentFileType ) {
             CurrentFileType = FileType;
@@ -361,6 +365,9 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     stc->SetFocus();
     
     if (SFDialog) SFDialog->Rebuild();
+    if ( select ) {
+        SetTitle( "FBIde - " + InitFile );
+    }
 
     return;
 }
@@ -369,7 +376,7 @@ void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
     return;
 }
 
-void MyFrame::ChangeNBPage   ( wxNotebookEvent& event) {
+void MyFrame::ChangeNBPage   ( wxTabbedCtrlEvent & event) {
     if (OldTabSelected==-1) {
         OldTabSelected = 0 ;
         return;

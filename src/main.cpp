@@ -177,9 +177,9 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_ReadMe,               MyFrame::OnReadMe)
     EVT_MENU(Menu_Fpp,                  MyFrame::OnFpp)
     
-        EVT_MENU_RANGE( wxID_FILE1, wxID_FILE9, MyFrame::OnFileHistory )
+    EVT_MENU_RANGE( wxID_FILE1, wxID_FILE9, MyFrame::OnFileHistory )
     
-    EVT_NOTEBOOK_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
+    EVT_TABBEDCTRL_PAGE_CHANGED(-1,       MyFrame::ChangeNBPage)
     
     EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError)
 
@@ -328,10 +328,10 @@ void MyFrame::OnClose 	(wxCloseEvent &event) {
     }
     
     if (FBCodePanel)    delete FBCodePanel;
-    if (FBNotebook)     delete FBNotebook;
     wxTheClipboard->Flush();
     SaveSettings();
     if (m_FileHistory ) delete m_FileHistory;
+    if( ::m_server ) delete m_server;
     event.Skip();
 }
 

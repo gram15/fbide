@@ -307,7 +307,7 @@ public:
     void OnFpp          ( wxCommandEvent& event );
     
     void NewSTCPage         ( wxString InitFile, bool select = false, int FileType = 0 );
-    void ChangeNBPage       ( wxNotebookEvent& event );
+    void ChangeNBPage       ( wxTabbedCtrlEvent& event );
     void ChangingNBPage     ( wxNotebookEvent& event );
     
     //Pointers
@@ -353,6 +353,7 @@ public:
     
     wxCHMHelpController help;
     wxFileHistory  * m_FileHistory;
+    wxBoxSizer     * m_TabStcSizer;
    
 private:
     DECLARE_EVENT_TABLE()
