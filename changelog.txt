@@ -1,5 +1,7 @@
 Version 0.4.5
+   * Added optionally setting active paths when compiling / running.
    * Changed New Visual Studio like looking tabs. Reason is mainly due bugs in Linux build of wxGTK wich doesn't seem to like tabs very much. ( vongodric )
+   * Changed New compilation system. Each tab has it's own compiled file, several bug fixes
 
 
 Version 0.4.4
