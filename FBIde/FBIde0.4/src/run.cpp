@@ -233,65 +233,78 @@ int MyFrame::Compile ( int index ) {
         ::wxSetWorkingDirectory( objFile.GetPath() );
     
     // Execute fbc and retreave results.
-    wxArrayString arrError, arrErrOutput;
-    int intCompileResult = wxExecute( strCompile, arrError, arrErrOutput );
+    wxArrayString arrOutput, arrErrOutput;
+    int intCompileResult = wxExecute( strCompile, arrOutput, arrErrOutput );
     
-    // if there was an error fbc returns 1. Now get error messages and put them 
+    // if there was any output from fbc then get output messages and put them 
     // into console area
-    if ( intCompileResult  ) {
+    if ( arrOutput.Count() || arrErrOutput.Count() ) {
         // define variables
-        wxString        strError;
+        wxString        strOutput;
         wxString        strTemp;
-        wxFileName      objErrorFile;
-        long            intError;
+        wxFileName      objOutputFile;
+        long            intOutput;
         long            intLine;
         int             intBraceStart;
         int             intBraceEnd;
-        bool            isErrorHeader = false;
+        bool            isOutputHeader = false;
         
         wxString        strDebug;
         
-        // Becouse fbc returns errors via both std and error channels,
+        // Becouse fbc returns Outputs via both std and error channels,
         // we need to join them here.
-        WX_APPEND_ARRAY( arrError, arrErrOutput );
+        WX_APPEND_ARRAY( arrOutput, arrErrOutput );
         
-        // Loop through arrError
-        for( unsigned int cnt = 0; cnt < arrError.Count(); cnt++ ) {
-            if( arrError[cnt].IsEmpty() ) continue;
+        // Loop through arrOutput
+        for ( unsigned int cnt = 0; cnt < arrOutput.Count(); cnt++ ) {
+            if ( arrOutput[cnt].IsEmpty() ) continue;
             
-            intBraceStart = arrError[cnt].Find( '(' );
-            intBraceEnd = arrError[cnt].Find( ')' );
+            intBraceStart = arrOutput[cnt].First( '(' );
+            intBraceEnd = arrOutput[cnt].First( ')' );
             
-            // if intBraceStart is not -1 then hopefully line number was found.
-            // as fbc returns things: file(linenumber): error nr : error message
-            if( intBraceStart != -1 && intBraceEnd != -1 ) {
-                // Get possible file name and check if it is indeed a filename
-                objErrorFile = arrError[cnt].Left( intBraceStart );
-                objErrorFile.Normalize();
-                if( objErrorFile.IsOk() && objErrorFile.FileExists() ) {
-                    //Now that it's indeed is a filename, get line, error number
-                    // and error message on that line
-                    strTemp = arrError[cnt].Mid( intBraceStart + 1, intBraceEnd - intBraceStart - 1);
+            // if intBraceStart is not -1 then probably line number was found.
+            // as fbc returns things: file(linenumber): Error|Rarning nr: Output message
+            // As it might be any message then test if first part is a filename.
+            // colon[:] - win32
+            // slash[/] -linux
+            #ifdef __WXMSW__
+                if( intBraceStart != -1 && intBraceEnd != -1 && arrOutput[cnt].GetChar(1) == ':' ) {
+            #else
+                if( intBraceStart != -1 && intBraceEnd != -1 && arrOutput[cnt].GetChar(0) == '/' ) {
+            #endif
+                // Get possible line and error number.
+                strTemp = arrOutput[cnt].Mid( intBraceStart + 1, intBraceEnd - intBraceStart - 1);
+                
+                // if this is a number:
+                if( strTemp.IsNumber() ) {
                     strTemp.ToLong( &intLine );
-                    
-                    strTemp = arrError[cnt].Mid( intBraceEnd + 10);
-                    strError = strTemp.Mid( strTemp.Find( ':' ) + 2 );
-                    strTemp = strTemp.Left( strTemp.Find( ':' ) );
-                    strTemp.ToLong( &intError );
-                    
-                    isErrorHeader = true;
+                    // Get possible file name and check if it is indeed a filename
+                    objOutputFile = arrOutput[cnt].Left( intBraceStart );
+                    objOutputFile.Normalize();
+                    if( objOutputFile.IsOk() && objOutputFile.FileExists() ) {
+                        //Now that it's indeed is a filename, get line, error/warning number
+                        //and Output message on that line
+                        strTemp = arrOutput[cnt].Mid( intBraceEnd + 4);
+                        strTemp = strTemp.Mid( strTemp.Find( ' ' ) + 1 );
+                        strOutput = strTemp.Mid( strTemp.Find( ':' ) + 2 );
+                        strTemp = strTemp.Left( strTemp.Find( ':' ) );
+                        strTemp.ToLong( &intOutput );
+                        isOutputHeader = true;
+                    }
                 }
             }
             
-            // If is error header ( includes filename, error number and line number then
+            // If is Output header ( includes filename, Output number and line number then
             // add generated values. Else just add original message.
-            if( isErrorHeader ) {
-                isErrorHeader = false;
-                AddListItem(intLine, intError, objErrorFile.GetFullPath(), strError);
+            if( isOutputHeader ) {
+                isOutputHeader = false;
+                if ( intOutput == 0 ) intOutput = -1;
+                AddListItem(intLine, intOutput, objOutputFile.GetFullPath(), strOutput);
             } else {
-                AddListItem(-1, -1, "", arrError[cnt]);
+                // Replace all tabs.
+                arrOutput[cnt].Replace( "\t", "  " );
+                AddListItem(-1, -1, "", arrOutput[cnt]);
             }
-            
         }
         
         // Open console area
@@ -300,15 +313,18 @@ int MyFrame::Compile ( int index ) {
             FB_View->Check(Menu_Result, true);
         }    
         
-        return 1;
+    } else {
+        // Since there was no output then close console area 
+        // -if no error then it is not needed.
+        if ( HSplitter->IsSplit() ) { 
+            ConsoleSize = HSplitter->GetSashPosition();
+            HSplitter->Unsplit( FBConsole );
+            FB_View->Check(Menu_Result, false);
+        }
     }
     
-    // Close console area -if no error then it is not needed.
-    if ( HSplitter->IsSplit() ) { 
-        ConsoleSize = HSplitter->GetSashPosition();
-        HSplitter->Unsplit( FBConsole );
-        FB_View->Check(Menu_Result, false);
-    }
+    // if there was an error fbc returns 1. So we just exit and return 1 as well
+    if ( intCompileResult  ) return 1;
     
     // Set newly compiled filename:
     // Note that under linux extension is missing, in windows
@@ -434,7 +450,6 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     FBConsole->DeleteAllItems();
     SetStatusText( "Compiling..." );
     
-    
     // Compile it
     if ( Compile( index ) == 0 ) {
         SetStatusText( "Compilation Complete." );
@@ -472,6 +487,8 @@ wxString MyFrame::GetCompileData ( int index ) {
         objFilePath.GetExt() != "rc" ) return "";    
     wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );    
     
+    
+    // Linux doesn't like quotes nor does it need exact path to fbc
     #ifdef __WXMSW__
         wxFileName ObjCompilerPath( CompilerPath );
         ObjCompilerPath.Normalize();
@@ -485,316 +502,9 @@ wxString MyFrame::GetCompileData ( int index ) {
     return strReturn;
 }
 
-/*
-
-
-
-
-void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
-    if (stc==0) return;
-    if (ProcessIsRunning) return;
-    
-    int index = FBNotebook->GetSelection();
-    Buffer* buff = bufferList[index];
-    
-    wxString OldRunFileName = CompiledFile;
-    if (buff->GetFileName()==""||buff->GetFileName()==FBUNNAMED) {
-        wxFileName w(FB_App->argv[0]);
-        CurFolder = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
-    }
-    else {
-        wxFileName w(buff->GetFileName());
-        CurFolder = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
-    }
-    stc->SaveFile (CurFolder + "FBIDETEMP.bas");
-    FBConsole->DeleteAllItems();
-    SetStatusText( "Compiling..." );
-    if (Compile(CurFolder + "FBIDETEMP.bas")==0) {
-        SetStatusText( "Compilation Complete." );
-        Run();
-    }
-    else {
-        SetStatusText( "Compilation Failed!" );
-        wxRemoveFile(CurFolder + "FBIDETEMP.bas");
-        wxRemoveFile(CurFolder + "fbidetemp.asm");
-        wxRemoveFile(CurFolder + "fbidetemp.o");
-    }
-
-    CompiledFile = OldRunFileName;
-    IsTemp=true;
-    return;
-}
-
-
-int  MyFrame::Compile            ( wxString FileName ) {
-    if (stc->GetLength()==0) {
-        wxMessageBox (_(Lang[178]), _(Lang[179]));
-        return 1;
-    }
-    
-    wxString Temp=GetCompileData( FileName );
-    wxString FilePath = wxPathOnly( CompiledFile );
-
-    if (Temp=="") return false;
-    
-    unsigned long LineNumber = 0, errornr = 0;
-    wxString NumTemp, Message;
-    
-    wxArrayString output, erroutput;
-    int answer = wxExecute(Temp, output, erroutput);
-    bool errline = false;
-    
-    int FirstLine = 0;
-    wxString FirstFile;
-
-    if (answer!=0) {
-        Temp="";
-
-        if (output.Count()) {
-            for (unsigned int ii=0;ii<output.Count();ii++) {
-                Temp = output[ii];
-                for (unsigned int i=0; i<Temp.Len();i++) {
-                    NumTemp = "";
-                    unsigned int x = 0;
-                    if (Temp.Mid(i,1)=="(") {
-                        for (x=i+1;x<Temp.Len();x++) {
-                   	        if (Temp.Mid(x,1)==")") {
-                                if ( NumTemp.Len() )
-                                    errline = true;
-                                break;
-                            }
-                            NumTemp+=Temp.Mid(x,1);
-                        }
-                        if (errline) {
-                            if (!NumTemp.IsNumber()) {
-                                errline = false;
-                                break;
-                            }
-                            NumTemp.ToULong(&LineNumber);
-                            FileName = Temp.Left(i);
-                            x+=10;
-                            NumTemp="";
-                            for (;x<Temp.Len();x++) {
-                   	            if (Temp.Mid(x,1)==":") break;
-                                NumTemp+=Temp.Mid(x,1);
-                            }
-                            if (x==Temp.Len()) {
-                                errline = false;
-                                break;
-                            }
-                            if (!NumTemp.IsNumber()) {
-                                errline = false;
-                                break;
-                            }
-                            NumTemp.ToULong(&errornr);
-                            Message = Temp.Mid(x+2);
-                            break;
-                        }
-                    }
-                }
-                if (errline) {
-                    wxFileName tf(FileName);
-                    if(!tf.HasVolume()) {
-                        wxString FBCPath = wxFileName(CompilerPath).GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
-                        if (FileName!="") {
-                            if(wxFileName(FilePath+"/"+FileName).FileExists()) {
-                                FileName=FilePath+"/"+FileName;
-                           }
-                           else if(wxFileName(FBCPath+FileName).FileExists()) {
-                               FileName=FBCPath+FileName;
-                           }
-                           else if(wxFileName(FBCPath+"inc/"+FileName).FileExists()) {
-                               FileName=FBCPath+"inc/"+FileName;
-                           }
-                           //else FileName=FBCPath+"inc/"+FileName;;
-                        }
-                        //FileName=FilePath+"/"+FileName;
-                    }
-                                        
-                    if (FirstFile=="") {
-                        FirstFile=FileName;
-                        FirstLine=LineNumber;
-                    }
-                    
-                    AddListItem(LineNumber, errornr, FileName, Message);
-                    if ( output[ii+1].Len() )
-                        AddListItem(-1, -1, "", output[ii+1]);
-                    if ( output[ii+2].Len() )
-                        AddListItem(-1, -1, "", output[ii+2]);
-                    if ( output[ii+3].Len() )
-                        AddListItem(-1, -1, "", output[ii+3]);
-                    ii+=3;
-                }
-                else AddListItem(-1, -1, "", output[ii]);
-                errline = false;
-            } //for
-        } //end output.Count()
-        
-        if (erroutput.Count()) {
-            for (unsigned int ii=0;ii<erroutput.Count();ii++) {
-                AddListItem(-1, -1, "", erroutput[ii]);
-            }
-        }
-
-
-        if ( !HSplitter->IsSplit() ) { 
-            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
-            FB_View->Check(Menu_Result, true);
-        }
-    
-        if (FirstFile!="") {
-            GoToError(FirstLine-1, FirstFile);
-        }
-        return answer;
-    }
-    
-    if (output.Count()) {
-        for (unsigned int ii=0;ii<output.Count();ii++) {
-            AddListItem(-1, -1, "", output[ii]);
-        }
-        
-        if ( !HSplitter->IsSplit() ) { 
-            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
-            FB_View->Check(Menu_Result, true);
-        }
-        return 0;
-    }
-    
-    if ( HSplitter->IsSplit() ) { 
-        ConsoleSize = HSplitter->GetSashPosition();
-        HSplitter->Unsplit( FBConsole );
-        FB_View->Check(Menu_Result, false);
-    }
-    return 0;
-}
-
-
-void MyFrame::Run                ( wxString FileName ) {
-    if (ProcessIsRunning) return;
-    if (FileName=="") FileName = CompiledFile;
-    
-    if (FileName=="") {
-        if (stc==0) return;
-    	int Question= wxMessageBox (Lang[180],
-                                  Lang[181],
-                                   wxYES_NO | wxICON_QUESTION);
-       if (Question==wxNO) return;
-       wxCommandEvent t;
-       OnCompileAndRun( t );
-       return;
-    }
-    wxString Temp;
-    Temp << "\"" + FileName << "\" " << ParameterList;
-    
-    MyProcess * process = new MyProcess(this, Temp);
-    int m_pidLast = wxExecute(Temp, wxEXEC_ASYNC, process);
-    if ( !m_pidLast )
-    {
-        delete process;
-        ProcessIsRunning=false;
-        wxMessageBox (Lang[182] + Temp + "\"", 
-                      Lang[179],
-                      wxICON_ERROR);
-        return;
-    }
-    
-    FB_Toolbar->EnableTool(Menu_Compile, false);
-    FB_Toolbar->EnableTool(Menu_CompileAndRun, false);
-    FB_Toolbar->EnableTool(Menu_Run, false);
-    FB_Toolbar->EnableTool(Menu_QuickRun, false);
-    
-    FB_Run->Enable(Menu_Compile, false);
-    FB_Run->Enable(Menu_CompileAndRun, false);
-    FB_Run->Enable(Menu_Run, false);
-    FB_Run->Enable(Menu_QuickRun, false);
-    
-    ProcessIsRunning=true;
-    return;
-}
-
-
-wxString MyFrame::GetCompileData ( wxString FileName ) {
-    wxString Cmd;
-    wxString Temp;
-    wxString TempCmdPath;
-    wxString MetaCommand;
-    
-    int index = FBNotebook->GetSelection();
-    Buffer * buff = bufferList[index];
-    
-    if (FileName=="") FileName = buff->GetFileName();
-    
-    Temp=CMDPrototype;
-    Temp=Temp.Trim(false).Lower();
-    
-    bool check=false;
-    bool eliminateSpaces=false;
-    CompiledFile="";
-
-    TempCmdPath = CompilerPath;
-    if (Temp.Len()>0) {
-        for (unsigned int i=0;i<Temp.Len()+1;i++) {
-
-            if (Temp.Mid(i,1)==" ") {
-                if (eliminateSpaces==true) continue;
-                eliminateSpaces=true;
-            }
-            else eliminateSpaces=false;
-
-            if (Temp.Mid(i,1)=="<" || Temp.Mid(i,1)==">") {
-         	  check=!check;
-         	  continue;
-            }
-
-        	if (check) {
-        	   MetaCommand+=Temp.Mid(i,1);
-        	   continue;
-        	}
-
-            if (Temp.Mid(i,3)=="-x ") {
-                bool terminate=false;
-                for (unsigned int x=i+3 ; x<Temp.Len()+1;x++) {
-                    if (Temp.Mid(x,1)==" ") {
-                        if (terminate==false)continue;
-                    }
-                    terminate=true;
-                    if (Temp.Mid(x,1)==" ") break;
-                    CompiledFile+=Temp.Mid(x,1);
-                }
-            }
-
-            MetaCommand=MetaCommand.Trim(true).Trim(false);
-            if (MetaCommand>"") {
-                if (MetaCommand=="fbc") Cmd+=TempCmdPath;
-                else if (MetaCommand=="filename") {
-                    Cmd<<"\"" << FileName << "\"";
-                }
-                MetaCommand="";
-                Cmd+=" ";
-            }
-            Cmd+=Temp.Mid(i,1);
-        }
-    }
-    else {
-        Cmd = "";
-  		Cmd << TempCmdPath << " \"" << FileName << "\"";
-    }
-
-    if (CompiledFile=="") {
-        Temp=FileName;
-        Temp=Temp.Trim(true).Trim(false).Lower();
-        if (Temp.Right(4)==".bas") {
-            CompiledFile=Temp.Left(Temp.Len()-4);
-            CompiledFile+=".exe";
-        }
-    }
-    return Cmd;
-}
-
-
-*/
 
 //------------------------------------------------------------------------------
+
 
 void MyProcess::OnTerminate( int pid, int status )
 {
