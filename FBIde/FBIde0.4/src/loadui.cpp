@@ -174,7 +174,8 @@ void MyFrame::LoadMenu () {
     FB_View->Append          (Menu_Settings, _(Lang[57]), _(Lang[58]));
     FB_View->Append          (Menu_Format, Lang[175], Lang[176]);
     FB_View->AppendCheckItem (Menu_Result, _(Lang[59] + "\tF4"), _(Lang[60]));
-    FB_View->Append (Menu_Subs, _(Lang[61] + "\tF2"), _(Lang[62]));
+    FB_View->Append          (Menu_Subs, _(Lang[61] + "\tF2"), _(Lang[62]));
+    FB_View->Append          (Menu_CompilerLog, _(Lang[236]), _(Lang[237] ) );
     //FB_Tools->Append (Menu_Converter, _(Language.ToolsConverter), _(Language.ToolsConverterDesc));
 
 
@@ -394,10 +395,6 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
     return;
 }
 
-
-void MyFrame::ChangingNBPage   ( wxNotebookEvent& event) {
-    return;
-}
 
 void MyFrame::ChangeNBPage   ( wxTabbedCtrlEvent& event) {
     if (OldTabSelected==-1) {

@@ -3,6 +3,8 @@
 232=Show splash screen
 234=Active paths
 235=Set paths active when running/compiling
+236=Show log
+237=Shows compilation log
 
 ;Generic stuff
 1=Willkommen in der FreeBASIC-IDE!
