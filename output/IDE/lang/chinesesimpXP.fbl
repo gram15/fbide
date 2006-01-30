@@ -21,6 +21,8 @@ XPµÄ¼òÌåÖĞÎÄµÄÓïÑÔÎÄ¼ş.ÒòÎªFBIdeµÄ½çÃæ¶ÔÖĞÎÄÖ§³Ö²»Ì«ºÃ,½çÃæ²¢²»ÀíÏë,Ëù
 ;==========================================================================================
 
 232=Show splash screen
+234=Active paths
+235=Set paths active when running/compiling
 
 ;Generic stuff
 1=ÿ»¶Ó­Ê¹ÓÃ FBIde!
