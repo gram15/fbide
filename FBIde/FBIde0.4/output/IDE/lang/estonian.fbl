@@ -1,6 +1,8 @@
 [FBIde]
 
 232=Näita splash akent
+234=Active paths
+235=Set paths active when running/compiling
 
 ;Generic stuff
 1=Tere tulemast FBIde'sse.

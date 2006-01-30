@@ -3,6 +3,8 @@
 [FBIde]
 
 232=Show splash screen
+234=Active paths
+235=Set paths active when running/compiling
 
 ;Generic stuff
 1=Tervetuloa k‰ytt‰m‰‰n ohjelmaa FBIde!

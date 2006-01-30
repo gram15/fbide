@@ -2,6 +2,8 @@
 ; by v!ct0r
 
 232=Show splash screen
+234=Active paths
+235=Set paths active when running/compiling
 
 ;Generic stuff
 1=Benvindo ao FBIde
