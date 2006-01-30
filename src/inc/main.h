@@ -204,6 +204,7 @@ public:
     void SetModified        ( int index, bool status );
     void AddListItem        ( int Linenr, int ErrorNr, wxString FileName, wxString Message );
     void OnGoToError        ( wxListEvent& event );
+    void OnConsoMouseleLeft ( wxListEvent& event );
     void GoToError          ( int Linenr, wxString FileName );
     
     void EnableMenus       ( bool state );
@@ -276,6 +277,8 @@ public:
     void OnFormat           ( wxCommandEvent &event );
     void OnResult           ( wxCommandEvent &event );
     void OnSubs             ( wxCommandEvent &event );
+    void OnCompilerLog      ( wxCommandEvent &event );
+    void CompilerLog        (  );
     
     //Run menu stuff
     void OnCompile 	        ( wxCommandEvent &event );
@@ -314,7 +317,6 @@ public:
     
     void NewSTCPage         ( wxString InitFile, bool select = false, int FileType = 0 );
     void ChangeNBPage       ( wxTabbedCtrlEvent & event );
-    void ChangingNBPage     ( wxNotebookEvent& event );
     
     //Pointers
     MyApp               * FB_App;
@@ -363,6 +365,8 @@ public:
 
     wxFileHistory  * m_FileHistory;
     wxBoxSizer     * m_TabStcSizer;
+    
+    wxArrayString    strCompilerOutput;
 
 	
    
@@ -414,6 +418,7 @@ enum
 	//ViewMenu:
     Menu_Format,
 	Menu_Result,
+	Menu_CompilerLog,
 	
 	//Tools menu
     Menu_Converter,

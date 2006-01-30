@@ -112,6 +112,73 @@ void MyFrame::GoToError ( int Linenr, wxString FileName ) {
     stc->EnsureCaretVisible();
 }
 
+
+void MyFrame::OnCompilerLog ( wxCommandEvent &event ) {
+    CompilerLog();
+}
+
+
+void MyFrame::MyFrame::OnConsoMouseleLeft ( wxListEvent& event ) {
+    CompilerLog();
+}
+
+
+void MyFrame::CompilerLog () {
+    //wxMessageBox( strCompilerOutput );
+    wxString strTitle( "Fbc output" );
+    wxDialog * dlg = new wxDialog( this, -1, strTitle, 
+            wxDefaultPosition, wxSize( 400, 200 ), 
+            wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxCLIP_CHILDREN | wxMAXIMIZE_BOX );
+    wxBoxSizer * objSizer = new wxBoxSizer( wxVERTICAL );
+    wxTextCtrl * output = new wxTextCtrl( dlg, wxID_ANY, "", 
+            wxDefaultPosition, wxDefaultSize, 
+            wxTE_MULTILINE | wxTE_READONLY | wxTE_BESTWRAP | wxTE_RICH2 );
+    output->SetFont( wxFont( 10, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL ) );
+    objSizer->Add( output, 1, wxBOTTOM | wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 0 );
+
+    wxTextAttr myattr=output->GetDefaultStyle();
+    wxFont defFont = myattr.GetFont();
+    wxFont boldFont = myattr.GetFont();
+    boldFont.SetWeight( wxFONTWEIGHT_BOLD );
+    bool nesting=false;
+    wxString tag="";
+    for(int i=0;i<(int)strCompilerOutput.Count();i++) {
+        for(int j=0;j<(int)strCompilerOutput[i].Len();j++)
+        {
+            char thechar=(char)*strCompilerOutput[i].Mid(j,1);
+            if(thechar=='['&&!nesting)
+            {
+                nesting=true;
+            }
+            else if(thechar==']'&&nesting)
+            {
+                nesting=false;
+                tag=tag.MakeLower();
+                if(tag=="bold")
+                    myattr.SetFont(boldFont);
+                else if(tag=="/bold")
+                    myattr.SetFont(defFont);
+                output->SetDefaultStyle(myattr);
+                tag="";
+            }
+            else if(nesting)
+            {
+                tag+=thechar;
+            }
+            else
+            {
+                output->WriteText(thechar);
+            }
+        }
+        output->WriteText("\r\n");
+    }
+    output->SetInsertionPoint( output->XYToPosition( 0, 0 ) );
+
+
+    dlg->SetSizer( objSizer );
+    dlg->Show();
+}
+
 //------------------------------------------------------------------------------
 
 void MyFrame::OnCompile (wxCommandEvent& WXUNUSED(event)) {
@@ -203,7 +270,6 @@ int MyFrame::Proceed   	(void) {
     return 1;
 }
 
-
 // -----------------------------------------------------------------------------
 
 /**
@@ -226,6 +292,11 @@ int MyFrame::Compile ( int index ) {
     // Get compiler cmdline and check it. if empty return.
     wxString strCompile( GetCompileData( index ) );
     if( !strCompile.Len() ) return 1;
+    
+    // Log compiler output and input
+    strCompilerOutput.Empty();
+    strCompilerOutput.Add("[bold]Command executed:[/bold]");
+    strCompilerOutput.Add(strCompile);
     
     // If Active path is activated then set current working path
     // to show to the location of the src file.
@@ -255,15 +326,22 @@ int MyFrame::Compile ( int index ) {
         // we need to join them here.
         WX_APPEND_ARRAY( arrOutput, arrErrOutput );
         
+        // Putput logging:
+        strCompilerOutput.Add( "" );
+        strCompilerOutput.Add( "[bold]Compiler output:[/bold]" );
+        
         // Loop through arrOutput
         for ( unsigned int cnt = 0; cnt < arrOutput.Count(); cnt++ ) {
             if ( arrOutput[cnt].IsEmpty() ) continue;
+            
+            // Log compiler output
+            strCompilerOutput.Add( arrOutput[cnt] );
             
             intBraceStart = arrOutput[cnt].First( '(' );
             intBraceEnd = arrOutput[cnt].First( ')' );
             
             // if intBraceStart is not -1 then probably line number was found.
-            // as fbc returns things: file(linenumber): Error|Rarning nr: Output message
+            // as fbc returns things: file(linenumber): Error|Warning nr: Output message
             // As it might be any message then test if first part is a filename.
             // colon[:] - win32
             // slash[/] -linux
@@ -284,7 +362,7 @@ int MyFrame::Compile ( int index ) {
                     if( objOutputFile.IsOk() && objOutputFile.FileExists() ) {
                         //Now that it's indeed is a filename, get line, error/warning number
                         //and Output message on that line
-                        strTemp = arrOutput[cnt].Mid( intBraceEnd + 4);
+                        strTemp = arrOutput[cnt].Mid( intBraceEnd + 4 );
                         strTemp = strTemp.Mid( strTemp.Find( ' ' ) + 1 );
                         strOutput = strTemp.Mid( strTemp.Find( ':' ) + 2 );
                         strTemp = strTemp.Left( strTemp.Find( ':' ) );
@@ -323,22 +401,51 @@ int MyFrame::Compile ( int index ) {
         }
     }
     
-    // if there was an error fbc returns 1. So we just exit and return 1 as well
-    if ( intCompileResult  ) return 1;
+    // Log
+    strCompilerOutput.Add( "" );
+    strCompilerOutput.Add( "[bold]Results:[/bold]" );
     
-    // Set newly compiled filename:
-    // Note that under linux extension is missing, in windows
-    // it's exe
-    if( objFile.GetExt() == "bas" || objFile.GetExt() == "bi" ) {
-        #ifdef __WXMSW__
-            objFile.SetExt( "exe" );
-        #else
-            objFile.SetExt( "" );
-        #endif
-        bufferList[ index ]->SetCompiledFile( objFile.GetFullPath() );
+    
+    // if there was an error ( fbc returns 1 ).
+    if ( intCompileResult  ) {
+        strCompilerOutput.Add( "Compilation failed" );
+    } else {
+        // Set newly compiled filename:
+        // Note that under linux extension is missing, in windows
+        // it's exe
+        if( objFile.GetExt() == "bas" || objFile.GetExt() == "bi" ) {
+            #ifdef __WXMSW__
+                objFile.SetExt( "exe" );
+            #else
+                objFile.SetExt( "" );
+            #endif
+            bufferList[ index ]->SetCompiledFile( objFile.GetFullPath() );
+        }
+        
+        strCompilerOutput.Add( "Compilation successful" );
+        strCompilerOutput.Add( "Generated executable: " + objFile.GetFullPath() );
     }
     
-    return 0;
+    wxString strTemp;
+    // Log system, fbide and fbc version
+    strCompilerOutput.Add( "" );
+    strCompilerOutput.Add( "[bold]System:[/bold]" );
+    
+    strTemp = "";
+    strTemp << VER_MAJOR << "." << VER_MINOR << "." << VER_RELEASE;
+    strCompilerOutput.Add( "FBIde: " + strTemp );
+    
+    arrOutput.Empty();
+    #ifdef __WXMSW__
+        wxFileName objFbcPath( CompilerPath );
+        wxExecute( "\"" + objFbcPath.GetFullPath() + "\" -version", arrOutput );
+    #else
+        wxExecute( CompilerPath + " -version", arrOutput );
+    #endif
+    strCompilerOutput.Add( "fbc:   " + arrOutput[0] );
+    strCompilerOutput.Add( "OS:    " + ::wxGetOsDescription() );
+    
+    return intCompileResult;
 }
 
 
@@ -413,7 +520,7 @@ void MyFrame::Run ( wxFileName file ) {
 
 /**
  * MyFrame::OnQuickRun
- * This function compiles active tab as a temorary file and executes it,
+ * This function compiles active tab as a temporary file and executes it,
  * when execution is terminated then temporary file is deleted.
  * @return none
  */

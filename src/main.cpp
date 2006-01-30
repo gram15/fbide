@@ -163,6 +163,7 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(Menu_Format,               MyFrame::OnFormat)
     EVT_MENU(Menu_Result,               MyFrame::OnResult)
     EVT_MENU(Menu_Subs,                 MyFrame::OnSubs)
+    EVT_MENU(Menu_CompilerLog,          MyFrame::OnCompilerLog)
     
     EVT_MENU(Menu_Compile,              MyFrame::OnCompile)
     EVT_MENU(Menu_CompileAndRun,        MyFrame::OnCompileAndRun)
@@ -183,6 +184,8 @@ BEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_TABBEDCTRL_PAGE_CHANGED(-1,     MyFrame::ChangeNBPage)
     
     EVT_LIST_ITEM_ACTIVATED(-1,         MyFrame::OnGoToError)
+    EVT_LIST_ITEM_RIGHT_CLICK(-1,       MyFrame::OnConsoMouseleLeft )
+    EVT_LIST_COL_RIGHT_CLICK( -1,        MyFrame::OnConsoMouseleLeft )
 
 END_EVENT_TABLE()
 
