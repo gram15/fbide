@@ -268,13 +268,17 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     wxImage::AddHandler(new wxPNGHandler);
 
     wxBitmap bitmap;
-    if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"/ide/splash.png"), wxBITMAP_TYPE_PNG))
+    /*if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"/ide/splash.png"), wxBITMAP_TYPE_PNG))
     {
       new wxSplashScreen(bitmap,
           wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
           1000, this, wxID_ANY, wxDefaultPosition, wxDefaultSize,
           wxSIMPLE_BORDER|wxSTAY_ON_TOP);
-    }
+    }*/
+    
+    /*wxMessageBox(  "This build of FBIde is only for testing, and might contain serius bugs!\n\
+If you encounter any problems then please let me know: vongodric@hotmail.com\n\
+    VonGodric", "Attention", wxOK | wxICON_INFORMATION  );*/
 
     LoadkwFile ( SyntaxFile );
     Style = LoadThemeFile( ThemeFile );
@@ -312,7 +316,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     }
     #ifdef __WXMSW__
         if( Prefs.UseHelp )
-    help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
+            help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
     #endif
     
     m_FileHistory->AddFilesToMenu();
