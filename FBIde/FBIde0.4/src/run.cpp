@@ -159,6 +159,7 @@ void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
     int result = wxGetOsVersion(&major, &minor);
     if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
     else if(result==wxWIN95) wxExecute("command.com");
+    else wxExecute("konsole");
     return;
 }
 
@@ -210,7 +211,7 @@ int MyFrame::Proceed   	(void) {
  * This function compiles given src file. It calls MyFrame::GetCompileData to
  * receave data.
  * @param index about file from buffer list
- * @return 0 on success, 1 on failure
+ * @return int 0 on success, 1 on failure
  */
 int MyFrame::Compile ( int index ) {
     
@@ -256,7 +257,8 @@ int MyFrame::Compile ( int index ) {
         
         // Loop through arrError
         for( unsigned int cnt = 0; cnt < arrError.Count(); cnt++ ) {
-            if( !arrError[cnt].Len() ) continue;
+            if( arrError[cnt].IsEmpty() ) continue;
+            
             intBraceStart = arrError[cnt].Find( '(' );
             intBraceEnd = arrError[cnt].Find( ')' );
             
@@ -309,8 +311,14 @@ int MyFrame::Compile ( int index ) {
     }
     
     // Set newly compiled filename:
+    // Note that under linux extension is missing, in windows
+    // it's exe
     if( objFile.GetExt() == "bas" || objFile.GetExt() == "bi" ) {
-        objFile.SetExt( "exe" );
+        #ifdef __WXMSW__
+            objFile.SetExt( "exe" );
+        #else
+            objFile.SetExt( "" );
+        #endif
         bufferList[ index ]->SetCompiledFile( objFile.GetFullPath() );
     }
     
@@ -346,8 +354,13 @@ void MyFrame::Run ( wxFileName file ) {
     if( Prefs.ActivePath )
         ::wxSetWorkingDirectory( file.GetPath() );
     
-    // Generate string that get's executed
-    wxString strCommand( "\"" + file.GetFullPath() + "\" " + ParameterList );
+    // Generate string that get's executed. 
+    // Note that linux doesn't want filenames in quotes!
+    #ifdef __WXMSW__
+        wxString strCommand( "\"" + file.GetFullPath() + "\" " + ParameterList );
+    #else
+        wxString strCommand( file.GetFullPath() + " " + ParameterList );
+    #endif
     
     
     // Create new process
@@ -452,18 +465,22 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
  */
 wxString MyFrame::GetCompileData ( int index ) {
     
-    // Retreave file original name and validate it
+        // Retreave file original name and validate it
     wxFileName objFilePath( bufferList[ index ]->GetFileName() );
     objFilePath.Normalize();
     if( objFilePath.GetExt() != "bas" && objFilePath.GetExt() != "bi" &&
-        objFilePath.GetExt() != "rc" ) return "";
+        objFilePath.GetExt() != "rc" ) return "";    
+    wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );    
     
-    wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );
-    wxFileName ObjCompilerPath( CompilerPath );
-    ObjCompilerPath.Normalize();
-    
-    strReturn.Replace( "<fbc>", "\"" + ObjCompilerPath.GetFullPath() + "\"" );
-    strReturn.Replace( "<filename>", "\"" + objFilePath.GetFullPath() + "\"" );
+    #ifdef __WXMSW__
+        wxFileName ObjCompilerPath( CompilerPath );
+        ObjCompilerPath.Normalize();
+        strReturn.Replace( "<fbc>", "\"" + ObjCompilerPath.GetFullPath() + "\"" );
+        strReturn.Replace( "<filename>", "\"" + objFilePath.GetFullPath() + "\"" );
+    #else
+        strReturn.Replace( "<fbc>", CompilerPath );
+        strReturn.Replace( "<filename>", objFilePath.GetFullPath() );
+    #endif
     
     return strReturn;
 }
