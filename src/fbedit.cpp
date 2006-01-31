@@ -534,6 +534,7 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     if (event.ControlDown()&&!event.AltDown()) {
         int key = event.GetKeyCode();
         if (key>=48 && key <= 57) {
+            if( key == 48 ) key = 58;
             int tab = (key-49) + (event.ShiftDown() ? 10 : 0);
             if (tab!=(int)Parent->FBNotebook->GetSelection()&&
                 tab< (int)Parent->FBNotebook->GetPageCount()) {

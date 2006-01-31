@@ -55,13 +55,31 @@ class wxTabbedCtrl : public wxControl {
    long style;
    wxSize padding; 
    bool hover; 
+   bool hover_next;
+   bool hover_prev;
+   bool hover_menu;
    wxRect x_rect; 
+   wxRect Prev_rect;
+   wxRect Next_rect;
+   wxRect Menu_rect;
+   
+   int m_intStartPage;
+   int m_intLastPage;
+   
+   int tipTab;
 
    void OnMouse(wxMouseEvent &); 
    void OnPaint(wxPaintEvent &); 
    void OnSize(wxSizeEvent &); 
    void OnEraseBackground(wxEraseEvent &); 
    void DrawX(bool active, wxDC &dc); 
+   void DrawNext(bool active, wxDC &dc); 
+   void DrawPrev(bool active, wxDC &dc); 
+   void DrawMenu(bool active, wxDC &dc);
+   bool IsVisible( int pg ) { return pg >= m_intStartPage && pg <= m_intLastPage; }
+   void SetVisible( int pg );
+   void OnPopUpMenu( wxCommandEvent & event );
+   void GenerateConextMenu( wxPoint & mouse );
 
 public: 
    wxTabbedCtrl(); 
@@ -93,6 +111,8 @@ public:
    void SetImageList(wxImageList *list) { img_list = list; } 
    wxSize GetPadding() { return padding; } 
    void SetPadding(const wxSize &pad) { padding = pad; } 
+   
+   void AdvanceSelection(bool forward = true);
 }; 
 
 class wxTabbedCtrlEvent : public wxNotifyEvent { 
