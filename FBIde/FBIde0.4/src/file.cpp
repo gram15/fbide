@@ -184,8 +184,6 @@ void MyFrame::CloseFile          ( int index ) {
     if (formatDialog)   { formatDialog->Close(true); }
     
     stc->SetBuffer( (Buffer *) 0 );
-    OldTabSelected = -1;
-        
     stc->ClearAll();
     stc->ReleaseDocument( bufferList[index]->GetDocument() );
     FBNotebook->DeletePage(index);
@@ -200,8 +198,7 @@ void MyFrame::CloseFile          ( int index ) {
         FBNotebook = 0;
     	m_TabStcSizer = 0;
         EnableMenus(false);
-    }
-    else {
+    } else {
         SetSTCPage(FBNotebook->GetSelection());
     }
                     

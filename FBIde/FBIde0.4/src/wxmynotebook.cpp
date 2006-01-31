@@ -14,6 +14,10 @@
 #include "inc/main.h"
 #include "inc/fbedit.h"
 #include "inc/wxmynotebook.h"
+#include <wx/tipwin.h>
+#include <wx/tooltip.h>
+
+#define BUTTON_BAR_SIZE 76
 
 BEGIN_EVENT_TABLE(wxMyNotebook,wxTabbedCtrl) 
     EVT_MOUSE_EVENTS(wxMyNotebook::OnMouseEvent) 
@@ -94,10 +98,11 @@ DEFINE_EVENT_TYPE(wxEVT_COMMAND_TABBEDCTRL_PAGE_CLOSING)
 
 BEGIN_EVENT_TABLE(wxTabbedCtrl, wxControl) 
    EVT_PAINT(wxTabbedCtrl::OnPaint) 
-   EVT_LEFT_DOWN(wxTabbedCtrl::OnMouse) 
-   EVT_MOTION(wxTabbedCtrl::OnMouse) 
+//   EVT_LEFT_DOWN(wxTabbedCtrl::OnMouse) 
+   EVT_MOUSE_EVENTS(wxTabbedCtrl::OnMouse) 
    EVT_SIZE(wxTabbedCtrl::OnSize) 
-   EVT_ERASE_BACKGROUND(wxTabbedCtrl::OnEraseBackground) 
+   EVT_ERASE_BACKGROUND(wxTabbedCtrl::OnEraseBackground)
+   EVT_MENU( -1, wxTabbedCtrl::OnPopUpMenu)
 END_EVENT_TABLE() 
 
 wxTabbedCtrl::wxTabbedCtrl() 
@@ -112,17 +117,31 @@ void wxTabbedCtrl::Create(wxWindow *parent, wxWindowID id,
    wxWindow::Create(parent, id, position, size, wxNO_BORDER, name); 
    active = -1; 
    img_list = 0; 
+   tipTab = -1;
    this->style = style; 
    padding.x = 5; 
    padding.y = 3; 
    hover = false; 
+   hover_next = false;
+   hover_prev = false;
+   hover_menu = false;
+   m_intStartPage = 0;
+   m_intLastPage = 0;
+   wxToolTip * tooltip = new wxToolTip( "" );
+   tooltip->Enable( true );
+   tooltip->SetDelay( 100 );
+   SetToolTip(  tooltip );
 } 
+
+
 
 void wxTabbedCtrl::AddPage(const wxString &text, bool select, int img) { 
    pages.push_back(wxTabbedPage(text, img)); 
    if(select || GetSelection()==-1) SetSelection(GetPageCount()-1); 
    else Refresh(); 
 } 
+
+
 
 void wxTabbedCtrl::InsertPage(int pg, const wxString& text, bool select, int img) { 
    wxASSERT_MSG(pg >= 0 && pg <= GetPageCount(), "Got invalid page number"); 
@@ -138,38 +157,98 @@ void wxTabbedCtrl::DeleteAllPages() {
    Refresh(); 
 } 
 
+
+
 void wxTabbedCtrl::DeletePage(int pg) { 
-   wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
-   pages_type::iterator it = pages.begin() + pg; 
-   pages.erase(it); 
-   if(pg < active) active--; 
-   else if(active==pg && active==GetPageCount()) active--; 
-   Refresh(); 
+    SetSelection(pg);
+    wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
+    tipTab = -1;
+    GetToolTip()->Enable( false );
+    pages_type::iterator it = pages.begin() + pg; 
+    pages.erase(it); 
+    if(pg < active) active--; 
+    else if(active==pg && active==GetPageCount()) active--;
+    SetVisible( active );
 } 
+
+
 
 void wxTabbedCtrl::SetSelection(int pg) { 
    wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
-   if(pg != active) { 
-      wxTabbedCtrlEvent event(wxEVT_COMMAND_TABBEDCTRL_PAGE_CHANGING, m_windowId); 
-      event.SetSelection(pg); 
-      event.SetOldSelection(active); 
-      event.SetEventObject(this); 
-      if(!GetEventHandler()->ProcessEvent(event) || event.IsAllowed()) 
-      { 
-         // program allows the page change 
-         active = pg; 
-         event.SetEventType(wxEVT_COMMAND_TABBEDCTRL_PAGE_CHANGED); 
-         event.SetOldSelection(active); 
-         GetEventHandler()->ProcessEvent(event); 
-         Refresh(); 
-      } 
-   } 
+
+    wxTabbedCtrlEvent event(wxEVT_COMMAND_TABBEDCTRL_PAGE_CHANGING, m_windowId); 
+    event.SetSelection(pg); 
+    event.SetOldSelection(active); 
+    event.SetEventObject(this); 
+    if(!GetEventHandler()->ProcessEvent(event) || event.IsAllowed()) { 
+        // program allows the page change 
+        event.SetEventType(wxEVT_COMMAND_TABBEDCTRL_PAGE_CHANGED); 
+        event.SetOldSelection(active); 
+        event.SetSelection(pg); 
+        GetEventHandler()->ProcessEvent(event);
+        active = pg; 
+        SetVisible( pg );
+    } 
 } 
+
+
+
+void wxTabbedCtrl::AdvanceSelection(bool forward) {
+    
+}
+
+
+
+void wxTabbedCtrl::SetVisible( int pg ) {
+    
+    if( GetPageCount() == 0 ) return;
+    if ( !IsVisible( pg ) ) {
+        if ( pg < m_intStartPage ) {
+            if ( m_intLastPage < ( GetPageCount() - 1 ) )
+                m_intStartPage = pg;
+            else
+                m_intStartPage = 0;
+        }
+        else {
+            int width, pom; 
+            wxSize size = GetSize(); 
+            wxClientDC dc(this); 
+            int posx = ( size.x - BUTTON_BAR_SIZE );
+            
+            wxFont normal_font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT); 
+            wxFont bold_font = normal_font; 
+            bold_font.SetWeight(wxFONTWEIGHT_BOLD); 
+            
+            int i = pg;
+            for ( ; i > 0; i-- ) {
+                dc.SetFont((i==pg) ? bold_font : normal_font); 
+                dc.GetTextExtent(GetPageText(i), &width, &pom); 
+                int space = padding.x; 
+                
+                posx -=  ( space + width +space + padding.x );
+                if ( posx <= 0 ) {
+                    m_intStartPage = i+1;
+                    Refresh();
+                    return;
+                }
+            }
+            m_intStartPage = 0;
+        
+        }
+    }
+    
+    Refresh();
+    
+}
+
+
 
 wxString wxTabbedCtrl::GetPageText(int pg) { 
    wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
    return pages[pg].text; 
 } 
+
+
 
 void wxTabbedCtrl::SetPageText(int pg, const wxString &t) { 
    wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
@@ -179,23 +258,10 @@ void wxTabbedCtrl::SetPageText(int pg, const wxString &t) {
    } 
 } 
 
-int wxTabbedCtrl::GetPageImage(int pg) { 
-   wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
-   return pages[pg].image; 
-} 
 
-void wxTabbedCtrl::SetPageImage(int pg, int img) { 
-   wxASSERT_MSG(pg >= 0 && pg < GetPageCount(), "Got invalid page number"); 
-   if(pages[pg].image != img) { 
-      pages[pg].image = img; 
-      Refresh(); 
-   } 
-} 
 
 int wxTabbedCtrl::HitTest(const wxPoint &p, long *flags) { 
    int height, width, pom; 
-   bool mirror = style & wxTB_BOTTOM; 
-//   bool drawx = style & wxTB_X; 
    wxSize size = GetSize(); 
    wxClientDC dc(this); 
 
@@ -207,33 +273,18 @@ int wxTabbedCtrl::HitTest(const wxPoint &p, long *flags) {
    dc.SetFont(bold_font); 
    dc.GetTextExtent("Aq", &pom, &height); 
    if(p.x <= 0 || p.x >= size.x) return wxNOT_FOUND; 
-   if(!mirror && (p.y <= size.y-height-padding.y*2 || p.y >= size.y)) return wxNOT_FOUND; 
-   if(mirror && (p.y <= 0 || p.y >= height+padding.y*2)) return wxNOT_FOUND; 
+   if(p.y <= 0 || p.y >= height+padding.y*2 ) return wxNOT_FOUND; 
 
    int posx = 3; 
-   for(int i = 0; i < GetPageCount(); i++) { 
+   for(int i = m_intStartPage; i <= m_intLastPage; i++) { 
       dc.SetFont((i==GetSelection()) ? bold_font : normal_font); 
       dc.GetTextExtent(GetPageText(i), &width, &pom); 
       
-      wxBitmap bmp; 
-      if(GetPageImage(i) >= 0) bmp = img_list->GetBitmap(i); 
       int space = padding.x; 
-      if(bmp.Ok()) space += bmp.GetWidth()+padding.x; 
 
       if(p.x > posx && p.x < posx+width+space+padding.x) { 
-         if(flags) *flags = wxTB_HITTEST_ONITEM; 
-          
-         //onicon attempt 
-         if(flags && bmp.Ok() && p.x >= posx+padding.x && p.x <= posx+bmp.GetWidth()+padding.x) { 
-            if(!mirror && p.y >= size.y-height-padding.y && p.y <= size.y-padding.y) *flags = wxTB_HITTEST_ONICON; 
-            else if(mirror && p.y >= padding.y && p.y <= padding.y+bmp.GetHeight()) *flags = wxTB_HITTEST_ONICON; 
-         } 
-         //onlabel attempt 
-         else if(flags && p.x >= posx+space && p.x <= posx+space+width) { 
-            if(!mirror && p.y >= size.y-height-padding.y && p.y <= size.y-padding.y) *flags = wxTB_HITTEST_ONLABEL; 
-            else if(mirror && p.y >= padding.y && p.y <= padding.y+height) *flags = wxTB_HITTEST_ONLABEL; 
-         } 
-          
+         if(flags) *flags = wxTB_HITTEST_ONLABEL; 
+
          return i; 
       } 
       
@@ -243,41 +294,129 @@ int wxTabbedCtrl::HitTest(const wxPoint &p, long *flags) {
    return wxNOT_FOUND; 
 } 
 
+
+
 void wxTabbedCtrl::OnMouse(wxMouseEvent &ev) { 
+   wxPoint mouse = ev.GetPosition();
+   int page = HitTest(ev.GetPosition());
    if(ev.GetEventType()==wxEVT_MOTION) { 
-      wxPoint mouse = ev.GetPosition(); 
-      bool nhover = mouse.x >= x_rect.x && mouse.x <= x_rect.x+x_rect.width && mouse.y >= x_rect.y && mouse.y <= x_rect.y+x_rect.height; 
-      if(hover != nhover) { 
-         hover = nhover; 
+      bool xhover = mouse.x >= x_rect.x && mouse.x <= x_rect.x+x_rect.width && mouse.y >= x_rect.y && mouse.y <= x_rect.y+x_rect.height; 
+      bool nhover = (mouse.x >= Next_rect.x && mouse.x <= Next_rect.x + Next_rect.width && mouse.y >= Next_rect.y && mouse.y <= Next_rect.y + Next_rect.height ) &&
+                    ( m_intLastPage < ( GetPageCount() - 1 ) );
+      bool phover = (mouse.x >= Prev_rect.x && mouse.x <= Prev_rect.x + Prev_rect.width && mouse.y >= Prev_rect.y && mouse.y <= Prev_rect.y + Prev_rect.height ) &&
+                    ( m_intStartPage > 0 );
+      bool mhover = (mouse.x >= Menu_rect.x && mouse.x <= Menu_rect.x + Menu_rect.width && mouse.y >= Menu_rect.y && mouse.y <= Menu_rect.y + Menu_rect.height );
+      if(hover != xhover) { 
+         hover = xhover; 
          wxClientDC dc(this); 
          DrawX(hover, dc); 
-      } 
-   } 
-   else if(ev.GetEventType()==wxEVT_LEFT_DOWN) { 
-      if(hover) { 
+      } else if(hover_next != nhover) { 
+         hover_next = nhover; 
+         wxClientDC dc(this); 
+         DrawNext(hover_next, dc); 
+      } else if(hover_prev != phover) { 
+         hover_prev = phover; 
+         wxClientDC dc(this); 
+         DrawPrev(hover_prev, dc); 
+      } else if ( hover_menu != mhover ) {
+         hover_menu = mhover; 
+         wxClientDC dc(this); 
+         DrawMenu(hover_menu, dc);             
+      } else {
+            wxToolTip * tooltip = GetToolTip();
+            if ( page != wxNOT_FOUND ) {
+                if ( tipTab != page ) {
+                    tipTab = page;
+                    tooltip->Enable( true );
+                    wxString info;
+                    int pg = page + 1;
+                    info << pg << " of " << GetPageCount() << " - " << GetPageText( page );
+                    tooltip->SetTip( info );
+                }
+            } else {
+                tipTab = -1;
+                tooltip->Enable( false );
+            }
+      }                
+   } else if( ev.GetEventType()==wxEVT_LEFT_UP ) {
+      if(hover ) { 
+            wxClientDC dc(this); 
+            DrawX(false, dc);
+            SetVisible( active );
             wxCommandEvent event( wxEVT_COMMAND_MENU_SELECTED, Menu_Close );
             GetEventHandler()->ProcessEvent( event );
-      } 
-      else { 
-         int page = HitTest(ev.GetPosition());  
-         if(page != wxNOT_FOUND) SetSelection(page); 
-      } 
-   } 
-} 
+      } else if( hover_next ) {
+            wxClientDC dc(this); 
+            DrawNext(false, dc);
+            if( GetPageCount() > ( m_intStartPage + 1 ) && ( m_intLastPage + 1 ) < GetPageCount() ) {
+                m_intStartPage++;
+                Refresh();
+            }
+      } else if( hover_prev ) {
+            wxClientDC dc(this); 
+            DrawPrev(false, dc);
+            if( m_intStartPage > 0 ) {
+                m_intStartPage--;
+                Refresh();
+            }
+      } else if( hover_menu ) {
+            hover_menu = false;
+            wxClientDC dc(this); 
+            DrawMenu(false, dc);
+            GenerateConextMenu( mouse );            
+      } else { 
+         if(page != wxNOT_FOUND) SetSelection(page);
+      }
+   } else if( ev.GetEventType() == wxEVT_RIGHT_UP && page == wxNOT_FOUND ) {
+        GenerateConextMenu( mouse );
+    }
+}
+
+
+void wxTabbedCtrl::GenerateConextMenu( wxPoint & mouse ) {
+    wxMenu popup("");
+    for ( int i = 0; i < GetPageCount(); i++ ) {
+        if ( i==active) {
+            popup.AppendCheckItem( i, GetPageText( i ) );
+            popup.Check( i, true );
+        } else 
+            popup.Append( i, GetPageText( i ) );
+    }
+    
+    PopupMenu(&popup, mouse.x, mouse.y);
+}
+
+
+void wxTabbedCtrl::OnPopUpMenu( wxCommandEvent & event ) {
+    int id = event.GetId();
+    if ( id > wxID_LOWEST ) {
+        event.Skip();
+        return;
+    }
+    if ( id >= 0 && id < GetPageCount() )
+        SetSelection( id );
+}
+
 
 void wxTabbedCtrl::OnSize(wxSizeEvent &) { 
    Refresh(); 
 } 
 
+
+
+
 void wxTabbedCtrl::OnEraseBackground(wxEraseEvent &) { 
 } 
+
+
+
 
 void wxTabbedCtrl::DrawX(bool active, wxDC &dc) { 
    const int SIZE = 8; 
    wxSize size = GetSize(); 
    wxBrush back_brush = wxBrush(GetBackgroundColour()); 
    wxPen back_pen = wxPen(GetBackgroundColour()); 
-   wxPen x_pen = wxPen(active ? wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW) : *wxBLACK); 
+   wxPen x_pen = wxPen(active ? *wxBLACK : wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW)); 
    x_pen.SetWidth(2); 
     
    int posx = size.x-SIZE*2, posy = (size.y-SIZE)/2; 
@@ -290,7 +429,69 @@ void wxTabbedCtrl::DrawX(bool active, wxDC &dc) {
    dc.SetPen(x_pen); 
    dc.DrawLine(posx, posy, posx+SIZE, posy+SIZE); 
    dc.DrawLine(posx, posy+SIZE, posx+SIZE, posy); 
+}
+
+void wxTabbedCtrl::DrawNext(bool active, wxDC &dc) { 
+   const int SIZE = 8; 
+   wxSize size = GetSize(); 
+   wxBrush back_brush = wxBrush(GetBackgroundColour()); 
+   wxPen back_pen = wxPen(GetBackgroundColour()); 
+   wxPen x_pen = wxPen(active ? *wxBLACK : wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW)); 
+   x_pen.SetWidth(2); 
+    
+   int posx = size.x-(SIZE*4), posy = (size.y-SIZE)/2; 
+   Next_rect = wxRect(posx, posy, SIZE, SIZE); 
+
+   dc.SetPen(back_pen); 
+   dc.SetBrush(back_brush); 
+   dc.DrawRectangle(posx-SIZE+1, 1, SIZE*3-2, size.y-2); 
+
+   dc.SetPen(x_pen); 
+   dc.DrawLine(posx+2, posy, posx + 6, posy+4); 
+   dc.DrawLine(posx+2, posy+SIZE, posx+6, posy+4); 
 } 
+
+void wxTabbedCtrl::DrawPrev(bool active, wxDC &dc) { 
+   const int SIZE = 8; 
+   wxSize size = GetSize(); 
+   wxBrush back_brush = wxBrush(GetBackgroundColour()); 
+   wxPen back_pen = wxPen(GetBackgroundColour()); 
+   wxPen x_pen = wxPen(active ? *wxBLACK : wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW)); 
+   x_pen.SetWidth(2); 
+    
+   int posx = size.x-(SIZE*6), posy = (size.y-SIZE)/2; 
+   Prev_rect = wxRect(posx, posy, SIZE, SIZE); 
+
+   dc.SetPen(back_pen); 
+   dc.SetBrush(back_brush); 
+   dc.DrawRectangle(posx-SIZE+1, 1, SIZE*3-2, size.y-2); 
+
+   dc.SetPen(x_pen); 
+   dc.DrawLine(posx+2, posy+4, posx+6, posy); 
+   dc.DrawLine(posx+2, posy+4, posx+6, posy+8); 
+} 
+
+void wxTabbedCtrl::DrawMenu(bool active, wxDC &dc) { 
+   const int SIZE = 8; 
+   wxSize size = GetSize(); 
+   wxBrush back_brush = wxBrush(GetBackgroundColour()); 
+   wxPen back_pen = wxPen(GetBackgroundColour()); 
+   wxPen x_pen = wxPen(active ? *wxBLACK : wxSystemSettings::GetColour(wxSYS_COLOUR_BTNSHADOW)); 
+   x_pen.SetWidth(2); 
+    
+   int posx = size.x-(SIZE*8), posy = (size.y-SIZE)/2; 
+   Menu_rect = wxRect(posx, posy, SIZE, SIZE); 
+
+   dc.SetPen(back_pen); 
+   dc.SetBrush(back_brush); 
+   dc.DrawRectangle(posx-SIZE+1, 1, SIZE*3-2, size.y-2); 
+
+   dc.SetPen(x_pen); 
+   dc.DrawLine(posx, posy+4, posx+4, posy+8); 
+   dc.DrawLine(posx+4, posy+8, posx+8, posy+4);
+}
+
+
 
 void wxTabbedCtrl::OnPaint(wxPaintEvent &) { 
    wxPaintDC dc(this); 
@@ -306,7 +507,6 @@ void wxTabbedCtrl::OnPaint(wxPaintEvent &) {
    bold_font.SetWeight(wxFONTWEIGHT_BOLD); 
    bool mirror = style & wxTB_BOTTOM; 
    bool fullborder = !(style & wxNO_BORDER); 
-   bool drawx = style & wxTB_X; 
     
    dc.BeginDrawing(); 
 
@@ -331,38 +531,32 @@ void wxTabbedCtrl::OnPaint(wxPaintEvent &) {
    int posx = 3; 
     
    //and tabs 
-   for(int i = 0; i < GetPageCount(); i++) { 
+   int i = m_intStartPage;
+   for( ; i < GetPageCount(); i++) { 
       dc.SetPen(border_pen); 
       dc.SetFont((i==GetSelection()) ? bold_font : normal_font); 
       dc.SetBrush((i==GetSelection()) ? sel_brush : nosel_brush); 
       dc.GetTextExtent(GetPageText(i), &width, &pom); 
           
-      wxBitmap bmp; 
-      if(GetPageImage(i) >= 0) bmp = img_list->GetBitmap(GetPageImage(i)); 
-      
       int space = padding.x; 
-      if(bmp.Ok()) space += padding.x + bmp.GetWidth(); 
-      
-      if(!mirror) { 
-         dc.DrawRoundedRectangle(posx, size.y-height-padding.y*2, width+space+padding.x, height+padding.y*2+3, 3); 
-         dc.DrawText(GetPageText(i), posx+space, size.y-height-padding.y); 
-         if(i!=GetSelection()) dc.DrawLine(posx, size.y-1, posx+width+space+padding.x, size.y-1); 
-
-         if(bmp.Ok()) dc.DrawBitmap(bmp, posx+padding.x, size.y-(height+2*padding.y+bmp.GetHeight())/2, true); 
-      } 
-      else { 
-         dc.DrawRoundedRectangle(posx, -3, width+space+padding.x, height+padding.y*2+3, 3); 
-         dc.DrawText(GetPageText(i), posx+space, padding.y); 
-         if(i!=GetSelection()) dc.DrawLine(posx, 0, posx+width+space+padding.x, 0); 
-
-         if(bmp.Ok()) dc.DrawBitmap(bmp, posx+padding.x, (height+2*padding.y-bmp.GetHeight())/2, true); 
-      } 
+      if( ( posx + width+space+padding.x + BUTTON_BAR_SIZE ) > size.x ) {
+            break;
+      }
+            
+      dc.DrawRoundedRectangle(posx, size.y-height-padding.y*2, width+space+padding.x, height+padding.y*2+3, 3); 
+      dc.DrawText(GetPageText(i), posx+space, size.y-height-padding.y); 
+      if(i!=GetSelection()) dc.DrawLine(posx, size.y-1, posx+width+space+padding.x, size.y-1); 
 
       posx += width+space+padding.x; 
    } 
+   m_intLastPage = i - 1;
 
    //X 
-   if(drawx) DrawX(hover, dc); 
+   DrawX(hover, dc); 
+   DrawNext( hover_next, dc );
+   DrawPrev( hover_prev, dc );
+   DrawMenu( hover_menu, dc );
+   
 
    dc.EndDrawing(); 
 } 

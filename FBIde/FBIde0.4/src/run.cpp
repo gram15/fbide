@@ -539,10 +539,7 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     
     // Get working directory
     if ( OldFileName == "" || OldFileName == FBUNNAMED ) {
-        if( CompilerPath.Len() )
-            CurFolder = ::wxPathOnly( CompilerPath );
-        else
-            CurFolder = ::wxPathOnly( EditorPath );
+        CurFolder = ::wxPathOnly( EditorPath );
     } else {
         CurFolder = ::wxPathOnly( OldFileName );
     }
