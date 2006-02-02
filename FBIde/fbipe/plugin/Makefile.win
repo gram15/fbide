@@ -1,0 +1,42 @@
+# Project: Plugin
+# Makefile created by Dev-C++ 4.9.9.2
+
+CPP  = g++.exe
+CC   = gcc.exe
+WINDRES = windres.exe
+RES  = obj/win32/FBIde0.4_private.res
+OBJ  = obj/win32/main.o obj/win32/class.pluginlist.o obj/win32/class.plugin.o obj/win32/class.plugin.server.o $(RES)
+LINKOBJ  = obj/win32/main.o obj/win32/class.pluginlist.o obj/win32/class.plugin.o obj/win32/class.plugin.server.o $(RES)
+LIBS =  -L"G:/Dev-Cpp/lib" -L"C:/dev/wx2.6.2/lib/gcc_dll" -mwindows -Wl,--subsystem,windows  -mwindows  -mthreads  -lwxmsw26_core  -lwxbase26  -lkernel32  -luser32  -lgdi32  -lcomdlg32  -lwinspool  -lwinmm  -lshell32  -lcomctl32  -lole32  -loleaut32  -luuid  -lrpcrt4  -ladvapi32  -lwsock32  -lodbc32   -fmessage-length=0 -s 
+INCS =  -I"G:/Dev-Cpp/include"  -I"C:/dev/wx2.6.2/include"  -I"C:/dev/wx2.6.2/include/wx"  -I"C:/dev/wx2.6.2/contrib/include"  -I"C:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"C:/dev/gpi/plugin_sdk"  -I"C:/dev/gpi/plugin_server" 
+CXXINCS =  -I"G:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"G:/Dev-Cpp/include/c++/3.4.2/backward"  -I"G:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"G:/Dev-Cpp/include/c++/3.4.2"  -I"G:/Dev-Cpp/include"  -I"C:/dev/wx2.6.2/include"  -I"C:/dev/wx2.6.2/include/wx"  -I"C:/dev/wx2.6.2/contrib/include"  -I"C:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"C:/dev/gpi/plugin_sdk"  -I"C:/dev/gpi/plugin_server" 
+BIN  = output/plugin.exe
+CXXFLAGS = $(CXXINCS) -D__WXMSW__   -DWXUSINGDLL  -mthreads  -DNO_GCC_PRAGMA  -Wall  -fno-pcc-struct-return  -O3  -Os  -fno-rtti  -fno-exceptions       -fexpensive-optimizations -O3 -fmessage-length=0
+CFLAGS = $(INCS)     -fexpensive-optimizations -O3 -fmessage-length=0
+RM = rm -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before output/plugin.exe all-after
+
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CPP) $(LINKOBJ) -o "output\plugin.exe" $(LIBS)
+
+obj/win32/main.o: src/main.cpp
+	$(CPP) -c src/main.cpp -o obj/win32/main.o $(CXXFLAGS)
+
+obj/win32/class.pluginlist.o: src/class.pluginlist.cpp
+	$(CPP) -c src/class.pluginlist.cpp -o obj/win32/class.pluginlist.o $(CXXFLAGS)
+
+obj/win32/class.plugin.o: ../plugin_sdk/class.plugin.cpp
+	$(CPP) -c ../plugin_sdk/class.plugin.cpp -o obj/win32/class.plugin.o $(CXXFLAGS)
+
+obj/win32/class.plugin.server.o: ../plugin_server/class.plugin.server.cpp
+	$(CPP) -c ../plugin_server/class.plugin.server.cpp -o obj/win32/class.plugin.server.o $(CXXFLAGS)
+
+obj/win32/FBIde0.4_private.res: FBIde0.4_private.rc 
+	$(WINDRES) -i FBIde0.4_private.rc --input-format=rc -o obj/win32/FBIde0.4_private.res -O coff 
