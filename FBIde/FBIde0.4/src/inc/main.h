@@ -344,7 +344,7 @@ public:
     bool                IsTemp;
     bool                InitState;
     
-    wxString CompilerPath, SyntaxFile, CMDPrototype, ThemeFile;
+    wxString CompilerPath, SyntaxFile, CMDPrototype, ThemeFile, RunPrototype, strTerminal;
     wxString Document, CompiledFile, EditorPath, ParameterList;
     wxString CurFolder;
     CommonInfo  Prefs;

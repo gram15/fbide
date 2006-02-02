@@ -33,7 +33,12 @@ void MyFrame::LoadSettings() {
     wxFileName w(FB_App->argv[0]);
     EditorPath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
     
-    wxFileInputStream PrefsINIIS( EditorPath + "ide/prefs.ini");
+    #ifdef __WXMSW__
+        wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_win32.ini");
+    #else
+        wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_linux.ini");
+    #endif
+    
     wxFileConfig PrefsINI(PrefsINIIS);
     
     wxString Temp = PRODUCT_NAME;
@@ -56,7 +61,8 @@ void MyFrame::LoadSettings() {
     Prefs.EdgeColumn        = PrefsINI.Read("edgecolumn",       80L);
     Prefs.Language          = PrefsINI.Read("language",         "English");
     Prefs.ActivePath        = PrefsINI.Read("ActivePath",       true);
-        
+    RunPrototype            = PrefsINI.Read("runprototype",    "<file> <param>");
+
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
     #ifdef __WXMSW__
@@ -79,8 +85,16 @@ void MyFrame::LoadSettings() {
         }
     #endif
     
+    #ifndef __WXMSW__
+        strTerminal = PrefsINI.Read("terminal", "");
+    #endif
+    
     Prefs.HelpFile          = PrefsINI.Read("helpfile",         "");
-    Prefs.UseHelp = ::wxFileExists( EditorPath + "ide/" + Prefs.HelpFile );
+    wxFileName helpFile( Prefs.HelpFile );
+    if( helpFile.IsRelative() )
+        Prefs.UseHelp = ::wxFileExists( EditorPath + "IDE/" + Prefs.HelpFile );
+    else
+        Prefs.UseHelp = ::wxFileExists( Prefs.HelpFile );
 
     SyntaxFile              = PrefsINI.Read("syntax",   "");
     if (SyntaxFile=="") SyntaxFile = "fbfull.lng";
@@ -110,7 +124,7 @@ void MyFrame::LoadSettings() {
     PrefsINI.SetPath("/");
     OpenLangFile(Prefs.Language);
 
-    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileInputStream input( EditorPath + "/IDE/history.ini" );
     wxFileConfig History(input);
     m_FileHistory = new wxFileHistory;
     m_FileHistory->Load( History );
@@ -121,10 +135,17 @@ void MyFrame::LoadSettings() {
 
 
 void MyFrame::SaveSettings() {
-    wxFileInputStream PrefsINIIS( EditorPath + "ide/prefs.ini");
+    
+    #ifdef __WXMSW__
+        wxString iniFile( EditorPath + "IDE/prefs_win32.ini" );
+    #else
+        wxString iniFile( EditorPath + "IDE/prefs_linux.ini" );
+    #endif
+    
+    wxFileInputStream PrefsINIIS( iniFile );
     wxFileConfig PrefsINI(PrefsINIIS);
     
-    wxFileOutputStream PrefsINIOS( EditorPath + "ide/prefs.ini");
+    wxFileOutputStream PrefsINIOS( iniFile );
     
     PrefsINI.SetPath("/general");
     PrefsINI.Write("autoindent",        (bool)Prefs.AutoIndent);
@@ -142,12 +163,17 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("edgecolumn",        (long)Prefs.EdgeColumn);
     PrefsINI.Write("language",          Prefs.Language);
     PrefsINI.Write("ActivePath",        (bool)Prefs.ActivePath);
+    PrefsINI.Write("runprototype",      RunPrototype);
 
     PrefsINI.SetPath("/paths");
     PrefsINI.Write("fbc",               CompilerPath);
     PrefsINI.Write("syntax",            SyntaxFile);
     PrefsINI.Write("theme",             ThemeFile);
     PrefsINI.Write("helpfile",          Prefs.HelpFile);
+    #ifndef __WXMSW__
+        PrefsINI.Write("terminal",      strTerminal);
+    #endif
+
 
     
     PrefsINI.SetPath("/compiler");
@@ -175,9 +201,9 @@ void MyFrame::SaveSettings() {
     
     PrefsINI.Save(PrefsINIOS);
     
-    wxFileInputStream input( EditorPath + "/ide/history.ini" );
+    wxFileInputStream input( EditorPath + "/IDE/history.ini" );
     wxFileConfig History(input);
-    wxFileOutputStream output( EditorPath + "/ide/history.ini" );
+    wxFileOutputStream output( EditorPath + "/IDE/history.ini" );
     m_FileHistory->Save( History );
     History.Save( output );
     return;
@@ -189,7 +215,7 @@ StyleInfo  MyFrame::LoadThemeFile( wxString ThemeFile ) {
     
     StyleInfo Style;
     
-    wxFileInputStream ThemeIS( EditorPath + "ide/" + ThemeFile + ".fbt" );
+    wxFileInputStream ThemeIS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
     wxFileConfig Theme( ThemeIS );
     
 	wxString StyleTypes[]={	"default", 	    "comment", 	   "number",
@@ -246,8 +272,8 @@ StyleInfo  MyFrame::LoadThemeFile( wxString ThemeFile ) {
 
 void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
 
-    wxFileInputStream ThemeIS( EditorPath + "ide/" + ThemeFile + ".fbt" );
-    wxFileOutputStream ThemeISOS( EditorPath + "ide/" + ThemeFile + ".fbt" );
+    wxFileInputStream ThemeIS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
+    wxFileOutputStream ThemeISOS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
     wxFileConfig Theme( ThemeIS );
     
 	wxString StyleTypes[]={	"default", 	    "comment", 	   "number",
@@ -305,7 +331,7 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
 
 void MyFrame::LoadkwFile( wxString SyntaxFile ) {
     
-    wxFileInputStream SyntaxIS( EditorPath + "ide/" + SyntaxFile );
+    wxFileInputStream SyntaxIS( EditorPath + "IDE/" + SyntaxFile );
     wxFileConfig Syntax(SyntaxIS);
     
     Syntax.SetPath("/keywords");
@@ -342,8 +368,8 @@ void MyFrame::LoadkwFile( wxString SyntaxFile ) {
 
 void MyFrame::SavekwFile( wxString SyntaxFile ) {
     
-    wxFileInputStream SyntaxIS( EditorPath + "ide/" + SyntaxFile );
-    wxFileOutputStream SyntaxOS( EditorPath + "ide/" + SyntaxFile );
+    wxFileInputStream SyntaxIS( EditorPath + "IDE/" + SyntaxFile );
+    wxFileOutputStream SyntaxOS( EditorPath + "IDE/" + SyntaxFile );
     wxFileConfig Syntax(SyntaxIS);
     
     Syntax.SetPath("/keywords");

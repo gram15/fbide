@@ -22,25 +22,28 @@
 */
 
 #include "inc/main.h"
+//#include "inc/configdiag.h"
 #include "inc/configdiag.h"
 #include "inc/fbedit.h"
 #include "inc/browser.h"
 #include "inc/format.h"
 
 void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
-    ConfigDialog dlg(this, -1, _(Lang[98]));
-    dlg.ShowModal();
-    if (stc==0) return;
-    SaveSettings();
-    
-    int index = FBNotebook->GetSelection();
-    Buffer * buff = bufferList[index];
-    
-    stc->Freeze();
-        stc->StyleClearAll();
-        stc->LoadSTCTheme(buff->GetFileType());
-        stc->LoadSTCSettings();
-    stc->Thaw();
+    ConfigDialog dlg( this, -1, _T(Lang[98]));
+    if( dlg.ShowModal() == wxID_OK ) {
+        if( stc ) {
+            SaveSettings();
+            
+            int index = FBNotebook->GetSelection();
+            Buffer * buff = bufferList[index];
+            
+            stc->Freeze();
+                stc->StyleClearAll();
+                stc->LoadSTCTheme(buff->GetFileType());
+                stc->LoadSTCSettings();
+            stc->Thaw();
+        }
+    }
     return;
 }
 

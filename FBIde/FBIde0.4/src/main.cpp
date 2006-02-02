@@ -318,8 +318,13 @@ If you encounter any problems then please let me know: vongodric@hotmail.com\n\
         }
     }
     #ifdef __WXMSW__
-        if( Prefs.UseHelp )
-            help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
+        if( Prefs.UseHelp ) {
+            wxFileName helpFile( Prefs.HelpFile );
+            if( helpFile.IsRelative() )
+                help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
+            else
+                help.Initialize( Prefs.HelpFile );
+        }
     #endif
     
     m_FileHistory->AddFilesToMenu();
