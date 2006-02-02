@@ -222,11 +222,17 @@ void MyFrame::OnRun (wxCommandEvent& WXUNUSED(event)) {
 
 
 void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
-    int major = 0, minor = 0;
-    int result = wxGetOsVersion(&major, &minor);
-    if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
-    else if(result==wxWIN95) wxExecute("command.com");
-    else wxExecute("konsole");
+
+    #ifdef __WXMSW__
+        int major = 0, minor = 0;
+        int result = wxGetOsVersion(&major, &minor);
+        if (result==wxWINDOWS_NT) wxExecute("cmd.exe");
+        else if(result==wxWIN95) wxExecute("command.com");
+    #else
+        if( strTerminal.Len() )
+            wxExecute( strTerminal );
+    #endif
+    
     return;
 }
 
@@ -477,14 +483,17 @@ void MyFrame::Run ( wxFileName file ) {
     if( Prefs.ActivePath )
         ::wxSetWorkingDirectory( file.GetPath() );
     
-    // Generate string that get's executed. 
-    // Note that linux doesn't want filenames in quotes!
-    #ifdef __WXMSW__
-        wxString strCommand( "\"" + file.GetFullPath() + "\" " + ParameterList );
-    #else
-        wxString strCommand( file.GetFullPath() + " " + ParameterList );
-    #endif
+    // Get execute command prototype
+    wxString strCommand( RunPrototype.Lower().Trim(true).Trim(false) );
     
+    
+    // Replace metatags
+    strCommand.Replace( "<param>",      ParameterList );
+    strCommand.Replace( "<file>",       file.GetFullPath()  );
+    strCommand.Replace( "<file_path>",  file.GetPath() );
+    strCommand.Replace( "<file_name>",  file.GetName() );
+    strCommand.Replace( "<file_ext>",   file.GetExt() );
+    strCommand.Replace( "<terminal>",   strTerminal );
     
     // Create new process
     MyProcess * objProcess = new MyProcess(this, strCommand);

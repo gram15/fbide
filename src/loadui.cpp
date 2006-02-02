@@ -224,7 +224,7 @@ void MyFrame::LoadMenu () {
 void MyFrame::LoadToolBar () {
 	
     // FB_Toolbar = GetToolBar();
-    FB_Toolbar = CreateToolBar();
+    FB_Toolbar = CreateToolBar( wxNO_BORDER | wxTB_HORIZONTAL | wxTB_DOCKABLE | wxTB_FLAT );
     
     // Add controls:
     wxBitmap toolBarBitmaps[15];
