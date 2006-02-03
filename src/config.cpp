@@ -38,7 +38,7 @@ void MyFrame::LoadSettings() {
     #else
         wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_linux.ini");
     #endif
-    
+
     wxFileConfig PrefsINI(PrefsINIIS);
     
     wxString Temp = PRODUCT_NAME;
@@ -59,7 +59,7 @@ void MyFrame::LoadSettings() {
     Prefs.CurrentLine       = PrefsINI.Read("lightcursorline",  b);
     Prefs.TabSize           = PrefsINI.Read("tabsize",          3l);
     Prefs.EdgeColumn        = PrefsINI.Read("edgecolumn",       80L);
-    Prefs.Language          = PrefsINI.Read("language",         "English");
+    Prefs.Language          = PrefsINI.Read("language",         "english");
     Prefs.ActivePath        = PrefsINI.Read("ActivePath",       true);
     RunPrototype            = PrefsINI.Read("runprototype",    "<file> <param>");
 
@@ -135,7 +135,7 @@ void MyFrame::LoadSettings() {
 
 
 void MyFrame::SaveSettings() {
-    
+
     #ifdef __WXMSW__
         wxString iniFile( EditorPath + "IDE/prefs_win32.ini" );
     #else
@@ -144,7 +144,6 @@ void MyFrame::SaveSettings() {
     
     wxFileInputStream PrefsINIIS( iniFile );
     wxFileConfig PrefsINI(PrefsINIIS);
-    
     wxFileOutputStream PrefsINIOS( iniFile );
     
     PrefsINI.SetPath("/general");
