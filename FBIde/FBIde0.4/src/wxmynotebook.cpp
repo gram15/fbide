@@ -131,6 +131,15 @@ void wxTabbedCtrl::Create(wxWindow *parent, wxWindowID id,
    tooltip->Enable( true );
    tooltip->SetDelay( 100 );
    SetToolTip(  tooltip );
+   
+   wxFont normal_font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT); 
+   wxFont bold_font = normal_font; 
+   bold_font.SetWeight(wxFONTWEIGHT_BOLD); 
+   wxPaintDC dc(this);
+   int height = 22, pom = 0; 
+   dc.SetFont(bold_font); 
+   dc.GetTextExtent("Aq", &pom, &height); 
+   SetSizeHints( wxSize(-1, height+padding.y*3) );
 } 
 
 
@@ -431,6 +440,8 @@ void wxTabbedCtrl::DrawX(bool active, wxDC &dc) {
    dc.DrawLine(posx, posy+SIZE, posx+SIZE, posy); 
 }
 
+
+
 void wxTabbedCtrl::DrawNext(bool active, wxDC &dc) { 
    const int SIZE = 8; 
    wxSize size = GetSize(); 
@@ -451,6 +462,8 @@ void wxTabbedCtrl::DrawNext(bool active, wxDC &dc) {
    dc.DrawLine(posx+2, posy+SIZE, posx+6, posy+4); 
 } 
 
+
+
 void wxTabbedCtrl::DrawPrev(bool active, wxDC &dc) { 
    const int SIZE = 8; 
    wxSize size = GetSize(); 
@@ -470,6 +483,8 @@ void wxTabbedCtrl::DrawPrev(bool active, wxDC &dc) {
    dc.DrawLine(posx+2, posy+4, posx+6, posy); 
    dc.DrawLine(posx+2, posy+4, posx+6, posy+8); 
 } 
+
+
 
 void wxTabbedCtrl::DrawMenu(bool active, wxDC &dc) { 
    const int SIZE = 8; 

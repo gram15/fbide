@@ -338,7 +338,6 @@ void MyFrame::NewSTCPage ( wxString InitFile, bool select, int FileType ) {
                 wxDefaultSize, wxSTATIC_BORDER|wxTB_TOP|wxTB_X);
     
             stc = new FB_Edit( this, FBCodePanel, -1, "" );
-            FBNotebook->SetSizeHints( wxSize(-1, 22) );
             m_TabStcSizer->Add( FBNotebook, 0, wxTOP | wxLEFT | wxRIGHT | wxEXPAND | wxALIGN_TOP, 0 );
             m_TabStcSizer->Add( stc, 1, wxBOTTOM | wxLEFT | wxRIGHT | wxTOP | wxEXPAND, 0 );
             FBCodePanel->SetSizer( m_TabStcSizer );
