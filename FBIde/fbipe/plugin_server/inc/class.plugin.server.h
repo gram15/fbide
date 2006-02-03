@@ -48,6 +48,12 @@ class classPluginServer {
                 { }
                 
                 
+                /**
+                 * Destructor. This also unloads the dll file and deletes
+                 * the dll and plugin objects. In plugin this couses a call into
+                 * destructor wich can be used to deinit data, but
+                 * method classPlugin::OnExit() is prefered.
+                 */
                 ~classPluginList() {
                     delete m_objPlugin;
                     m_objDll->Unload();
@@ -67,6 +73,10 @@ class classPluginServer {
                 wxFileName            m_objFileName;
         };
 
+        /**
+         * defines an array of classPluginList pointers. This is used for
+         * internal referencing of plugins.
+         */
         WX_DEFINE_ARRAY( classPluginList *,  arrayOfPlugins );
         
         
@@ -117,11 +127,14 @@ class classPluginServer {
         }
         
         
+        
         /**
          * @brief Is destructor
          * Cleans up and unloads all loaded plugins
          */
         ~classPluginServer ();
+        
+        
         
         /**
          * @breaf Returns the number of loaded plugins
@@ -130,12 +143,14 @@ class classPluginServer {
         const int GetPluginCount() const { return m_arrPlugins.GetCount(); }
         
         
+        
         /**
          * @brief This function loads a new plugin.
          * @param wxFileName objFile - A file to load
          * @return int - plugin ID number > 0 or 0 on failure.
          */
         const int LoadPlugin ( wxFileName objFile );
+        
         
         
         /**
@@ -151,7 +166,9 @@ class classPluginServer {
          * @brief Unloads the loaded plugin by the file name
          * @param wxFileName - name of the plugin file
          */
-        void UnloadPlugin ( wxFileName objFile );
+        void UnloadPlugin ( wxFileName objFile ) {
+            UnloadPlugin( GetPluginId( objFile ) );
+        }
         
         
         
@@ -166,15 +183,30 @@ class classPluginServer {
          * @param int pluginID - Id of the plugin we want to check
          * @return bool - true or false
          */
-        const bool IsLoaded ( const int pluginID );
+        const bool IsLoaded ( const int pluginID ) {
+            return GetPlugin( pluginID ) != NULL;
+        }
+        
+
+        
+        /**
+         * @brief Checks if the plugin with the given ID is loaded ot not
+         * @param int pluginID - Id of the plugin we want to check
+         * @return bool - true or false
+         */
+        const bool IsLoaded ( wxFileName objFile ) {
+            return GetPlugin( objFile ) != NULL;
+        }
         
         
+                
         /**
          * @brief Checks if the plugin with the given filename is loaded or not
          * @param wxFileName - filename of the plugin
          * @return int -plugin ID or -1 on failure
          */
         const int GetPluginId ( wxFileName objFile );
+        
         
         
         /**
@@ -187,6 +219,7 @@ class classPluginServer {
             if ( pluginID != -1 ) return GetPlugin( pluginID );
             else return NULL;
         }
+        
         
         
         /**

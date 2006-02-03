@@ -23,7 +23,7 @@ const int classPluginServer::GetPluginId ( wxFileName objFile ) {
 
 
 
-const classPlugin * classPluginServer::GetPlugin ( const int pluginID ) {
+classPlugin * classPluginServer::GetPlugin ( const int pluginID ) {
     
     for ( int i = 0; i < GetPluginCount(); i++ )
         if ( m_arrPlugins.Item( i )->m_ID == pluginID )
@@ -44,9 +44,7 @@ void classPluginServer::UnloadPlugin ( const int pluginID ) {
     }
 }
 
-void classPluginServer::UnloadPlugin ( wxFileName objFile ) {
-    UnloadPlugin( GetPluginId( objFile ) );
-}
+
 
 void classPluginServer::UnLoadAllPlugins () {
     
