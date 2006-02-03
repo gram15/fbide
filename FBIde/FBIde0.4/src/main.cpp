@@ -271,7 +271,7 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     wxImage::AddHandler(new wxPNGHandler);
 
     wxBitmap bitmap;
-    /*if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"/ide/splash.png"), wxBITMAP_TYPE_PNG))
+    /*if(Prefs.SplashScreen&&bitmap.LoadFile(_T(this->EditorPath+"/IDE/splash.png"), wxBITMAP_TYPE_PNG))
     {
       new wxSplashScreen(bitmap,
           wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
@@ -321,7 +321,7 @@ If you encounter any problems then please let me know: vongodric@hotmail.com\n\
         if( Prefs.UseHelp ) {
             wxFileName helpFile( Prefs.HelpFile );
             if( helpFile.IsRelative() )
-                help.Initialize( EditorPath + "ide/" + Prefs.HelpFile );
+                help.Initialize( EditorPath + "IDE/" + Prefs.HelpFile );
             else
                 help.Initialize( Prefs.HelpFile );
         }

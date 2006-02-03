@@ -28,7 +28,7 @@
 void MyFrame::OpenLangFile( wxString FileName ){
      
      //First lets select the file we are going to use...
-     wxFFileInputStream FileINIIS( EditorPath + "ide/lang/" + FileName + ".fbl" );
+     wxFFileInputStream FileINIIS( EditorPath + "IDE/lang/" + FileName + ".fbl" );
      
      //And then open it as an INI file
      wxFileConfig FileINI(FileINIIS);
