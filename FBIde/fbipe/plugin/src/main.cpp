@@ -76,27 +76,20 @@ void PluginFrame::OnPluginListRight( wxListEvent & event ) {
 
 
 void PluginFrame::OnClosePlugin( wxCommandEvent & event ) {
-    /*wxListCtrl * objList = m_objPluginList->GetListCtrl();
-    wxDynamicLibrary * dll = m_arrDlls.Item( m_intListIndex );
-    classPlugin * plugin = m_arrPlugins.Item( m_intListIndex );
-    
-    plugin->OnExit();
-    delete plugin;
-    dll->Unload();
-    delete dll;
-    m_arrDlls.RemoveAt( m_intListIndex );
-    m_arrPlugins.RemoveAt( m_intListIndex );
-    objList->DeleteItem( m_intListIndex );*/
+    wxListCtrl * objList = m_objPluginList->GetListCtrl();
+    m_objPluginServer->UnloadPlugin( objList->GetItemText( m_intListIndex ) );
+    objList->DeleteItem( m_intListIndex );
     return;
 }
 
 
 void PluginFrame::OnSendCommand( wxCommandEvent & event ) {
-    /*classPlugin * plugin = m_arrPlugins.Item( m_intListIndex );
+    wxListCtrl * objList = m_objPluginList->GetListCtrl();
+    classPlugin * plugin = m_objPluginServer->GetPlugin( objList->GetItemText( m_intListIndex ) );
     wxTextEntryDialog dialog(this, "Enter command to send" );
     if ( dialog.ShowModal() == wxID_OK ) {
-       // plugin->SendCommand( dialog.GetValue() );
-    }*/
+       plugin->SendCommand( dialog.GetValue() );
+    }
 }
 
 

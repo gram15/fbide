@@ -44,7 +44,9 @@ void classPluginServer::UnloadPlugin ( const int pluginID ) {
     }
 }
 
-
+void classPluginServer::UnloadPlugin ( wxFileName objFile ) {
+    UnloadPlugin( GetPluginId( objFile ) );
+}
 
 void classPluginServer::UnLoadAllPlugins () {
     
@@ -68,6 +70,10 @@ const int classPluginServer::LoadPlugin ( wxFileName objFile ) {
     }
     if( !objFile.FileExists() ) {
         SetError( ID_Error::PLUGIN_FILE_NOT_FOUND );
+        return 0;
+    }
+    if( GetPluginId( objFile ) ) {
+        SetError( ID_Error::PLUGIN_ALREADY_LOADED );
         return 0;
     }
     

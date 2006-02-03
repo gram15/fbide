@@ -148,6 +148,14 @@ class classPluginServer {
         
         
         /**
+         * @brief Unloads the loaded plugin by the file name
+         * @param wxFileName - name of the plugin file
+         */
+        void UnloadPlugin ( wxFileName objFile );
+        
+        
+        
+        /**
          * @brief Unloads all loaded plugins
          */
         void UnLoadAllPlugins ( );
@@ -174,7 +182,7 @@ class classPluginServer {
          * @param wxFileName objFile filename of the plugin
          * @return classPlugin *
          */
-        const classPlugin * GetPlugin ( wxFileName objFile ) {
+        classPlugin * GetPlugin ( wxFileName objFile ) {
             int pluginID = GetPluginId ( objFile );
             if ( pluginID != -1 ) return GetPlugin( pluginID );
             else return NULL;
@@ -186,7 +194,7 @@ class classPluginServer {
          * @param int pluginID - the ID of the plugin to retreave
          * @return classPlugin *
          */
-        const classPlugin * GetPlugin ( const int pluginID );
+        classPlugin * GetPlugin ( const int pluginID );
                 
         
         

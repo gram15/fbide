@@ -1,11 +1,11 @@
 [Project]
 FileName=plugin_test.dev
 Name=plugin_test
-UnitCount=3
+UnitCount=4
 Type=3
 Ver=1
 ObjFiles=
-Includes=E:\dev\wx2.6.2\lib\gcc_dll\msw;E:\dev\wx2.6.2\include;E:\dev\gpi\plugin_sdk
+Includes=E:\dev\wx2.6.2\lib\gcc_dll\msw;E:\dev\wx2.6.2\include;E:\dev\fbipe\plugin_sdk
 Libs=E:\dev\wx2.6.2\lib\gcc_dll
 PrivateResource=
 ResourceIncludes=
@@ -69,6 +69,16 @@ BuildCmd=
 
 [Unit3]
 FileName=..\plugin_sdk\inc\class.plugin.h
+CompileCpp=1
+Folder=plugin_test
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit4]
+FileName=..\plugin_sdk\inc\fbipe_sdk.h
 CompileCpp=1
 Folder=plugin_test
 Compile=1
