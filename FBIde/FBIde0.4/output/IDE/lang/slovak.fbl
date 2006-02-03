@@ -1,10 +1,15 @@
 [FBIde]
 
-232=Show splash screen
 234=Active paths
 235=Set paths active when running/compiling
 236=Show log
 237=Shows compilation log
+238=Run Command
+239=Compiler and path settings
+240=Run command
+241=Help file ( .chm )
+242=FreeBASIC 
+243=Windows helpfiles (*.chm)
 
 ;Generic stuff
 1=Vytajte vo FBIde!
