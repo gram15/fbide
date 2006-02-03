@@ -522,8 +522,13 @@ void ConfigDialog::OnCompilerPath( wxCommandEvent& event ) {
     wxFileDialog dlg (this,
         _T(m_Parent->Lang[155]), //Open file
         _T(""),
+    #ifdef __WXMSW__
         _T("fbc.exe"),
         _T(m_Parent->Lang[156]), //"All programs (*.exe)|*.exe"
+    #else
+        _T("fbc"),
+        _T(""),
+    #endif
     wxFILE_MUST_EXIST );
     if (dlg.ShowModal() != wxID_OK) return;
     

@@ -124,7 +124,7 @@ void MyFrame::LoadSettings() {
     PrefsINI.SetPath("/");
     OpenLangFile(Prefs.Language);
 
-    wxFileInputStream input( EditorPath + "/IDE/history.ini" );
+    wxFileInputStream input( EditorPath + "IDE/history.ini" );
     wxFileConfig History(input);
     m_FileHistory = new wxFileHistory;
     m_FileHistory->Load( History );
@@ -200,9 +200,9 @@ void MyFrame::SaveSettings() {
     
     PrefsINI.Save(PrefsINIOS);
     
-    wxFileInputStream input( EditorPath + "/IDE/history.ini" );
+    wxFileInputStream input( EditorPath + "IDE/history.ini" );
     wxFileConfig History(input);
-    wxFileOutputStream output( EditorPath + "/IDE/history.ini" );
+    wxFileOutputStream output( EditorPath + "IDE/history.ini" );
     m_FileHistory->Save( History );
     History.Save( output );
     return;
