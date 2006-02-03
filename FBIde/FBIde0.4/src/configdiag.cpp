@@ -588,7 +588,6 @@ void ConfigDialog::OnSaveTheme( wxCommandEvent& event ) {
 void ConfigDialog::OnSelectTheme( wxCommandEvent& event ) {
     if ( chTheme->GetSelection()!=0 ) {
         m_Style = m_Parent->LoadThemeFile( chTheme->GetStringSelection() );
-        m_Parent->ThemeFile = chTheme->GetStringSelection();
     }
     SetTypeSelection( m_ThemeTypeOld );
     return;
@@ -871,6 +870,9 @@ void ConfigDialog::OnOkClick( wxCommandEvent& event ) {
     m_Parent->CompilerPath = textCompilerPath->GetValue();
     m_Parent->CMDPrototype = textCompilerCommand->GetValue();
     m_Parent->RunPrototype = textRunCommand->GetValue();
+    
+    if ( chTheme->GetSelection()!=0 )
+        m_Parent->ThemeFile = chTheme->GetStringSelection();
     
     StoreTypeSelection( m_ThemeTypeOld );
     
