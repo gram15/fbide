@@ -2,56 +2,39 @@
 #ifndef _CLASS_PLUGIN_H_
 #define _CLASS_PLUGIN_H_
  
-#define PLUGIN_EXPORT __declspec (dllexport)
-
-	
-    class classPluginData {
-        private:
-            int       m_ID;
-            wxApp   * m_ParentApp;
-            wxFrame * m_parentFrame;
-        
-        public:
-            classPluginData( int ID, wxApp * app, wxFrame * frame ) : 
-                m_ID( ID ), m_ParentApp( app ),  m_parentFrame( frame )
-            { }
-            
-            const wxFrame * GetFrame() const { return m_parentFrame; }
-            const wxApp * GetApp() const { return m_ParentApp; }
-            const int GetId() const { return m_ID; }
-    };
-        
+    #include "inc/class.plugin.data.h"
     
+    /**
+     * This class is a base class for a plugin. All plugins are derived from 
+     * this.
+     */
+     
     class classPlugin : public wxEvtHandler {
 	    
 		public:
             classPlugin( );
-            virtual bool OnInit( );
-			virtual void OnExit( );
-			virtual void SendCommand( wxString strCmd );
-			virtual ~classPlugin();
+            
+            // These are pure virtual methods that every
+            // plugin must override
+            virtual bool OnInit( ) = 0;
+			virtual void OnExit( ) = 0;
+			virtual void SendCommand( wxString strCmd ) = 0;
 			
-			const int GetErrorCode() const { return m_ErrorCode; }
-			void SetErrorCode( int intError ) { m_ErrorCode = intError; }
+            
+            virtual ~classPlugin();
 			
 			const classPluginData * GetData() const { return m_objPluginData; }
-		
-            void SetPluginData( classPluginData * objPluginData ) { m_objPluginData = objPluginData; }
+			const int GetId() const { return m_ID; }
             
-            bool m_IsAttached;
-            bool m_ErrorCode;
+            void SetPluginData( int ID, classPluginData * objPluginData ) { 
+                m_ID = ID; 
+                m_objPluginData = objPluginData; 
+            }
+            
+        private:
             classPluginData * m_objPluginData;
+            int               m_ID;
 	};
 
-
-    #define DECLARE_PLUGIN() \
-        extern "C" \
-        { \
-            PLUGIN_EXPORT classPlugin* GetPlugin(); \
-        }
-        
-    #define IMPLEMENT_PLUGIN(name) \
-        classPlugin* GetPlugin() { return new name; }
-
-    
+   
 #endif

@@ -1,6 +1,12 @@
 #ifndef _CLASS_PLUGIN_SERVER_H_
 #define _CLASS_PLUGIN_SERVER_H_
 
+#include <wx/dynlib.h>
+
+// Plugin SDK
+#include "inc/class.plugin.data.h"
+#include "inc/class.plugin.h"
+
 namespace ID_Error {
     enum Plugin {
         PLUGIN_OK = 0,
@@ -14,8 +20,6 @@ namespace ID_Error {
     };
 }
 
-class classPlugin;
-class wxDynamicLibrary;
 
 class classPluginServer {
 
@@ -44,6 +48,13 @@ class classPluginServer {
                 { }
                 
                 
+                ~classPluginList() {
+                    delete m_objPlugin;
+                    m_objDll->Unload();
+                    delete m_objDll;
+                }
+                
+                
                 /**
                  * @var m_ID - ID of the plugin
                  * @var m_objDll - a dll handler accociated with this plugin
@@ -60,18 +71,15 @@ class classPluginServer {
         
         
         /**
-         * @var m_ParentApp - a pointer to wxApp instance
-         * @var m_ParentFrame - a pointer to the main frame accociated with the 
-         *                      program
          * @var m_arrPlugins - array of loaded plugins
          * @var m_intPluginID - this incerements every time plugin is loaded
          *                      so every plugin receaves an unique ID
          */
-        wxApp               * m_ParentApp;
-        wxFrame             * m_ParentFrame;
         arrayOfPlugins      m_arrPlugins;
         int                 m_intPluginID;
         ID_Error::Plugin    m_ErrorCode;
+        classPluginData     * m_PluginData;
+        
         
         
         /**
@@ -81,6 +89,19 @@ class classPluginServer {
         void SetError( const ID_Error::Plugin errorCode ) { 
             m_ErrorCode = errorCode;
         }
+        
+        
+        
+        /**
+         *
+         *
+         */
+        int GetPluginIndex ( int pluginID ) {
+            for ( int i = 0; i < GetPluginCount(); i++ )
+                if ( m_arrPlugins.Item( i )->m_ID == pluginID )
+                    return i;
+            return -1;
+        }
     
     public:
         
@@ -89,9 +110,11 @@ class classPluginServer {
          * @param wxApp * - pointer of the wxApp instance
          * @param wxFrame * - pointer of the wxFrame instance
          */
-        classPluginServer( wxApp * objApp, wxFrame * objFrame ) : 
-            m_ParentApp( objApp ), m_ParentFrame( objFrame )
-        { }
+        classPluginServer( wxApp * objApp, wxFrame * objFrame ) :
+            m_intPluginID( 1 ), m_ErrorCode( ID_Error::PLUGIN_OK )
+        { 
+            m_PluginData = new classPluginData( objApp, objFrame );
+        }
         
         
         /**
@@ -110,9 +133,9 @@ class classPluginServer {
         /**
          * @brief This function loads a new plugin.
          * @param wxFileName objFile - A file to load
-         * @return int - plugin ID number >= 0 or -1 on failure.
+         * @return int - plugin ID number > 0 or 0 on failure.
          */
-        int LoadPlugin ( wxFileName objFile );
+        const int LoadPlugin ( wxFileName objFile );
         
         
         /**
@@ -123,12 +146,19 @@ class classPluginServer {
         void UnloadPlugin ( const int pluginID );
         
         
+        
+        /**
+         * @brief Unloads all loaded plugins
+         */
+        void UnLoadAllPlugins ( );
+        
+        
         /**
          * @brief Checks if the plugin with the given ID is loaded ot not
          * @param int pluginID - Id of the plugin we want to check
          * @return bool - true or false
          */
-        bool IsLoaded ( const int pluginID );
+        const bool IsLoaded ( const int pluginID );
         
         
         /**
@@ -136,7 +166,7 @@ class classPluginServer {
          * @param wxFileName - filename of the plugin
          * @return int -plugin ID or -1 on failure
          */
-        int GetPluginId ( wxFileName objFile );
+        const int GetPluginId ( wxFileName objFile );
         
         
         /**
@@ -156,10 +186,8 @@ class classPluginServer {
          * @param int pluginID - the ID of the plugin to retreave
          * @return classPlugin *
          */
-        const classPlugin * GetPlugin ( int pluginID ) {
-            return m_arrPlugins.Item( pluginID )->m_objPlugin;
-        }
-        
+        const classPlugin * GetPlugin ( const int pluginID );
+                
         
         
         /**

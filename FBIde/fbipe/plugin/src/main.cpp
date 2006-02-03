@@ -59,21 +59,6 @@ PluginFrame::PluginFrame(const wxString& title)
 
 void PluginFrame::OnQuit(wxCommandEvent& WXUNUSED(event)) {
     
-    /*wxDynamicLibrary * dll = m_arrDlls.Item( m_intListIndex );
-    classPlugin * plugin = m_arrPlugins.Item( m_intListIndex );
-    
-    while( m_arrPlugins.GetCount() ) {
-        plugin = m_arrPlugins.Item( 0 );
-        plugin->OnExit();
-        delete plugin;
-        m_arrPlugins.RemoveAt( 0 );
-        
-        dll = m_arrDlls.Item( 0 );
-        dll->Unload();
-        delete dll;
-        m_arrDlls.RemoveAt( 0 );
-    }*/
-    
     delete m_objPluginList;
     delete m_objPluginServer;
     Close(true);
@@ -124,7 +109,7 @@ void PluginFrame::OnLoadButton(wxCommandEvent& WXUNUSED(event)) {
     
     int result = m_objPluginServer->LoadPlugin( objInputFile );
     
-    if( result == -1 ) {
+    if( result == 0 ) {
         wxString strError;
         switch( m_objPluginServer->GetError() ) {
             case ID_Error::PLUGIN_FILE_NOT_FOUND :
