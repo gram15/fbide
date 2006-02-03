@@ -1,8 +1,10 @@
 
 #include <wx/wx.h>
 
-// include main plugin class.
-#include "inc/class.plugin.h"
+// include plugin sdk. This include will also include
+// all base headers and declares data needed for plugins.
+#include "inc/fbipe_sdk.h"
+
 
 // Declare our plugin. This Macro is needed!
 DECLARE_PLUGIN()
@@ -19,7 +21,7 @@ class plugin_test : public classPlugin {
     // If return false then it means failed loading.
     bool OnInit(  ) {
         wxString caption;
-        caption << "Plugin ID:" << GetData()->GetId();
+        caption << "Plugin ID:" << GetId();
         wxMessageBox( "Hello from a plugin!", caption );
         return true;
     }
@@ -33,7 +35,7 @@ class plugin_test : public classPlugin {
     // Just testing. 
     void SendCommand( wxString strCmd ) {
         wxString caption;
-        caption << "Plugin ID:" << GetData()->GetId();
+        caption << "Plugin ID:" << GetId();
         wxMessageBox( "Message receaved: " + strCmd, caption );
     }
     
@@ -41,7 +43,7 @@ class plugin_test : public classPlugin {
     // Destructor
     ~plugin_test() {
         wxString caption;
-        caption << "Plugin ID:" << GetData()->GetId();
+        caption << "Plugin ID:" << GetId();
         wxMessageBox( "Plugin Destructor", caption );
         return;
     }

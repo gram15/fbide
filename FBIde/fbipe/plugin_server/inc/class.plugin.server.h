@@ -93,8 +93,8 @@ class classPluginServer {
         
         
         /**
-         *
-         *
+         * is a private function of this class. retreaves the index of the 
+         * plugin in the plugin array
          */
         int GetPluginIndex ( int pluginID ) {
             for ( int i = 0; i < GetPluginCount(); i++ )
