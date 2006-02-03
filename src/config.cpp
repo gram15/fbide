@@ -31,6 +31,7 @@
 void MyFrame::LoadSettings() {
     
     wxFileName w(FB_App->argv[0]);
+    w.Normalize();
     EditorPath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
     
     #ifdef __WXMSW__
