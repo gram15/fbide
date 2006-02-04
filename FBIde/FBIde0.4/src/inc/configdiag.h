@@ -21,17 +21,6 @@
 * Program URL   : http://fbide.sourceforge.net
 */
 
-/////////////////////////////////////////////////////////////////////////////
-// Name:        ConfigDialog.h
-// Purpose:
-// Author:
-// Modified by:
-// Created:     02/02/2006 04:47:03
-// RCS-ID:
-// Copyright:
-// Licence:
-/////////////////////////////////////////////////////////////////////////////
-
 #ifndef _ConfigDialog_H_
 #define _ConfigDialog_H_
 
