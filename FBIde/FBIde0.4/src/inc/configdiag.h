@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -23,13 +23,13 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // Name:        ConfigDialog.h
-// Purpose:     
-// Author:      
-// Modified by: 
+// Purpose:
+// Author:
+// Modified by:
 // Created:     02/02/2006 04:47:03
-// RCS-ID:      
-// Copyright:   
-// Licence:     
+// RCS-ID:
+// Copyright:
+// Licence:
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef _ConfigDialog_H_
@@ -67,7 +67,7 @@ class wxSpinCtrl;
 
 ////@begin control identifiers
 #define ID_DIALOG 10000
-#define SYMBOL_ConfigDialog_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP|wxCLOSE_BOX|wxCLIP_CHILDREN 
+#define SYMBOL_ConfigDialog_STYLE wxCAPTION|wxSYSTEM_MENU|wxSTAY_ON_TOP|wxCLOSE_BOX|wxCLIP_CHILDREN
 #define SYMBOL_ConfigDialog_TITLE _("FBIde settings")
 #define SYMBOL_ConfigDialog_IDNAME ID_DIALOG
 #define SYMBOL_ConfigDialog_SIZE wxDefaultSize
@@ -122,8 +122,7 @@ class wxSpinCtrl;
  * ConfigDialog class declaration
  */
 
-class ConfigDialog: public wxDialog
-{    
+class ConfigDialog: public wxDialog {
     DECLARE_DYNAMIC_CLASS( ConfigDialog )
     DECLARE_EVENT_TABLE()
 
@@ -138,7 +137,7 @@ public:
     /// Creates the controls and sizers
     void CreateControls();
 
-////@begin ConfigDialog event handler declarations
+    ////@begin ConfigDialog event handler declarations
 
     /// wxEVT_COMMAND_LISTBOX_SELECTED event handler for ID_listThemeType
     void OnThemeSelectType( wxCommandEvent& event );
@@ -170,33 +169,49 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for wxID_CANCEL
     void OnCancelClick( wxCommandEvent& event );
 
-////@end ConfigDialog event handler declarations
+    ////@end ConfigDialog event handler declarations
 
-////@begin ConfigDialog member function declarations
+    ////@begin ConfigDialog member function declarations
 
-    bool GetMoGeneral() const { return m_MoGeneral ; }
-    void SetMoGeneral(bool value) { m_MoGeneral = value ; }
+    bool GetMoGeneral() const {
+        return m_MoGeneral ;
+    }
+    void SetMoGeneral(bool value) {
+        m_MoGeneral = value ;
+    }
 
-    bool GetModTheme() const { return m_ModTheme ; }
-    void SetModTheme(bool value) { m_ModTheme = value ; }
+    bool GetModTheme() const {
+        return m_ModTheme ;
+    }
+    void SetModTheme(bool value) {
+        m_ModTheme = value ;
+    }
 
-    bool GetModKeyWord() const { return m_ModKeyWord ; }
-    void SetModKeyWord(bool value) { m_ModKeyWord = value ; }
+    bool GetModKeyWord() const {
+        return m_ModKeyWord ;
+    }
+    void SetModKeyWord(bool value) {
+        m_ModKeyWord = value ;
+    }
 
-    bool GetModCompiler() const { return m_ModCompiler ; }
-    void SetModCompiler(bool value) { m_ModCompiler = value ; }
+    bool GetModCompiler() const {
+        return m_ModCompiler ;
+    }
+    void SetModCompiler(bool value) {
+        m_ModCompiler = value ;
+    }
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
 
     /// Retrieves icon resources
     wxIcon GetIconResource( const wxString& name );
-////@end ConfigDialog member function declarations
+    ////@end ConfigDialog member function declarations
 
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-////@begin ConfigDialog member variables
+    ////@begin ConfigDialog member variables
     wxNotebook* objNoteBook;
     wxPanel* objPanelGeneral;
     wxCheckBox* chkAutoIndent;
@@ -237,7 +252,7 @@ public:
     bool m_ModTheme;
     bool m_ModKeyWord;
     bool m_ModCompiler;
-////@end ConfigDialog member variables
+    ////@end ConfigDialog member variables
 
     MyFrame         * m_Parent;
     StyleInfo       m_Style;
@@ -249,7 +264,7 @@ public:
     int             m_ThemeOld;
     unsigned int    m_fg;
     unsigned int    m_bg;
-    
+
     void LoadGeneral();
     void LoadThemes();
     void LoadKeywords();
@@ -260,7 +275,7 @@ public:
 };
 
 #endif
-    // _ConfigDialog_H_
+// _ConfigDialog_H_
 
 
 /*
@@ -294,9 +309,9 @@ enum ConfigENUMS {
 
 class ConfigDialog: public wxDialog {
 public:
-    ConfigDialog(   wxWindow* parent, 
-                    wxWindowID id = -1, 
-                    const wxString& title = wxT(""), 
+    ConfigDialog(   wxWindow* parent,
+                    wxWindowID id = -1,
+                    const wxString& title = wxT(""),
                     long style = wxCAPTION|
                                  wxSYSTEM_MENU|
                                  wxCLOSE_BOX|
@@ -306,7 +321,7 @@ public:
                     const wxString& name = wxT("dialogBox") );
 
     // Pointer control
-    
+
     void Button_OK              ( wxCommandEvent&  event );
     void Button_Cancel          ( wxCommandEvent&  event );
     void Button_GetCompPath     ( wxCommandEvent&  event );
@@ -314,20 +329,20 @@ public:
     void Button_Background      ( wxCommandEvent&  event );
     void Button_SaveTheme       ( wxCommandEvent&  event );
     void ListBox_Select         ( wxCommandEvent&  event );
-    
+
     void LoadStyle              ( StyleInfo   LoadStyle );
     void SaveStyle              ( StyleInfo   LoadStyle );
     void SaveSettings           (  );
     void ThemeSelector          ( wxCommandEvent& event );
     void KeywordSelect          ( wxCommandEvent& event );
-        
+
     bool ModKw, ModTheme;
     StyleInfo   Style;
     int         Oldselection;
     int         OldKWSelect;
     uint        bg;
     uint        fg;
-    
+
     wxNotebook *CD_Notebook;;
     wxPanel *CD_Settings;
     wxPanel *CD_Theme;
@@ -388,9 +403,9 @@ public:
     wxTextCtrl *TB_KeywordFile;
     wxButton *But_KeywordFile;
     wxTextCtrl *TA_Keywords;
-    
+
     wxButton * font_button;
- 
+
     ~ConfigDialog   (  );
 
     MyFrame * Parent;

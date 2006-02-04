@@ -1,12 +1,12 @@
 /////////////////////////////////////////////////////////////////////////////
 // Name:        fb_about.cpp
-// Purpose:     
+// Purpose:
 // Author:      VonGodric
-// Modified by: 
+// Modified by:
 // Created:     08/14/05 17:16:30
-// RCS-ID:      
-// Copyright:   
-// Licence:     
+// RCS-ID:
+// Copyright:
+// Licence:
 /////////////////////////////////////////////////////////////////////////////
 
 #ifndef __WXMSW__
@@ -19,20 +19,18 @@
 //IMPLEMENT_DYNAMIC_CLASS( about, wxDialog )
 
 BEGIN_EVENT_TABLE( about, wxDialog )
-    EVT_CLOSE(              about::OnCloseWindow )
-    EVT_BUTTON( wxID_OK,    about::OnOkClick )
+EVT_CLOSE(              about::OnCloseWindow )
+EVT_BUTTON( wxID_OK,    about::OnOkClick )
 END_EVENT_TABLE()
 
 about::about( ) {  }
-about::about( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
+about::about( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) {
     Parent = ( MyFrame * ) parent;
     Create(parent, id, caption, pos, size, style);
 }
 
 
-bool about::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
-{
+bool about::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) {
     SetExtraStyle(GetExtraStyle()|wxWS_EX_BLOCK_EVENTS);
     wxDialog::Create( parent, id, caption, pos, size, style );
 
@@ -44,8 +42,7 @@ bool about::Create( wxWindow* parent, wxWindowID id, const wxString& caption, co
 }
 
 
-void about::CreateControls()
-{    
+void about::CreateControls() {
     about* itemDialog1 = this;
     wxString temp;
 
@@ -60,17 +57,17 @@ void about::CreateControls()
     wxStaticBoxSizer* itemStaticBoxSizer4 = new wxStaticBoxSizer(itemStaticBoxSizer4Static, wxVERTICAL);
     itemBoxSizer2->Add(itemStaticBoxSizer4, 0, wxGROW|wxLEFT|wxRIGHT|wxBOTTOM, 5);
 
-    temp = ""; 
+    temp = "";
     temp << "Version:    " << VER_MAJOR << "." << VER_MINOR << "." << VER_RELEASE;
     wxStaticText* itemStaticText5 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
     itemStaticText5->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
     itemStaticBoxSizer4->Add(itemStaticText5, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
-//    temp = ""; 
-//    temp << "Build:      " << VER_BUILD;
-//    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
-//    itemStaticText6->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
-//    itemStaticBoxSizer4->Add(itemStaticText6, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
+    //    temp = "";
+    //    temp << "Build:      " << VER_BUILD;
+    //    wxStaticText* itemStaticText6 = new wxStaticText( itemDialog1, wxID_STATIC, temp, wxDefaultPosition, wxDefaultSize, 0 );
+    //    itemStaticText6->SetFont(wxFont(10, wxSWISS, wxNORMAL, 0, FALSE, _T("Courier New")));
+    //    itemStaticBoxSizer4->Add(itemStaticText6, 0, wxALIGN_LEFT|wxLEFT|wxRIGHT|wxADJUST_MINSIZE, 5);
 
     temp = "";
     temp << "Build date: " << _(__DATE__);
@@ -87,10 +84,10 @@ void about::CreateControls()
     wxStaticLine* itemStaticLine9 = new wxStaticLine( itemDialog1, wxID_STATIC, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
     itemStaticBoxSizer4->Add(itemStaticLine9, 0, wxGROW|wxTOP|wxBOTTOM, 5);
 
-    wxTextCtrl*txm7=new wxTextCtrl( itemDialog1, ID_TEXTCTRL, 
-        _(""), 
-        wxDefaultPosition, wxSize(-1, 200),wxVSCROLL|wxHSCROLL|wxTE_READONLY|wxTE_RICH2|wxTE_DONTWRAP|wxTE_MULTILINE );
-            txm7->SetLabel(wxT(""));
+    wxTextCtrl*txm7=new wxTextCtrl( itemDialog1, ID_TEXTCTRL,
+                                    _(""),
+                                    wxDefaultPosition, wxSize(-1, 200),wxVSCROLL|wxHSCROLL|wxTE_READONLY|wxTE_RICH2|wxTE_DONTWRAP|wxTE_MULTILINE );
+    txm7->SetLabel(wxT(""));
     itemStaticBoxSizer4->Add(txm7, 0, wxGROW, 5);
     wxArrayString myarr;
     myarr.Add(wxString::Format("[bold]FBIde %d.%d.%d[/bold]",VER_MAJOR,VER_MINOR,VER_RELEASE));
@@ -101,7 +98,7 @@ void about::CreateControls()
     myarr.Add("[bold]"+Parent->Lang[207]);
     myarr.Add(Parent->Lang[208]+"[/bold]");
     myarr.Add("VonGodric - "+Parent->Lang[209]);
-//    myarr.Add("dilyias - "+Parent->Lang[211]);
+    //    myarr.Add("dilyias - "+Parent->Lang[211]);
     myarr.Add("dumbledore - "+Parent->Lang[212]);
     myarr.Add("Madedog - "+Parent->Lang[213]);
     myarr.Add("");
@@ -136,17 +133,13 @@ void about::CreateControls()
     wxFont boldFont=myattr.GetFont();
     boldFont.SetWeight(wxFONTWEIGHT_BOLD);
     bool nesting=false;
-    for(int i=0;i<(int)myarr.Count();i++)
-    {
-        for(int j=0;j<(int)myarr[i].Len();j++)
-        {
+    for(int i=0;i<(int)myarr.Count();i++) {
+        for(int j=0;j<(int)myarr[i].Len();j++) {
             char thechar=(char)*myarr[i].Mid(j,1);
-            if(thechar=='['&&!nesting)
-            {
+            if(thechar=='['&&!nesting) {
                 nesting=true;
             }
-            else if(thechar==']'&&nesting)
-            {
+            else if(thechar==']'&&nesting) {
                 nesting=false;
                 tag=tag.MakeLower();
                 if(tag=="bold")
@@ -156,12 +149,10 @@ void about::CreateControls()
                 txm7->SetDefaultStyle(myattr);
                 tag="";
             }
-            else if(nesting)
-            {
+            else if(nesting) {
                 tag+=thechar;
             }
-            else
-            {
+            else {
                 txm7->WriteText(thechar);
             }
         }
@@ -178,24 +169,20 @@ void about::CreateControls()
 }
 
 
-wxBitmap about::GetBitmapResource( const wxString& name )
-{
-    if (name == wxT("ide/fbide.bmp"))
-    {
+wxBitmap about::GetBitmapResource( const wxString& name ) {
+    if (name == wxT("ide/fbide.bmp")) {
         wxBitmap bitmap(_T("ide/fbide.bmp"), wxBITMAP_TYPE_BMP);
         return bitmap;
     }
     return wxNullBitmap;
 }
 
-void about::OnOkClick( wxCommandEvent& event )
-{
+void about::OnOkClick( wxCommandEvent& event ) {
     this->EndModal(true);
 }
 
 
-void about::OnCloseWindow( wxCloseEvent& event )
-{
+void about::OnCloseWindow( wxCloseEvent& event ) {
     this->EndModal(true);
 }
 

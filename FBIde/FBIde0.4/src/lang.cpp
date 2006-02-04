@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -25,28 +25,28 @@
 #include <wx/fileconf.h>
 #include <wx/wfstream.h>
 
-void MyFrame::OpenLangFile( wxString FileName ){
-     
-     //First lets select the file we are going to use...
-     wxFFileInputStream FileINIIS( EditorPath + "IDE/lang/" + FileName + ".fbl" );
-     
-     //And then open it as an INI file
-     wxFileConfig FileINI(FileINIIS);
-     
-     //Pathname to search...
-     FileINI.SetPath("/FBIde");     
-     
-     //And GO!
-     wxString temp;
-     for (int i=0; i < 244; i++){
-         temp="";
-         temp<<i;
-         //Lang.Add(FileINI.Read(temp,""));
-         Lang.Add(FileINI.Read(temp,""));
-     }
-     
-     Lang.Shrink();
-     
-     return;               
+void MyFrame::OpenLangFile( wxString FileName ) {
+
+    //First lets select the file we are going to use...
+    wxFFileInputStream FileINIIS( EditorPath + "IDE/lang/" + FileName + ".fbl" );
+
+    //And then open it as an INI file
+    wxFileConfig FileINI(FileINIIS);
+
+    //Pathname to search...
+    FileINI.SetPath("/FBIde");
+
+    //And GO!
+    wxString temp;
+    for (int i=0; i < 244; i++) {
+        temp="";
+        temp<<i;
+        //Lang.Add(FileINI.Read(temp,""));
+        Lang.Add(FileINI.Read(temp,""));
+    }
+
+    Lang.Shrink();
+
+    return;
 }
-               
+

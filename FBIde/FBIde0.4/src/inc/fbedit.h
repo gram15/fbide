@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -29,7 +29,7 @@
 
 namespace kw {
     enum {
-        SUB         = 1, 
+        SUB         = 1,
         FUNCTION,
         IF,
         THEN,
@@ -55,37 +55,38 @@ namespace kw {
         PRIVATE
     };
     const int word_count = 23;
-    const wxString words[word_count] = { 
-            "sub", "function", "if", "then", "else", "elseif",
-            "case", "select", "with", "asm", "type", "union",
-            "enum", "scope", "do", "for", "while", "loop", "next",
-            "wend", "end", "static", "private" };
+    const wxString words[word_count] = {
+                                           "sub", "function", "if", "then", "else", "elseif",
+                                           "case", "select", "with", "asm", "type", "union",
+                                           "enum", "scope", "do", "for", "while", "loop", "next",
+                                           "wend", "end", "static", "private"
+                                       };
 }
 
 class FB_Edit: public wxStyledTextCtrl {
 public:
     FB_Edit ( MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id = -1,
-             wxString FileToLoad= FBUNNAMED,
-             const wxPoint &pos = wxDefaultPosition,
-             const wxSize &size = wxDefaultSize,
-             long style = wxSUNKEN_BORDER|wxVSCROLL
-           );
-    
+              wxString FileToLoad= FBUNNAMED,
+              const wxPoint &pos = wxDefaultPosition,
+              const wxSize &size = wxDefaultSize,
+              long style = wxSUNKEN_BORDER|wxVSCROLL
+            );
+
     MyFrame * Parent;
     Buffer* buff;
-    
+
     void LoadSTCSettings    (  );
     void LoadSTCTheme       ( int FileType = 0 );
-    
-    void OnCharAdded  		( wxStyledTextEvent &event );
-	void OnUpdateUI		    ( wxStyledTextEvent &event );
+
+    void OnCharAdded    ( wxStyledTextEvent &event );
+    void OnUpdateUI      ( wxStyledTextEvent &event );
     static bool IsBrace     ( wxChar brace );
     void OnMarginClick      ( wxStyledTextEvent &event );
     void OnModified         ( wxStyledTextEvent &event );
     void OnKeyDown          ( wxKeyEvent &event );
     void OnKeyUp            ( wxKeyEvent &event );
     void OnHotSpot          ( wxStyledTextEvent &event );
-    
+
     void FB_Edit::IndentLine ( int & lineInd, int cLine );
 
     wxString    DocumentName;
@@ -97,59 +98,62 @@ public:
         for( int i = 0; i < kw::word_count; i++ ) {
             if( kw[0] == kw::words[i][0] ) {
                 if ( kw == kw::words[i] ) {
-                    if ( i != kw::ELSE ) i++;
+                    if ( i != kw::ELSE )
+                        i++;
                     return i;
-                }                    
+                }
             }
         }
         return 0;
     }
-    
+
     inline wxString ClearCmdLine ( int cLine ) {
         wxString cmdline( GetLine(cLine).Trim(false).Lower() );
         bool instring =false;
         int len = 0;
-        if ( cmdline[0]=='#'||(cmdline[0]=='\''&&cmdline[1]=='$')) 
+        if ( cmdline[0]=='#'||(cmdline[0]=='\''&&cmdline[1]=='$'))
             return cmdline.Trim( true );
         for (unsigned int i=0; i < cmdline.Len(); i++) {
-            if (cmdline[i] == '\"') instring = !instring;
-            else if (cmdline[i] == '\'' && !instring) break;
+            if (cmdline[i] == '\"')
+                instring = !instring;
+            else if (cmdline[i] == '\'' && !instring)
+                break;
             len++;
         }
         return cmdline.Left( len ).Trim(true);
     }
-    
+
     inline wxString GetFirstKw ( wxString cmdline ) {
         wxString Temp = cmdline.Left(cmdline.Find(' '));
         Temp = Temp.Left(Temp.Find('('));
         return Temp;
     }
-    
+
     inline wxString GetSecondKw ( wxString cmdline ) {
         int sp = cmdline.Find(' ');
         wxString Temp = cmdline.Mid(sp);
         Temp.Trim(true).Trim(false);
         return GetFirstKw( Temp );
     }
-    
+
     inline wxString GetLastKw ( wxString cmdline ) {
         return cmdline.Right(cmdline.Len() - cmdline.Find(' ', true) - 1);
     }
-    
+
     inline void SetBuffer ( Buffer* buff ) {
         this->buff = buff;
     }
-    
+
     inline bool FileExists ( wxString File ) {
         wxFileName w(File);
         return w.FileExists();
     }
-    
+
     int m_CursorPos;
     char m_CharAtCur;
-    
-    
-//   ~FB_Edit ();
+
+
+    //   ~FB_Edit ();
 private:
 
     DECLARE_EVENT_TABLE()

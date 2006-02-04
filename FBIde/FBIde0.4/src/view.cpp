@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -28,19 +28,19 @@
 #include "inc/browser.h"
 #include "inc/format.h"
 
-void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
+void MyFrame::OnSettings (wxCommandEvent  &WXUNUSED(event)) {
     ConfigDialog dlg( this, -1, _T(Lang[98]));
     if( dlg.ShowModal() == wxID_OK ) {
         if( stc ) {
             SaveSettings();
-            
+
             int index = FBNotebook->GetSelection();
             Buffer * buff = bufferList[index];
-            
+
             stc->Freeze();
-                stc->StyleClearAll();
-                stc->LoadSTCTheme(buff->GetFileType());
-                stc->LoadSTCSettings();
+            stc->StyleClearAll();
+            stc->LoadSTCTheme(buff->GetFileType());
+            stc->LoadSTCSettings();
             stc->Thaw();
         }
     }
@@ -48,40 +48,45 @@ void MyFrame::OnSettings (wxCommandEvent 	&WXUNUSED(event)) {
 }
 
 
-void MyFrame::OnFormat (wxCommandEvent 	&WXUNUSED(event)) {
-    if(stc==0) return;
-    if(formatDialog) return;
+void MyFrame::OnFormat (wxCommandEvent  &WXUNUSED(event)) {
+    if(stc==0)
+        return;
+    if(formatDialog)
+        return;
     int index = FBNotebook->GetSelection();
     Buffer * buff = bufferList[index];
-    if (buff->GetFileType()!=0) return;
-    
+    if (buff->GetFileType()!=0)
+        return;
+
     formatDialog=new format(this, -1, Lang[223]); //Convert the format
     formatDialog->Show();
-    
+
     return;
 }
 
 
-void MyFrame::OnResult  (wxCommandEvent 	&WXUNUSED(event)) {
+void MyFrame::OnResult  (wxCommandEvent  &WXUNUSED(event)) {
 
     Freeze();
-        if ( HSplitter->IsSplit() ) { 
-            ConsoleSize = HSplitter->GetSashPosition();
-            HSplitter->Unsplit( FBConsole );
-            FB_View->Check(Menu_Result, false);
-        }
-        else {
-            HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
-            FB_View->Check(Menu_Result, true);
-        }
+    if ( HSplitter->IsSplit() ) {
+        ConsoleSize = HSplitter->GetSashPosition();
+        HSplitter->Unsplit( FBConsole );
+        FB_View->Check(Menu_Result, false);
+    }
+    else {
+        HSplitter->SplitHorizontally( FBCodePanel, FBConsole, ConsoleSize );
+        FB_View->Check(Menu_Result, true);
+    }
     Thaw();
     return;
 }
 
 
-void MyFrame::OnSubs (wxCommandEvent 	&WXUNUSED(event)) {
-    if (stc==0) return;
-    if (SFDialog) return;
+void MyFrame::OnSubs (wxCommandEvent  &WXUNUSED(event)) {
+    if (stc==0)
+        return;
+    if (SFDialog)
+        return;
 
     SFDialog = new SFBrowser(this, -1, Lang[224]); //Sub/Function Browser
     SFDialog->Show();

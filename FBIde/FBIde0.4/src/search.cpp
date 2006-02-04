@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -25,9 +25,9 @@
 #include "inc/main.h"
 #include "inc/fbedit.h"
 
-void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event))
-{
-    if (stc==0) return;
+void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event)) {
+    if (stc==0)
+        return;
     if (FindDialog != NULL || ReplaceDialog != NULL)
         return;
 
@@ -44,9 +44,9 @@ void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event))
 
 
 
-void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event))
-{
-    if (stc==0) return;
+void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event)) {
+    if (stc==0)
+        return;
     if (FindDialog != NULL || ReplaceDialog != NULL)
         return;
 
@@ -56,7 +56,7 @@ void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event))
         ReplaceData->SetFindString(GetTextUnderCursor());
 
     ReplaceDialog = new wxFindReplaceDialog(this, ReplaceData,
-                                      _(Lang[220]), wxFR_REPLACEDIALOG); //Replace text
+                                            _(Lang[220]), wxFR_REPLACEDIALOG); //Replace text
 
     ReplaceDialog->Show();
     return;
@@ -64,43 +64,41 @@ void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event))
 
 
 
-void MyFrame::OnFindAgain (wxCommandEvent& WXUNUSED(event))
-{
-   if (stc==0) return;
-   int flags=FindData->GetFlags();
-   if (flags & wxFR_DOWN)
-      FindNext();
-   else
-      FindPrevious();
-   return;
+void MyFrame::OnFindAgain (wxCommandEvent& WXUNUSED(event)) {
+    if (stc==0)
+        return;
+    int flags=FindData->GetFlags();
+    if (flags & wxFR_DOWN)
+        FindNext();
+    else
+        FindPrevious();
+    return;
 }
 
 
 
-void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event))
-{
-    if (stc==0) return;
+void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event)) {
+    if (stc==0)
+        return;
     wxString lineString = wxGetTextFromUser(_(Lang[221]), _(Lang[222]), _(""), this);
     //Go To Line Number: \ Go To Line
 
-    if (lineString.IsEmpty()) return;
+    if (lineString.IsEmpty())
+        return;
 
-    if (lineString.Contains(":"))
-    {
+    if (lineString.Contains(":")) {
         wxString line, col;
         line = lineString.BeforeFirst(':');
         col = lineString.AfterFirst(':');
-        if ((line.IsNumber() || line == "e") && (col.IsNumber() || col == "e"))
-        {
+        if ((line.IsNumber() || line == "e") && (col.IsNumber() || col == "e")) {
             long lineNumber, colNumber;
-            if (line.IsNumber()) 
+            if (line.IsNumber())
                 line.ToLong(&lineNumber);
             else
                 lineNumber = stc->GetLineCount();
 
             lineNumber--;
-            if (col.IsNumber())
-            {
+            if (col.IsNumber()) {
                 col.ToLong(&colNumber);
                 colNumber--;
             }
@@ -122,21 +120,20 @@ void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event))
     else if (lineString == "e")
         stc->GotoLine(stc->GetLineCount() - 1);
 
-    else if (lineString.IsNumber())
-    {
+    else if (lineString.IsNumber()) {
         long lineNumber;
         lineString.ToLong(&lineNumber);
         lineNumber--;
         if (lineNumber >= 0 && lineNumber <= stc->GetLineCount())
             stc->GotoLine(lineNumber);
-    }   
+    }
 }
 
 
 
-void MyFrame::FindButton ( wxFindDialogEvent& event )
-{
-    if (stc==0) return;
+void MyFrame::FindButton ( wxFindDialogEvent& event ) {
+    if (stc==0)
+        return;
     int flags = 0;
     if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
@@ -152,33 +149,30 @@ void MyFrame::FindButton ( wxFindDialogEvent& event )
     else
         FindOccurence(event.GetFindString(), 1, flags);
 
-   return;
+    return;
 }
 
 
 
-void MyFrame::FindClose ( wxFindDialogEvent& event )
-{
-    
-    if (event.GetDialog() == FindDialog)
-    {
+void MyFrame::FindClose ( wxFindDialogEvent& event ) {
+
+    if (event.GetDialog() == FindDialog) {
         FindDialog->Destroy();
         FindDialog = NULL;
     }
 
-    else if (event.GetDialog() == ReplaceDialog)
-    {
+    else if (event.GetDialog() == ReplaceDialog) {
         ReplaceDialog->Destroy();
         ReplaceDialog = NULL;
     }
-   return;
+    return;
 }
 
 
 
-void MyFrame::MenuFindNext ( wxFindDialogEvent& event )
-{
-    if (stc==0) return;
+void MyFrame::MenuFindNext ( wxFindDialogEvent& event ) {
+    if (stc==0)
+        return;
     int flags = 0;
 
     if (event.GetFlags() & wxFR_WHOLEWORD)
@@ -195,29 +189,29 @@ void MyFrame::MenuFindNext ( wxFindDialogEvent& event )
     else
         FindOccurence(event.GetFindString(), 1, flags);
 
-   return;
+    return;
 }
 
 
 
-void MyFrame::ReplaceSel ( wxFindDialogEvent& event )
-{
-   if (stc==0) return;
-   int flags = 0;
-   if (event.GetFlags() & wxFR_WHOLEWORD)
+void MyFrame::ReplaceSel ( wxFindDialogEvent& event ) {
+    if (stc==0)
+        return;
+    int flags = 0;
+    if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
 
-   if (event.GetFlags() & wxFR_MATCHCASE)
+    if (event.GetFlags() & wxFR_MATCHCASE)
         flags += wxSTC_FIND_MATCHCASE;
 
-   Replace(event.GetFindString(), event.GetReplaceString(), flags);
+    Replace(event.GetFindString(), event.GetReplaceString(), flags);
 }
 
 
 
-void MyFrame::MenuReplaceAll ( wxFindDialogEvent& event )
-{
-    if (stc==0) return;
+void MyFrame::MenuReplaceAll ( wxFindDialogEvent& event ) {
+    if (stc==0)
+        return;
     int flags = 0;
     if (event.GetFlags() & wxFR_WHOLEWORD)
         flags += wxSTC_FIND_WHOLEWORD;
@@ -244,16 +238,14 @@ inline bool MyFrame::HasText() {
 
 
 
-wxString MyFrame::GetTextUnderCursor()
-{
+wxString MyFrame::GetTextUnderCursor() {
     int startpos = stc->WordStartPosition(stc->GetCurrentPos(), true);
     int endpos = stc->WordEndPosition(stc->GetCurrentPos(), true);
 
     return stc->GetTextRange(startpos, endpos);
 }
 
-wxString MyFrame::GetTextUnderCursor(int& startPos, int& endPos)
-{
+wxString MyFrame::GetTextUnderCursor(int& startPos, int& endPos) {
     startPos = stc->WordStartPosition(stc->GetCurrentPos(), true);
     endPos = stc->WordEndPosition(stc->GetCurrentPos(), true);
 
@@ -262,15 +254,13 @@ wxString MyFrame::GetTextUnderCursor(int& startPos, int& endPos)
 
 
 
-inline bool MyFrame::FindNext()
-{
+inline bool MyFrame::FindNext() {
     if (findString.IsEmpty())
         return false;
     return FindOccurence(findString, 0, FindFlags);
 }
 
-inline bool MyFrame::FindPrevious()
-{
+inline bool MyFrame::FindPrevious() {
     if (findString.IsEmpty())
         return false;
     return FindOccurence(findString, 1, FindFlags);
@@ -286,8 +276,7 @@ inline void MyFrame::FindNextWord(wxCommandEvent& WXUNUSED(event)) {
 
 
 
-bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags)
-{
+bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags) {
     // Store the find string and flags in the class for later use
     findString = findStr;
     FindFlags = flags;
@@ -296,8 +285,7 @@ bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags)
     int targetEnd = direc == 0 ? stc->GetLength() : 0;
 
     // If this is a case sensitive search
-    if (flags & wxSTC_FIND_MATCHCASE)
-    {
+    if (flags & wxSTC_FIND_MATCHCASE) {
         if ((stc->GetSelectedText() == findStr) && (direc == 0))
             targetStart = stc->GetSelectionEnd();
 
@@ -306,8 +294,7 @@ bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags)
     }
 
     // If this is a case insensitive search
-    else
-    {
+    else {
         if ((stc->GetSelectedText().Lower() == findStr.Lower()) && (direc == 0))
             targetStart = stc->GetSelectionEnd();
 
@@ -321,31 +308,28 @@ bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags)
     stc->SetSearchFlags(flags);
 
     // If the text was found, select it and return true
-    if (stc->SearchInTarget(findStr) != -1)
-    {
+    if (stc->SearchInTarget(findStr) != -1) {
         stc->SetSelection(stc->GetTargetStart(), stc->GetTargetEnd());
         stc->EnsureCaretVisible();
         return true;
     }
 
     // Return false because the text wasn't found
-    else return false;
+    else
+        return false;
 
 }
 
 
 
-bool MyFrame::FindCurrentWord(int direc)
-{
+bool MyFrame::FindCurrentWord(int direc) {
     wxString findText;
-    if (HasSelection())
-    {
+    if (HasSelection()) {
         findText = stc->GetSelectedText();
         return FindOccurence(findText, direc, 0);
     }
 
-    else
-    {
+    else {
         findText = GetTextUnderCursor();
         return FindOccurence(findText, direc, wxSTC_FIND_WHOLEWORD);
     }
@@ -355,22 +339,18 @@ bool MyFrame::FindCurrentWord(int direc)
 
 
 
-void MyFrame::Replace(const wxString& findStr, const wxString& replaceStr, int flags)
-{
-    if (!HasSelection())
-    {
+void MyFrame::Replace(const wxString& findStr, const wxString& replaceStr, int flags) {
+    if (!HasSelection()) {
         wxBell();
         return;
     }
 
-    if (flags & wxSTC_FIND_MATCHCASE && stc->GetSelectedText() != findStr)
-    {
+    if (flags & wxSTC_FIND_MATCHCASE && stc->GetSelectedText() != findStr) {
         wxBell();
         return;
     }
 
-    else if (stc->GetSelectedText().Lower() != findStr.Lower())
-    {
+    else if (stc->GetSelectedText().Lower() != findStr.Lower()) {
         wxBell();
         return;
     }
@@ -381,8 +361,7 @@ void MyFrame::Replace(const wxString& findStr, const wxString& replaceStr, int f
 
 
 
-void MyFrame::ReplaceAll(const wxString& findStr, const wxString& replaceStr, int flags)
-{
+void MyFrame::ReplaceAll(const wxString& findStr, const wxString& replaceStr, int flags) {
     int find;
 
     stc->BeginUndoAction();
@@ -390,12 +369,10 @@ void MyFrame::ReplaceAll(const wxString& findStr, const wxString& replaceStr, in
     stc->SetTargetEnd(stc->GetLength());
     stc->SetSearchFlags(flags);
 
-    do
-    {
+    do {
         find = stc->SearchInTarget(findStr);
 
-        if (find != -1)
-        {
+        if (find != -1) {
             stc->ReplaceTarget(replaceStr);
             stc->SetTargetStart(stc->GetTargetEnd());
             stc->SetTargetEnd(stc->GetLength());
@@ -408,8 +385,7 @@ void MyFrame::ReplaceAll(const wxString& findStr, const wxString& replaceStr, in
 
 
 
-void MyFrame::ReplaceCurrentWord(const wxString& text)
-{
+void MyFrame::ReplaceCurrentWord(const wxString& text) {
     int start = stc->WordStartPosition(stc->GetCurrentPos(), true);
     int end = stc->WordEndPosition(stc->GetCurrentPos(), true);
 
@@ -418,10 +394,8 @@ void MyFrame::ReplaceCurrentWord(const wxString& text)
 
 
 
-void MyFrame::ReplaceText(int from, int to, const wxString& text)
-{
-    if (from == to)
-    {
+void MyFrame::ReplaceText(int from, int to, const wxString& text) {
+    if (from == to) {
         stc->InsertText(to, text);
         return;
     }
