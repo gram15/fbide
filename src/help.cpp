@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -27,39 +27,38 @@
 
 //------------------------------------------------------------------------------
 // Show about dialog
-void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
-{
+void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event)) {
     about dlg(this);
     dlg.ShowModal();
 }
 
 void MyFrame::OnHelp ( wxCommandEvent& event ) {
-    
-    #ifdef __WXMSW__
-        if( !stc ) {
-            help.DisplayContents();
-            return;
-        }
-        
-        int start=0, end=0;
-        wxString strKw = GetTextUnderCursor( start, end ).Trim( false ).Trim( true ).MakeLower();
-        
-        if( strKw.Len() ) {
-            if( stc->GetCharAt( start - 1 ) == '#' ) strKw = "#" + strKw;
-            
-            help.KeywordSearch( strKw );
-            //help.DisplayTextPopup( strKw, wxPoint(300, 200 ) );
-            //help.DisplayContextPopup( 1 );
-        }
-        else
-            help.DisplayContents();
-    #endif
+
+#ifdef __WXMSW__
+    if( !stc ) {
+        help.DisplayContents();
+        return;
+    }
+
+    int start=0, end=0;
+    wxString strKw = GetTextUnderCursor( start, end ).Trim( false ).Trim( true ).MakeLower();
+
+    if( strKw.Len() ) {
+        if( stc->GetCharAt( start - 1 ) == '#' )
+            strKw = "#" + strKw;
+
+        help.KeywordSearch( strKw );
+        //help.DisplayTextPopup( strKw, wxPoint(300, 200 ) );
+        //help.DisplayContextPopup( 1 );
+    }
+    else
+        help.DisplayContents();
+#endif
 
 }
 
 
-void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
-{
+void MyFrame::OnQuickKeys    ( wxCommandEvent& event ) {
     wxString FileName( EditorPath + "IDE/quickkeys.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
@@ -68,8 +67,7 @@ void MyFrame::OnQuickKeys    ( wxCommandEvent& event )
 }
 
 
-void MyFrame::OnReadMe       ( wxCommandEvent& event )
-{
+void MyFrame::OnReadMe       ( wxCommandEvent& event ) {
     wxString FileName( EditorPath + "IDE/readme.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
@@ -79,8 +77,7 @@ void MyFrame::OnReadMe       ( wxCommandEvent& event )
 }
 
 
-void MyFrame::OnFpp          ( wxCommandEvent& event )
-{
+void MyFrame::OnFpp          ( wxCommandEvent& event ) {
     wxString FileName( EditorPath + "IDE/fpp.txt" );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );

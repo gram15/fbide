@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -29,22 +29,24 @@
 #include <wx/wfstream.h>
 
 void MyFrame::LoadSettings() {
-    
+
     wxFileName w(FB_App->argv[0]);
     w.Normalize();
     EditorPath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
-    
-    #ifdef __WXMSW__
-        wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_win32.ini");
-    #else
-        wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_linux.ini");
-    #endif
+
+#ifdef __WXMSW__
+
+    wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_win32.ini");
+#else
+
+    wxFileInputStream PrefsINIIS( EditorPath + "IDE/prefs_linux.ini");
+#endif
 
     wxFileConfig PrefsINI(PrefsINIIS);
-    
+
     wxString Temp = PRODUCT_NAME;
     SetTitle( Temp );
-    
+
     bool b = false;
     PrefsINI.SetPath("/general");
     Prefs.AutoIndent        = PrefsINI.Read("autoindent",       b);
@@ -66,30 +68,31 @@ void MyFrame::LoadSettings() {
 
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
-    #ifdef __WXMSW__
-        if (CompilerPath == ""||!wxFileExists(CompilerPath)) {
-            if ( wxFileExists( EditorPath + "fbc.exe" ) )
-                CompilerPath = EditorPath + "fbc.exe";
-            else {
-                if (wxMessageBox("Compiler path is either not set or is corrupt. Set correct path now?",
-                                "Compiler error", wxYES_NO | wxICON_HAND ) ==wxYES) {
-                    wxFileDialog dlg (this,
-                        _T("Open compiler"), //Open file
-                        _T(""),
-                        _T("fbc.exe"),
-                        _T("FreeBASIC (fbc.exe)|fbc.exe|All programs (*.exe)|*.exe"),
-                    wxFILE_MUST_EXIST );
-                    if (dlg.ShowModal() == wxID_OK)
-                        CompilerPath=dlg.GetPath();
-                }
+#ifdef __WXMSW__
+
+    if (CompilerPath == ""||!wxFileExists(CompilerPath)) {
+        if ( wxFileExists( EditorPath + "fbc.exe" ) )
+            CompilerPath = EditorPath + "fbc.exe";
+        else {
+            if (wxMessageBox("Compiler path is either not set or is corrupt. Set correct path now?",
+                             "Compiler error", wxYES_NO | wxICON_HAND ) ==wxYES) {
+                wxFileDialog dlg (this,
+                                  _T("Open compiler"), //Open file
+                                  _T(""),
+                                  _T("fbc.exe"),
+                                  _T("FreeBASIC (fbc.exe)|fbc.exe|All programs (*.exe)|*.exe"),
+                                  wxFILE_MUST_EXIST );
+                if (dlg.ShowModal() == wxID_OK)
+                    CompilerPath=dlg.GetPath();
             }
         }
-    #endif
-    
-    #ifndef __WXMSW__
-        strTerminal = PrefsINI.Read("terminal", "");
-    #endif
-    
+    }
+#endif
+
+#ifndef __WXMSW__
+    strTerminal = PrefsINI.Read("terminal", "");
+#endif
+
     Prefs.HelpFile          = PrefsINI.Read("helpfile",         "");
     wxFileName helpFile( Prefs.HelpFile );
     if( helpFile.IsRelative() )
@@ -98,30 +101,33 @@ void MyFrame::LoadSettings() {
         Prefs.UseHelp = ::wxFileExists( Prefs.HelpFile );
 
     SyntaxFile              = PrefsINI.Read("syntax",   "");
-    if (SyntaxFile=="") SyntaxFile = "fbfull.lng";
+    if (SyntaxFile=="")
+        SyntaxFile = "fbfull.lng";
 
     ThemeFile               = PrefsINI.Read("theme",    "");
-    if (ThemeFile=="") ThemeFile = "classic";
+    if (ThemeFile=="")
+        ThemeFile = "classic";
 
-    
+
     PrefsINI.SetPath("/compiler");
     CMDPrototype            = PrefsINI.Read("command",  "<fbc> <filename>");
-    
+
     int winx, winy, winh, winw;
     PrefsINI.SetPath("/editor");
     Prefs.FloatBars         = PrefsINI.Read("floatbars",        b);
     winx                    = PrefsINI.Read("winx",             50),
-    winy                    = PrefsINI.Read("winy",             50),
-    winw                    = PrefsINI.Read("winw",             350),
-    winh                    = PrefsINI.Read("winh",             200);
+                              winy                    = PrefsINI.Read("winy",             50),
+                                                        winw                    = PrefsINI.Read("winw",             350),
+                                                                                  winh                    = PrefsINI.Read("winh",             200);
     Prefs.SplashScreen      = PrefsINI.Read("splashscreen",     b);
-    
-    if(winw==-1||winh==-1) Maximize();
+
+    if(winw==-1||winh==-1)
+        Maximize();
     else {
         Move(winx, winy);
         SetSize(winw, winh);
     }
-    
+
     PrefsINI.SetPath("/");
     OpenLangFile(Prefs.Language);
 
@@ -137,16 +143,17 @@ void MyFrame::LoadSettings() {
 
 void MyFrame::SaveSettings() {
 
-    #ifdef __WXMSW__
-        wxString iniFile( EditorPath + "IDE/prefs_win32.ini" );
-    #else
-        wxString iniFile( EditorPath + "IDE/prefs_linux.ini" );
-    #endif
-    
+#ifdef __WXMSW__
+    wxString iniFile( EditorPath + "IDE/prefs_win32.ini" );
+#else
+
+    wxString iniFile( EditorPath + "IDE/prefs_linux.ini" );
+#endif
+
     wxFileInputStream PrefsINIIS( iniFile );
     wxFileConfig PrefsINI(PrefsINIIS);
     wxFileOutputStream PrefsINIOS( iniFile );
-    
+
     PrefsINI.SetPath("/general");
     PrefsINI.Write("autoindent",        (bool)Prefs.AutoIndent);
     PrefsINI.Write("syntaxhighlight",   (bool)Prefs.SyntaxHighlight);
@@ -170,17 +177,18 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("syntax",            SyntaxFile);
     PrefsINI.Write("theme",             ThemeFile);
     PrefsINI.Write("helpfile",          Prefs.HelpFile);
-    #ifndef __WXMSW__
-        PrefsINI.Write("terminal",      strTerminal);
-    #endif
+#ifndef __WXMSW__
+
+    PrefsINI.Write("terminal",      strTerminal);
+#endif
 
 
-    
+
     PrefsINI.SetPath("/compiler");
     PrefsINI.Write("command",           CMDPrototype);
 
     int winx, winy, winh, winw;
-    
+
     if (IsMaximized()||IsIconized()) {
         winw=-1;
         winh=-1;
@@ -191,16 +199,16 @@ void MyFrame::SaveSettings() {
         GetSize(&winw, &winh);
         GetPosition(&winx, &winy);
     }
-    
+
     PrefsINI.SetPath("/editor");
     PrefsINI.Write("winx",             (long)winx),
     PrefsINI.Write("winy",             (long)winy),
     PrefsINI.Write("winw",             (long)winw),
     PrefsINI.Write("winh",             (long)winh);
     PrefsINI.Write("splashscreen",     (bool)Prefs.SplashScreen);
-    
+
     PrefsINI.Save(PrefsINIOS);
-    
+
     wxFileInputStream input( EditorPath + "IDE/history.ini" );
     wxFileConfig History(input);
     wxFileOutputStream output( EditorPath + "IDE/history.ini" );
@@ -212,20 +220,20 @@ void MyFrame::SaveSettings() {
 
 
 StyleInfo  MyFrame::LoadThemeFile( wxString ThemeFile ) {
-    
+
     StyleInfo Style;
-    
+
     wxFileInputStream ThemeIS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
     wxFileConfig Theme( ThemeIS );
-    
-	wxString StyleTypes[]={	"default", 	    "comment", 	   "number",
+
+    wxString StyleTypes[]={ "default",      "comment",     "number",
                             "keyword",      "string",      "preprocessor",
-							"operator", 	"identifier",  "date",
+                            "operator",  "identifier",  "date",
                             "stringeol",    "keyword2",    "keyword3",
                             "keyword4",     "constant",    "asm" };
 
-	//Default:
-	
+    //Default:
+
     Theme.SetPath("/default");
     Style.DefaultBgColour       = Theme.Read("background",      0xffffff);
     Style.DefaultFgColour       = Theme.Read("foreground",      0L);
@@ -234,27 +242,27 @@ StyleInfo  MyFrame::LoadThemeFile( wxString ThemeFile ) {
     Style.CaretLine             = Theme.Read("caretline",       0xdddddd);
     Style.DefaultFontStyle      = Theme.Read("fontstyle",       0L);
     Style.DefaultFont           = Theme.Read("font",            "");
-   
-	//Line number
+
+    //Line number
     Theme.SetPath("/linenumber");
     Style.LineNumberBgColour    = Theme.Read("background",      0xc0c0c0);
     Style.LineNumberFgColour    = Theme.Read("foreground",      0xffffff);
-	
+
     Theme.SetPath("/select");
     Style.SelectBgColour        = Theme.Read("background",      0xc0c0c0);
     Style.SelectFgColour        = Theme.Read("foreground",      0xffffff);
-    
+
     Theme.SetPath("/brace");
     Style.BraceBgColour         = Theme.Read("background",      (long)Style.DefaultFgColour);
     Style.BraceFgColour         = Theme.Read("foreground",      (long)Style.DefaultBgColour);
     Style.BraceFontStyle        = Theme.Read("fontstyle",       0L);
-    
+
     Theme.SetPath("/badbrace");
     Style.BadBraceBgColour      = Theme.Read("background",      (long)Style.DefaultFgColour);
     Style.BadBraceFgColour      = Theme.Read("foreground",      0L);
     Style.BadBraceFontStyle     = Theme.Read("fonstyle",        0L);
-    
-    
+
+
     for (int i=1; i<15;i++) {
         Theme.SetPath("/" + StyleTypes[i]);
         Style.Info[i].background    = Theme.Read("background",      (long)Style.DefaultBgColour);
@@ -264,7 +272,7 @@ StyleInfo  MyFrame::LoadThemeFile( wxString ThemeFile ) {
         Style.Info[i].fontstyle     = Theme.Read("fontstyle",       (long)Style.DefaultFontStyle);
         Style.Info[i].fontname      = Theme.Read("font",            Style.DefaultFont);
     }
-    
+
     return Style;
 }
 
@@ -275,15 +283,15 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
     wxFileInputStream ThemeIS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
     wxFileOutputStream ThemeISOS( EditorPath + "IDE/" + ThemeFile + ".fbt" );
     wxFileConfig Theme( ThemeIS );
-    
-	wxString StyleTypes[]={	"default", 	    "comment", 	   "number",
+
+    wxString StyleTypes[]={ "default",      "comment",     "number",
                             "keyword",      "string",      "preprocessor",
-							"operator", 	"identifier",  "date",
+                            "operator",  "identifier",  "date",
                             "stringeol",    "keyword2",    "keyword3",
                             "keyword4",     "constant",    "asm" };
 
-	//Default:
-	
+    //Default:
+
     Theme.SetPath("/default");
     Theme.Write("background",                   (long)Style.DefaultBgColour);
     Theme.Write("foreground",                   (long)Style.DefaultFgColour);
@@ -292,27 +300,27 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
     Theme.Write("caretline",                    (long)Style.CaretLine);
     Theme.Write("fontstyle",                    (long)Style.DefaultFontStyle);
     Theme.Write("font",                         Style.DefaultFont);
-   
-	//Line number
+
+    //Line number
     Theme.SetPath("/linenumber");
     Theme.Write("background",                   (long)Style.LineNumberBgColour);
     Theme.Write("foreground",                   (long)Style.LineNumberFgColour);
-	
+
     Theme.SetPath("/select");
     Theme.Write("background",                   (long)Style.SelectBgColour);
     Theme.Write("foreground",                   (long)Style.SelectFgColour);
-    
+
     Theme.SetPath("/brace");
     Theme.Write("background",                   (long)Style.BraceBgColour);
     Theme.Write("foreground",                   (long)Style.BraceFgColour);
     Theme.Write("fontstyle",                    (long)Style.BraceFontStyle);
-    
+
     Theme.SetPath("/badbrace");
     Theme.Write("background",                   (long)Style.BadBraceBgColour);
     Theme.Write("foreground",                   (long)Style.BadBraceFgColour);
     Theme.Write("fonstyle",                     (long)Style.BadBraceFontStyle);
-    
-    
+
+
     for (int i=1; i<15;i++) {
         Theme.SetPath("/" + StyleTypes[i]);
         Theme.Write("background",               (long)Style.Info[i].background);
@@ -322,7 +330,7 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
         Theme.Write("capital",                  (long)Style.Info[i].lettercase);
         Theme.Write("fontstyle",                (long)Style.Info[i].fontstyle);
     }
-    
+
     Theme.Save(ThemeISOS);
     return;
 }
@@ -330,28 +338,25 @@ void MyFrame::SaveThemeFile      ( StyleInfo Style, wxString ThemeFile ) {
 
 
 void MyFrame::LoadkwFile( wxString SyntaxFile ) {
-    
+
     wxFileInputStream SyntaxIS( EditorPath + "IDE/" + SyntaxFile );
     wxFileConfig Syntax(SyntaxIS);
-    
+
     Syntax.SetPath("/keywords");
     Keyword[1]            = Syntax.Read("kw1", "");
     Keyword[2]            = Syntax.Read("kw2", "");
     Keyword[3]            = Syntax.Read("kw3", "");
     Keyword[4]            = Syntax.Read("kw4", "");
-    
+
     kwList.Clear();
     char c;
     wxString curword;
-    for(int i=0;i<4;i++)
-    {
-        for(int j=0;j<(int)Keyword[i+1].Len();j++)
-        {
+    for(int i=0;i<4;i++) {
+        for(int j=0;j<(int)Keyword[i+1].Len();j++) {
             c = Keyword[i+1].GetChar(j);
             curword += c;
             if(c == ' ' || c == '\n' || c == '\r' ||
-               j + 1 == (int)Keyword[i+1].Len() )
-            {
+                    j + 1 == (int)Keyword[i+1].Len() ) {
                 if(curword.Trim(false).Trim(true).Len()>0) {
                     kwList.Add( curword );
                 }
@@ -359,25 +364,25 @@ void MyFrame::LoadkwFile( wxString SyntaxFile ) {
             }
         }
     }
-    
+
     kwList.Sort();
-    
-    return;    
+
+    return;
 }
 
 
 void MyFrame::SavekwFile( wxString SyntaxFile ) {
-    
+
     wxFileInputStream SyntaxIS( EditorPath + "IDE/" + SyntaxFile );
     wxFileOutputStream SyntaxOS( EditorPath + "IDE/" + SyntaxFile );
     wxFileConfig Syntax(SyntaxIS);
-    
+
     Syntax.SetPath("/keywords");
     Syntax.Write("kw1",     Keyword[1]);
     Syntax.Write("kw2",     Keyword[2]);
     Syntax.Write("kw3",     Keyword[3]);
     Syntax.Write("kw4",     Keyword[4]);
-    
+
     Syntax.Save(SyntaxOS);
-    return;    
+    return;
 }

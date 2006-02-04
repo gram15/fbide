@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -30,9 +30,9 @@ using namespace std;
 
 class SFBrowser: public wxDialog {
 public:
-    SFBrowser(  wxWindow* parent, 
-                wxWindowID id = -1, 
-                const wxString& title = wxT(""), 
+    SFBrowser(  wxWindow* parent,
+                wxWindowID id = -1,
+                const wxString& title = wxT(""),
                 long style = wxCAPTION|
                              wxSYSTEM_MENU|
                              wxCLOSE_BOX|
@@ -44,32 +44,32 @@ public:
                              wxWANTS_CHARS ,
                 const wxString& name = wxT("sfbrower") );
     ~SFBrowser();
-    
+
     void AddListItem ( int Linenr, bool Type, wxString Message );
     void OnCharAdded ( wxCommandEvent& event );
     void OnEnter     ( wxCommandEvent& event );
     void OnSelect    ( wxListEvent& event );
     void OnActivate  ( wxListEvent& event );
-    
+
     void GenerateList( wxString Search );
-    
+
     void OnClose ( wxCloseEvent & event);
     void OnKeyUp ( wxKeyEvent &event );
-//    void SFBClose (  ) { delete this; }
-    
+    //    void SFBClose (  ) { delete this; }
+
     void Rebuild (  );
-    
+
     MyFrame     * Parent;
     wxStaticText* SearchLabel;
     wxTextCtrl  * SearchBox;
     wxListCtrl  * SFList;
     wxPanel     * Panel;
-    
+
     wxArrayString Original;
     wxArrayString OriginalArg;
     vector <int> OrigLineNr;
     vector <bool> OrigType;
-    
+
     wxString SearchString;
     bool     ChangePos;
 
@@ -77,13 +77,13 @@ public:
         SearchBoxId,
         SFListId,
     };
-    
+
 protected:
     DECLARE_EVENT_TABLE()
 };
 
-    // Pointer control
-    
+// Pointer control
+
 
 
 #endif

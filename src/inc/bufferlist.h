@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -27,35 +27,38 @@
 
 #include <wx/dynarray.h>
 
-class BufferList
-{
-    public:
-        BufferList();
-        ~BufferList();
+class BufferList {
+public:
+    BufferList();
+    ~BufferList();
 
-        Buffer* AddBuffer(const wxString& highlighter = "Text");
-        Buffer* AddFileBuffer(const wxString& fileName,
-                              const wxString& highlighter);
+    Buffer* AddBuffer(const wxString& highlighter = "Text");
+    Buffer* AddFileBuffer(const wxString& fileName,
+                          const wxString& highlighter);
 
-        void SetBufferModified(int index, bool status);
-        void SetBufferUnModified(int index);
-        bool GetBufferModified(int index);
+    void SetBufferModified(int index, bool status);
+    void SetBufferUnModified(int index);
+    bool GetBufferModified(int index);
 
-        int GetModifiedCount();
-        int GetBufferCount();
+    int GetModifiedCount();
+    int GetBufferCount();
 
-        Buffer* GetBuffer(int index);
-        Buffer* operator[](int index);
-        void SetBuffer(int index, Buffer* buff);            
-        Buffer* GetLastBuffer();
-        void RemoveBuffer(int index);
-        int FileLoaded ( wxString FileName );
-        void DecrModCount () { modifiedCount --; }
-        void IncrModCount () { modifiedCount ++; }
+    Buffer* GetBuffer(int index);
+    Buffer* operator[](int index);
+    void SetBuffer(int index, Buffer* buff);
+    Buffer* GetLastBuffer();
+    void RemoveBuffer(int index);
+    int FileLoaded ( wxString FileName );
+    void DecrModCount () {
+        modifiedCount --;
+    }
+    void IncrModCount () {
+        modifiedCount ++;
+    }
 
-    private:
-        BufferArray buffers;
-        int modifiedCount;
+private:
+    BufferArray buffers;
+    int modifiedCount;
 };
 
 #endif

@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -33,11 +33,10 @@
  */
 Buffer::Buffer( const wxString& fileName )
         : wasModified(false), modified(false), document(NULL),
-        selStart(0), selEnd(0), firstLine(0)
-{
+selStart(0), selEnd(0), firstLine(0) {
     this->fileName = fileName;
     FileMode = 0;
-//    UpdateModTime();
+    //    UpdateModTime();
 }
 
 /**
@@ -49,17 +48,14 @@ Buffer::Buffer( const wxString& fileName )
  * @return Whether the file modification time has changed and the file
  * has been modified externally.
  */
-bool Buffer::CheckModTime()
-{
-    if (!Exists())
-    {
+bool Buffer::CheckModTime() {
+    if (!Exists()) {
         return false;
     }
 
     wxFileName file(fileName);
 
-    if (file.GetModificationTime() > modTime)
-    {
+    if (file.GetModificationTime() > modTime) {
         return true;
     }
 
@@ -72,15 +68,12 @@ bool Buffer::CheckModTime()
  * @see Buffer::IsUntitled()
  * @return Whether the file referenced by this buffer exists.
  */
-bool Buffer::Exists()
-{
-    if (fileName.IsEmpty() || IsUntitled())
-    {
+bool Buffer::Exists() {
+    if (fileName.IsEmpty() || IsUntitled()) {
         return false;
     }
 
-    else
-    {
+    else {
         return wxFileExists(fileName);
     }
 }
@@ -90,8 +83,7 @@ bool Buffer::Exists()
  * @see SetDocument(void* document)
  * @return A document pointer to the document this buffer represents.
  */
-void* Buffer::GetDocument()
-{
+void* Buffer::GetDocument() {
     return document;
 }
 
@@ -100,8 +92,7 @@ void* Buffer::GetDocument()
  * @see Buffer::SetFileName(const wxString& fileName)
  * @return The file name of this buffer.
  */
-const wxString& Buffer::GetFileName()
-{
+const wxString& Buffer::GetFileName() {
     return fileName;
 }
 
@@ -111,8 +102,7 @@ const wxString& Buffer::GetFileName()
  * @see Buffer::SetHighlighter(const wxString& highlighter)
  * @return The name of the highlighter this buffer is currently using.
  */
-const wxString& Buffer::GetHighlighter()
-{
+const wxString& Buffer::GetHighlighter() {
     return highlighter;
 }
 
@@ -123,8 +113,7 @@ const wxString& Buffer::GetHighlighter()
  * @see Buffer::SetLine(int firstLine)
  * @return The first visible line for the document.
  */
-int Buffer::GetLine()
-{
+int Buffer::GetLine() {
     return firstLine;
 }
 
@@ -134,8 +123,7 @@ int Buffer::GetLine()
  * @return A wxDateTime object representing the modification time
  * of the file this buffer represents.
  */
-const wxDateTime& Buffer::GetModificationTime()
-{
+const wxDateTime& Buffer::GetModificationTime() {
     return modTime;
 }
 
@@ -144,8 +132,7 @@ const wxDateTime& Buffer::GetModificationTime()
  * @see Buffer::SetModified(bool modified)
  * @return Whether this buffer has been modified.
  */
-bool Buffer::GetModified()
-{
+bool Buffer::GetModified() {
     return modified;
 }
 
@@ -158,8 +145,7 @@ bool Buffer::GetModified()
  * @see Buffer::GetSelectionStart()
  * @return The end of the selection in the current document.
  */
-int Buffer::GetSelectionEnd()
-{
+int Buffer::GetSelectionEnd() {
     return selEnd;
 }
 
@@ -172,8 +158,7 @@ int Buffer::GetSelectionEnd()
  * @see GetSelectionEnd()
  * @return The start of the selection in the current document.
  */
-int Buffer::GetSelectionStart()
-{
+int Buffer::GetSelectionStart() {
     return selStart;
 }
 
@@ -183,8 +168,7 @@ int Buffer::GetSelectionStart()
  * @see Buffer::Exists()
  * @return If the current buffer is untitled for the buffer.
  */
-bool Buffer::IsUntitled()
-{
+bool Buffer::IsUntitled() {
     return fileName == "Untitled"; //Untitled
 }
 
@@ -193,8 +177,7 @@ bool Buffer::IsUntitled()
  * @param document The new document pointer.
  * @see Buffer::GetDocument()
  */
-void Buffer::SetDocument(void* document)
-{
+void Buffer::SetDocument(void* document) {
     this->document = document;
 }
 
@@ -206,8 +189,7 @@ void Buffer::SetDocument(void* document)
  * @param fileName The new file name for the buffer.
  * @see Buffer::GetFileName()
  */
-void Buffer::SetFileName(const wxString& fileName)
-{
+void Buffer::SetFileName(const wxString& fileName) {
     this->fileName = fileName;
 }
 
@@ -218,8 +200,7 @@ void Buffer::SetFileName(const wxString& fileName)
  * @param highlighter The new highlighter name for the buffer.
  * @see Buffer::GetHighlighter()
  */
-void Buffer::SetHighlighter(const wxString& highlighter)
-{
+void Buffer::SetHighlighter(const wxString& highlighter) {
     this->highlighter = highlighter;
 }
 
@@ -233,8 +214,7 @@ void Buffer::SetHighlighter(const wxString& highlighter)
  * @param firstLine The first line visible in the current document.
  * @see Buffer::GetLine()
  */
-void Buffer::SetLine(int firstLine)
-{
+void Buffer::SetLine(int firstLine) {
     this->firstLine = firstLine;
 }
 
@@ -245,8 +225,7 @@ void Buffer::SetLine(int firstLine)
  * @param modTime The new modification time of the file.
  * @see Buffer::GetModificationTime()
  */
-void Buffer::SetModificationTime(const wxDateTime& modTime)
-{
+void Buffer::SetModificationTime(const wxDateTime& modTime) {
     this->modTime = modTime;
 }
 
@@ -261,14 +240,13 @@ void Buffer::SetModificationTime(const wxDateTime& modTime)
  * @see Buffer::WasModified()
  * @see Buffer::SetWasModified(bool wasModified)
  */
-void Buffer::SetModified(bool modified)
-{
+void Buffer::SetModified(bool modified) {
     this->modified = modified;
 
-//    if (modified && !wasModified)
-//    {
-//        wasModified = true;
-//    }
+    //    if (modified && !wasModified)
+    //    {
+    //        wasModified = true;
+    //    }
 }
 
 /**
@@ -279,8 +257,7 @@ void Buffer::SetModified(bool modified)
  * @see Buffer::GetSelectionStart()
  * @see Buffer::GetSelectionEnd()
  */
-void Buffer::SetPositions(int selStart, int selEnd)
-{
+void Buffer::SetPositions(int selStart, int selEnd) {
     this->selStart = selStart;
     this->selEnd = selEnd;
 }
@@ -293,8 +270,7 @@ void Buffer::SetPositions(int selStart, int selEnd)
  * @param wasModified If this buffer has ever been modified since it was
  * created.
  */
-void Buffer::SetWasModified(bool wasModified)
-{
+void Buffer::SetWasModified(bool wasModified) {
     this->wasModified = wasModified;
 }
 // bitmap->SetMask( new wxMask( *bitmap, wxColour( 192, 192, 192 ) ) );
@@ -310,10 +286,8 @@ void Buffer::SetWasModified(bool wasModified)
  * @return Whether updating the modification time suceeeded. It fail
  * when the current file doesn't exist or the file is untitled.
  */
-bool Buffer::UpdateModTime()
-{
-    if (!Exists())
-    {
+bool Buffer::UpdateModTime() {
+    if (!Exists()) {
         return false;
     }
 
@@ -329,8 +303,7 @@ bool Buffer::UpdateModTime()
  * @see Buffer::SetWasModified(bool wasModified)
  * @return If this buffer has ever been modified.
  */
-bool Buffer::WasModified()
-{
+bool Buffer::WasModified() {
     return wasModified;
 }
 

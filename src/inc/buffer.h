@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -25,66 +25,73 @@
 #ifndef Buffer_H
 #define Buffer_H
 
-class Buffer
-{
-    public:
-        Buffer(const wxString& fileName = "Untitled");
+class Buffer {
+public:
+    Buffer(const wxString& fileName = "Untitled");
 
-        const wxDateTime& GetModificationTime();
-        void SetModificationTime(const wxDateTime& modTime);
+    const wxDateTime& GetModificationTime();
+    void SetModificationTime(const wxDateTime& modTime);
 
-        const wxString& GetFileName();
-        void SetFileName(const wxString& fileName);
-        bool IsUntitled();
+    const wxString& GetFileName();
+    void SetFileName(const wxString& fileName);
+    bool IsUntitled();
 
-        const wxString& GetHighlighter();
-        void SetHighlighter(const wxString& highlighter);
+    const wxString& GetHighlighter();
+    void SetHighlighter(const wxString& highlighter);
 
-        bool UpdateModTime();
-        bool Exists();
-        bool CheckModTime();
+    bool UpdateModTime();
+    bool Exists();
+    bool CheckModTime();
 
-        void SetDocument(void* document);
-        void* GetDocument();
+    void SetDocument(void* document);
+    void* GetDocument();
 
-        bool GetModified();
-        void SetModified(bool modified);
+    bool GetModified();
+    void SetModified(bool modified);
 
-        bool WasModified();
-        void SetWasModified(bool wasModified);
+    bool WasModified();
+    void SetWasModified(bool wasModified);
 
-        void SetPositions(int selStart, int selEnd);
-        void SetCaretPos(int cp) { caretpos = cp; }
-        int  GetCaretPos() { return caretpos; }
-        void SetLine(int firstLine);
+    void SetPositions(int selStart, int selEnd);
+    void SetCaretPos(int cp) {
+        caretpos = cp;
+    }
+    int  GetCaretPos() {
+        return caretpos;
+    }
+    void SetLine(int firstLine);
 
-        int GetSelectionStart();
-        int GetSelectionEnd();
-        int GetLine();
-        void SetFileType(int i) { FileMode = i; }
-        int GetFileType() { return FileMode; }
-        
-        void SetCompiledFile ( wxString CompiledFile ) {
-            m_CompiledFile = CompiledFile;
-        }
-        
-        wxString GetCompiledFile() {
-            return m_CompiledFile;
-        }
+    int GetSelectionStart();
+    int GetSelectionEnd();
+    int GetLine();
+    void SetFileType(int i) {
+        FileMode = i;
+    }
+    int GetFileType() {
+        return FileMode;
+    }
 
-    private:
-        wxDateTime modTime;
-        wxString fileName;
-        wxString highlighter;
-        wxString m_CompiledFile;
+    void SetCompiledFile ( wxString CompiledFile ) {
+        m_CompiledFile = CompiledFile;
+    }
 
-        bool wasModified;
-        bool modified;
+    wxString GetCompiledFile() {
+        return m_CompiledFile;
+    }
 
-        void* document;
+private:
+    wxDateTime modTime;
+    wxString fileName;
+    wxString highlighter;
+    wxString m_CompiledFile;
 
-        int selStart, selEnd, firstLine, caretpos;
-        int FileMode;
+    bool wasModified;
+    bool modified;
+
+    void* document;
+
+    int selStart, selEnd, firstLine, caretpos;
+    int FileMode;
 };
 
 WX_DEFINE_ARRAY(Buffer*, BufferArray);

@@ -1,5 +1,5 @@
 /*
-* This file is part of FBIde, an open-source (cross-platform) IDE for 
+* This file is part of FBIde, an open-source (cross-platform) IDE for
 * FreeBasic compiler.
 * Copyright (C) 2005  Albert Varaksin
 *
@@ -29,61 +29,60 @@
 #include "inc/browser.h"
 
 BEGIN_EVENT_TABLE( SFBrowser, wxDialog)
-    EVT_CLOSE ( SFBrowser::OnClose )
-    EVT_TEXT(SearchBoxId,       SFBrowser::OnCharAdded)
-    EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
-    EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
-    EVT_LIST_ITEM_ACTIVATED(-1, SFBrowser::OnActivate)
-    #ifdef __WXMSW__    
-        EVT_HOTKEY( 1985, SFBrowser::OnKeyUp )
-    #endif
+EVT_CLOSE ( SFBrowser::OnClose )
+EVT_TEXT(SearchBoxId,       SFBrowser::OnCharAdded)
+EVT_TEXT_ENTER(SearchBoxId, SFBrowser::OnEnter)
+EVT_LIST_ITEM_SELECTED(-1,  SFBrowser::OnSelect)
+EVT_LIST_ITEM_ACTIVATED(-1, SFBrowser::OnActivate)
+#ifdef __WXMSW__
+EVT_HOTKEY( 1985, SFBrowser::OnKeyUp )
+#endif
 END_EVENT_TABLE()
 
 SFBrowser::SFBrowser(   wxWindow* parent,
                         wxWindowID id,
                         const wxString& title,
                         long style,
-                        const wxString& name )
-{
-    
+                        const wxString& name ) {
+
     ChangePos = false;
     Parent = ( MyFrame * ) parent;
     Create(parent,id,title,wxDefaultPosition, wxSize(300, 400), style, name);
- 
+
     Panel = new wxPanel(this, wxID_ANY,
-        wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
-        
+                        wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
+
     SearchLabel=new wxStaticText(Panel,-1, wxT(""),wxPoint(5,7),wxSize(60,13),wxST_NO_AUTORESIZE);
     SearchLabel->SetLabel(wxT(Parent->Lang[226])); //Search
-    
+
     SearchBox=new wxTextCtrl(Panel, SearchBoxId,wxT(""),wxPoint(70,5),wxSize(220,21),wxTE_PROCESS_ENTER );
     wxBoxSizer * Sizer = new wxBoxSizer(wxVERTICAL);
-    
-    SFList = new wxListCtrl(   Panel, 
-                               wxID_ANY, 
-                               wxDefaultPosition, 
-                               wxDefaultSize, 
-                               wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
-    
-    wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
-	SFList->SetFont(LbFont);
 
-    
+    SFList = new wxListCtrl(   Panel,
+                               wxID_ANY,
+                               wxDefaultPosition,
+                               wxDefaultSize,
+                               wxLC_REPORT|wxLC_SINGLE_SEL|wxLC_HRULES|wxLC_VRULES );
+
+    wxFont LbFont (10, wxMODERN, wxNORMAL, wxNORMAL, false);
+    SFList->SetFont(LbFont);
+
+
     //    wxFont LbFont (12, wxMODERN, wxNORMAL, wxNORMAL, false);
-    //	SFList->SetFont(LbFont);
-	
-	Sizer->Add(SearchLabel, 0, 0, 0);
-	Sizer->Add(SearchBox, 0, wxGROW|wxRIGHT, 0);
+    // SFList->SetFont(LbFont);
+
+    Sizer->Add(SearchLabel, 0, 0, 0);
+    Sizer->Add(SearchBox, 0, wxGROW|wxRIGHT, 0);
     Sizer->Add(SFList, 3, wxGROW | (wxALL & ~wxTOP), 0);
-	
-	Panel->SetSizer(Sizer);
-	
-	SetMinSize(wxSize(510, 300));
-    
+
+    Panel->SetSizer(Sizer);
+
+    SetMinSize(wxSize(510, 300));
+
     Sizer->Fit(this);
     Sizer->SetSizeHints(this);
-    
-    
+
+
     wxListItem itemCol;
     itemCol.SetText(_T(Parent->Lang[165]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
@@ -92,7 +91,7 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     itemCol.SetText(_T(Parent->Lang[227]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(1, itemCol);
-    
+
     itemCol.SetText(_T(Parent->Lang[228]));
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(2, itemCol);
@@ -102,16 +101,18 @@ SFBrowser::SFBrowser(   wxWindow* parent,
     SFList->SetColumnWidth( 2, 400 );
 
     Refresh();
-    #ifdef __WXMSW__
-        RegisterHotKey( 1985, 0, 27 );
-    #endif
-    
+#ifdef __WXMSW__
+
+    RegisterHotKey( 1985, 0, 27 );
+#endif
+
     Rebuild();
 }
 
 void SFBrowser::Rebuild (  ) {
 
-    if (ChangePos) return;
+    if (ChangePos)
+        return;
     wxString Temp;
     wxString fkw;
     wxString skw;
@@ -123,7 +124,7 @@ void SFBrowser::Rebuild (  ) {
 
     Original.Clear();
     OriginalArg.Clear();
-            
+
     OrigLineNr.clear();
     OrigType.clear();
 
@@ -131,41 +132,48 @@ void SFBrowser::Rebuild (  ) {
         //Temp = stc->GetLine(i);
         Temp = stc->ClearCmdLine( i );
         ch = Temp.GetChar( 0 );
-        if ( ch == 'p' || ch == 's' || ch == 'f' )
-        { 
+        if ( ch == 'p' || ch == 's' || ch == 'f' ) {
             fkw = stc->GetFirstKw( Temp );
             skw = stc->GetSecondKw( Temp );
-            
+
             if (fkw == "private"||fkw == "static") {
-                if (skw=="sub") { type = false; Add = true; }
-                else if (skw =="function") { type = true; Add = true; }
+                if (skw=="sub") {
+                    type = false;
+                    Add = true;
+                }
+                else if (skw =="function") {
+                    type = true;
+                    Add = true;
+                }
                 Arg = Temp.Mid(Temp.Find(' '));
                 Arg = Arg.Trim(false).Trim(true);
                 Arg = Arg.Mid(Arg.Find(' '));
             }
-            else if (fkw == "sub") { 
-                type= false; 
-                Add = true; 
+            else if (fkw == "sub") {
+                type= false;
+                Add = true;
                 Arg = Temp.Mid(Temp.Find(' '));
                 Arg = Arg.Trim(false).Trim(true);
             }
             else if (fkw == "function" && skw.Left(1)!="=") {
-                type= true; 
-                Add = true; 
+                type= true;
+                Add = true;
                 Arg = Temp.Mid(Temp.Find(' '));
                 Arg = Arg.Trim(false).Trim(true);
             }
-            
+
             if (Add) {
                 Add = false;
                 Temp = "";
-                if (type) Temp << "func";
-                else  Temp << "sub";
+                if (type)
+                    Temp << "func";
+                else
+                    Temp << "sub";
                 Temp  << " " << Arg;
-                
+
                 Original.Add(Temp);
                 OriginalArg.Add(Arg);
-                
+
                 OrigLineNr.push_back(i);
                 OrigType.push_back(type);
             }
@@ -196,7 +204,7 @@ void SFBrowser::AddListItem ( int Linenr, bool Type, wxString Message ) {
         t.SetTextColour(  wxColour( 0, 0, 128) );
         t.SetText( "Sub" );
     }
-    
+
     SFList->SetItem( t );
     SFList->SetItem(Itemcount, 2, Message.Trim(true).Trim(false));
 }
@@ -209,7 +217,8 @@ void SFBrowser::OnCharAdded ( wxCommandEvent& event ) {
 }
 
 void SFBrowser::OnKeyUp (wxKeyEvent &event) {
-    if(event.GetKeyCode()==27) Close(true);
+    if(event.GetKeyCode()==27)
+        Close(true);
 }
 
 void SFBrowser::OnEnter ( wxCommandEvent& event ) {
@@ -223,7 +232,7 @@ void SFBrowser::OnEnter ( wxCommandEvent& event ) {
     }
     ChangePos = false;
     Close(true);
-    
+
 }
 
 
@@ -251,7 +260,7 @@ void SFBrowser::OnActivate ( wxListEvent& event ) {
 
 
 void SFBrowser::GenerateList ( wxString Search ) {
-    
+
     this->Freeze();
     SFList->DeleteAllItems();
     if (Search.Len()) {
@@ -274,9 +283,11 @@ void SFBrowser::GenerateList ( wxString Search ) {
 SFBrowser::~SFBrowser () {
     delete Panel;
     Parent->SFDialog=0;
-    #ifdef __WXMSW__
-        UnregisterHotKey( 1985 );
-    #endif
+#ifdef __WXMSW__
+
+    UnregisterHotKey( 1985 );
+#endif
+
     return;
 }
 
