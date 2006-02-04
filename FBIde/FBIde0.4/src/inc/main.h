@@ -288,7 +288,7 @@ public:
     void OnParameters       ( wxCommandEvent &event );
     void OnShowExitCode     ( wxCommandEvent &event );
     int  Compile            ( int index );
-    void Run                ( wxFileName file = "" );
+    void Run                ( wxFileName file );
     wxString GetCompileData ( int index );
     void OnActivePath       ( wxCommandEvent & event );
 
@@ -358,7 +358,6 @@ public:
     int OldTabSelected;
     int CurrentFileType;
 #ifdef __WXMSW__
-
     wxCHMHelpController help;
 #endif
 
