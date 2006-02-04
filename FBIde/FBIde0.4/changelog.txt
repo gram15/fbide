@@ -1,8 +1,11 @@
 Version 0.4.5
    * Added optionally setting active paths when compiling / running. ( vongodric )
-   * Added compiler ourpur log - click right mouse button on compiler output area will popup a dialog window with output ( vongodric )
+   * Added suport for exterbal chm help files ( win32 only ) ( VonGodric )
+   * Added compiler output log - click right mouse button on compiler output area will popup a dialog window with output ( vongodric )
    * Changed New Visual Studio like looking tabs. Reason is mainly due bugs in Linux build of wxGTK wich doesn't seem to like tabs very much. ( vongodric )
    * Changed New compilation system. Each tab has it's own compiled file, several bug fixes ( vongodric )
+   * Changed New settings dialog ( looks 99% like old one, but is 100% new code ) ( vongodric )
+   * Fixed noumerous bugs ( vongodric )
 
 
 Version 0.4.4
