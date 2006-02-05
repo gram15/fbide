@@ -283,7 +283,10 @@ MyFrame::MyFrame(MyApp * App, const wxString& title)
     CurrentFileType = 0;
     LoadUI();
     m_FileHistory->AddFilesToMenu();
-    SetIcon( wxICON(fbicon) );
+    
+    #ifdef __WXMSW__ 
+        SetIcon( wxICON(fbicon) );
+    #endif
 
 
     for (int i = 1; i < FB_App->argc; i++) {
