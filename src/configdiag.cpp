@@ -854,6 +854,7 @@ void ConfigDialog::OnOkClick( wxCommandEvent& event ) {
     m_Parent->Keyword[2] = m_Keywords[1];
     m_Parent->Keyword[3] = m_Keywords[2];
     m_Parent->Keyword[4] = m_Keywords[3];
+    m_Parent->SavekwFile( m_Parent->SyntaxFile );
 
     // Get data from compiler tab
     if( m_Prefs.HelpFile != textHelpFile->GetValue() ) {

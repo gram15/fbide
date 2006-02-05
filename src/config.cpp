@@ -63,7 +63,6 @@ void MyFrame::LoadSettings() {
     Prefs.EdgeColumn        = PrefsINI.Read("edgecolumn",       80L);
     Prefs.Language          = PrefsINI.Read("language",         "english");
     Prefs.ActivePath        = PrefsINI.Read("ActivePath",       true);
-    RunPrototype            = PrefsINI.Read("runprototype",    "<file> <param>");
 
     PrefsINI.SetPath("/paths");
     CompilerPath            = PrefsINI.Read("fbc",      "");
@@ -110,6 +109,7 @@ void MyFrame::LoadSettings() {
 
     PrefsINI.SetPath("/compiler");
     CMDPrototype            = PrefsINI.Read("command",  "<fbc> <filename>");
+    RunPrototype            = PrefsINI.Read("runprototype",    "<file> <param>");
 
     int winx, winy, winh, winw;
     PrefsINI.SetPath("/editor");
@@ -169,7 +169,6 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("edgecolumn",        (long)Prefs.EdgeColumn);
     PrefsINI.Write("language",          Prefs.Language);
     PrefsINI.Write("ActivePath",        (bool)Prefs.ActivePath);
-    PrefsINI.Write("runprototype",      RunPrototype);
 
     PrefsINI.SetPath("/paths");
     PrefsINI.Write("fbc",               CompilerPath);
@@ -177,7 +176,6 @@ void MyFrame::SaveSettings() {
     PrefsINI.Write("theme",             ThemeFile);
     PrefsINI.Write("helpfile",          Prefs.HelpFile);
 #ifndef __WXMSW__
-
     PrefsINI.Write("terminal",      strTerminal);
 #endif
 
@@ -185,6 +183,7 @@ void MyFrame::SaveSettings() {
 
     PrefsINI.SetPath("/compiler");
     PrefsINI.Write("command",           CMDPrototype);
+    PrefsINI.Write("runprototype",      RunPrototype);
 
     int winx, winy, winh, winw;
 
