@@ -629,6 +629,12 @@ wxString MyFrame::GetCompileData ( int index ) {
 
     wxFileName ObjCompilerPath( CompilerPath );
     ObjCompilerPath.Normalize();
+    
+    if( !ObjCompilerPath.FileExists() ) {
+        wxMessageBox( Lang[244], "FBC", wxICON_ERROR );
+        return "";
+    }
+    
     strReturn.Replace( "<fbc>", "\"" + ObjCompilerPath.GetFullPath() + "\"" );
     strReturn.Replace( "<filename>", "\"" + objFilePath.GetFullPath() + "\"" );
 #else
