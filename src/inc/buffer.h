@@ -25,6 +25,8 @@
 #ifndef Buffer_H
 #define Buffer_H
 
+#include <vector>
+
 class Buffer {
 public:
     Buffer(const wxString& fileName = "Untitled");
@@ -78,6 +80,21 @@ public:
     wxString GetCompiledFile() {
         return m_CompiledFile;
     }
+    
+    void ClearFoldBuffer() {
+        vectorFoldData.clear();
+    }
+    
+    void AddFoldData( int line ) {
+        vectorFoldData.push_back( line );
+    }
+    
+    bool GetFoldData( int &line ) {
+        if( vectorFoldData.empty() ) return false;
+        line = vectorFoldData.back();
+        vectorFoldData.pop_back();
+        return true;
+    }
 
 private:
     wxDateTime modTime;
@@ -92,6 +109,8 @@ private:
 
     int selStart, selEnd, firstLine, caretpos;
     int FileMode;
+
+    std::vector<int> vectorFoldData;
 };
 
 WX_DEFINE_ARRAY(Buffer*, BufferArray);

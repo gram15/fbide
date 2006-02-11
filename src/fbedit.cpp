@@ -75,6 +75,18 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
     SetViewWhiteSpace (Prefs->whiteSpace ? wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
     CmdKeyClear (wxSTC_KEY_TAB, 0);
+    
+    if ( !Parent->Prefs.BraceHighlight ) {
+        if ( braceLoc != -1 ) {
+            BraceHighlight(-1, -1);
+            braceLoc = -1;
+        }
+    } else {
+        wxStyledTextEvent event;
+        m_CharAtCur = 0;
+        OnUpdateUI ( event );
+        
+    }
 
     return;
 }
@@ -283,7 +295,7 @@ void FB_Edit::OnModified        ( wxStyledTextEvent &event ) {
     }
 }
 
-void FB_Edit::OnUpdateUI     ( wxStyledTextEvent &event ) {
+void FB_Edit::OnUpdateUI ( wxStyledTextEvent &event ) {
 
     int tempPos = GetCurrentPos();
     char tempChr = GetCharAt(tempPos);
@@ -552,7 +564,9 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 
 void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     event.Skip();
-    if (event.ControlDown()&&!event.AltDown()) {
+    if (!event.ControlDown())
+        return;
+    if (!event.AltDown()) {
         int key = event.GetKeyCode();
         if (key>=48 && key <= 57) {
             if( key == 48 )
@@ -563,12 +577,23 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
                 Parent->FBNotebook->SetSelection(tab);
             }
             return;
+        } else if ( key == WXK_TAB && Parent->FBNotebook->GetPageCount() > 1 ) {
+            int max = Parent->FBNotebook->GetPageCount() - 1;
+            int current = Parent->FBNotebook->GetSelection() ;
+            
+            if ( event.ShiftDown() ) {
+                if ( current == 0 ) current = max;
+                else current--;
+            } else {
+                if ( current < max ) current++;
+                else current = 0;
+            }
+            Parent->FBNotebook->SetSelection(current);
+            return;
         }
+        SetMouseDownCaptures(false);
+        StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
     }
-    if (!event.ControlDown())
-        return;
-    SetMouseDownCaptures(false);
-    StyleSetHotSpot(wxSTC_B_PREPROCESSOR, true);
     return;
 }
 

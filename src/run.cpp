@@ -294,7 +294,12 @@ int MyFrame::Compile ( int index ) {
         return 1;
     if ( ProcessIsRunning )
         return 1;
-
+    
+    // these are used to get the first error
+    bool isFirstErrorFound = false;
+    wxString strFirstErrorFile;
+    int intFirstErrorLine;
+        
     // File that we are about to compile
     wxFileName objFile( bufferList[ index ]->GetFileName() );
     objFile.Normalize();
@@ -330,7 +335,7 @@ int MyFrame::Compile ( int index ) {
         int             intBraceStart;
         int             intBraceEnd;
         bool            isOutputHeader = false;
-
+        
         wxString        strDebug;
 
         // Becouse fbc returns Outputs via both std and error channels,
@@ -367,12 +372,12 @@ int MyFrame::Compile ( int index ) {
                 strTemp = arrOutput[cnt].Mid( intBraceStart + 1, intBraceEnd - intBraceStart - 1);
 
                 // if this is a number:
-                if( strTemp.IsNumber() ) {
+                if ( strTemp.IsNumber() ) {
                     strTemp.ToLong( &intLine );
                     // Get possible file name and check if it is indeed a filename
                     objOutputFile = arrOutput[cnt].Left( intBraceStart );
                     objOutputFile.Normalize();
-                    if( objOutputFile.IsOk() && objOutputFile.FileExists() ) {
+                    if ( objOutputFile.IsOk() && objOutputFile.FileExists() ) {
                         //Now that it's indeed is a filename, get line, error/warning number
                         //and Output message on that line
                         strTemp = arrOutput[cnt].Mid( intBraceEnd + 4 );
@@ -391,6 +396,11 @@ int MyFrame::Compile ( int index ) {
                 isOutputHeader = false;
                 if ( intOutput == 0 )
                     intOutput = -1;
+                if ( !isFirstErrorFound ) {
+                    strFirstErrorFile = objOutputFile.GetFullPath();
+                    intFirstErrorLine = intLine;
+                    isFirstErrorFound = true;
+                }
                 AddListItem(intLine, intOutput, objOutputFile.GetFullPath(), strOutput);
             }
             else {
@@ -425,12 +435,16 @@ int MyFrame::Compile ( int index ) {
     // if there was an error ( fbc returns 1 ).
     if ( intCompileResult  ) {
         strCompilerOutput.Add( "Compilation failed" );
+        
+        if( isFirstErrorFound ) {
+            GoToError( intFirstErrorLine - 1, strFirstErrorFile );
+        }
     }
     else {
         // Set newly compiled filename:
         // Note that under linux extension is missing, in windows
         // it's exe
-        if( objFile.GetExt() == "bas" || objFile.GetExt() == "bi" ) {
+        if( objFile.GetExt().Lower() == "bas" || objFile.GetExt().Lower() == "bi" ) {
 #ifdef __WXMSW__
             objFile.SetExt( "exe" );
 #else
@@ -479,7 +493,6 @@ int MyFrame::Compile ( int index ) {
  * @return none
  */
 void MyFrame::Run ( wxFileName file ) {
-
     //Safety checks
     if ( !stc )
         return;
@@ -618,13 +631,14 @@ wxString MyFrame::GetCompileData ( int index ) {
     // Retreave file original name and validate it
     wxFileName objFilePath( bufferList[ index ]->GetFileName() );
     objFilePath.Normalize();
-    if( objFilePath.GetExt() != "bas" && objFilePath.GetExt() != "bi" &&
-            objFilePath.GetExt() != "rc" )
+    if( objFilePath.GetExt().Lower() != "bas" && objFilePath.GetExt().Lower() != "bi" &&
+            objFilePath.GetExt().Lower() != "rc" )
         return "";
     wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );
 
 
-    // Linux doesn't like quotes nor does it need exact path to fbc
+    // Linux doesn't like quotes nor does it need exact path to fbc 
+    // ( moved quotes into settings file )
 #ifdef __WXMSW__
 
     wxFileName ObjCompilerPath( CompilerPath );
@@ -635,14 +649,13 @@ wxString MyFrame::GetCompileData ( int index ) {
         return "";
     }
     
-    strReturn.Replace( "<fbc>", "\"" + ObjCompilerPath.GetFullPath() + "\"" );
-    strReturn.Replace( "<filename>", "\"" + objFilePath.GetFullPath() + "\"" );
+    strReturn.Replace( "<fbc>", + ObjCompilerPath.GetFullPath() );
+    strReturn.Replace( "<filename>", + objFilePath.GetFullPath() );
 #else
 
     strReturn.Replace( "<fbc>", CompilerPath );
     strReturn.Replace( "<filename>", objFilePath.GetFullPath() );
 #endif
-
     return strReturn;
 }
 
@@ -664,17 +677,20 @@ void MyProcess::OnTerminate( int pid, int status ) {
     }
     m_parent->Raise();
     m_parent->SetFocus();
-    m_parent->stc->SetFocus();
-
-    m_parent->FB_Toolbar->EnableTool(Menu_Compile, true);
-    m_parent->FB_Toolbar->EnableTool(Menu_CompileAndRun, true);
-    m_parent->FB_Toolbar->EnableTool(Menu_Run, true);
-    m_parent->FB_Toolbar->EnableTool(Menu_QuickRun, true);
-
-    m_parent->FB_Run->Enable(Menu_Compile, true);
-    m_parent->FB_Run->Enable(Menu_CompileAndRun, true);
-    m_parent->FB_Run->Enable(Menu_Run, true);
-    m_parent->FB_Run->Enable(Menu_QuickRun, true);
+    
+    if ( m_parent->stc ) {
+        m_parent->stc->SetFocus();
+    
+        m_parent->FB_Toolbar->EnableTool(Menu_Compile, true);
+        m_parent->FB_Toolbar->EnableTool(Menu_CompileAndRun, true);
+        m_parent->FB_Toolbar->EnableTool(Menu_Run, true);
+        m_parent->FB_Toolbar->EnableTool(Menu_QuickRun, true);
+    
+        m_parent->FB_Run->Enable(Menu_Compile, true);
+        m_parent->FB_Run->Enable(Menu_CompileAndRun, true);
+        m_parent->FB_Run->Enable(Menu_Run, true);
+        m_parent->FB_Run->Enable(Menu_QuickRun, true);
+    }
     m_parent->Refresh();
     m_parent->Update();
     delete this;
