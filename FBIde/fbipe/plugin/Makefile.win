@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = obj/FBIde0.4_private.res
-OBJ  = obj/main.o obj/class.pluginlist.o obj/class.plugin.o obj/class.plugin.server.o $(RES)
-LINKOBJ  = obj/main.o obj/class.pluginlist.o obj/class.plugin.o obj/class.plugin.server.o $(RES)
+OBJ  = obj/main.o obj/class.pluginlist.o obj/class.plugin.o obj/class.plugin.server.o obj/class.plugin.data.o $(RES)
+LINKOBJ  = obj/main.o obj/class.pluginlist.o obj/class.plugin.o obj/class.plugin.server.o obj/class.plugin.data.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" -L"e:/dev/wx2.6.2/lib/gcc_dll" -mwindows -Wl,--subsystem,windows  -mwindows  -mthreads  -lwxmsw26_core  -lwxbase26  -lkernel32  -luser32  -lgdi32  -lcomdlg32  -lwinspool  -lwinmm  -lshell32  -lcomctl32  -lole32  -loleaut32  -luuid  -lrpcrt4  -ladvapi32  -lwsock32  -lodbc32   -fmessage-length=0 -s 
 INCS =  -I"C:/Dev-Cpp/include"  -I"e:/dev/wx2.6.2/include"  -I"e:/dev/wx2.6.2/include/wx"  -I"e:/dev/wx2.6.2/contrib/include"  -I"e:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"e:/dev/fbipe/plugin_sdk"  -I"e:/dev/fbipe/plugin_server" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"e:/dev/wx2.6.2/include"  -I"e:/dev/wx2.6.2/include/wx"  -I"e:/dev/wx2.6.2/contrib/include"  -I"e:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"e:/dev/fbipe/plugin_sdk"  -I"e:/dev/fbipe/plugin_server" 
@@ -37,6 +37,9 @@ obj/class.plugin.o: ../plugin_sdk/class.plugin.cpp
 
 obj/class.plugin.server.o: ../plugin_server/class.plugin.server.cpp
 	$(CPP) -c ../plugin_server/class.plugin.server.cpp -o obj/class.plugin.server.o $(CXXFLAGS)
+
+obj/class.plugin.data.o: ../plugin_sdk/class.plugin.data.cpp
+	$(CPP) -c ../plugin_sdk/class.plugin.data.cpp -o obj/class.plugin.data.o $(CXXFLAGS)
 
 obj/FBIde0.4_private.res: FBIde0.4_private.rc 
 	$(WINDRES) -i FBIde0.4_private.rc --input-format=rc -o obj/FBIde0.4_private.res -O coff 

@@ -19,21 +19,20 @@
             virtual bool OnInit( ) = 0;
 			virtual void OnExit( ) = 0;
 			virtual void SendCommand( wxString strCmd ) = 0;
-			
-            
             virtual ~classPlugin();
 			
-			const classPluginData * GetData() const { return m_objPluginData; }
-			const int GetId() const { return m_ID; }
+            const int GetId() const { return m_ID; }
             
-            void SetPluginData( int ID, classPluginData * objPluginData ) { 
+            void SetPluginData( int ID, classPluginData * objData ) { 
                 m_ID = ID; 
-                m_objPluginData = objPluginData; 
+                m_PluginData = objData;
             }
             
+            classPluginData * GetData() { return m_PluginData; }
+            
         private:
-            classPluginData * m_objPluginData;
-            int               m_ID;
+            int m_ID;
+            classPluginData * m_PluginData;
 	};
 
    

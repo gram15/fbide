@@ -5,8 +5,8 @@ CPP  = g++.exe
 CC   = gcc.exe
 WINDRES = windres.exe
 RES  = 
-OBJ  = dllmain.o ../plugin_sdk/class.plugin.o $(RES)
-LINKOBJ  = dllmain.o ../plugin_sdk/class.plugin.o $(RES)
+OBJ  = dllmain.o ../plugin_sdk/class.plugin.o ../plugin_sdk/class.plugin.data.o $(RES)
+LINKOBJ  = dllmain.o ../plugin_sdk/class.plugin.o ../plugin_sdk/class.plugin.data.o $(RES)
 LIBS =  -L"C:/Dev-Cpp/lib" -L"E:/dev/wx2.6.2/lib/gcc_dll" --no-export-all-symbols --add-stdcall-alias -mwindows  -mthreads  -lwxmsw26_core  -lwxbase26  -lkernel32  -luser32  -lgdi32  -lcomdlg32  -lwinspool  -lwinmm  -lshell32  -lcomctl32  -lole32  -loleaut32  -luuid  -lrpcrt4  -ladvapi32  -lwsock32  -lodbc32  -s 
 INCS =  -I"C:/Dev-Cpp/include"  -I"E:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"E:/dev/wx2.6.2/include"  -I"E:/dev/fbipe/plugin_sdk" 
 CXXINCS =  -I"C:/Dev-Cpp/lib/gcc/mingw32/3.4.2/include"  -I"C:/Dev-Cpp/include/c++/3.4.2/backward"  -I"C:/Dev-Cpp/include/c++/3.4.2/mingw32"  -I"C:/Dev-Cpp/include/c++/3.4.2"  -I"C:/Dev-Cpp/include"  -I"E:/dev/wx2.6.2/lib/gcc_dll/msw"  -I"E:/dev/wx2.6.2/include"  -I"E:/dev/fbipe/plugin_sdk" 
@@ -35,3 +35,6 @@ dllmain.o: dllmain.cpp
 
 ../plugin_sdk/class.plugin.o: ../plugin_sdk/class.plugin.cpp
 	$(CPP) -c ../plugin_sdk/class.plugin.cpp -o ../plugin_sdk/class.plugin.o $(CXXFLAGS)
+
+../plugin_sdk/class.plugin.data.o: ../plugin_sdk/class.plugin.data.cpp
+	$(CPP) -c ../plugin_sdk/class.plugin.data.cpp -o ../plugin_sdk/class.plugin.data.o $(CXXFLAGS)

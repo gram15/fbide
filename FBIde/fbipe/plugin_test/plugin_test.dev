@@ -1,7 +1,7 @@
 [Project]
 FileName=plugin_test.dev
 Name=plugin_test
-UnitCount=4
+UnitCount=5
 Type=3
 Ver=1
 ObjFiles=
@@ -79,6 +79,16 @@ BuildCmd=
 
 [Unit4]
 FileName=..\plugin_sdk\inc\fbipe_sdk.h
+CompileCpp=1
+Folder=plugin_test
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=..\plugin_sdk\class.plugin.data.cpp
 CompileCpp=1
 Folder=plugin_test
 Compile=1

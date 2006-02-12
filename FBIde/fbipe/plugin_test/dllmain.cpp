@@ -34,9 +34,9 @@ class plugin_test : public classPlugin {
     
     // Just testing. 
     void SendCommand( wxString strCmd ) {
-        wxString caption;
-        caption << "Plugin ID:" << GetId();
-        wxMessageBox( "Message receaved: " + strCmd, caption );
+        wxFrame * frame = GetData()->GetFrame();
+        frame->SetTitle( strCmd );
+        return;
     }
     
     

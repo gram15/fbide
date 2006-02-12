@@ -3,16 +3,13 @@
 
     class classPluginData {
         private:
-            wxApp   * m_ParentApp;
-            wxFrame * m_parentFrame;
+            wxApp                   * m_ParentApp;
+            wxFrame                 * m_parentFrame;
         
-        public:
-            classPluginData( wxApp * app, wxFrame * frame ) : 
-                m_ParentApp( app ),  m_parentFrame( frame )
-            { }
-            
-            const wxFrame * GetFrame() const { return m_parentFrame; }
-            const wxApp * GetApp() const { return m_ParentApp; }
+        public :
+            classPluginData( wxApp * app, wxFrame * frame );
+             wxFrame * GetFrame() const { return m_parentFrame; }
+             wxApp * GetApp() const { return m_ParentApp; }
     };
     
 #endif
