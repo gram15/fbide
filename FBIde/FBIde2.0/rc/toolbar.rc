@@ -1,0 +1,107 @@
+/*
+* This file is part of FBIde, an open-source (cross-platform) IDE for
+* FreeBasic compiler.
+* Copyright (C) 2005  Albert Varaksin
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program; if not, write to the Free Software
+* Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*
+* Contact e-mail: Albert Varaksin <vongodric@hotmail.com>
+* Program URL   : http://fbide.sourceforge.net
+*/
+
+//mondrian ICON "mondrian.ico"
+
+//nclude "wx/msw/wx.rc"
+
+bmp_about       BITMAP "rc/bitmaps/about.bmp"
+bmp_add         BITMAP "rc/bitmaps/add.bmp"
+bmp_addbook     BITMAP "rc/bitmaps/addbook.bmp"
+bmp_addsrc      BITMAP "rc/bitmaps/addsrc.bmp"
+bmp_arricon     BITMAP "rc/bitmaps/arricon.bmp"
+bmp_bughlp      BITMAP "rc/bitmaps/bughlp.bmp"
+bmp_close       BITMAP "rc/bitmaps/close.bmp"
+bmp_closefl     BITMAP "rc/bitmaps/closefl.bmp"
+bmp_clrhist     BITMAP "rc/bitmaps/clrhist.bmp"
+bmp_clsall      BITMAP "rc/bitmaps/clsall.bmp"
+
+bmp_compile     BITMAP "rc/bitmaps/compile.bmp"
+bmp_compopt     BITMAP "rc/bitmaps/compopt.bmp"
+bmp_compres     BITMAP "rc/bitmaps/compres.bmp"
+bmp_comprun     BITMAP "rc/bitmaps/comprun.bmp"
+bmp_copy        BITMAP "rc/bitmaps/copy.bmp"
+bmp_cut         BITMAP "rc/bitmaps/cut.bmp"
+bmp_debug       BITMAP "rc/bitmaps/debug.bmp"
+bmp_dos         BITMAP "rc/bitmaps/dos.bmp"
+bmp_empty       BITMAP "rc/bitmaps/empty.bmp"
+bmp_envopt      BITMAP "rc/bitmaps/envopt.bmp"
+
+bmp_explor      BITMAP "rc/bitmaps/explor.bmp"
+bmp_export      BITMAP "rc/bitmaps/export.bmp"
+bmp_gobook      BITMAP "rc/bitmaps/gobook.bmp"
+bmp_goto        BITMAP "rc/bitmaps/goto.bmp"
+bmp_help        BITMAP "rc/bitmaps/help.bmp"
+bmp_homepg      BITMAP "rc/bitmaps/homepg.bmp"
+bmp_icon        BITMAP "rc/bitmaps/icon.bmp"
+bmp_insert      BITMAP "rc/bitmaps/insert.bmp"
+bmp_makefl      BITMAP "rc/bitmaps/makefl.bmp"
+bmp_minall      BITMAP "rc/bitmaps/minall.bmp"
+
+bmp_newproj     BITMAP "rc/bitmaps/newproj.bmp"
+bmp_newsrc      BITMAP "rc/bitmaps/newsrc.bmp"
+bmp_newtemp     BITMAP "rc/bitmaps/newtemp.bmp"
+bmp_next        BITMAP "rc/bitmaps/next.bmp"
+bmp_opnproj     BITMAP "rc/bitmaps/opnproj.bmp"
+bmp_package     BITMAP "rc/bitmaps/package.bmp"
+bmp_packman     BITMAP "rc/bitmaps/packman.bmp"
+bmp_paste       BITMAP "rc/bitmaps/paste.bmp"
+bmp_prev        BITMAP "rc/bitmaps/prev.bmp"
+bmp_print       BITMAP "rc/bitmaps/print.bmp"
+
+bmp_projopt     BITMAP "rc/bitmaps/projopt.bmp"
+bmp_rebuild     BITMAP "rc/bitmaps/rebuild.bmp"
+bmp_redo        BITMAP "rc/bitmaps/redo.bmp"
+bmp_remsrc      BITMAP "rc/bitmaps/remsrc.bmp"
+bmp_reopen      BITMAP "rc/bitmaps/reopen.bmp"
+bmp_resrc       BITMAP "rc/bitmaps/resrc.bmp"
+bmp_run         BITMAP "rc/bitmaps/run.bmp"
+bmp_save        BITMAP "rc/bitmaps/save.bmp"
+bmp_saveall     BITMAP "rc/bitmaps/saveall.bmp"
+bmp_saveas      BITMAP "rc/bitmaps/saveas.bmp"
+
+bmp_screen      BITMAP "rc/bitmaps/screen.bmp"
+bmp_search      BITMAP "rc/bitmaps/search.bmp"
+bmp_srcagain    BITMAP "rc/bitmaps/srcagain.bmp"
+bmp_srchrep     BITMAP "rc/bitmaps/srchrep.bmp"
+bmp_temphlp     BITMAP "rc/bitmaps/temphlp.bmp"
+bmp_tile        BITMAP "rc/bitmaps/tile.bmp"
+bmp_toolbar     BITMAP "rc/bitmaps/toolbar.bmp"
+bmp_tools       BITMAP "rc/bitmaps/tools.bmp"
+bmp_tutor       BITMAP "rc/bitmaps/tutor.bmp"
+bmp_undo        BITMAP "rc/bitmaps/undo.bmp"
+bmp_update      BITMAP "rc/bitmaps/update.bmp"
+
+fbide    BITMAP "rc/bitmaps/fbide.bmp"
+fbicon   ICON   "FBIde0.4.ico"
+sub      BITMAP "rc/bitmaps/sub1.bmp"
+function BITMAP "rc/bitmaps/function1.bmp"
+enum     BITMAP "rc/bitmaps/enum1.bmp"
+union    BITMAP "rc/bitmaps/union1.bmp"
+type     BITMAP "rc/bitmaps/type1.bmp"
+new      BITMAP "rc/bitmaps/new1.bmp"
+
+//bmp_fbide       BITMAP "rc/bitmaps/fbide.bmp"
+
+wxBITMAP_STD_COLOURS BITMAP "rc/bitmaps/colours.bmp"
+

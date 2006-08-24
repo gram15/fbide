@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="5" />
+	<Project>
+		<Option title="FBIde" />
+		<Option pch_mode="0" />
+		<Option default_target="ansi Release" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="unicode Debug">
+				<Option output="bin\unicode\fbide_debug.exe" />
+				<Option object_output="obj\unicode\Debug\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-D__WXDEBUG__" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswud" />
+				</Compiler>
+				<Linker>
+					<Add library="libwxmsw27ud.a" />
+					<Add library="libwxmsw27ud_stc.a" />
+				</Linker>
+			</Target>
+			<Target title="unicode Release">
+				<Option output="bin\unicode\fbide.exe" />
+				<Option object_output="obj\unicode\Release\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-s" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswu" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw27u.a" />
+					<Add library="libwxmsw27u_stc.a" />
+				</Linker>
+			</Target>
+			<Target title="ansi Debug">
+				<Option output="bin\ansi\fbide_debug.exe" />
+				<Option object_output="obj\ansi\Debug\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-D__WXDEBUG__" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswd" />
+				</Compiler>
+				<Linker>
+					<Add library="libwxmsw27d.a" />
+					<Add library="libwxmsw27d_stc.a" />
+				</Linker>
+			</Target>
+			<Target title="ansi Release">
+				<Option output="bin\ansi\fbide.exe" />
+				<Option object_output="obj\ansi\Release\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-s" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\msw" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw27.a" />
+					<Add library="libwxmsw27_stc.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-pipe" />
+			<Add option="-mthreads" />
+			<Add option="-include src/inc/wx_pch.h" />
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D__WXMSW__" />
+			<Add option="-DWXUSINGDLL" />
+			<Add option="-DUSE_PCH" />
+			<Add directory="C:\dev\wx2.7.0\include" />
+			<Add directory="C:\dev\wx2.7.0\contrib\include" />
+		</Compiler>
+		<Linker>
+			<Add library="gdi32" />
+			<Add directory="C:\dev\wx2.7.0\lib\gcc_dll" />
+		</Linker>
+		<Unit filename="src\docmanager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\document.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\documentlist.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\event.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\fbide.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\docmanager.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\document.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\documentlist.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\event.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\fbide.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\manager.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\regmanager.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\stceditor.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\styleinfo.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\uimanager.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\wx_pch.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\manager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\regmanager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\styleinfo.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\uimanager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
