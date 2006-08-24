@@ -1,0 +1,3 @@
+* finish document managment
+* fix bug with shutting down
+* implement plugin manager

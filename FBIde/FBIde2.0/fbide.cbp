@@ -4,7 +4,6 @@
 	<Project>
 		<Option title="FBIde" />
 		<Option pch_mode="0" />
-		<Option default_target="ansi Release" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="unicode Debug">
@@ -94,6 +93,13 @@
 			<Add library="gdi32" />
 			<Add directory="C:\dev\wx2.7.0\lib\gcc_dll" />
 		</Linker>
+		<Unit filename="src\doc_stc.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
 		<Unit filename="src\docmanager.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="unicode Debug" />
@@ -124,6 +130,15 @@
 		</Unit>
 		<Unit filename="src\fbide.cpp">
 			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\doc_stc.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="unicode Debug" />
 			<Option target="unicode Release" />
 			<Option target="ansi Debug" />

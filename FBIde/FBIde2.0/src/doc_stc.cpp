@@ -21,57 +21,10 @@
  * Program URL   : http://fbide.sourceforge.net
  */
 
-#include "inc/fbide.h"
 #include "inc/manager.h"
-
-
 #include "inc/doc_stc.h"
 
-/**
- * This is main entry function into our FBIde
- *
- * If returns false then application will not be started.
- * @return bool
- */
-bool FBIde::OnInit()
+Doc_Stc::Doc_Stc()
 {
-
-  // Force creation of the manager (will initalize all sub managers)
-  (void)Manager::Get();
-
-  // Set top window
-  SetTopWindow (Manager::Get()->GetUiManager()->GetFrame());
-
-  Doc_Stc * stc = new Doc_Stc;
-  stc->ShowDocument();
-
-  // Show
-  Manager::Get()->GetUiManager()->Show();
-
-  return true;
+  Create (Manager::Get()->GetDocManager()->GetWindow(), wxID_ANY);
 }
-
-
-
-/**
- * This is function that gets called apon exit from FBIde
- *
- * Returns an exit code.
- * @return int
- */
-int FBIde::OnExit()
-{
-  wxTheClipboard->Flush();
-
-  Manager::Get()->Release();
-
-  return wxApp::OnExit();
-}
-
-
-
-/**
- * Implement and declare FBIde application
- */
-IMPLEMENT_APP(FBIde)
-DECLARE_APP(FBIde)

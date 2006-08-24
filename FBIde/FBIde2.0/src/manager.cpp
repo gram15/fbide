@@ -105,8 +105,9 @@ void Manager::Release ()
  */
 void Manager::ShutDown()
 {
-  m_isShuttingDown = true;
   delete m_docMngr;
+  m_docMngr = NULL;
+  m_isShuttingDown = true;
 }
 
 
