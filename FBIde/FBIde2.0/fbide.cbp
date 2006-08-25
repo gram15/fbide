@@ -273,6 +273,7 @@
 		<Unit filename="src\inc\wx_pch.h">
 			<Option compilerVar="CPP" />
 			<Option link="0" />
+			<Option weight="0" />
 			<Option target="unicode Debug" />
 			<Option target="unicode Release" />
 			<Option target="ansi Debug" />
