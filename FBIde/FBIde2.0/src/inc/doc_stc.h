@@ -35,6 +35,8 @@
   {
     public:
       Doc_Stc();
+      void LoadStyle (const wxString & regPath =_T("style://stc/default"));
+      void SetStyle (int style, const StyleInfo & data);
   };
 
 #endif // DOC_STC_H_INCLUDED

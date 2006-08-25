@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1156504156 c:\dev\fbide2_0\src\fbide.cpp
+1156507339 c:\dev\fbide2_0\src\fbide.cpp
 	"inc/fbide.h"
 	"inc/manager.h"
 	"inc/main.h"
@@ -3573,7 +3573,7 @@
 	"inc/manager.h"
 	"inc/documentlist.h"
 
-1156500024 c:\dev\fbide2_0\src\docmanager.cpp
+1156507312 c:\dev\fbide2_0\src\docmanager.cpp
 	"inc/manager.h"
 
 1156424107 c:\dev\fbide2_0\src\styleinfo.cpp
@@ -3648,11 +3648,11 @@
 	<wx/stc/stc.h>
 	"styleinfo.h"
 
-1156450344 c:\dev\fbide2_0\src\doc_stc.cpp
+1156510349 c:\dev\fbide2_0\src\doc_stc.cpp
 	"inc/manager.h"
 	"inc/doc_stc.h"
 
-1156450344 c:\dev\fbide2_0\src\inc\doc_stc.h
+1156508867 c:\dev\fbide2_0\src\inc\doc_stc.h
 	<wx/stc/stc.h>
 	"styleinfo.h"
 
@@ -3660,7 +3660,7 @@
 
 1156499054 c:\dev\fbide2_0\src\inc\commonid.h
 
-1156506391 c:\dev\fbide2_0\src\main.cpp
+1156511414 c:\dev\fbide2_0\src\main.cpp
 	"inc/manager.h"
 	"inc/main.h"
 
@@ -3692,4 +3692,8 @@
 	<wx/clipbrd.h>
 	<wx/notebook.h>
 	<wx/wx.h>
+
+1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\automtn.h
+	"wx/object.h"
+	"wx/variant.h"
 

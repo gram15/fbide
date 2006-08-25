@@ -24,7 +24,6 @@
 #include "inc/manager.h"
 #include "inc/main.h"
 
-
 BEGIN_EVENT_TABLE(Main, wxFrame)
     EVT_CLOSE(Main::OnClose)
 END_EVENT_TABLE()
@@ -38,9 +37,13 @@ Main::Main()
 }
 
 
+
+
 Main::~Main()
 {
 }
+
+
 
 /**
  * This means that we want to exit FBIde
