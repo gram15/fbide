@@ -47,7 +47,9 @@ DocManager::~DocManager ()
      * into doc managaer to clear itself.
      */
     while (m_list.Count())
-        delete m_list[0];
+      delete m_list[0];
+
+    m_bookCtrl->Destroy();
 }
 
 
@@ -77,9 +79,7 @@ bool DocManager::Remove (DocumentBase * doc)
 {
     if (!Exists(doc)) return false;
 
-    if (!Manager::Get()->IsShuttingDown())
-        Hide (doc);
-
+    Hide (doc);
     m_list.Remove (doc);
 
     return true;

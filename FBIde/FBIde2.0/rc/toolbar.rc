@@ -92,6 +92,7 @@ bmp_tutor       BITMAP "rc/bitmaps/tutor.bmp"
 bmp_undo        BITMAP "rc/bitmaps/undo.bmp"
 bmp_update      BITMAP "rc/bitmaps/update.bmp"
 
+/*
 fbide    BITMAP "rc/bitmaps/fbide.bmp"
 fbicon   ICON   "FBIde0.4.ico"
 sub      BITMAP "rc/bitmaps/sub1.bmp"
@@ -100,7 +101,7 @@ enum     BITMAP "rc/bitmaps/enum1.bmp"
 union    BITMAP "rc/bitmaps/union1.bmp"
 type     BITMAP "rc/bitmaps/type1.bmp"
 new      BITMAP "rc/bitmaps/new1.bmp"
-
+*/
 //bmp_fbide       BITMAP "rc/bitmaps/fbide.bmp"
 
 wxBITMAP_STD_COLOURS BITMAP "rc/bitmaps/colours.bmp"

@@ -57,7 +57,6 @@ Manager::Manager()
  */
 Manager::~Manager()
 {
-  delete m_registryBase;
   m_instance = NULL;
 }
 
@@ -100,14 +99,21 @@ void Manager::Release ()
 }
 
 
+
 /**
  * Shut down managers
  */
 void Manager::ShutDown()
 {
-  delete m_docMngr;
-  m_docMngr = NULL;
+
   m_isShuttingDown = true;
+
+  delete m_docMngr;         // shutdown document manager
+  delete m_uiMngr;          // shut down UI manager
+  delete m_registryBase;    // shut down registry
+
+  m_docMngr = NULL;
+  m_docMngr = NULL;
 }
 
 

@@ -22,46 +22,39 @@
  */
 
 #include "inc/manager.h"
+#include "inc/main.h"
 
-BEGIN_EVENT_TABLE(UiManager, wxFrame)
-  EVT_CLOSE(UiManager::OnClose)
-  EVT_FBIDE(wxID_EXIT, UiManager::Close)
-END_EVENT_TABLE()
-
-UiManager::UiManager()
+UiManager::UiManager() : m_frame(NULL)
 {
-  Create(NULL, wxID_ANY, _T("TEST"));
+    m_frame = new Main();
+    return;
 }
 
 
 
 UiManager::~UiManager()
 {
+    return;
 }
 
 
-
-wxFrame * UiManager::GetFrame()
-{
-  return this;
-}
-
-
+/*
 void UiManager::OnClose (wxCloseEvent & event)
 {
-  FBIdeEvent custom(EVT_FBIDE_COMMAND, wxID_EXIT);
-  GetEventHandler()->ProcessEvent( custom );
-  if (!custom.IsAllowed()) return;
+    FBIdeEvent custom(EVT_FBIDE_COMMAND, wxID_EXIT);
+    GetEventHandler()->ProcessEvent( custom );
+    if (!custom.IsAllowed()) return;
 
 
-  Manager::Get()->ShutDown();
-  event.Skip();
+    Manager::Get()->ShutDown();
+    event.Skip();
 }
 
 
 
 void UiManager::Close (FBIdeEvent & event)
 {
-  if (wxMessageBox(_T("Exit FBIde?"), _T("Quit"), wxYES_NO | wxICON_QUESTION) == wxNO)
-    event.Veto();
+    if (wxMessageBox(_T("Exit FBIde?"), _T("Quit"), wxYES_NO | wxICON_QUESTION) == wxNO)
+        event.Veto();
 }
+*/

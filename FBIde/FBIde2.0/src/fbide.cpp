@@ -24,6 +24,7 @@
 #include "inc/fbide.h"
 #include "inc/manager.h"
 
+#include "inc/main.h"
 
 #include "inc/doc_stc.h"
 
@@ -42,12 +43,15 @@ bool FBIde::OnInit()
   // Set top window
   SetTopWindow (Manager::Get()->GetUiManager()->GetFrame());
 
-  Doc_Stc * stc = new Doc_Stc;
-  stc->ShowDocument();
+  Doc_Stc * tt1 = new Doc_Stc;
+  tt1->ShowDocument();
+
+  Doc_Stc * tt2 = new Doc_Stc;
+  tt2->ShowDocument();
+
 
   // Show
-  Manager::Get()->GetUiManager()->Show();
-
+  Manager::Get()->GetUiManager()->GetFrame()->Show();
   return true;
 }
 
@@ -62,9 +66,7 @@ bool FBIde::OnInit()
 int FBIde::OnExit()
 {
   wxTheClipboard->Flush();
-
   Manager::Get()->Release();
-
   return wxApp::OnExit();
 }
 

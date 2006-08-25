@@ -24,23 +24,16 @@
 #ifndef UIMANAGER_H_INCLUDED
 #define UIMANAGER_H_INCLUDED
 
-  class UiManager : public wxFrame
+  class UiManager
   {
     private:
-
-      // Event handling
-      void OnClose (wxCloseEvent & event);
+      wxFrame * m_frame;
 
     public:
       UiManager();
       ~UiManager();
 
-      wxFrame * GetFrame();
-
-      void Close (FBIdeEvent &);
-
-    private:
-      DECLARE_EVENT_TABLE()
+      wxFrame * GetFrame() const { return m_frame; }
   };
 
 #endif // UIMANAGER_H_INCLUDED

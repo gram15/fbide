@@ -64,7 +64,7 @@
              * Ensure unique id as well.
              */
             DocumentBase (wxWindow * window) : m_id(GetNewId()), m_window(window), m_flags(0) {  }
-
+            virtual ~DocumentBase () { }
 
             /**
              * Safe destruction of the document.
@@ -165,7 +165,7 @@
                     AddDocument(); // Add this document to docManager
                 }
 
-                ~Document ()
+                virtual ~Document ()
                 {
                     CloseDocument(); // Remove this document from docManager
                 }

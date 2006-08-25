@@ -28,6 +28,7 @@
 #include "regmanager.h"
 #include "uimanager.h"
 #include "docmanager.h"
+#include "commonid.h"
 
 
   /**
