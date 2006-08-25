@@ -24,6 +24,8 @@
 #ifndef DOCUMENT_H_INCLUDED
 #define DOCUMENT_H_INCLUDED
 
+    #include "regaccessor.h"
+
     #define FBI_DOCUMENT_CAN_EDIT       1
     #define FBI_DOCUEMTN_CAN_SEARCH     (1 << 1)
     #define FBI_DOCUMENT_CAN_REPLACE    (1 << 2)
@@ -119,7 +121,7 @@
             virtual wxString GetDocumentName ()
             {
                 wxString tmp;
-                tmp << _T("Untitled ") << GetDocumentId();
+                tmp << _T("Untitled ") << (int)GetDocumentId();
                 return tmp;
             }
 
@@ -137,13 +139,13 @@
              * documents://docId/
              * where docID is the ID of the given document
              */
-            Registry * GetDocumentData () const;
+            RegAccessor * GetDocumentData () const;
 
             /**
              * Get Registry accessor to documents properties
              * documents://docId/proprties
              */
-            Registry * GetDocumentProperties () const;
+            RegAccessor * GetDocumentProperties () const;
 
     };
 

@@ -41,43 +41,24 @@
     private:
       Manager();
       ~Manager();
-      static Manager * m_instance;
-      FBIdeRegistry::RegistryBase * m_registryBase;
-      UiManager * m_uiMngr;
-      DocManager * m_docMngr;
-      wxEvtHandler * m_parentEventHanlder;
 
       bool m_isShuttingDown;
 
     public:
       static Manager * Get();
-      static void Set (Manager * mngr);
-      void Release ();
-
-      /**
-       * Return new instance of registry accossor.
-       */
-      Registry * GetRegistry(const wxString & ns) const { return new Registry(m_registryBase, ns); }
 
       /**
        * Get Ui manager instance
        */
-      UiManager * GetUiManager() const { return m_uiMngr; }
-
-      /**
-       * Get DocManager isntance
-       */
-      DocManager * GetDocManager() const { return m_docMngr; }
-
-
-      void SetParentEventHandler (wxEvtHandler * evt); // ??
+      UiManager * GetUiManager() const { return UiManager::Get(); }
+      DocManager * GetDocManager() const { return DocManager::Get(); }
+      RegManager * GetRegManager() const { return RegManager::Get(); }
 
       /**
        * If we are shutting down
        */
       bool IsShuttingDown() const { return m_isShuttingDown; }
       void ShutDown();
-      wxEvtHandler * GetParentEventHandler (); // ?
   };
 
 #endif // MANAGER_H_INCLUDED

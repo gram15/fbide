@@ -36,25 +36,3 @@ UiManager::~UiManager()
 {
     return;
 }
-
-
-/*
-void UiManager::OnClose (wxCloseEvent & event)
-{
-    FBIdeEvent custom(EVT_FBIDE_COMMAND, wxID_EXIT);
-    GetEventHandler()->ProcessEvent( custom );
-    if (!custom.IsAllowed()) return;
-
-
-    Manager::Get()->ShutDown();
-    event.Skip();
-}
-
-
-
-void UiManager::Close (FBIdeEvent & event)
-{
-    if (wxMessageBox(_T("Exit FBIde?"), _T("Quit"), wxYES_NO | wxICON_QUESTION) == wxNO)
-        event.Veto();
-}
-*/

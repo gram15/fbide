@@ -27,12 +27,10 @@
 #include <wx/wfstream.h>
 #include <wx/confbase.h>
 
-using namespace FBIdeRegistry;
-
 /**
  * Constructs a new Registry base
  */
-RegistryBase::RegistryBase()
+RegManager::RegManager()
 {
   return;
 }
@@ -42,7 +40,7 @@ RegistryBase::RegistryBase()
 /**
  * Destroy
  */
-RegistryBase::~RegistryBase ()
+RegManager::~RegManager ()
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -72,7 +70,7 @@ RegistryBase::~RegistryBase ()
  * Returns a folder map for the given namespace.
  * If doesn't exist then it is creates.
  */
-RegistryFolderMap * RegistryBase::GetFolderMap (const wxString & ns)
+RegManager::RegistryFolderMap * RegManager::GetFolderMap (const wxString & ns)
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -96,7 +94,7 @@ RegistryFolderMap * RegistryBase::GetFolderMap (const wxString & ns)
 /**
  * Get value map for the folder
  */
-RegistryValueMap * RegistryBase::GetValueMap (RegistryFolderMap * folderMap, const wxString & folder)
+RegManager::RegistryValueMap * RegManager::GetValueMap (RegistryFolderMap * folderMap, const wxString & folder)
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -126,7 +124,7 @@ RegistryValueMap * RegistryBase::GetValueMap (RegistryFolderMap * folderMap, con
 /**
  * Write value onto registry. If key doesn't exist them create
  */
-void RegistryBase::Write (RegistryValueMap * valueMap, const wxString & key, const wxVariant & value)
+void RegManager::Write (RegistryValueMap * valueMap, const wxString & key, const wxVariant & value)
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -145,7 +143,7 @@ void RegistryBase::Write (RegistryValueMap * valueMap, const wxString & key, con
 /**
  * Read value from registry. If doesn't exist -default will be used.
  */
-wxVariant RegistryBase::Read (RegistryValueMap * valueMap, const wxString & key, const wxVariant & defValue)
+wxVariant RegManager::Read (RegistryValueMap * valueMap, const wxString & key, const wxVariant & defValue)
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -170,7 +168,7 @@ wxVariant RegistryBase::Read (RegistryValueMap * valueMap, const wxString & key,
  * Save namespace content into config. Can be anything as long as derived from
  * wxConfigBase
  */
-void RegistryBase::SaveNamespace (const wxString & ns, wxConfigBase * config)
+void RegManager::SaveNamespace (const wxString & ns, wxConfigBase * config)
 {
   wxMutexLocker lock(m_LockerMutex);
 
@@ -197,14 +195,14 @@ void RegistryBase::SaveNamespace (const wxString & ns, wxConfigBase * config)
 /**
  * Lad data from config into a namespace
  */
-void RegistryBase::LoadToNamespace (const wxString & ns, wxConfigBase * config)
+void RegManager::LoadToNamespace (const wxString & ns, wxConfigBase * config)
 {
   wxMutexLocker lock(m_LockerMutex);
 
   LoadToNamespace (GetFolderMap(ns), _T("/"), config);
 }
 
-void RegistryBase::LoadToNamespace (RegistryFolderMap * folderMap, wxString entryGroup, wxConfigBase * config)
+void RegManager::LoadToNamespace (RegistryFolderMap * folderMap, wxString entryGroup, wxConfigBase * config)
 {
   long groupIndex = 0;
   long entryIndex = 0;
@@ -215,7 +213,7 @@ void RegistryBase::LoadToNamespace (RegistryFolderMap * folderMap, wxString entr
 
   config->SetPath(entryGroup);
 
-  RegistryValueMap * valueMap = new RegistryValueMap;
+  RegManager::RegistryValueMap * valueMap = new RegManager::RegistryValueMap;
   (*folderMap)[entryGroup] = valueMap;
 
   if (config->GetFirstEntry(entry, entryIndex))
@@ -229,175 +227,4 @@ void RegistryBase::LoadToNamespace (RegistryFolderMap * folderMap, wxString entr
     LoadToNamespace (folderMap, path + group, config);
     config->SetPath(entryGroup);
   } while (config->GetNextGroup(group, groupIndex));
-}
-
-
-
-
-/**
- * Constructs us a new Registry object for use.
- */
-Registry::Registry (FBIdeRegistry::RegistryBase * base, const wxString & ns)
-{
-  m_base = base;//RegistryBase::Get();
-  SetNamespace(ns);
-}
-
-
-
-/**
- * Get current path
- * @return wxString
- */
-wxString Registry::GetPath ()
-{
-  return m_path;
-}
-
-
-
-/**
- * Set new path
- */
-void Registry::SetPath (const wxString & path)
-{
-  if (path[0] == '/') {
-    m_path = path;
-  } else {
-    int pos = path.Find(_T("://"));
-    if (pos != -1) {
-      SetNamespace (path.Left(pos), path.Mid(pos + 2));
-      return;
-    } else {
-      if (m_path != _T("/"))
-        m_path << _T("/") << path;
-      else
-        m_path << path;
-    }
-  }
-  m_valueMap = m_base->GetValueMap (m_folderMap, m_path);
-}
-
-
-
-/**
- * Return current namespace
- */
-wxString Registry::GetNamespace ()
-{
-  return m_namespace;
-}
-
-
-
-/**
- * Set new namespace
- */
-void Registry::SetNamespace (const wxString & ns, const wxString & path)
-{
-  m_namespace = ns;
-  m_folderMap = m_base->GetFolderMap (ns);
-  SetPath(path);
-}
-
-
-
-/**
- * wxString
- */
-wxString Registry::ReadString (const wxString & key, const wxString & defValue)
-{
-  return m_base->Read(m_valueMap, key, defValue).GetString();
-}
-
-void Registry::WriteString (const wxString & key, const wxString & value)
-{
-   m_base->Write(m_valueMap, key, value);
-}
-
-
-/**
- * long
- */
-
-long Registry::ReadLong (const wxString & key, const long defValue)
-{
-  return m_base->Read(m_valueMap, key, defValue).GetLong();
-}
-
-void Registry::WriteLong (const wxString & key, const long value)
-{
-  m_base->Write(m_valueMap, key, value);
-}
-
-
-/**
- * bool
- */
-
-bool Registry::ReadBool (const wxString & key, const bool defValue)
-{
-  return m_base->Read(m_valueMap, key, defValue).GetBool();
-}
-
-void Registry::WriteBool (const wxString & key, const bool value)
-{
-  m_base->Write(m_valueMap, key, value);
-}
-
-
-/**
- * wxColour
- */
-wxColour Registry::ReadColour (const wxString & key, const wxColour & defValue)
-{
-  wxString colr = m_base->Read(m_valueMap, key, defValue.GetAsString(wxC2S_CSS_SYNTAX));
-  return wxColour(colr);
-}
-
-
-void Registry::WriteColour (const wxString & key, const wxColour & value)
-{
-  m_base->Write(m_valueMap, key, value.GetAsString(wxC2S_CSS_SYNTAX));
-}
-
-
-/**
- * Load INI fail containing the config into current namespace
- */
-void Registry::LoadFile (const wxFileName & file)
-{
-  wxFileInputStream is (file.GetFullPath());
-  wxFileConfig fc(is);
-
-  m_base->LoadToNamespace(m_namespace, &fc);
-}
-
-
-
-/**
- * Save INI current namespace into INI type file
- */
-void Registry::SaveFile (const wxFileName & file)
-{
-
-  wxFileInputStream is (file.GetFullPath());
-  wxFileOutputStream os (file.GetFullPath());
-  wxFileConfig fc(is);
-
-  m_base->SaveNamespace(m_namespace, &fc);
-
-  fc.Save(os);
-
-  return;
-}
-
-
-
-/**
- * Destroy...
- */
-Registry::~Registry ()
-{
-
 }

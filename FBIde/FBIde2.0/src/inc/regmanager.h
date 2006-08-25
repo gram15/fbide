@@ -24,28 +24,11 @@
 #ifndef REGMANAGER_H_INCLUDED
 #define REGMANAGER_H_INCLUDED
 
+#include "singleton.h"
+
 /**
  * The content of the namespace is for private use of Registry only
  */
-namespace FBIdeRegistry
-{
-
-  /**
-   * Hash map holding key value pairs
-   */
-  WX_DECLARE_STRING_HASH_MAP(wxVariant, RegistryValueMap);
-
-
-  /**
-   * Hash map holding folders and RegistryValueMap
-   */
-  WX_DECLARE_STRING_HASH_MAP(RegistryValueMap *, RegistryFolderMap);
-
-
-  /**
-   * Hash map that holds namespaces and RegistryFolderMap
-   */
-  WX_DECLARE_STRING_HASH_MAP(RegistryFolderMap *, RegistryNamespaceMap);
 
 
   /**
@@ -59,17 +42,35 @@ namespace FBIdeRegistry
    *       and seperated with / character
    *   3 - keys. Reside in the folders and hold actual value
    */
-  class RegistryBase
+  class RegManager : public Singleton<RegManager>
   {
+      public:
+          /**
+           * Hash map holding key value pairs
+           */
+          WX_DECLARE_STRING_HASH_MAP(wxVariant, RegistryValueMap);
+
+
+          /**
+           * Hash map holding folders and RegistryValueMap
+           */
+          WX_DECLARE_STRING_HASH_MAP(RegistryValueMap *, RegistryFolderMap);
+
+
+          /**
+           * Hash map that holds namespaces and RegistryFolderMap
+           */
+          WX_DECLARE_STRING_HASH_MAP(RegistryFolderMap *, RegistryNamespaceMap);
+
       private:
-          static RegistryBase * m_instance;
+          friend class Singleton<RegManager>;
+          RegManager();
+          ~RegManager();
 
           RegistryNamespaceMap m_namespace;
           wxMutex m_LockerMutex;
 
       public:
-          RegistryBase();
-          ~RegistryBase();
 
           /**
            * Return foldermap. Takes namespace name as argument
@@ -95,48 +96,6 @@ namespace FBIdeRegistry
 
       private:
           void LoadToNamespace (RegistryFolderMap * folderMap, wxString entryGroup, wxConfigBase * config);
-  };
-}
-
-
-  /**
-   * This is registry accessor class and is used by client side
-   */
-  class Registry
-  {
-      public:
-          Registry (FBIdeRegistry::RegistryBase * base, const wxString & ns);
-          ~Registry();
-
-          wxString ReadString (const wxString & key, const wxString & defValue = _T(""));
-          void WriteString (const wxString & key, const wxString & value);
-
-          long ReadLong (const wxString & key, const long defValue = 0L);
-          void WriteLong (const wxString & key, const long value);
-
-          bool ReadBool (const wxString & key, const bool defValue = false);
-          void WriteBool (const wxString & key, const bool value);
-
-          wxColour ReadColour (const wxString & key, const wxColour & defValue = _T("RGB(0, 0, 0)"));
-          void WriteColour (const wxString & key, const wxColour & value);
-
-          wxString GetPath ();
-          void SetPath (const wxString & path);
-
-          wxString GetNamespace ();
-          void SetNamespace (const wxString & ns, const wxString & folder = _T("/"));
-
-          void LoadFile (const wxFileName & file);
-          void SaveFile (const wxFileName & file);
-
-
-      private:
-          wxString m_path;
-          wxString m_namespace;
-          FBIdeRegistry::RegistryFolderMap * m_folderMap;
-          FBIdeRegistry::RegistryValueMap  * m_valueMap;
-          FBIdeRegistry::RegistryBase      * m_base;
-
   };
 
 #endif // REGMANAGER_H_INCLUDED

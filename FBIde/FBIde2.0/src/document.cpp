@@ -62,20 +62,26 @@ void DocumentBase::IsDocumentVisible ()
 }
 
 
-Registry * DocumentBase::GetDocumentData () const
+RegAccessor * DocumentBase::GetDocumentData () const
 {
-  Registry * reg = Manager::Get()->GetRegistry(_T("documents"));
+/*
+  Registry * reg = Manager::Get()->GetRegManager(_T("documents"));
   wxString folder;
   folder << _T("/") << GetDocumentId();
   reg->SetPath(folder);
   return reg;
+*/
+    return NULL;
 }
 
 
-Registry * DocumentBase::GetDocumentProperties () const
+RegAccessor * DocumentBase::GetDocumentProperties () const
 {
+/*
   Registry * reg = GetDocumentData();
   reg->SetPath(_T("properties"));
   return reg;
+*/
+    return NULL;
 }
 

@@ -26,6 +26,7 @@
 
   #include "document.h"
   #include "documentlist.h"
+  #include "singleton.h"
 
   /**
    * DocManager
@@ -35,16 +36,18 @@
    * regarding to user responses.
    */
 
-  class DocManager
+  class DocManager : public Singleton<DocManager>
   {
     private:
+        friend class Singleton<DocManager>;
         DocumentList        m_list;
         wxBookCtrlBase    * m_bookCtrl;
         wxWindow          * m_window;
 
-    public:
         DocManager ();
         ~DocManager ();
+
+    public:
 
         /**
          * return pointer to window where

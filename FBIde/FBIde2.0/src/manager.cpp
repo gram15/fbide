@@ -22,13 +22,7 @@
  */
 
 #include "inc/manager.h"
-
-
-/**
- * Holds an instance to Manager class
- * @var Manager *
- */
-Manager * Manager::m_instance = NULL;
+#include "inc/uimanager.h"
 
 
 
@@ -39,14 +33,7 @@ Manager * Manager::m_instance = NULL;
  */
 Manager::Manager()
 {
-  m_instance = this;
   m_isShuttingDown = false;
-  m_parentEventHanlder = NULL;
-
-  m_registryBase = new FBIdeRegistry::RegistryBase;
-  m_uiMngr = new UiManager;
-  m_docMngr = new DocManager;
-
   return;
 }
 
@@ -57,7 +44,6 @@ Manager::Manager()
  */
 Manager::~Manager()
 {
-  m_instance = NULL;
 }
 
 
@@ -68,34 +54,8 @@ Manager::~Manager()
  */
 Manager * Manager::Get()
 {
-  if (m_instance == NULL)
-    new Manager;
-
-  return m_instance;
-}
-
-
-
-/**
- * Sets an instance of teh Manager if not yet set
- * (Is used for setting up manager in plugins)
- *
- * @var Manager *
- */
-void Manager::Set (Manager * mngr)
-{
-  if (m_instance == NULL) m_instance = mngr;
-}
-
-
-
-/**
- * Releases an instance of the Manager
- * However only in FBIde::OnExit should this be called!
- */
-void Manager::Release ()
-{
-  delete this;
+	static Manager instance;
+    return &instance;
 }
 
 
@@ -108,31 +68,7 @@ void Manager::ShutDown()
 
   m_isShuttingDown = true;
 
-  delete m_docMngr;         // shutdown document manager
-  delete m_uiMngr;          // shut down UI manager
-  delete m_registryBase;    // shut down registry
-
-  m_docMngr = NULL;
-  m_docMngr = NULL;
-}
-
-
-
-/**
- * Set an event handler of the base (wxApp usually)
- */
-void Manager::SetParentEventHandler (wxEvtHandler * evt)
-{
-  if (m_parentEventHanlder) return;
-  m_parentEventHanlder = evt;
-}
-
-
-
-/**
- * Get base event handler
- */
-wxEvtHandler * Manager::GetParentEventHandler ()
-{
-  return m_parentEventHanlder;
+  DocManager::Free();
+  UiManager::Free();
+  RegManager::Free();
 }

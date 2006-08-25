@@ -37,8 +37,12 @@
 bool FBIde::OnInit()
 {
 
-  // Force creation of the manager (will initalize all sub managers)
+  // Force creation of managers
   (void)Manager::Get();
+  (void)Manager::Get()->GetRegManager();
+  (void)Manager::Get()->GetUiManager();
+  (void)Manager::Get()->GetDocManager();
+
 
   // Set top window
   SetTopWindow (Manager::Get()->GetUiManager()->GetFrame());
@@ -66,7 +70,6 @@ bool FBIde::OnInit()
 int FBIde::OnExit()
 {
   wxTheClipboard->Flush();
-  Manager::Get()->Release();
   return wxApp::OnExit();
 }
 

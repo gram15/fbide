@@ -24,16 +24,19 @@
 #ifndef UIMANAGER_H_INCLUDED
 #define UIMANAGER_H_INCLUDED
 
-  class UiManager
-  {
-    private:
-      wxFrame * m_frame;
+#include "singleton.h"
 
-    public:
-      UiManager();
-      ~UiManager();
+    class UiManager : public Singleton<UiManager>
+    {
+        private:
+            friend class Singleton<UiManager>;
+            wxFrame * m_frame;
+            UiManager();
+            ~UiManager();
 
-      wxFrame * GetFrame() const { return m_frame; }
-  };
+        public:
+
+            wxFrame * GetFrame() const { return m_frame; }
+    };
 
 #endif // UIMANAGER_H_INCLUDED

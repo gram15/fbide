@@ -207,7 +207,25 @@
 			<Option target="ansi Debug" />
 			<Option target="ansi Release" />
 		</Unit>
+		<Unit filename="src\inc\main.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
 		<Unit filename="src\inc\manager.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\inc\regaccessor.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -225,7 +243,7 @@
 			<Option target="ansi Debug" />
 			<Option target="ansi Release" />
 		</Unit>
-		<Unit filename="src\inc\stceditor.h">
+		<Unit filename="src\inc\singleton.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -254,14 +272,28 @@
 		</Unit>
 		<Unit filename="src\inc\wx_pch.h">
 			<Option compilerVar="CPP" />
-			<Option compile="0" />
 			<Option link="0" />
 			<Option target="unicode Debug" />
 			<Option target="unicode Release" />
 			<Option target="ansi Debug" />
 			<Option target="ansi Release" />
 		</Unit>
+		<Unit filename="src\main.cpp">
+			<Option compilerVar="CPP" />
+			<Option weight="0" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
 		<Unit filename="src\manager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="unicode Debug" />
+			<Option target="unicode Release" />
+			<Option target="ansi Debug" />
+			<Option target="ansi Release" />
+		</Unit>
+		<Unit filename="src\regaccessor.cpp">
 			<Option compilerVar="CPP" />
 			<Option target="unicode Debug" />
 			<Option target="unicode Release" />
