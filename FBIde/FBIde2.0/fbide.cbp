@@ -4,15 +4,89 @@
 	<Project>
 		<Option title="FBIde" />
 		<Option pch_mode="0" />
-		<Option default_target="" />
+		<Option default_target="APP unicode release" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="unicode Debug">
+			<Target title="SDK unicode debug">
+				<Option output="bin\unicode\fbide_debug.dll" />
+				<Option object_output="obj\sdk\unicode\Debug\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-D__WXDEBUG__" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DEXPORT_LIB" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswud" />
+				</Compiler>
+				<Linker>
+					<Add library="libwxmsw27ud.a" />
+				</Linker>
+			</Target>
+			<Target title="SDK unicode">
+				<Option output="bin\unicode\fbide.dll" />
+				<Option object_output="obj\sdk\unicode\Release\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-O3" />
+					<Add option="-s" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add option="-DEXPORT_LIB" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswu" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw27u.a" />
+				</Linker>
+			</Target>
+			<Target title="SDK ansi debug">
+				<Option output="bin\ansi\fbide_debug.dll" />
+				<Option object_output="obj\sdk\ansi\Debug\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+					<Add option="-D__WXDEBUG__" />
+					<Add option="-DEXPORT_LIB" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswd" />
+				</Compiler>
+				<Linker>
+					<Add library="libwxmsw27d.a" />
+				</Linker>
+			</Target>
+			<Target title="SDK ansi">
+				<Option output="bin\ansi\fbide.dll" />
+				<Option object_output="obj\sdk\ansi\Release\" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
+				<Option projectResourceIncludeDirsRelation="0" />
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-s" />
+					<Add option="-DEXPORT_LIB" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\msw" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw27.a" />
+				</Linker>
+			</Target>
+			<Target title="APP unicode debug">
 				<Option output="bin\unicode\fbide_debug.exe" />
-				<Option object_output="obj\unicode\Debug\" />
+				<Option object_output="obj\app\unicode\Debug\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
 				<Compiler>
 					<Add option="-Wall" />
 					<Add option="-g" />
@@ -21,60 +95,28 @@
 					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswud" />
 				</Compiler>
 				<Linker>
-					<Add library="libwxmsw27ud.a" />
+					<Add library="bin\unicode\libfbide_debug.a" />
 					<Add library="libwxmsw27ud_stc.a" />
+					<Add library="libwxmsw27ud.a" />
 				</Linker>
 			</Target>
-			<Target title="unicode Release">
+			<Target title="APP unicode release">
 				<Option output="bin\unicode\fbide.exe" />
-				<Option object_output="obj\unicode\Release\" />
+				<Option object_output="obj\app\unicode\Release\" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
 				<Compiler>
 					<Add option="-Os" />
-					<Add option="-s" />
-					<Add option="-DwxUSE_UNICODE" />
-					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswu" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-					<Add library="libwxmsw27u.a" />
-					<Add library="libwxmsw27u_stc.a" />
-				</Linker>
-			</Target>
-			<Target title="ansi Debug">
-				<Option output="bin\ansi\fbide_debug.exe" />
-				<Option object_output="obj\ansi\Debug\" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
+					<Add option="-O3" />
 					<Add option="-Wall" />
-					<Add option="-g" />
-					<Add option="-D__WXDEBUG__" />
-					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswd" />
-				</Compiler>
-				<Linker>
-					<Add library="libwxmsw27d.a" />
-					<Add library="libwxmsw27d_stc.a" />
-				</Linker>
-			</Target>
-			<Target title="ansi Release">
-				<Option output="bin\ansi\fbide.exe" />
-				<Option object_output="obj\ansi\Release\" />
-				<Option type="0" />
-				<Option compiler="gcc" />
-				<Option projectResourceIncludeDirsRelation="0" />
-				<Compiler>
-					<Add option="-Os" />
-					<Add option="-s" />
-					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\msw" />
+					<Add option="-DwxUSE_UNICODE" />
+					<Add directory="C:\dev\wx2.7.0\lib\gcc_dll\mswud" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add library="libwxmsw27.a" />
-					<Add library="libwxmsw27_stc.a" />
+					<Add library="bin\unicode\libfbide.a" />
+					<Add library="libwxmsw27u_stc.a" />
+					<Add library="libwxmsw27u.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -82,11 +124,13 @@
 			<Add option="-Wall" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
-			<Add option="-include src/inc/wx_pch.h" />
+			<Add option="-include sdk/inc/wx_pch.h" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DWXUSINGDLL" />
 			<Add option="-DUSE_PCH" />
+			<Add option="-DEXPORT_LIB" />
+			<Add option="-DEXPORT_EVENTS" />
 			<Add directory="C:\dev\wx2.7.0\include" />
 			<Add directory="C:\dev\wx2.7.0\contrib\include" />
 		</Compiler>
@@ -94,234 +138,245 @@
 			<Add library="gdi32" />
 			<Add directory="C:\dev\wx2.7.0\lib\gcc_dll" />
 		</Linker>
+		<Unit filename="app\doc_stc.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\fbide.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\inc\doc_html.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\inc\doc_stc.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\inc\fbide.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\inc\main.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
+		<Unit filename="app\main.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
+		</Unit>
 		<Unit filename="rc\toolbar.rc">
 			<Option compilerVar="WINDRES" />
 			<Option objectName="rc\toolbar.res" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
 		</Unit>
-		<Unit filename="src\doc_stc.cpp">
+		<Unit filename="sdk\docmanager.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\docmanager.cpp">
+		<Unit filename="sdk\document.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\document.cpp">
+		<Unit filename="sdk\documentlist.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\documentlist.cpp">
+		<Unit filename="sdk\event.cpp">
 			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\event.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\fbide.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\inc\commonid.h">
+		<Unit filename="sdk\inc\commonid.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\doc_stc.h">
+		<Unit filename="sdk\inc\docmanager.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\docmanager.h">
+		<Unit filename="sdk\inc\document.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\document.h">
+		<Unit filename="sdk\inc\documentbase.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\documentlist.h">
+		<Unit filename="sdk\inc\documentlist.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\event.h">
+		<Unit filename="sdk\inc\event.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\fbide.h">
+		<Unit filename="sdk\inc\manager.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\main.h">
+		<Unit filename="sdk\inc\regaccessor.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\manager.h">
+		<Unit filename="sdk\inc\regmanager.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\regaccessor.h">
+		<Unit filename="sdk\inc\singleton.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\regmanager.h">
+		<Unit filename="sdk\inc\styleinfo.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\singleton.h">
+		<Unit filename="sdk\inc\uimanager.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\styleinfo.h">
+		<Unit filename="sdk\inc\wx_pch.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\inc\uimanager.h">
+		<Unit filename="sdk\manager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
+		</Unit>
+		<Unit filename="sdk\regaccessor.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
+		</Unit>
+		<Unit filename="sdk\regmanager.cpp">
+			<Option compilerVar="CPP" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
+		</Unit>
+		<Unit filename="sdk\sdk.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
+			<Option target="APP unicode debug" />
+			<Option target="APP unicode release" />
 		</Unit>
-		<Unit filename="src\inc\wx_pch.h">
+		<Unit filename="sdk\styleinfo.cpp">
 			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option weight="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
-		<Unit filename="src\main.cpp">
+		<Unit filename="sdk\uimanager.cpp">
 			<Option compilerVar="CPP" />
-			<Option weight="0" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\manager.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\regaccessor.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\regmanager.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\styleinfo.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
-		</Unit>
-		<Unit filename="src\uimanager.cpp">
-			<Option compilerVar="CPP" />
-			<Option target="unicode Debug" />
-			<Option target="unicode Release" />
-			<Option target="ansi Debug" />
-			<Option target="ansi Release" />
+			<Option target="SDK unicode debug" />
+			<Option target="SDK unicode" />
+			<Option target="SDK ansi debug" />
+			<Option target="SDK ansi" />
 		</Unit>
 		<Extensions />
 	</Project>
