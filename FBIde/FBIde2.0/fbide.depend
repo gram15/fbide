@@ -1729,7 +1729,7 @@
 	"wx/string.h"
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\wxprec.h
+1155032832 c:\dev\wx2.7.0\include\wx\wxprec.h
 	"wx/defs.h"
 	"wx/wxchar.h"
 	"wx/msw/wrapwin.h"
@@ -1742,7 +1742,7 @@
 	"wx/mgl/private.h"
 	"wx/wx.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\defs.h
+1155032830 c:\dev\wx2.7.0\include\wx\defs.h
 	"wx/platform.h"
 	"wx/features.h"
 	"wx/version.h"
@@ -1752,7 +1752,7 @@
 	<sys/types.h>
 	<unistd.h>
 
-1154842378 c:\dev\wx2.7.0\include\wx\platform.h
+1155032828 c:\dev\wx2.7.0\include\wx\platform.h
 	<stddef.h>
 	<unistd.h>
 	"wx/mac/carbon/config_xcode.h"
@@ -1765,7 +1765,7 @@
 
 1155032828 c:\dev\wx2.7.0\lib\gcc_dll\mswud\wx\setup.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\chkconf.h
+1155032830 c:\dev\wx2.7.0\include\wx\chkconf.h
 	"wx/palmos/chkconf.h"
 	"wx/msw/wince/chkconf.h"
 	"wx/msw/chkconf.h"
@@ -1775,30 +1775,30 @@
 	"wx/motif/chkconf.h"
 	"wx/x11/chkconf.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\chkconf.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\chkconf.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\chkconf.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\chkconf.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\libraries.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\libraries.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\libraries.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\libraries.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\gccpriv.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\gccpriv.h
 	<_mingw.h>
 	<w32api.h>
 
-1154842380 c:\dev\wx2.7.0\include\wx\features.h
+1155032832 c:\dev\wx2.7.0\include\wx\features.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\version.h
+1155032832 c:\dev\wx2.7.0\include\wx\version.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\dlimpexp.h
+1155032828 c:\dev\wx2.7.0\include\wx\dlimpexp.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\debug.h
+1155032828 c:\dev\wx2.7.0\include\wx\debug.h
 	<assert.h>
 	<limits.h>
 	"wx/wxchar.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\wxchar.h
+1155032832 c:\dev\wx2.7.0\include\wx\wxchar.h
 	"wx/platform.h"
 	"wx/dlimpexp.h"
 	<stdarg.h>
@@ -1826,25 +1826,25 @@
 	<time.h>
 	<string.h>
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wrapwin.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wrapwin.h
 	"wx/platform.h"
 	<windows.h>
 	"wx/msw/winundef.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\winundef.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\winundef.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wrapcctl.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wrapcctl.h
 	<commctrl.h>
 	"wx/msw/missing.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\missing.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\missing.h
 	"wx/msw/wince/missing.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\missing.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\missing.h
 	"wx/msw/private.h"
 	"shellapi.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\private.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\private.h
 	"wx/msw/wrapwin.h"
 	"wx/msw/microwin.h"
 	"wx/msw/mslu.h"
@@ -1852,14 +1852,14 @@
 	"wx/gdicmn.h"
 	"wx/colour.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\microwin.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\microwin.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\mslu.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\mslu.h
 	"wx/defs.h"
 	"wx/utils.h"
 	"wx/wxchar.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\utils.h
+1155032832 c:\dev\wx2.7.0\include\wx\utils.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/filefn.h"
@@ -1870,19 +1870,19 @@
 	<unistd.h>
 	<stdio.h>
 
-1154842380 c:\dev\wx2.7.0\include\wx\object.h
+1155032832 c:\dev\wx2.7.0\include\wx\object.h
 	"wx/defs.h"
 	"wx/memory.h"
 	"wx/xti.h"
 	"wx/msw/msvcrt.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\memory.h
+1155032832 c:\dev\wx2.7.0\include\wx\memory.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/msgout.h"
 	<stddef.h>
 
-1154842380 c:\dev\wx2.7.0\include\wx\string.h
+1155032832 c:\dev\wx2.7.0\include\wx\string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -1905,11 +1905,11 @@
 	"wx/arrstr.h"
 	"wx/iosfwrap.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\buffer.h
+1155032832 c:\dev\wx2.7.0\include\wx\buffer.h
 	"wx/wxchar.h"
 	<stdlib.h>
 
-1154842376 c:\dev\wx2.7.0\include\wx\strconv.h
+1155032828 c:\dev\wx2.7.0\include\wx\strconv.h
 	"wx/defs.h"
 	"wx/wxchar.h"
 	"wx/buffer.h"
@@ -1917,35 +1917,35 @@
 	<stdlib.h>
 	"wx/fontenc.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\fontenc.h
+1155032828 c:\dev\wx2.7.0\include\wx\fontenc.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\beforestd.h
+1155032830 c:\dev\wx2.7.0\include\wx\beforestd.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\afterstd.h
+1155032830 c:\dev\wx2.7.0\include\wx\afterstd.h
 	"wx/msw/winundef.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\arrstr.h
+1155032832 c:\dev\wx2.7.0\include\wx\arrstr.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\dynarray.h
+1155032832 c:\dev\wx2.7.0\include\wx\dynarray.h
 	"wx/defs.h"
 	"wx/beforestd.h"
 	<vector>
 	<algorithm>
 	"wx/afterstd.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\iosfwrap.h
+1155032828 c:\dev\wx2.7.0\include\wx\iosfwrap.h
 	<iostream.h>
 	<iosfwd>
 	"wx/msw/winundef.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\msgout.h
+1155032832 c:\dev\wx2.7.0\include\wx\msgout.h
 	"wx/defs.h"
 	"wx/wxchar.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\xti.h
+1155032828 c:\dev\wx2.7.0\include\wx\xti.h
 	"wx/defs.h"
 	"wx/memory.h"
 	"wx/flags.h"
@@ -1957,15 +1957,15 @@
 	<typeinfo>
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\flags.h
+1155032830 c:\dev\wx2.7.0\include\wx\flags.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\hashmap.h
+1155032830 c:\dev\wx2.7.0\include\wx\hashmap.h
 	"wx/string.h"
 	<ext/hash_map>
 	<hash_map>
 	<stddef.h>
 
-1154842376 c:\dev\wx2.7.0\include\wx\log.h
+1155032828 c:\dev\wx2.7.0\include\wx\log.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/arrstr.h"
@@ -1975,18 +1975,18 @@
 	"wx/generic/logg.h"
 	"wx/cocoa/log.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\logg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\logg.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\intl.h
+1155032830 c:\dev\wx2.7.0\include\wx\intl.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/fontenc.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\msvcrt.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\msvcrt.h
 	<stdlib.h>
 	<crtdbg.h>
 
-1154842380 c:\dev\wx2.7.0\include\wx\list.h
+1155032830 c:\dev\wx2.7.0\include\wx\list.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -1996,7 +1996,7 @@
 	<list>
 	"wx/afterstd.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\filefn.h
+1155032830 c:\dev\wx2.7.0\include\wx\filefn.h
 	"wx/list.h"
 	"wx/arrstr.h"
 	"wx/msw/wince/time.h"
@@ -2033,9 +2033,9 @@
 	<sys/types.h>
 	"wx/msw/private.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\time.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\time.h
 
-1154842378 c:\dev\wx2.7.0\include\wx\gdicmn.h
+1155032828 c:\dev\wx2.7.0\include\wx\gdicmn.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/string.h"
@@ -2043,18 +2043,18 @@
 	"wx/hashmap.h"
 	"wx/math.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\math.h
+1155032830 c:\dev\wx2.7.0\include\wx\math.h
 	"wx/defs.h"
 	<math.h>
 	<float.h>
 
-1154842380 c:\dev\wx2.7.0\include\wx\longlong.h
+1155032832 c:\dev\wx2.7.0\include\wx\longlong.h
 	"wx/defs.h"
 	"wx/string.h"
 	<limits.h>
 	"wx/iosfwrap.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\colour.h
+1155032830 c:\dev\wx2.7.0\include\wx\colour.h
 	"wx/defs.h"
 	"wx/gdiobj.h"
 	"wx/palmos/colour.h"
@@ -2068,20 +2068,20 @@
 	"wx/cocoa/colour.h"
 	"wx/os2/colour.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\gdiobj.h
+1155032828 c:\dev\wx2.7.0\include\wx\gdiobj.h
 	"wx/object.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\colour.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\colour.h
 	"wx/object.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wrapcdlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wrapcdlg.h
 	"wx/defs.h"
 	"wx/msw/wrapwin.h"
 	"wx/msw/private.h"
 	"wx/msw/missing.h"
 	<commdlg.h>
 
-1154842376 c:\dev\wx2.7.0\include\wx\wx.h
+1155032828 c:\dev\wx2.7.0\include\wx\wx.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/dynarray.h"
@@ -2160,13 +2160,13 @@
 	"wx/validate.h"
 	"wx/valtext.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\hash.h
+1155032830 c:\dev\wx2.7.0\include\wx\hash.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\event.h
+1155032830 c:\dev\wx2.7.0\include\wx\event.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/clntdata.h"
@@ -2175,16 +2175,16 @@
 	"wx/thread.h"
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\clntdata.h
+1155032832 c:\dev\wx2.7.0\include\wx\clntdata.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/hashmap.h"
 	"wx/vector.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\vector.h
+1155032830 c:\dev\wx2.7.0\include\wx\vector.h
 	"wx/defs.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\cursor.h
+1155032830 c:\dev\wx2.7.0\include\wx\cursor.h
 	"wx/defs.h"
 	"wx/palmos/cursor.h"
 	"wx/msw/cursor.h"
@@ -2198,18 +2198,18 @@
 	"wx/os2/cursor.h"
 	"wx/utils.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\cursor.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\cursor.h
 	"wx/msw/gdiimage.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\gdiimage.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\gdiimage.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/list.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\thread.h
+1155032832 c:\dev\wx2.7.0\include\wx\thread.h
 	"wx/defs.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\app.h
+1155032828 c:\dev\wx2.7.0\include\wx\app.h
 	"wx/event.h"
 	"wx/window.h"
 	"wx/vidmode.h"
@@ -2227,7 +2227,7 @@
 	"wx/os2/app.h"
 	"wx/univ/theme.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\window.h
+1155032832 c:\dev\wx2.7.0\include\wx\window.h
 	"wx/event.h"
 	"wx/list.h"
 	"wx/cursor.h"
@@ -2251,7 +2251,7 @@
 	"wx/os2/window.h"
 	"wx/univ/window.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\font.h
+1155032830 c:\dev\wx2.7.0\include\wx\font.h
 	"wx/defs.h"
 	"wx/fontenc.h"
 	"wx/gdiobj.h"
@@ -2266,10 +2266,10 @@
 	"wx/cocoa/font.h"
 	"wx/os2/font.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\font.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\font.h
 	"wx/gdicmn.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\region.h
+1155032832 c:\dev\wx2.7.0\include\wx\region.h
 	"wx/colour.h"
 	"wx/palmos/region.h"
 	"wx/msw/region.h"
@@ -2281,15 +2281,15 @@
 	"wx/cocoa/region.h"
 	"wx/os2/region.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\region.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\region.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\validate.h
+1155032830 c:\dev\wx2.7.0\include\wx\validate.h
 	"wx/defs.h"
 	"wx/event.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\palette.h
+1155032828 c:\dev\wx2.7.0\include\wx\palette.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -2302,16 +2302,16 @@
 	"wx/mac/palette.h"
 	"wx/os2/palette.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\palette.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\palette.h
 	"wx/gdiobj.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\paletteg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\paletteg.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\accel.h
+1155032830 c:\dev\wx2.7.0\include\wx\accel.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/generic/accel.h"
@@ -2323,16 +2323,16 @@
 	"wx/generic/accel.h"
 	"wx/os2/accel.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\accel.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\accel.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\accel.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\accel.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\access.h
+1155032830 c:\dev\wx2.7.0\include\wx\access.h
 	"wx/defs.h"
 	"wx/variant.h"
 	"wx/msw/ole/access.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\variant.h
+1155032830 c:\dev\wx2.7.0\include\wx\variant.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -2342,7 +2342,7 @@
 	"wx/db.h"
 	"wx/iosfwrap.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\datetime.h
+1155032830 c:\dev\wx2.7.0\include\wx\datetime.h
 	"wx/defs.h"
 	<time.h>
 	"wx/msw/wince/time.h"
@@ -2350,7 +2350,7 @@
 	"wx/longlong.h"
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\db.h
+1155032828 c:\dev\wx2.7.0\include\wx\db.h
 	"wx/defs.h"
 	"wx/string.h"
 	<afxwin.h>
@@ -2367,20 +2367,20 @@
 	<sqlext.h>
 	"wx/object.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\isql.h
+1155032830 c:\dev\wx2.7.0\include\wx\isql.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\isqlext.h
+1155032832 c:\dev\wx2.7.0\include\wx\isqlext.h
 	"wx/isql.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\access.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\access.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\window.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\window.h
 	"wx/hash.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\window.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\window.h
 	"wx/bitmap.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\bitmap.h
+1155032828 c:\dev\wx2.7.0\include\wx\bitmap.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -2397,25 +2397,25 @@
 	"wx/cocoa/bitmap.h"
 	"wx/os2/bitmap.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\bitmap.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\bitmap.h
 	"wx/msw/gdiimage.h"
 	"wx/gdicmn.h"
 	"wx/palette.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\vidmode.h
+1155032828 c:\dev\wx2.7.0\include\wx\vidmode.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\build.h
+1155032832 c:\dev\wx2.7.0\include\wx\build.h
 	"wx/version.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\init.h
+1155032830 c:\dev\wx2.7.0\include\wx\init.h
 	"wx/wxchar.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\app.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\app.h
 	"wx/event.h"
 	"wx/icon.h"
 	"wx/msw/wrapwin.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\icon.h
+1155032830 c:\dev\wx2.7.0\include\wx\icon.h
 	"wx/iconloc.h"
 	"wx/palmos/icon.h"
 	"wx/msw/icon.h"
@@ -2428,35 +2428,35 @@
 	"wx/cocoa/icon.h"
 	"wx/os2/icon.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\iconloc.h
+1155032832 c:\dev\wx2.7.0\include\wx\iconloc.h
 	"wx/string.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\icon.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\icon.h
 	"wx/msw/gdiimage.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\theme.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\theme.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\stream.h
+1155032832 c:\dev\wx2.7.0\include\wx\stream.h
 	"wx/defs.h"
 	<stdio.h>
 	"wx/object.h"
 	"wx/string.h"
 	"wx/filefn.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\stopwatch.h
+1155032828 c:\dev\wx2.7.0\include\wx\stopwatch.h
 	"wx/defs.h"
 	"wx/longlong.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\containr.h
+1155032830 c:\dev\wx2.7.0\include\wx\containr.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\panel.h
+1155032832 c:\dev\wx2.7.0\include\wx\panel.h
 	"wx/generic/panelg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\panelg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\panelg.h
 	"wx/window.h"
 	"wx/containr.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\toplevel.h
+1155032832 c:\dev\wx2.7.0\include\wx\toplevel.h
 	"wx/window.h"
 	"wx/iconbndl.h"
 	"wx/palmos/toplevel.h"
@@ -2471,25 +2471,25 @@
 	"wx/motif/toplevel.h"
 	"wx/univ/toplevel.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\iconbndl.h
+1155032832 c:\dev\wx2.7.0\include\wx\iconbndl.h
 	"wx/dynarray.h"
 	"wx/gdicmn.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\toplevel.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\toplevel.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\toplevel.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\toplevel.h
 	"wx/univ/inpcons.h"
 	"wx/univ/inphand.h"
 	"wx/icon.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\inpcons.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\inpcons.h
 	"wx/object.h"
 	"wx/event.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\inphand.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\inphand.h
 	"wx/univ/inpcons.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\frame.h
+1155032830 c:\dev\wx2.7.0\include\wx\frame.h
 	"wx/toplevel.h"
 	"wx/univ/frame.h"
 	"wx/palmos/frame.h"
@@ -2501,11 +2501,11 @@
 	"wx/cocoa/frame.h"
 	"wx/os2/frame.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\frame.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\frame.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\frame.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\frame.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\image.h
+1155032832 c:\dev\wx2.7.0\include\wx\image.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -2522,37 +2522,37 @@
 	"wx/imagxpm.h"
 	"wx/imagiff.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagbmp.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagbmp.h
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagpng.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagpng.h
 	"wx/defs.h"
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imaggif.h
+1155032830 c:\dev\wx2.7.0\include\wx\imaggif.h
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagpcx.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagpcx.h
 	"wx/image.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\imagjpeg.h
+1155032828 c:\dev\wx2.7.0\include\wx\imagjpeg.h
 	"wx/defs.h"
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagtiff.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagtiff.h
 	"wx/defs.h"
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagpnm.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagpnm.h
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagxpm.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagxpm.h
 	"wx/image.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\imagiff.h
+1155032830 c:\dev\wx2.7.0\include\wx\imagiff.h
 	"wx/image.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\dc.h
+1155032828 c:\dev\wx2.7.0\include\wx\dc.h
 	"wx/object.h"
 	"wx/cursor.h"
 	"wx/font.h"
@@ -2575,7 +2575,7 @@
 	"wx/cocoa/dc.h"
 	"wx/os2/dc.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\brush.h
+1155032832 c:\dev\wx2.7.0\include\wx\brush.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -2589,12 +2589,12 @@
 	"wx/cocoa/brush.h"
 	"wx/os2/brush.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\brush.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\brush.h
 	"wx/gdicmn.h"
 	"wx/gdiobj.h"
 	"wx/bitmap.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\pen.h
+1155032828 c:\dev\wx2.7.0\include\wx\pen.h
 	"wx/defs.h"
 	"wx/palmos/pen.h"
 	"wx/msw/pen.h"
@@ -2606,15 +2606,15 @@
 	"wx/cocoa/pen.h"
 	"wx/os2/pen.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\pen.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\pen.h
 	"wx/gdiobj.h"
 	"wx/bitmap.h"
 	"wx/colour.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dc.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dc.h
 	"wx/defs.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\dcclient.h
+1155032828 c:\dev\wx2.7.0\include\wx\dcclient.h
 	"wx/defs.h"
 	"wx/palmos/dcclient.h"
 	"wx/msw/dcclient.h"
@@ -2627,11 +2627,11 @@
 	"wx/cocoa/dcclient.h"
 	"wx/os2/dcclient.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dcclient.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dcclient.h
 	"wx/dc.h"
 	"wx/dynarray.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\dcmemory.h
+1155032828 c:\dev\wx2.7.0\include\wx\dcmemory.h
 	"wx/defs.h"
 	"wx/palmos/dcmemory.h"
 	"wx/msw/dcmemory.h"
@@ -2644,20 +2644,20 @@
 	"wx/cocoa/dcmemory.h"
 	"wx/os2/dcmemory.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dcmemory.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dcmemory.h
 	"wx/dcclient.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\dcprint.h
+1155032828 c:\dev\wx2.7.0\include\wx\dcprint.h
 	"wx/palmos/dcprint.h"
 	"wx/msw/dcprint.h"
 	"wx/os2/dcprint.h"
 	"wx/mac/dcprint.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dcprint.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dcprint.h
 	"wx/dc.h"
 	"wx/cmndata.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\cmndata.h
+1155032832 c:\dev\wx2.7.0\include\wx\cmndata.h
 	"wx/window.h"
 	"wx/font.h"
 	"wx/encinfo.h"
@@ -2665,10 +2665,10 @@
 	"wx/gdicmn.h"
 	"wx/stream.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\encinfo.h
+1155032828 c:\dev\wx2.7.0\include\wx\encinfo.h
 	"wx/string.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\dcscreen.h
+1155032832 c:\dev\wx2.7.0\include\wx\dcscreen.h
 	"wx/defs.h"
 	"wx/palmos/dcscreen.h"
 	"wx/msw/dcscreen.h"
@@ -2681,10 +2681,10 @@
 	"wx/cocoa/dcscreen.h"
 	"wx/os2/dcscreen.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dcscreen.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dcscreen.h
 	"wx/dc.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\button.h
+1155032832 c:\dev\wx2.7.0\include\wx\button.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/button.h"
@@ -2697,7 +2697,7 @@
 	"wx/os2/button.h"
 	"wx/palmos/button.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\control.h
+1155032830 c:\dev\wx2.7.0\include\wx\control.h
 	"wx/defs.h"
 	"wx/window.h"
 	"wx/univ/control.h"
@@ -2710,19 +2710,19 @@
 	"wx/cocoa/control.h"
 	"wx/os2/control.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\control.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\control.h
 	"wx/univ/inphand.h"
 	"wx/univ/inpcons.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\control.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\control.h
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\button.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\button.h
 	"wx/bitmap.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\button.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\button.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\menuitem.h
+1155032830 c:\dev\wx2.7.0\include\wx\menuitem.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/univ/menuitem.h"
@@ -2735,18 +2735,18 @@
 	"wx/cocoa/menuitem.h"
 	"wx/os2/menuitem.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\menuitem.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\menuitem.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\menuitem.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\menuitem.h
 	"wx/ownerdrw.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\ownerdrw.h
+1155032828 c:\dev\wx2.7.0\include\wx\ownerdrw.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/colour.h"
 	"wx/font.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\menu.h
+1155032830 c:\dev\wx2.7.0\include\wx\menu.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/window.h"
@@ -2761,16 +2761,16 @@
 	"wx/cocoa/menu.h"
 	"wx/os2/menu.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\menu.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\menu.h
 	"wx/accel.h"
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\menu.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\menu.h
 	"wx/accel.h"
 	"wx/dynarray.h"
 	"wx/arrstr.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\dialog.h
+1155032828 c:\dev\wx2.7.0\include\wx\dialog.h
 	"wx/defs.h"
 	"wx/containr.h"
 	"wx/toplevel.h"
@@ -2784,12 +2784,12 @@
 	"wx/cocoa/dialog.h"
 	"wx/os2/dialog.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\dialog.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\dialog.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dialog.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dialog.h
 	"wx/panel.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\timer.h
+1155032830 c:\dev\wx2.7.0\include\wx\timer.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/longlong.h"
@@ -2804,15 +2804,15 @@
 	"wx/mac/timer.h"
 	"wx/os2/timer.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\timer.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\timer.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\timer.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\timer.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\settings.h
+1155032830 c:\dev\wx2.7.0\include\wx\settings.h
 	"wx/colour.h"
 	"wx/font.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\msgdlg.h
+1155032832 c:\dev\wx2.7.0\include\wx\msgdlg.h
 	"wx/defs.h"
 	"wx/generic/msgdlgg.h"
 	"wx/generic/msgdlgg.h"
@@ -2826,15 +2826,15 @@
 	"wx/generic/msgdlgg.h"
 	"wx/os2/msgdlg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\msgdlgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\msgdlgg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\msgdlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\msgdlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\dataobj.h
+1155032828 c:\dev\wx2.7.0\include\wx\dataobj.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/bitmap.h"
@@ -2865,17 +2865,17 @@
 	"wx/cocoa/dataobj2.h"
 	"wx/os2/dataobj2.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\dataform.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\dataform.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\dataobj.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\dataobj.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\dataobj2.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\dataobj2.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\ctrlsub.h
+1155032832 c:\dev\wx2.7.0\include\wx\ctrlsub.h
 	"wx/defs.h"
 	"wx/control.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\bmpbuttn.h
+1155032832 c:\dev\wx2.7.0\include\wx\bmpbuttn.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/button.h"
@@ -2888,14 +2888,14 @@
 	"wx/cocoa/bmpbuttn.h"
 	"wx/os2/bmpbuttn.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\bmpbuttn.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\bmpbuttn.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\bmpbuttn.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\bmpbuttn.h
 	"wx/button.h"
 	"wx/bitmap.h"
 	"wx/brush.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\checkbox.h
+1155032832 c:\dev\wx2.7.0\include\wx\checkbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/checkbox.h"
@@ -2908,12 +2908,12 @@
 	"wx/os2/checkbox.h"
 	"wx/palmos/checkbox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\checkbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\checkbox.h
 	"wx/button.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\checkbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\checkbox.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\checklst.h
+1155032832 c:\dev\wx2.7.0\include\wx\checklst.h
 	"wx/listbox.h"
 	"wx/univ/checklst.h"
 	"wx/msw/wince/checklst.h"
@@ -2925,7 +2925,7 @@
 	"wx/cocoa/checklst.h"
 	"wx/os2/checklst.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\listbox.h
+1155032832 c:\dev\wx2.7.0\include\wx\listbox.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/listbox.h"
@@ -2937,26 +2937,26 @@
 	"wx/os2/listbox.h"
 	"wx/cocoa/listbox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\listbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\listbox.h
 	"wx/scrolwin.h"
 	"wx/dynarray.h"
 	"wx/arrstr.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\scrolwin.h
+1155032830 c:\dev\wx2.7.0\include\wx\scrolwin.h
 	"wx/panel.h"
 	"wx/gtk/scrolwin.h"
 	"wx/gtk1/scrolwin.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\listbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\listbox.h
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\checklst.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\checklst.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\checklst.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\checklst.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\checklst.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\checklst.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\choice.h
+1155032830 c:\dev\wx2.7.0\include\wx\choice.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/choice.h"
@@ -2969,10 +2969,10 @@
 	"wx/cocoa/choice.h"
 	"wx/os2/choice.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\choice.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\choice.h
 	"wx/combobox.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\combobox.h
+1155032830 c:\dev\wx2.7.0\include\wx\combobox.h
 	"wx/defs.h"
 	"wx/textctrl.h"
 	"wx/ctrlsub.h"
@@ -2985,7 +2985,7 @@
 	"wx/cocoa/combobox.h"
 	"wx/os2/combobox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\textctrl.h
+1155032828 c:\dev\wx2.7.0\include\wx\textctrl.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/dynarray.h"
@@ -3002,24 +3002,24 @@
 	"wx/cocoa/textctrl.h"
 	"wx/os2/textctrl.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\ioswrap.h
+1155032830 c:\dev\wx2.7.0\include\wx\ioswrap.h
 	<iostream.h>
 	<iostream>
 	"wx/msw/winundef.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\textctrl.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\textctrl.h
 	"wx/scrolwin.h"
 	"wx/univ/inphand.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\textctrlce.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\textctrlce.h
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\textctrl.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\textctrl.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\combobox.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\combobox.h
 	"wx/combo.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\combo.h
+1155032828 c:\dev\wx2.7.0\include\wx\combo.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/renderer.h"
@@ -3027,23 +3027,23 @@
 	"wx/msw/combo.h"
 	"wx/generic/combo.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\renderer.h
+1155032828 c:\dev\wx2.7.0\include\wx\renderer.h
 	"wx/gdicmn.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\combo.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\combo.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\combo.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\combo.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\combobox.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\combobox.h
 	"wx/choice.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\choicece.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\choicece.h
 	"wx/defs.h"
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\choice.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\choice.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\scrolbar.h
+1155032830 c:\dev\wx2.7.0\include\wx\scrolbar.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/scrolbar.h"
@@ -3055,15 +3055,15 @@
 	"wx/cocoa/scrolbar.h"
 	"wx/os2/scrolbar.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\scrolbar.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\scrolbar.h
 	"wx/univ/scrarrow.h"
 	"wx/renderer.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\scrarrow.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\scrarrow.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\scrolbar.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\scrolbar.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\stattext.h
+1155032832 c:\dev\wx2.7.0\include\wx\stattext.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/stattext.h"
@@ -3076,11 +3076,11 @@
 	"wx/os2/stattext.h"
 	"wx/palmos/stattext.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\stattext.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\stattext.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\stattext.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\stattext.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\statbmp.h
+1155032832 c:\dev\wx2.7.0\include\wx\statbmp.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/bitmap.h"
@@ -3094,15 +3094,15 @@
 	"wx/cocoa/statbmp.h"
 	"wx/os2/statbmp.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\statbmp.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\statbmp.h
 	"wx/bitmap.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\statbmp.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\statbmp.h
 	"wx/control.h"
 	"wx/icon.h"
 	"wx/bitmap.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\statbox.h
+1155032832 c:\dev\wx2.7.0\include\wx\statbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/statbox.h"
@@ -3114,11 +3114,11 @@
 	"wx/cocoa/statbox.h"
 	"wx/os2/statbox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\statbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\statbox.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\statbox.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\statbox.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\radiobox.h
+1155032832 c:\dev\wx2.7.0\include\wx\radiobox.h
 	"wx/ctrlsub.h"
 	"wx/dynarray.h"
 	"wx/univ/radiobox.h"
@@ -3131,14 +3131,14 @@
 	"wx/os2/radiobox.h"
 	"wx/palmos/radiobox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\radiobox.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\radiobox.h
 	"wx/statbox.h"
 	"wx/dynarray.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\radiobox.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\radiobox.h
 	"wx/statbox.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\radiobut.h
+1155032832 c:\dev\wx2.7.0\include\wx\radiobut.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/radiobut.h"
@@ -3151,12 +3151,12 @@
 	"wx/os2/radiobut.h"
 	"wx/palmos/radiobut.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\radiobut.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\radiobut.h
 	"wx/checkbox.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\radiobut.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\radiobut.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\slider.h
+1155032832 c:\dev\wx2.7.0\include\wx\slider.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/slider.h"
@@ -3169,15 +3169,15 @@
 	"wx/os2/slider.h"
 	"wx/palmos/slider.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\slider.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\slider.h
 	"wx/univ/scrthumb.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\scrthumb.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\scrthumb.h
 	"wx/timer.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\slider95.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\slider95.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\gauge.h
+1155032830 c:\dev\wx2.7.0\include\wx\gauge.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/gauge.h"
@@ -3189,11 +3189,11 @@
 	"wx/cocoa/gauge.h"
 	"wx/os2/gauge.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\gauge.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\gauge.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\gauge95.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\gauge95.h
 
-1154842378 c:\dev\wx2.7.0\include\wx\dirdlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\dirdlg.h
 	"wx/dialog.h"
 	"wx/generic/dirdlgg.h"
 	"wx/generic/dirdlgg.h"
@@ -3205,12 +3205,12 @@
 	"wx/cocoa/dirdlg.h"
 	"wx/generic/dirdlgg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\dirdlgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\dirdlgg.h
 	"wx/dialog.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\dirdlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\dirdlg.h
 
-1154842378 c:\dev\wx2.7.0\include\wx\toolbar.h
+1155032828 c:\dev\wx2.7.0\include\wx\toolbar.h
 	"wx/defs.h"
 	"wx/tbarbase.h"
 	"wx/univ/toolbar.h"
@@ -3224,47 +3224,47 @@
 	"wx/cocoa/toolbar.h"
 	"wx/os2/toolbar.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\tbarbase.h
+1155032828 c:\dev\wx2.7.0\include\wx\tbarbase.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/list.h"
 	"wx/control.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\toolbar.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\toolbar.h
 	"wx/button.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\tbar95.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\tbar95.h
 	"wx/dynarray.h"
 	"wx/imaglist.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\imaglist.h
+1155032828 c:\dev\wx2.7.0\include\wx\imaglist.h
 	"wx/msw/imaglist.h"
 	"wx/mac/imaglist.h"
 	"wx/generic/imaglist.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\imaglist.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\imaglist.h
 	"wx/bitmap.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\imaglist.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\imaglist.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/icon.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\wince\tbarwce.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\wince\tbarwce.h
 	"wx/dynarray.h"
 	"wx/msw/tbar95.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\layout.h
+1155032832 c:\dev\wx2.7.0\include\wx\layout.h
 	"wx/object.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\sizer.h
+1155032828 c:\dev\wx2.7.0\include\wx\sizer.h
 	"wx/defs.h"
 	"wx/button.h"
 	"wx/window.h"
 	"wx/frame.h"
 	"wx/dialog.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\mdi.h
+1155032828 c:\dev\wx2.7.0\include\wx\mdi.h
 	"wx/defs.h"
 	"wx/generic/mdig.h"
 	"wx/msw/mdi.h"
@@ -3275,12 +3275,12 @@
 	"wx/cocoa/mdi.h"
 	"wx/generic/mdig.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\mdig.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\mdig.h
 	"wx/frame.h"
 	"wx/panel.h"
 	"wx/notebook.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\notebook.h
+1155032832 c:\dev\wx2.7.0\include\wx\notebook.h
 	"wx/defs.h"
 	"wx/bookctrl.h"
 	"wx/univ/notebook.h"
@@ -3292,31 +3292,31 @@
 	"wx/cocoa/notebook.h"
 	"wx/os2/notebook.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\bookctrl.h
+1155032830 c:\dev\wx2.7.0\include\wx\bookctrl.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/dynarray.h"
 	"wx/notebook.h"
 	"wx/choicebk.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\choicebk.h
+1155032830 c:\dev\wx2.7.0\include\wx\choicebk.h
 	"wx/defs.h"
 	"wx/bookctrl.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\notebook.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\notebook.h
 	"wx/arrstr.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\notebook.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\notebook.h
 	"wx/control.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\notebook.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\notebook.h
 	"wx/event.h"
 	"wx/control.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\mdi.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\mdi.h
 	"wx/frame.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\statusbr.h
+1155032832 c:\dev\wx2.7.0\include\wx\statusbr.h
 	"wx/defs.h"
 	"wx/window.h"
 	"wx/list.h"
@@ -3328,49 +3328,49 @@
 	"wx/mac/statusbr.h"
 	"wx/generic/statusbr.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\univ\statusbr.h
+1155032828 c:\dev\wx2.7.0\include\wx\univ\statusbr.h
 	"wx/univ/inpcons.h"
 	"wx/arrstr.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\statbr95.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\statbr95.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\statusbr.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\statusbr.h
 	"wx/defs.h"
 	"wx/pen.h"
 	"wx/font.h"
 	"wx/statusbr.h"
 	"wx/arrstr.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\choicdlg.h
+1155032830 c:\dev\wx2.7.0\include\wx\choicdlg.h
 	"wx/generic/choicdgg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\choicdgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\choicdgg.h
 	"wx/dynarray.h"
 	"wx/dialog.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\textdlg.h
+1155032832 c:\dev\wx2.7.0\include\wx\textdlg.h
 	"wx/generic/textdlgg.h"
 	"wx/numdlg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\textdlgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\textdlgg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/valtext.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\valtext.h
+1155032832 c:\dev\wx2.7.0\include\wx\valtext.h
 	"wx/defs.h"
 	"wx/textctrl.h"
 	"wx/validate.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\numdlg.h
+1155032832 c:\dev\wx2.7.0\include\wx\numdlg.h
 	"wx/defs.h"
 	"wx/generic/numdlgg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\numdlgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\numdlgg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\filedlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\filedlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/arrstr.h"
@@ -3384,32 +3384,32 @@
 	"wx/cocoa/filedlg.h"
 	"wx/os2/filedlg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\filedlgg.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\filedlgg.h
 	"wx/listctrl.h"
 	"wx/datetime.h"
 	"wx/filefn.h"
 	"wx/filedlg.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\listctrl.h
+1155032830 c:\dev\wx2.7.0\include\wx\listctrl.h
 	"wx/defs.h"
 	"wx/listbase.h"
 	"wx/msw/listctrl.h"
 	"wx/generic/listctrl.h"
 
-1154842378 c:\dev\wx2.7.0\include\wx\listbase.h
+1155032828 c:\dev\wx2.7.0\include\wx\listbase.h
 	"wx/defs.h"
 	"wx/colour.h"
 	"wx/font.h"
 	"wx/gdicmn.h"
 	"wx/event.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\listctrl.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\listctrl.h
 	"wx/control.h"
 	"wx/event.h"
 	"wx/hash.h"
 	"wx/textctrl.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\generic\listctrl.h
+1155032830 c:\dev\wx2.7.0\include\wx\generic\listctrl.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/imaglist.h"
@@ -3422,49 +3422,49 @@
 	"wx/listbase.h"
 	"wx/textctrl.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\filedlg.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\filedlg.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\regex.h
+1155032828 c:\dev\wx2.7.0\include\wx\regex.h
 	"wx/defs.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\confbase.h
+1155032830 c:\dev\wx2.7.0\include\wx\confbase.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/string.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\filename.h
+1155032830 c:\dev\wx2.7.0\include\wx\filename.h
 	"wx/arrstr.h"
 	"wx/filefn.h"
 	"wx/datetime.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\fileconf.h
+1155032830 c:\dev\wx2.7.0\include\wx\fileconf.h
 	"wx/defs.h"
 	"wx/textfile.h"
 	"wx/string.h"
 	"wx/confbase.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\textfile.h
+1155032828 c:\dev\wx2.7.0\include\wx\textfile.h
 	"wx/defs.h"
 	"wx/textbuf.h"
 	"wx/file.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\textbuf.h
+1155032832 c:\dev\wx2.7.0\include\wx\textbuf.h
 	"wx/defs.h"
 	"wx/arrstr.h"
 	"wx/convauto.h"
 	"wx/string.h"
 	"wx/dynarray.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\convauto.h
+1155032832 c:\dev\wx2.7.0\include\wx\convauto.h
 	"wx/strconv.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\file.h
+1155032830 c:\dev\wx2.7.0\include\wx\file.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
 	"wx/strconv.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\wfstream.h
+1155032830 c:\dev\wx2.7.0\include\wx\wfstream.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -3472,7 +3472,7 @@
 	"wx/file.h"
 	"wx/ffile.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\ffile.h
+1155032830 c:\dev\wx2.7.0\include\wx\ffile.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
@@ -3493,11 +3493,11 @@
 
 1156421086 c:\dev\fbide2_0\src\inc\event.h
 
-1154842362 c:\dev\wx2.7.0\contrib\include\wx\stc\stc.h
+1155032818 c:\dev\wx2.7.0\contrib\include\wx\stc\stc.h
 	"wx/wx.h"
 	"wx/dnd.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\dnd.h
+1155032828 c:\dev\wx2.7.0\include\wx\dnd.h
 	"wx/defs.h"
 	"wx/dataobj.h"
 	"wx/cursor.h"
@@ -3510,9 +3510,9 @@
 	"wx/mac/dnd.h"
 	"wx/os2/dnd.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\dropsrc.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\dropsrc.h
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\droptgt.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\ole\droptgt.h
 
 1156414816 c:\dev\fbide2_0\src\inc\stceditor.h
 	"wx/stc/stc.h"
@@ -3525,7 +3525,7 @@
 
 1155032828 c:\dev\wx2.7.0\lib\gcc_dll\mswu\wx\setup.h
 
-1154842380 c:\dev\wx2.7.0\include\wx\clipbrd.h
+1155032832 c:\dev\wx2.7.0\include\wx\clipbrd.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/wxchar.h"
@@ -3539,12 +3539,12 @@
 	"wx/cocoa/clipbrd.h"
 	"wx/os2/clipbrd.h"
 
-1154842376 c:\dev\wx2.7.0\include\wx\msw\clipbrd.h
+1155032828 c:\dev\wx2.7.0\include\wx\msw\clipbrd.h
 	"wx/list.h"
 	"wx/module.h"
 	"wx/dataobj.h"
 
-1154842380 c:\dev\wx2.7.0\include\wx\module.h
+1155032830 c:\dev\wx2.7.0\include\wx\module.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/dynarray.h"
@@ -3581,10 +3581,10 @@
 
 1156506457 c:\dev\fbide2_0\src\inc\styleinfo.h
 
-1156427621 c:\dev\fbide2.0\src\docmanager.cpp
+1156680525 c:\dev\fbide2.0\src\docmanager.cpp
 	"inc/manager.h"
 
-1156427622 c:\dev\fbide2.0\src\inc\manager.h
+1156528315 c:\dev\fbide2.0\src\inc\manager.h
 	"event.h"
 	"regmanager.h"
 	"uimanager.h"
@@ -3592,20 +3592,24 @@
 
 1156427622 c:\dev\fbide2.0\src\inc\event.h
 
-1156427622 c:\dev\fbide2.0\src\inc\regmanager.h
+1156526370 c:\dev\fbide2.0\src\inc\regmanager.h
+	"singleton.h"
 
-1156427622 c:\dev\fbide2.0\src\inc\uimanager.h
+1156678981 c:\dev\fbide2.0\src\inc\uimanager.h
+	"singleton.h"
 
-1156427622 c:\dev\fbide2.0\src\inc\docmanager.h
+1156678777 c:\dev\fbide2.0\src\inc\docmanager.h
 	"document.h"
 	"documentlist.h"
+	"singleton.h"
 
-1156427622 c:\dev\fbide2.0\src\inc\document.h
+1156679974 c:\dev\fbide2.0\src\inc\document.h
+	"regaccessor.h"
 
 1156427622 c:\dev\fbide2.0\src\inc\documentlist.h
 	"document.h"
 
-1156427621 c:\dev\fbide2.0\src\document.cpp
+1156677051 c:\dev\fbide2.0\src\document.cpp
 	"inc/manager.h"
 	"inc/document.h"
 
@@ -3616,19 +3620,23 @@
 1156427622 c:\dev\fbide2.0\src\event.cpp
 	"inc/event.h"
 
-1156434499 c:\dev\fbide2.0\src\fbide.cpp
+1156685570 c:\dev\fbide2.0\src\fbide.cpp
 	"inc/fbide.h"
 	"inc/manager.h"
-	"inc/doc_stc.h"
+	"inc/main.h"
+	"inc/document.h"
+	<wx/html/htmlwin.h>
+	<wx/uri.h>
 
 1156427622 c:\dev\fbide2.0\src\inc\fbide.h
 
-1156427622 c:\dev\fbide2.0\src\inc\styleinfo.h
+1156526370 c:\dev\fbide2.0\src\inc\styleinfo.h
 
-1156434727 c:\dev\fbide2.0\src\manager.cpp
+1156526370 c:\dev\fbide2.0\src\manager.cpp
 	"inc/manager.h"
+	"inc/uimanager.h"
 
-1156427622 c:\dev\fbide2.0\src\regmanager.cpp
+1156526370 c:\dev\fbide2.0\src\regmanager.cpp
 	"inc/regmanager.h"
 	<wx/fileconf.h>
 	<wx/wfstream.h>
@@ -3637,14 +3645,15 @@
 1156427622 c:\dev\fbide2.0\src\styleinfo.cpp
 	"inc/styleinfo.h"
 
-1156427622 c:\dev\fbide2.0\src\uimanager.cpp
+1156679466 c:\dev\fbide2.0\src\uimanager.cpp
 	"inc/manager.h"
+	"inc/main.h"
 
-1156434250 c:\dev\fbide2.0\src\doc_stc.cpp
+1156680644 c:\dev\fbide2.0\src\doc_stc.cpp
 	"inc/manager.h"
 	"inc/doc_stc.h"
 
-1156434487 c:\dev\fbide2.0\src\inc\doc_stc.h
+1156680058 c:\dev\fbide2.0\src\inc\doc_stc.h
 	<wx/stc/stc.h>
 	"styleinfo.h"
 
@@ -3696,4 +3705,122 @@
 1154842376 c:\dev\wx2.7.0\include\wx\msw\ole\automtn.h
 	"wx/object.h"
 	"wx/variant.h"
+
+1156507747 c:\dev\fbide2.0\src\inc\singleton.h
+
+1156507747 c:\dev\fbide2.0\src\inc\regaccessor.h
+	"regmanager.h"
+
+1156530065 c:\dev\fbide2.0\src\inc\commonid.h
+
+1156427622 c:\dev\fbide2.0\src\inc\wx_pch.h
+	<wx/wxprec.h>
+	<memory>
+	<vector>
+	<wx/variant.h>
+	<wx/hashmap.h>
+	<wx/regex.h>
+	<wx/confbase.h>
+	<wx/filename.h>
+	<wx/thread.h>
+	<wx/event.h>
+	<wx/clipbrd.h>
+	<wx/notebook.h>
+	<wx/wx.h>
+
+1156682993 c:\dev\fbide2.0\src\main.cpp
+	"inc/manager.h"
+	"inc/main.h"
+	"inc/doc_stc.h"
+
+1156677567 c:\dev\fbide2.0\src\inc\main.h
+
+1156526370 c:\dev\fbide2.0\rc\toolbar.rc
+
+1156507747 c:\dev\fbide2.0\src\regaccessor.cpp
+	"inc/manager.h"
+	"inc/regaccessor.h"
+	<wx/fileconf.h>
+	<wx/wfstream.h>
+	<wx/confbase.h>
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmlwin.h
+	"wx/defs.h"
+	"wx/window.h"
+	"wx/scrolwin.h"
+	"wx/config.h"
+	"wx/stopwatch.h"
+	"wx/html/winpars.h"
+	"wx/html/htmlcell.h"
+	"wx/filesys.h"
+	"wx/html/htmlfilt.h"
+	"wx/filename.h"
+	"wx/bitmap.h"
+
+1155032830 c:\dev\wx2.7.0\include\wx\config.h
+	"wx/defs.h"
+	"wx/confbase.h"
+	"wx/msw/regconf.h"
+	"wx/msw/iniconf.h"
+	"wx/palmos/prefconf.h"
+	"wx/fileconf.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\msw\regconf.h
+	"wx/msw/registry.h"
+	"wx/object.h"
+	"wx/confbase.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\msw\registry.h
+
+1155032828 c:\dev\wx2.7.0\include\wx\msw\iniconf.h
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\winpars.h
+	"wx/defs.h"
+	"wx/module.h"
+	"wx/font.h"
+	"wx/html/htmlpars.h"
+	"wx/html/htmlcell.h"
+	"wx/encconv.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmlpars.h
+	"wx/defs.h"
+	"wx/html/htmltag.h"
+	"wx/filesys.h"
+	"wx/hash.h"
+	"wx/fontenc.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmltag.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/arrstr.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\filesys.h
+	"wx/defs.h"
+	"wx/stream.h"
+	"wx/datetime.h"
+	"wx/filename.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmlcell.h
+	"wx/defs.h"
+	"wx/html/htmltag.h"
+	"wx/html/htmldefs.h"
+	"wx/window.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmldefs.h
+	"wx/defs.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\encconv.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/fontenc.h"
+	"wx/dynarray.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\html\htmlfilt.h
+	"wx/defs.h"
+	"wx/filesys.h"
+
+1155032828 c:\dev\wx2.7.0\include\wx\uri.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/string.h"
 

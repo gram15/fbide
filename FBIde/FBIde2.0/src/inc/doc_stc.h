@@ -31,12 +31,19 @@
    * This is a textDocument based on wxStyledTextControl
    */
 
-  class Doc_Stc : public Document <wxStyledTextCtrl>
-  {
-    public:
-      Doc_Stc();
-      void LoadStyle (const wxString & regPath =_T("style://stc/default"));
-      void SetStyle (int style, const StyleInfo & data);
-  };
+    class Doc_Stc : public Document <wxStyledTextCtrl>
+    {
+        public:
+            Doc_Stc();
+            ~Doc_Stc();
+            void LoadStyle (const wxString & regPath =_T("style://stc/default"));
+            void SetStyle (int style, const StyleInfo & data);
+
+            void OnSave (wxCommandEvent & event);
+            void OnClose (wxCommandEvent & event);
+
+        private:
+            DECLARE_EVENT_TABLE()
+    };
 
 #endif // DOC_STC_H_INCLUDED

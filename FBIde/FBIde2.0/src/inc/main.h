@@ -33,7 +33,12 @@
         public:
             Main();
             ~Main();
-            void OnClose (wxCloseEvent & event);
+            void OnCloseFrame (wxCloseEvent & event);
+            void OnExit (wxCommandEvent & event);
+            void OnNew (wxCommandEvent & event);
+            void OnDocumentBook (wxNotebookEvent & event);
+            void OnDocumentEvent (wxCommandEvent & event);
+            void OnOpen (wxCommandEvent & event);
 
         private:
             DECLARE_EVENT_TABLE()

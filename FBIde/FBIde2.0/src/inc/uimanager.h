@@ -33,10 +33,20 @@
             wxFrame * m_frame;
             UiManager();
             ~UiManager();
+            wxBookCtrlBase * m_docNotebook;
 
         public:
 
             wxFrame * GetFrame() const { return m_frame; }
+            wxBitmap GetMenuIcon (int id);
+            void CreateToolbar ();
+            void CreateMenu ();
+            void CreateLayout ();
+            void SetTitle (const wxString & title);
+
+            wxBookCtrlBase * GetDocumentBook();
+            void ShowDocumentBook();
+            void HideDocumentBook();
     };
 
 #endif // UIMANAGER_H_INCLUDED

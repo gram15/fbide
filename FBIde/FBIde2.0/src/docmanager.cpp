@@ -28,12 +28,19 @@
  * @todo - adding a list of documents
  * @todo - when tab's undocking is done,
  *         then allow focusing untabbed documents too
+ * @todo - send events when needed!
  */
 
-DocManager::DocManager () : m_bookCtrl(NULL), m_window(NULL)
+
+BEGIN_EVENT_TABLE(DocManager, wxEvtHandler)
+    EVT_NOTEBOOK_PAGE_CHANGING(-1,  DocManager::OnPageChanging)
+    EVT_NOTEBOOK_PAGE_CHANGED(-1,   DocManager::OnPageChanged)
+END_EVENT_TABLE()
+
+
+DocManager::DocManager () : m_bookCtrl(NULL), m_window(NULL), m_activeDoc(NULL)
 {
-    m_bookCtrl = new wxNotebook (Manager::Get()->GetUiManager()->GetFrame(), wxID_ANY);
-    m_bookCtrl->Hide();
+    m_bookCtrl = Manager::Get()->GetUiManager()->GetDocumentBook();
     m_window = m_bookCtrl;
     return;
 }
@@ -42,14 +49,26 @@ DocManager::DocManager () : m_bookCtrl(NULL), m_window(NULL)
 
 DocManager::~DocManager ()
 {
-    /**
-     * Deleteing Document this way is safe. it does callback
-     * into doc managaer to clear itself.
-     */
     while (m_list.Count())
       delete m_list[0];
 
-    m_bookCtrl->Destroy();
+    Manager::Get()->GetUiManager()->HideDocumentBook();
+}
+
+
+
+void DocManager::OnPageChanging (wxNotebookEvent & event)
+{
+
+}
+
+
+
+void DocManager::OnPageChanged (wxNotebookEvent & event)
+{
+    m_activeDoc = DetectActive();
+    Manager::Get()->GetUiManager()->SetTitle(m_activeDoc->GetDocumentName());
+    m_activeDoc->GetDocumentWindow()->SetFocus();
 }
 
 
@@ -104,11 +123,10 @@ bool DocManager::Show (DocumentBase * doc)
 {
     if (!Exists(doc)) return false;
 
-    wxFrame * frame = Manager::Get()->GetUiManager()->GetFrame();
-    frame->Freeze();
-        m_bookCtrl->AddPage (doc->GetDocumentWindow(), doc->GetDocumentName());
-        if (m_bookCtrl->GetPageCount() == 1) m_bookCtrl->Show();
-    frame->Thaw();
+    m_bookCtrl->AddPage (doc->GetDocumentWindow(), doc->GetDocumentName(), true);
+
+    if (m_bookCtrl->GetPageCount() == 1)
+        Manager::Get()->GetUiManager()->ShowDocumentBook();
 
     return true;
 }
@@ -119,20 +137,34 @@ bool DocManager::Hide (DocumentBase * doc)
 {
     if (!Exists(doc)) return false;
 
-    wxFrame * frame = Manager::Get()->GetUiManager()->GetFrame();
-    size_t page = 0;
-
-    for ( ; page < m_bookCtrl->GetPageCount(); page++)
+    for (size_t page = 0; page < m_bookCtrl->GetPageCount(); page++)
         if (m_bookCtrl->GetPage(page) == doc->GetDocumentWindow())
         {
-            frame->Freeze();
-                m_bookCtrl->RemovePage (page);
-                if (m_bookCtrl->GetPageCount() == 0) m_bookCtrl->Hide();
-                doc->GetDocumentWindow()->Hide();
-            frame->Thaw();
+            m_bookCtrl->RemovePage (page);
+            if (m_bookCtrl->GetPageCount() == 0)
+            {
+                Manager::Get()->GetUiManager()->HideDocumentBook();
+                m_activeDoc = NULL;
+                Manager::Get()->GetUiManager()->SetTitle(_T(""));
+            }
             return true;
         }
+
     return false;
+}
+
+
+
+DocumentBase * DocManager::DetectActive () const
+{
+    if (m_bookCtrl->GetPageCount() == 0) return NULL;
+
+    wxWindow * active = m_bookCtrl->GetCurrentPage();
+    for (size_t i = 0; i < m_list.Count(); i++)
+        if (m_list[i]->GetDocumentWindow() == active)
+            return m_list[i];
+
+    return NULL;
 }
 
 

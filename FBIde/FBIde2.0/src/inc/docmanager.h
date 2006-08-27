@@ -36,94 +36,115 @@
    * regarding to user responses.
    */
 
-  class DocManager : public Singleton<DocManager>
-  {
-    private:
-        friend class Singleton<DocManager>;
-        DocumentList        m_list;
-        wxBookCtrlBase    * m_bookCtrl;
-        wxWindow          * m_window;
+    class DocManager : public Singleton<DocManager>, public wxEvtHandler
+    {
+        private:
+            friend class Singleton<DocManager>;
+            DocumentList        m_list;
+            wxBookCtrlBase    * m_bookCtrl;
+            int                 m_bookCtrlId;
+            wxWindow          * m_window;
+            DocumentBase      * m_activeDoc;
 
-        DocManager ();
-        ~DocManager ();
+            void OnPageChanging (wxNotebookEvent & event);
+            void OnPageChanged (wxNotebookEvent & event);
 
-    public:
+            DocManager ();
+            ~DocManager ();
 
-        /**
-         * return pointer to window where
-         * objects can be placed
-         */
-        wxWindow * GetWindow() const { return m_window; }
+            DocumentBase * DetectActive () const;
 
-        /**
-         * Add new document.
-         * Returns true if added and false otherwise (already exists)
-         */
-        bool Add (DocumentBase * doc, bool show);
+        public:
 
-        /**
-         * Add doduments from list
-         * Returns number of documents added
-         */
-        int Add (DocumentList * docs, bool show);
+            /**
+            * return pointer to window where
+            * objects can be placed
+            */
+            wxWindow * GetWindow() const { return m_window; }
 
+            /**
+            * Return if is active
+            */
+            bool IsActive () const { return m_bookCtrl->GetPageCount() != 0; }
 
-        /**
-         * Get all documents that have been added in a list
-         */
-        const DocumentList * GetList () const { return &m_list; }
+            /**
+            * Add new document.
+            * Returns true if added and false otherwise (already exists)
+            */
+            bool Add (DocumentBase * doc, bool show);
 
-
-        /**
-         * Show document
-         */
-        bool Show (DocumentBase * doc);
-        bool Show (int id) { return Show(m_list.GetById(id)); }
-
-
-        /**
-         * Hide
-         */
-        bool Hide (DocumentBase * doc);
-        bool Hide (int id) { return Hide(m_list.GetById(id)); }
+            /**
+            * Add doduments from list
+            * Returns number of documents added
+            */
+            int Add (DocumentList * docs, bool show);
 
 
-        /**
-         * If document exists (has been added and not yet removed / destroyed)
-         */
-        bool Exists (DocumentBase * doc) { return m_list.Exists(doc); }
-        bool Exists (int id) { return m_list.Exists(id); }
+
+            /**
+            * Get active document, or NULL if tehre's none
+            */
+            DocumentBase * GetActive () const { return m_activeDoc; }
 
 
-        /**
-         * Remove document from manager
-         */
-        bool Remove (DocumentBase * doc);
-        bool Remove (int id) { return Remove(m_list.GetById(id)); }
+            /**
+            * Get all documents that have been added in a list
+            */
+            const DocumentList * GetList () const { return &m_list; }
 
 
-        /**
-         * Return if document is visible or not
-         */
-        bool IsVisible (DocumentBase * doc);
-        bool IsVisible (int id) { return IsVisible (m_list.GetById(id)); }
+            /**
+            * Show document
+            */
+            bool Show (DocumentBase * doc);
+            bool Show (int id) { return Show(m_list.GetById(id)); }
 
 
-        /**
-         * Traverse between documents.
-         * return false if not possible (no document loaded?)
-         */
-        bool FocusNextDocument ();
-        bool FocusPrevDocument ();
+            /**
+            * Hide
+            */
+            bool Hide (DocumentBase * doc);
+            bool Hide (int id) { return Hide(m_list.GetById(id)); }
 
 
-        /**
-         * Focus given document.
-         */
-        bool FocusDocument (DocumentBase * doc);
-        bool FocusDocument (int id);
+            /**
+            * If document exists (has been added and not yet removed / destroyed)
+            */
+            bool Exists (DocumentBase * doc) { return m_list.Exists(doc); }
+            bool Exists (int id) { return m_list.Exists(id); }
 
-  };
+
+            /**
+            * Remove document from manager
+            */
+            bool Remove (DocumentBase * doc);
+            bool Remove (int id) { return Remove(m_list.GetById(id)); }
+
+
+            /**
+            * Return if document is visible or not
+            */
+            bool IsVisible (DocumentBase * doc);
+            bool IsVisible (int id) { return IsVisible (m_list.GetById(id)); }
+
+
+            /**
+            * Traverse between documents.
+            * return false if not possible (no document loaded?)
+            */
+            bool FocusNextDocument ();
+            bool FocusPrevDocument ();
+
+
+            /**
+            * Focus given document.
+            */
+            bool FocusDocument (DocumentBase * doc);
+            bool FocusDocument (int id);
+
+        private:
+            DECLARE_EVENT_TABLE()
+    };
 
 
 #endif // DOCMANAGER_H_INCLUDED

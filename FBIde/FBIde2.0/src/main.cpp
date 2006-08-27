@@ -23,11 +23,21 @@
 
 #include "inc/manager.h"
 #include "inc/main.h"
+#include "inc/doc_stc.h"
+
+int fbiID_DOCBOOK = ::wxNewId();
 
 BEGIN_EVENT_TABLE(Main, wxFrame)
-    EVT_CLOSE(Main::OnClose)
-END_EVENT_TABLE()
+    EVT_MENU(wxID_EXIT,     Main::OnExit)
+    EVT_MENU(wxID_NEW,      Main::OnNew)
+    EVT_MENU(wxID_CLOSE,    Main::OnDocumentEvent)
+    EVT_MENU(wxID_SAVE,     Main::OnDocumentEvent)
+    EVT_CLOSE(Main::OnCloseFrame)
 
+    // Document notebook
+    EVT_NOTEBOOK_PAGE_CHANGED(fbiID_DOCBOOK, Main::OnDocumentBook)
+    EVT_NOTEBOOK_PAGE_CHANGING(fbiID_DOCBOOK, Main::OnDocumentBook)
+END_EVENT_TABLE()
 
 
 Main::Main()
@@ -45,12 +55,55 @@ Main::~Main()
 
 
 
+void Main::OnExit (wxCommandEvent & event)
+{
+    Close (true);
+}
+
+
+
+void Main::OnNew (wxCommandEvent & event)
+{
+    Doc_Stc * doc = new Doc_Stc();
+    doc->ShowDocument();
+    return;
+}
+
+
+void Main::OnDocumentBook (wxNotebookEvent & event)
+{
+    // send to document manager
+    Manager::Get()->GetDocManager()->ProcessEvent(event);
+    return;
+}
+
+
+void Main::OnDocumentEvent (wxCommandEvent & event)
+{
+    DocManager * mngr = Manager::Get()->GetDocManager();
+    if (!mngr->IsActive()) return;
+
+    // Send event to the document
+    event.StopPropagation();
+    mngr->GetActive()->ProcessDocumentEvent (event);
+    return;
+}
+
+
+
+void Main::OnOpen (wxCommandEvent & event)
+{
+    return;
+}
+
+
+
 /**
  * This means that we want to exit FBIde
  * @todo - first generate FBIde notification
  *         event about exiting!
  */
-void Main::OnClose (wxCloseEvent & event)
+void Main::OnCloseFrame (wxCloseEvent & event)
 {
     Manager::Get()->ShutDown();
     event.Skip();

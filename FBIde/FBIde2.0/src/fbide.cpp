@@ -26,7 +26,9 @@
 
 #include "inc/main.h"
 
-#include "inc/doc_stc.h"
+#include "inc/document.h"
+#include <wx/html/htmlwin.h>
+#include <wx/uri.h>
 
 /**
  * This is main entry function into our FBIde
@@ -34,30 +36,80 @@
  * If returns false then application will not be started.
  * @return bool
  */
+
+class WelcomePage : public Document<wxHtmlWindow>
+{
+    public:
+        WelcomePage ()
+        {
+            Create (Manager::Get()->GetDocManager()->GetWindow(), wxID_ANY);
+            std::auto_ptr<RegAccessor>reg(new RegAccessor(_T("base")));
+            reg->SetPath(_T("/paths"));
+            wxString file;
+            file << reg->ReadString(_T("base")) << _T("test.html");
+            LoadFile (file);
+        }
+
+        virtual wxString GetDocumentName ()
+        {
+            return _T("Welcome");
+        }
+
+
+        /**
+         * Handle clicks on links
+         * if scheme is: fbide:// then it is some fbide command
+         * if scheme is: http:// then it is a link to internet
+         * if screme is: file:// then it is a file under fbide
+         */
+        virtual void OnLinkClicked(const wxHtmlLinkInfo& link)
+        {
+            wxURI uri(link.GetHref());
+            if (uri.GetScheme() == _T("fbide"))
+            {
+                wxMessageBox (uri.GetServer());
+            } else if (uri.GetScheme() == _T("http")) {
+                ::wxLaunchDefaultBrowser(link.GetHref());
+            } else if (uri.GetScheme() == _T("file")) {
+                wxMessageBox (uri.GetServer() + uri.GetPath());
+            }
+        }
+};
+
 bool FBIde::OnInit()
 {
+    // Force creation of managers
+    (void)Manager::Get();
 
-  // Force creation of managers
-  (void)Manager::Get();
-  (void)Manager::Get()->GetRegManager();
-  (void)Manager::Get()->GetUiManager();
-  (void)Manager::Get()->GetDocManager();
+    // Load registry and set some initial data
+    (void)Manager::Get()->GetRegManager();
+    std::auto_ptr<RegAccessor>reg(new RegAccessor(_T("base")));
+    wxString base = ::wxPathOnly(argv[0]) + _T("/");
+    reg->SetPath(_T("/paths"));
+    reg->WriteString(_T("base"),      base);
+    reg->WriteString(_T("config"),    base + _T("ide/config/"));
+    reg->WriteString(_T("plugins"),   base + _T("ide/plugins/"));
+    reg->WriteString(_T("langs"),     base + _T("ide/langs/"));
+
+    // User interface manager
+    (void)Manager::Get()->GetUiManager();
+
+    // Document manager
+    (void)Manager::Get()->GetDocManager();
 
 
-  // Set top window
-  SetTopWindow (Manager::Get()->GetUiManager()->GetFrame());
+    // Set top window
+    SetTopWindow (Manager::Get()->GetUiManager()->GetFrame());
 
-  Doc_Stc * tt1 = new Doc_Stc;
-  tt1->ShowDocument();
+    // Show
+    Manager::Get()->GetUiManager()->GetFrame()->Show();
 
-  Doc_Stc * tt2 = new Doc_Stc;
-  tt2->ShowDocument();
+    // Open welcome screen
+    WelcomePage * welcome = new WelcomePage;
+    welcome->ShowDocument();
 
-
-  // Show
-  Manager::Get()->GetUiManager()->GetFrame()->Show();
-  return true;
-}
+    return true;
+    }
 
 
 

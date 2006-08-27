@@ -41,6 +41,7 @@
 #include <wx/event.h>
 #include <wx/clipbrd.h>
 #include <wx/notebook.h>
+#include <wx/bitmap.h>
 
 #ifdef __BORLANDC__
 	#pragma hdrstop

@@ -5,21 +5,9 @@
  * This file contains defination of commonly used id's in FBIde
  */
 
-/*
-class fbiID {
+#ifdef FBI_MAIN_MODULE
 
-    public:
-        const int OPEN      = wxID_OPEN;
-        const int CLOSE     = wxID_CLOSE;
-        const int NEW       = wxID_NEW;
-        const int SAVE      = wxID_SAVE;
-        const int SAVEAS    = wxID_SAVEAS;
-        const int REVERT    = wxID_REVERT;
-        const int EXIT      = wxID_EXIT;
-        const int UNDO      = wxID_UNDO;
-
-};
-*/
+#endif
 
 
 #endif // COMMONID_H_INCLUDED

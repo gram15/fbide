@@ -68,19 +68,21 @@
             DocumentBase (wxWindow * window) : m_id(GetNewId()), m_window(window), m_flags(0) {  }
             virtual ~DocumentBase () { }
 
-            /**
-             * Safe destruction of the document.
-             * Mainly removes it from docManger
-             * and hide's the instance
-             * before destruction
-             */
-            void CloseDocument ();
-
 
             /**
              * Add docuemtn to doc manager
              */
             void AddDocument ();
+            void CloseDocument ();
+
+
+            /**
+             * Send event to document window
+             */
+            virtual bool ProcessDocumentEvent (wxEvent & event)
+            {
+                return m_window->GetEventHandler()->ProcessEvent (event);
+            }
 
 
             /**
@@ -125,11 +127,11 @@
                 return tmp;
             }
 
-
             void ResetDocumentFlags (int flags) { m_flags = flags; }
             int GetDocumentFlags () const { return m_flags; }
             void SetDocumentFlag (int flag) { m_flags |= flag; }
             void UnsetDocumentFlag (int flag) { if (m_flags & flag) m_flags ^= flag; }
+            void ToggleDocumentFlag (int flag) { m_flags ^= flag; }
             bool IsDocumentFlagSet (int flag) const { return m_flags & flag; }
 
             /**

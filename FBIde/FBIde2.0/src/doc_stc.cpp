@@ -48,12 +48,40 @@
 #define SCE_FB_ASM_KEYWORD3     21
 #define SCLEX_FB 79
 
+BEGIN_EVENT_TABLE(Doc_Stc, wxStyledTextCtrl)
+    EVT_MENU(wxID_SAVE,         Doc_Stc::OnSave)
+    EVT_MENU(wxID_CLOSE,        Doc_Stc::OnClose)
+END_EVENT_TABLE()
+
 Doc_Stc::Doc_Stc()
 {
     Create (Manager::Get()->GetDocManager()->GetWindow(), wxID_ANY);
     LoadStyle();
 }
 
+
+Doc_Stc::~Doc_Stc()
+{
+
+}
+
+
+void Doc_Stc::OnClose (wxCommandEvent & event)
+{
+    if (GetModify())
+    {
+        int result = wxMessageBox(_T("This file has been modified. Save?"), _T("Save?"),
+                                  wxYES_NO | wxCANCEL | wxICON_QUESTION);
+        if (result == wxCANCEL) return;
+    }
+    delete this;
+}
+
+
+void Doc_Stc::OnSave (wxCommandEvent & event)
+{
+    wxMessageBox (_T("testing"));
+}
 
 
 void Doc_Stc::LoadStyle (const wxString & regPath)
