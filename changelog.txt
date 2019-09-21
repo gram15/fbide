@@ -1,6 +1,12 @@
+Version 0.4.5.1 (port to wxWidgets 3.0.x)
+   * Port to wxWidgets 3.0.x
+   * support for external chm help file in linux too (with xchm, to be installed separately) (gram15)
+   * fix Makefile for linux
+   * fix support for wchar_t in linux
+
 Version 0.4.5
    * Added optionally setting active paths when compiling / running. ( vongodric )
-   * Added suport for exterbal chm help files ( win32 only ) ( VonGodric )
+   * Added suport for external chm help files ( win32 only ) ( VonGodric )
    * Added compiler output log - click right mouse button on compiler output area will popup a dialog window with output ( vongodric )
    * Changed New Visual Studio like looking tabs. Reason is mainly due bugs in Linux build of wxGTK wich doesn't seem to like tabs very much. ( vongodric )
    * Changed New compilation system. Each tab has it's own compiled file, several bug fixes ( vongodric )
