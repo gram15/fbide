@@ -1,5 +1,5 @@
 /* XPM */
-static char * fbide_xpm[] = {
+static const char * fbide_xpm[] = {
 "300 75 4743 2",
 "  	c #FFFFFF",
 ". 	c #FDFDFD",

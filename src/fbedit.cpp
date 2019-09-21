@@ -123,7 +123,7 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 
             for (int i=1;i<15;i++) {
                 Nr=StyleNR[i];
-                wxString fontname="";
+                wxString fontname = _T("");
 
                 //Foreground
                 StyleSetForeground (Nr, GetClr(Style->Info[i].foreground));
@@ -179,13 +179,13 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
 
             StyleSetBold       (wxSTC_H_TAG, true);
             StyleSetBold       (wxSTC_H_ATTRIBUTE, true);
-            SetKeyWords (0, "color font b i body style size pre html head body meta http-equiv" \
-                         "content charset span style title" );
+            SetKeyWords (0, _T("color font b i body style size pre html head body meta http-equiv" \
+                         "content charset span style title") );
         }
     }
     else {
         for (int Nr = 0; Nr < 4; Nr++)
-            SetKeyWords (Nr, "");
+            SetKeyWords (Nr, _T(""));
     }
 
     if (FileType==0||!Prefs->SyntaxHighlight||FileType==2) {
@@ -251,18 +251,18 @@ void FB_Edit::LoadSTCTheme       ( int FileType ) {
     SetMarginMask (2, wxSTC_MASK_FOLDERS);
 
     SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
-    MarkerDefine(wxSTC_MARKNUM_FOLDER,          wxSTC_MARK_BOXPLUS, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDEREND,       wxSTC_MARK_BOXPLUSCONNECTED, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL,   wxSTC_MARK_TCORNER, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN,      wxSTC_MARK_BOXMINUS, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID,   wxSTC_MARK_BOXMINUSCONNECTED, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDERSUB,       wxSTC_MARK_VLINE, "white", "gray");
-    MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL,      wxSTC_MARK_LCORNER, "white", "gray");
+    MarkerDefine(wxSTC_MARKNUM_FOLDER,          wxSTC_MARK_BOXPLUS, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDEREND,       wxSTC_MARK_BOXPLUSCONNECTED, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDERMIDTAIL,   wxSTC_MARK_TCORNER, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDEROPEN,      wxSTC_MARK_BOXMINUS, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDEROPENMID,   wxSTC_MARK_BOXMINUSCONNECTED, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDERSUB,       wxSTC_MARK_VLINE, _T("white"), _T("gray"));
+    MarkerDefine(wxSTC_MARKNUM_FOLDERTAIL,      wxSTC_MARK_LCORNER, _T("white"), _T("gray"));
 
-    SetProperty (_T("fold"), "1");
-    SetProperty (_T("fold.comment"), "1");
-    SetProperty (_T("fold.compact"), "1");
-    SetProperty (_T("fold.preprocessor"), "1");
+    SetProperty (_T("fold"), _T("1"));
+    SetProperty (_T("fold.comment"), _T("1"));
+    SetProperty (_T("fold.compact"), _T("1"));
+    SetProperty (_T("fold.preprocessor"), _T("1"));
 
     if (Prefs->FolderMargin) {
         SetMarginWidth (2, 14);
@@ -325,7 +325,7 @@ void FB_Edit::OnUpdateUI ( wxStyledTextEvent &event ) {
     }
 
     wxString pos;
-    pos.Printf("  %d : %d", LineFromPosition(m_CursorPos) + 1,
+    pos.Printf(_T("  %d : %d"), LineFromPosition(m_CursorPos) + 1,
                GetColumn(m_CursorPos) + 1);
     Parent->SetStatusText(pos, 1);
 }
@@ -444,8 +444,8 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
             break;
         }
         case kw::TYPE : {
-            if ((!TempLine.Contains(" as "))&&(!TempLine.Contains("\tas "))&&
-                    (!TempLine.Contains(" as\t"))&&(!TempLine.Contains("\tas\t"))&&
+            if ((!TempLine.Contains( _T(" as "))) && (!TempLine.Contains( _T("\tas ")))&&
+                    (!TempLine.Contains( _T(" as\t"))) && (!TempLine.Contains( _T("\tas\t"))) &&
                     LastKW!=FirstKW)
                 lineInd += TabSize;
             break;
@@ -629,8 +629,8 @@ void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
     if (!File.HasVolume()) {
         wxString FilePath = buff->GetFileName();
         wxString FBCPath = Parent->CompilerPath;
-        if (FilePath==""||FilePath==FBUNNAMED)
-            FilePath="";
+        if (FilePath == _T("") || FilePath == FBUNNAMED)
+            FilePath = _T("");
 
         wxFileName w(FilePath);
         FilePath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
@@ -638,32 +638,32 @@ void FB_Edit::OnHotSpot          ( wxStyledTextEvent &event ) {
         w.Assign(FBCPath);
         FBCPath = w.GetPath(wxPATH_GET_SEPARATOR|wxPATH_GET_VOLUME);
 
-        if (FileName!="") {
+        if (FileName != _T("")) {
             if(FileExists(FilePath+FileName)) {
                 FileName=FilePath+FileName;
             }
             else if(FileExists(FBCPath+FileName)) {
                 FileName=FBCPath+FileName;
             }
-            else if(FileExists(FBCPath+"inc\\"+FileName)) {
-                FileName=FBCPath+"inc\\"+FileName;
+            else if(FileExists( FBCPath + _T("inc\\") + FileName)) {
+                FileName = FBCPath + _T("inc\\") + FileName;
             }
             else
-                FileName="";
+                FileName = _T("");
         }
     }
 
-    if(FileName!="") {
+    if(FileName != _T("")) {
         if(FileExists(FileName)) {
-            if ( FileName.Right(4) == ".exe" || FileName.Right(2) == ".o" ||
-                    FileName.Right(4) == ".dll" || FileName.Right(2) == ".a" )
+            if ( FileName.Right(4) == _T(".exe") || FileName.Right(2) == _T(".o") ||
+                    FileName.Right(4) == _T(".dll") || FileName.Right(2) == _T(".a") )
                 return;
             int result = Parent->bufferList.FileLoaded(FileName);
             if (result != -1)
                 Parent->FBNotebook->SetSelection(result);
             else {
                 Parent->NewSTCPage(FileName, true);
-                Parent->SetTitle( "FBIde - " + Parent->bufferList[Parent->FBNotebook->GetSelection()]->GetFileName() );
+                Parent->SetTitle( _T("FBIde - ") + Parent->bufferList[Parent->FBNotebook->GetSelection()]->GetFileName() );
             }
             return;
         }

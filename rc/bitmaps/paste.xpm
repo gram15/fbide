@@ -1,5 +1,5 @@
 /* XPM */
-static char * paste_xpm[] = {
+static const char * paste_xpm[] = {
 "16 15 17 1",
 " 	c #C0C0C0",
 ".	c #6B6B6B",

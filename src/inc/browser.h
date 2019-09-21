@@ -26,6 +26,20 @@
 #define Browser_H
 
 #include <vector>
+
+
+// deprecated versions defined for compatibility reasons
+#define wxRESIZE_BOX            wxMAXIMIZE_BOX
+#define wxTHICK_FRAME           wxRESIZE_BORDER
+
+// obsolete styles, unused any more
+#define wxDIALOG_MODAL          0
+#define wxDIALOG_MODELESS       0
+#define wxNO_3D                 0
+#define wxUSER_COLOURS          0
+#define wxSP_FULLSASH           0
+
+
 using namespace std;
 
 class SFBrowser: public wxDialog {

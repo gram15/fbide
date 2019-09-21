@@ -114,7 +114,7 @@ void MyFrame::OnComment ( wxCommandEvent& WXUNUSED(event) ) {
 
     stc->BeginUndoAction();
     for(;lineStart <= lineEnd; lineStart++) {
-        stc->InsertText(stc->PositionFromLine(lineStart),"\'");
+        stc->InsertText(stc->PositionFromLine(lineStart),_T("\'"));
     }
     stc->EndUndoAction();
 
@@ -137,12 +137,12 @@ void MyFrame::OnUncomment ( wxCommandEvent& WXUNUSED(event) ) {
         Temp = Temp.Lower();
         Temp = Temp.Trim(false);
         Temp = Temp.Trim(true);
-        Temp+= " ";
+        Temp+= _T(" ");
         x = stc->PositionFromLine(lineStart) + stc->GetLineIndentation(lineStart);
-        if (Temp.Left(4) == "rem "||Temp.Left(4) == "rem\t")
-            ReplaceText(x, x+3, "");
-        else if (Temp.Left(1) == "\'")
-            ReplaceText(x, x+1, "");
+        if (Temp.Left(4) == _T("rem ")||Temp.Left(4) == _T("rem\t"))
+            ReplaceText(x, x+3, _T(""));
+        else if (Temp.Left(1) == _T("\'"))
+            ReplaceText(x, x+1, _T(""));
     }
     stc->EndUndoAction();
     return;

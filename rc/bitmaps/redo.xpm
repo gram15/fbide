@@ -1,5 +1,5 @@
 /* XPM */
-static char * redo_xpm[] = {
+static const char * redo_xpm[] = {
 "16 15 6 1",
 " 	c #C0C0C0",
 ".	c #000000",

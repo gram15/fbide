@@ -34,7 +34,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 #if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-#pragma implementation "inc/ConfigDialog.h"
+//#pragma implementation "inc/ConfigDialog.h"
 #endif
 
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -63,41 +63,41 @@
 IMPLEMENT_DYNAMIC_CLASS( ConfigDialog, wxDialog )
 
 /*!
+ * ConfigDialog constructors
+ */
+ConfigDialog::ConfigDialog(void) {}
+ConfigDialog::~ConfigDialog() {}
+
+/*!
  * ConfigDialog event table definition
  */
 
 BEGIN_EVENT_TABLE( ConfigDialog, wxDialog )
 
 ////@begin ConfigDialog event table entries
-EVT_LISTBOX( ID_listThemeType, ConfigDialog::OnThemeSelectType )
+    EVT_LISTBOX( ID_listThemeType, ConfigDialog::OnThemeSelectType )
 
-EVT_CHOICE( ID_chTheme, ConfigDialog::OnSelectTheme )
+    EVT_CHOICE( ID_chTheme, ConfigDialog::OnSelectTheme )
 
-EVT_BUTTON( ID_btnSaveTheme, ConfigDialog::OnSaveTheme )
+    EVT_BUTTON( ID_btnSaveTheme, ConfigDialog::OnSaveTheme )
 
-EVT_BUTTON( ID_btnForeground, ConfigDialog::OnBtnForeground )
+    EVT_BUTTON( ID_btnForeground, ConfigDialog::OnBtnForeground )
 
-EVT_BUTTON( ID_btnBackground, ConfigDialog::OnBtnBackground )
+    EVT_BUTTON( ID_btnBackground, ConfigDialog::OnBtnBackground )
 
-EVT_CHOICE( ID_chKeywordGroup, ConfigDialog::OnKeywordsGroup )
+    EVT_CHOICE( ID_chKeywordGroup, ConfigDialog::OnKeywordsGroup )
 
-EVT_BUTTON( ID_btnCompilerPath, ConfigDialog::OnCompilerPath )
+    EVT_BUTTON( ID_btnCompilerPath, ConfigDialog::OnCompilerPath )
 
-EVT_BUTTON( ID_btnHelpFilePath, ConfigDialog::OnHelpPath )
+    EVT_BUTTON( ID_btnHelpFilePath, ConfigDialog::OnHelpPath )
 
-EVT_BUTTON( wxID_OK, ConfigDialog::OnOkClick )
+    EVT_BUTTON( wxID_OK, ConfigDialog::OnOkClick )
 
-EVT_BUTTON( wxID_CANCEL, ConfigDialog::OnCancelClick )
+    EVT_BUTTON( wxID_CANCEL, ConfigDialog::OnCancelClick )
 
 ////@end ConfigDialog event table entries
 
 END_EVENT_TABLE()
-
-/*!
- * ConfigDialog constructors
- */
-
-ConfigDialog::ConfigDialog( ) {}
 
 
 /**
@@ -512,7 +512,7 @@ wxIcon ConfigDialog::GetIconResource( const wxString& name ) {
 
 void ConfigDialog::OnCompilerPath( wxCommandEvent& event ) {
     wxFileDialog dlg (this,
-                      _T(m_Parent->Lang[155]), //Open file
+                      m_Parent->Lang[155], //Open file
                       _T(""),
 #ifdef __WXMSW__
                       _T("fbc.exe"),
@@ -549,9 +549,10 @@ void ConfigDialog::OnSaveTheme( wxCommandEvent& event ) {
     if (chTheme->GetSelection()!=0)
         m_Parent->SaveThemeFile(m_Style, chTheme->GetStringSelection());
     else {
-        wxTextEntryDialog dialog(this, _T(m_Lang[157]), //"Enter theme name:"
-                                 _T(m_Lang[158]), //"Paremeters..."
-                                 "", wxOK | wxCANCEL);
+        wxTextEntryDialog dialog(this, 
+                                 m_Lang[157], //"Enter theme name:"
+                                 m_Lang[158], //"Paremeters..."
+                                 _T(""), wxOK | wxCANCEL);
         if (dialog.ShowModal() != wxID_OK)
             return;
 
@@ -561,13 +562,13 @@ void ConfigDialog::OnSaveTheme( wxCommandEvent& event ) {
         fn = fn.Trim(false);
 
         wxFileSystem File;
-        if (File.FindFirst( m_Parent->EditorPath+"IDE/"+fn+".fbt" )!="" ) {
+        if (File.FindFirst( m_Parent->EditorPath + _T("IDE/") + fn + _T(".fbt") ) != _T("") ) {
             //"Theme \""+ fn +"\" already exists!\nOverwrite it?"
             if (wxMessageBox (m_Lang[159]+ fn + m_Lang[160], m_Lang[161], wxICON_QUESTION | wxYES_NO )!=wxOK)
                 return;
         }
         else {
-            wxTextFile temp(m_Parent->EditorPath+"IDE/"+fn+".fbt");
+            wxTextFile temp(m_Parent->EditorPath + _T("IDE/") + fn + _T(".fbt") );
             temp.Create();
             temp.Write();
             temp.Close();
@@ -649,7 +650,7 @@ void ConfigDialog::SetTypeSelection( int intSel ) {
     bool ModFG = false, ModBG = false, ModFont = false, ModStyle = false, ModSize = false;
     bool SetBold = false, SetItalic = false, SetUnderlined = false;
     int SetSize = 0;
-    wxString SetFont = "";
+    wxString SetFont = _T("");
     int selection = intSel;
 
 
@@ -738,7 +739,7 @@ void ConfigDialog::SetTypeSelection( int intSel ) {
     if (ModFont) {
         chFont->Enable();
         if( chFont->FindString( SetFont ) == wxNOT_FOUND )
-            chFont->SetStringSelection( "Courier New" );
+            chFont->SetStringSelection( _T("Courier New") );
         else
             chFont->SetStringSelection( SetFont );
 
@@ -911,10 +912,10 @@ void ConfigDialog::OnCancelClick( wxCommandEvent& event ) {
 
 void ConfigDialog::OnHelpPath( wxCommandEvent& event ) {
     wxFileDialog dlg (this,
-                      _T(m_Lang[155]), //Open file
+                      m_Lang[155], //Open file
                       _T(""),
                       _T(""),
-                      _T( m_Lang[243] + "|*.chm"),
+                      m_Lang[243] + _T("|*.chm"),
                       wxFILE_MUST_EXIST );
     if (dlg.ShowModal() != wxID_OK)
         return;
@@ -949,11 +950,11 @@ void ConfigDialog::LoadGeneral() {
 
     wxArrayString arrLangs;
     wxFileSystem LangFiles;
-    wxString fileQuery = LangFiles.FindFirst( m_Parent->EditorPath+"IDE/lang/*.fbl" );
+    wxString fileQuery = LangFiles.FindFirst( m_Parent->EditorPath + _T("IDE/lang/*.fbl") );
     wxFileName objLangFile;
 
     int counter=0, selector=0;
-    while ( fileQuery != "" ) {
+    while ( fileQuery != _T("") ) {
         objLangFile.Assign(fileQuery, wxPATH_NATIVE);
         fileQuery = objLangFile.GetName();
         fileQuery = fileQuery.Lower();
@@ -1004,11 +1005,11 @@ void ConfigDialog::LoadThemes() {
     wxArrayString arrThemes;
     arrThemes.Add( m_Lang[141] ); //"Create new theme"
     wxFileSystem ThemeFiles;
-    wxString fileQuery = ThemeFiles.FindFirst( m_Parent->EditorPath+"IDE/*.fbt" );
+    wxString fileQuery = ThemeFiles.FindFirst( m_Parent->EditorPath + _T("IDE/*.fbt") );
     wxFileName objThemeFile;
 
     int counter=0, selector=0;
-    while ( fileQuery != "" ) {
+    while ( fileQuery != _T("") ) {
         counter++;
         objThemeFile.Assign(fileQuery, wxPATH_NATIVE);
         fileQuery = objThemeFile.GetName();
@@ -1026,7 +1027,7 @@ void ConfigDialog::LoadThemes() {
     // Fonts
     wxFontEnumerator objFontEnum;
     objFontEnum.EnumerateFacenames(  );
-    chFont->Append( *objFontEnum.GetFacenames() );
+    chFont->Append( objFontEnum.GetFacenames() );
 
     SetTypeSelection( 1 );
 

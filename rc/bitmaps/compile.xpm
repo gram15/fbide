@@ -1,5 +1,5 @@
 /* XPM */
-static char * compile_xpm[] = {
+static const char * compile_xpm[] = {
 "16 15 47 1",
 " 	c #6B6B6B",
 ".	c #313131",

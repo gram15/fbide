@@ -53,35 +53,53 @@ void MyFrame::OnHelp ( wxCommandEvent& event ) {
     }
     else
         help.DisplayContents();
+#elif __linux__
+    //if( !stc ) {        
+        wxFileName helpFile( Prefs.HelpFile );    
+        wxString startString;
+        if( helpFile.IsRelative() )
+        {
+            //wxExecute( "xchm " +  EditorPath + "IDE/" + Prefs.HelpFile );
+            startString = "xchm " +  EditorPath + "IDE/" + Prefs.HelpFile;
+        }
+        else
+        {
+            //wxExecute( "xchm " + Prefs.HelpFile );
+            startString = "xchm " +  Prefs.HelpFile;
+        }
+        wxExecute( "/bin/bash -c \"if [[ -z \\\"$(pidof " + startString + ")\\\" ]]; then " + startString + "; else xchm; fi\"" );
+            
+        return;
+    //}
 #endif
 
 }
 
 
 void MyFrame::OnQuickKeys    ( wxCommandEvent& event ) {
-    wxString FileName( EditorPath + "IDE/quickkeys.txt" );
+    wxString FileName( EditorPath + _("IDE/quickkeys.txt") );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
-        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+        SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
 }
 
 
 void MyFrame::OnReadMe       ( wxCommandEvent& event ) {
-    wxString FileName( EditorPath + "IDE/readme.txt" );
+    wxString FileName( EditorPath + _T("IDE/readme.txt") );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
-        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+        SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
 
 }
 
 
 void MyFrame::OnFpp          ( wxCommandEvent& event ) {
-    wxString FileName( EditorPath + "IDE/fpp.txt" );
+    wxString FileName( EditorPath + _T("IDE/fpp.txt") );
     if( bufferList.FileLoaded( FileName )==-1 ) {
         NewSTCPage( FileName, true );
-        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+        SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     }
 
 }

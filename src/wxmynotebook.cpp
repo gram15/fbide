@@ -62,22 +62,22 @@ void wxMyNotebook::OnMouseEvent(wxMouseEvent& event) {
         if ( tabid!=GetSelection() )
             SetSelection( tabid );
         FB_Edit * stc = p->stc;
-        wxMenu popup("");
-        popup.Append(Menu_Close,        _(p->Lang[21]));
-        popup.Append(Menu_CloseAll,    _(p->Lang[173]));
+        wxMenu popup(_T(""));
+        popup.Append(Menu_Close,       p->Lang[21]);
+        popup.Append(Menu_CloseAll,    p->Lang[173]);
         popup.AppendSeparator();
-        popup.Append(Menu_Undo,         _(p->Lang[27]));
+        popup.Append(Menu_Undo,        p->Lang[27]);
         popup.Enable(Menu_Undo, stc->CanUndo());
-        popup.Append(Menu_Redo,         _(p->Lang[29]));
+        popup.Append(Menu_Redo,        p->Lang[29]);
         popup.Enable(Menu_Redo, stc->CanRedo());
         popup.AppendSeparator();
-        popup.Append(Menu_Copy,         _(p->Lang[33]));
+        popup.Append(Menu_Copy,        p->Lang[33]);
         popup.Enable(Menu_Copy, (stc->GetSelectionEnd()-stc->GetSelectionStart()));
-        popup.Append(Menu_Cut,          _(p->Lang[31]));
+        popup.Append(Menu_Cut,         p->Lang[31]);
         popup.Enable(Menu_Cut,   (stc->GetSelectionEnd()-stc->GetSelectionStart()));
-        popup.Append(Menu_Paste,        _(p->Lang[35]));
+        popup.Append(Menu_Paste,       p->Lang[35]);
         popup.Enable(Menu_Paste, stc->CanPaste());
-        popup.Append(Menu_SelectAll,    _(p->Lang[37]));
+        popup.Append(Menu_SelectAll,   p->Lang[37]);
         popup.Enable(Menu_SelectAll, stc->GetLength());
         wxWindow::PopupMenu(&popup, m_X, m_Y);
         return;
@@ -136,7 +136,7 @@ void wxTabbedCtrl::Create(wxWindow *parent, wxWindowID id,
     hover_menu = false;
     m_intStartPage = 0;
     m_intLastPage = 0;
-    wxToolTip * tooltip = new wxToolTip( "" );
+    wxToolTip * tooltip = new wxToolTip( _T("") );
     tooltip->Enable( true );
     tooltip->SetDelay( 100 );
     SetToolTip(  tooltip );
@@ -147,7 +147,7 @@ void wxTabbedCtrl::Create(wxWindow *parent, wxWindowID id,
     wxPaintDC dc(this);
     int height = 22, pom = 0;
     dc.SetFont(bold_font);
-    dc.GetTextExtent("Aq", &pom, &height);
+    dc.GetTextExtent(_T("Aq"), &pom, &height);
     SetSizeHints( wxSize(-1, height+padding.y*3) );
 }
 
@@ -296,7 +296,7 @@ int wxTabbedCtrl::HitTest(const wxPoint &p, long *flags) {
     if(flags)
         *flags = wxTB_HITTEST_NOWHERE;
     dc.SetFont(bold_font);
-    dc.GetTextExtent("Aq", &pom, &height);
+    dc.GetTextExtent(_T("Aq"), &pom, &height);
     if(p.x <= 0 || p.x >= size.x)
         return wxNOT_FOUND;
     if(p.y <= 0 || p.y >= height+padding.y*2 )
@@ -362,7 +362,7 @@ void wxTabbedCtrl::OnMouse(wxMouseEvent &ev) {
                     tooltip->Enable( true );
                     wxString info;
                     int pg = page + 1;
-                    info << pg << " of " << GetPageCount() << " - " << GetPageText( page );
+                    info << pg << _T(" of ") << GetPageCount() << _T(" - ") << GetPageText( page );
                     tooltip->SetTip( info );
                 }
             }
@@ -414,7 +414,7 @@ void wxTabbedCtrl::OnMouse(wxMouseEvent &ev) {
 
 
 void wxTabbedCtrl::GenerateConextMenu( wxPoint & mouse ) {
-    wxMenu popup("");
+    wxMenu popup(_T(""));
     for ( int i = 0; i < GetPageCount(); i++ ) {
         if ( i==active) {
             popup.AppendCheckItem( i, GetPageText( i ) );
@@ -554,7 +554,7 @@ void wxTabbedCtrl::OnPaint(wxPaintEvent &) {
     bool mirror = style & wxTB_BOTTOM;
     bool fullborder = !(style & wxNO_BORDER);
 
-    dc.BeginDrawing();
+    //dc.BeginDrawing();
 
     //background
     dc.SetTextBackground(GetBackgroundColour());
@@ -573,7 +573,7 @@ void wxTabbedCtrl::OnPaint(wxPaintEvent &) {
 
     int height, width, pom;
     dc.SetFont(bold_font);
-    dc.GetTextExtent("Aq", &pom, &height);
+    dc.GetTextExtent(_T("Aq"), &pom, &height);
     int posx = 3;
 
     //and tabs
@@ -605,7 +605,7 @@ void wxTabbedCtrl::OnPaint(wxPaintEvent &) {
     DrawMenu( hover_menu, dc );
 
 
-    dc.EndDrawing();
+    //dc.EndDrawing();
 }
 
 

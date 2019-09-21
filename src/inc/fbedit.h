@@ -56,10 +56,10 @@ namespace kw {
     };
     const int word_count = 23;
     const wxString words[word_count] = {
-                                           "sub", "function", "if", "then", "else", "elseif",
-                                           "case", "select", "with", "asm", "type", "union",
-                                           "enum", "scope", "do", "for", "while", "loop", "next",
-                                           "wend", "end", "static", "private"
+                                           _T("sub"), _T("function"), _T("if"), _T("then"), _T("else"), _T("elseif"),
+                                           _T("case"), _T("select"), _T("with"), _T("asm"), _T("type"), _T("union"),
+                                           _T("enum"), _T("scope"), _T("do"), _T("for"), _T("while"), _T("loop"), _T("next"),
+                                           _T("wend"), _T("end"), _T("static"), _T("private")
                                        };
 }
 
@@ -87,7 +87,8 @@ public:
     void OnKeyUp            ( wxKeyEvent &event );
     void OnHotSpot          ( wxStyledTextEvent &event );
 
-    void FB_Edit::IndentLine ( int & lineInd, int cLine );
+    //void FB_Edit::IndentLine ( int & lineInd, int cLine );
+    void IndentLine ( int & lineInd, int cLine );
 
     wxString    DocumentName;
     int braceLoc;

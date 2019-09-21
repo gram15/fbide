@@ -29,7 +29,7 @@
 #include "inc/format.h"
 
 void MyFrame::OnSettings (wxCommandEvent  &WXUNUSED(event)) {
-    ConfigDialog dlg( this, -1, _T(Lang[98]));
+    ConfigDialog dlg( this, -1, Lang[98]);
     if( dlg.ShowModal() == wxID_OK ) {
         if( stc ) {
             SaveSettings();

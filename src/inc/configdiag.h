@@ -25,7 +25,7 @@
 #define _ConfigDialog_H_
 
 #if defined(__GNUG__) && !defined(NO_GCC_PRAGMA)
-#pragma interface "ConfigDialog.h"
+//#pragma interface "ConfigDialog.h"
 #endif
 
 /*!
@@ -119,6 +119,8 @@ public:
     /// Constructors
     ConfigDialog( );
     ConfigDialog( wxWindow* parent, wxWindowID id = SYMBOL_ConfigDialog_IDNAME, const wxString& caption = SYMBOL_ConfigDialog_TITLE, const wxPoint& pos = SYMBOL_ConfigDialog_POSITION, const wxSize& size = SYMBOL_ConfigDialog_SIZE, long style = SYMBOL_ConfigDialog_STYLE );
+
+    ~ConfigDialog();
 
     /// Creation
     bool Create( wxWindow* parent, wxWindowID id = SYMBOL_ConfigDialog_IDNAME, const wxString& caption = SYMBOL_ConfigDialog_TITLE, const wxPoint& pos = SYMBOL_ConfigDialog_POSITION, const wxSize& size = SYMBOL_ConfigDialog_SIZE, long style = SYMBOL_ConfigDialog_STYLE );

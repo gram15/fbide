@@ -32,35 +32,35 @@ VwX_INIT_OBJECTS_format {
     Create(parent,id,title,pos,size,style,name);
 
     if((pos==wxDefaultPosition)&&(size==wxDefaultSize)) {
-    SetSize(0,0,405,210);
+        SetSize(0,0,405,210);
     }
 
     if((pos!=wxDefaultPosition)&&(size==wxDefaultSize)) {
-    SetSize(405,210);
+        SetSize(405,210);
     }
     st5=new wxStaticText(this,-1,wxT(""),wxPoint(33,11),wxSize(218,19),wxST_NO_AUTORESIZE);
-    st5->SetLabel(wxT(Parent->Lang[162])); //"Type of conversion:"
+    st5->SetLabel(Parent->Lang[162]); //"Type of conversion:"
 
     lno6=new wxStaticLine(this,-1,wxPoint(29,32),wxSize(234,1));
 
     button_ok=new wxButton(this,-1,wxT(""),wxPoint(275,31),wxSize(93,24));
-    button_ok->SetLabel(wxT(Parent->Lang[163])); //"Go!"
+    button_ok->SetLabel(Parent->Lang[163]); //"Go!"
 
-    sb9=new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
-    sb9->SetTitle(wxT(Parent->Lang[164])); //"Preview!"
+    sb9 = new wxStaticBox(this,-1,wxT(""),wxPoint(20,117),wxSize(335,53));
+    sb9->SetLabel(Parent->Lang[164]); //"Preview!"
 
     preview=new wxStaticText(this,-1,wxT(""),wxPoint(30,145),wxSize(45,13));
     preview->SetLabel(wxT("Cls:Locate 1,1:Print \"\""));
 
-    wxString choices[]= {"KeyWords","KEYWORDS","keywords","BBCode","HTML"
+    wxString choices[]= { _T("KeyWords"), _T("KEYWORDS"), _T("keywords"), _T("BBCode"), _T("HTML")
                         };
     chc15=new wxChoice(this,-1,wxPoint(31,37),wxSize(214,21),5,choices);
     chc15->SetSelection(0);
 
     bt16=new wxButton(this,-1,wxT(""),wxPoint(275,61),wxSize(93,24));
-    bt16->SetLabel(wxT(Parent->Lang[3]));
+    bt16->SetLabel(Parent->Lang[3]);
     bt17=new wxButton(this,-1,wxT(""),wxPoint(275,91),wxSize(93,24));
-    bt17->SetLabel(wxT(Parent->Lang[112]));
+    bt17->SetLabel(Parent->Lang[112]);
 
     Refresh();
     Centre();
@@ -79,7 +79,7 @@ END_EVENT_TABLE()
 
 
 void format::VwXVwXEvOnChoiceSelect(wxCommandEvent& event) {
-    wxObject *m_wxWin = event.m_eventObject ;
+    wxObject *m_wxWin = event.GetEventObject() ;
     if(m_wxWin==chc15) {
         chc15_VwXEvOnChoiceSelect(event,-1);
         return;
@@ -88,8 +88,8 @@ void format::VwXVwXEvOnChoiceSelect(wxCommandEvent& event) {
 }
 
 void format::VwXVwXEvOnButtonClick(wxCommandEvent& event) {
-    wxObject *m_wxWin = event.m_eventObject ;
-    if(m_wxWin==bt16) {
+    wxObject *m_wxWin = event.GetEventObject() ;
+    if(m_wxWin == bt16) {
         bt16_VwXEvOnButtonClick(event,-1);
         return;
     }
@@ -117,20 +117,20 @@ void format::bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
 void format::chc15_VwXEvOnChoiceSelect(wxCommandEvent& event,int index) {
     switch(chc15->GetSelection()) {
         case 0:
-        preview->SetLabel("Cls:Locate 1,1:Print \"\"");
-        break;
+            preview->SetLabel(_T("Cls:Locate 1,1:Print \"\""));
+            break;
         case 1:
-        preview->SetLabel("CLS:a$=MID$(\"1234\",1)");
-        break;
+            preview->SetLabel(_T("CLS:a$=MID$(\"1234\",1)"));
+            break;
         case 2:
-        preview->SetLabel("cls:locate 1,1:print \"\"");
-        break;
+            preview->SetLabel(_T("cls:locate 1,1:print \"\""));
+            break;
         case 3:
-        preview->SetLabel("[b]cls[/b]:[b]locate[/b] 1,1");
-        break;
+            preview->SetLabel(_T("[b]cls[/b]:[b]locate[/b] 1,1"));
+            break;
         case 4:
-        preview->SetLabel("<b>cls</b>:<b>locate</b> 1,1");
-        break;
+            preview->SetLabel(_T("<b>cls</b>:<b>locate</b> 1,1"));
+            break;
     }
 }
 
@@ -147,35 +147,39 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
     if (buff->GetFileType()>0)
         return;
 
-    wxString guts=Parent->stc->GetText(),tagstart="",tagend="";
-    int sel=chc15->GetSelection();
-    bool dotags=false,dokeyws=false;
-    wxString output="";
+    wxString guts = Parent->stc->GetText(), tagstart = _T(""), tagend = _T("");
+    int sel = chc15->GetSelection();
+    bool dotags = false, dokeyws = false;
+    wxString output = _T("");
     StyleInfo * Style = &(Parent->Style);
     switch(sel) {
         case 0:
-        dokeyws=true;
-        break;
+            dokeyws=true;
+            break;
         case 1:
-        dokeyws=true;
-        break;
+            dokeyws=true;
+            break;
         case 2:
-        dokeyws=true;
-        break;
+            dokeyws=true;
+            break;
         case 3:
-        dotags=true;
-        tagstart="[";
-        tagend="]";
-        output="[quote=\"fbide 0.4 bbcode generator\"][size=12]";
-        break;
+            dotags=true;
+            tagstart = _T("[");
+            tagend = _T("]");
+            output = _T("[quote=\"fbide 0.4 bbcode generator\"][size=12]");
+            break;
         case 4:
-        dotags=true;
-        tagstart="<";
-        tagend=">";
-        output="<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=iso-8859-1\">\n<title></title>\n</head>\n<body style=\"font-size:12pt; background-color:#"+hex(GetClr(Style->DefaultBgColour))+"; color:#"+hex(GetClr(Style->Info[wxSTC_B_IDENTIFIER].foreground))+"\"><pre>";
-        break;
+            dotags = true;
+            tagstart = _T("<");
+            tagend = _T(">");
+            output = _T("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n<head>\n<meta http-equiv=\"content-type\" content=\"text/html;charset=iso-8859-1\">\n<title></title>\n</head>\n<body style=\"font-size:12pt; background-color:#") 
+                    + hex(GetClr(Style->DefaultBgColour))
+                    + _T("; color:#")
+                    + hex(GetClr(Style->Info[wxSTC_B_IDENTIFIER].foreground))
+                    + _T("\"><pre>");
+            break;
     }
-    wxString curword="";
+    wxString curword = _T("");
     initkeywords();
     int kwtyp=0;
     bool commenting=false,dontadd=false,quoting=false,bold=false,italic=false;
@@ -204,16 +208,16 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
             if(dotags&&!commenting&&!quoting&&(kwtyp=isKeyword(curword))!=0) {
                 if(color!=kwtyp-1) {
                     if(color!=-1)
-                        output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                        output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                     if(bold)
-                        output+=tagstart+"/b"+tagend;
+                        output += tagstart + _T("/b") + tagend;
                     if(italic)
-                        output+=tagstart+"/i"+tagend;
-                    output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[kwtyp-1]+ \
-                            (sel==4?"\"":"")+tagend+curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                        output += tagstart + _T("/i") + tagend;
+                    output += tagstart + _T("b") + tagend + tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[kwtyp-1] + \
+                            (sel == 4 ? _T("\"") : _T("")) + tagend + curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
                 }
                 else
-                    output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                    output += curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
                 color=kwtyp-1;
                 bold=true;
                 italic=false;
@@ -221,16 +225,16 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
             else if(dotags&&!commenting&&!quoting&&isNumeric(curword)) {
                 if(color!=7) {
                     if(color!=-1)
-                        output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                        output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                     if(bold)
-                        output+=tagstart+"/b"+tagend;
+                        output += tagstart + _T("/b") + tagend;
                     if(italic)
-                        output+=tagstart+"/i"+tagend;
-                    output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[7]+ \
-                            (sel==4?"\"":"")+tagend+curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                        output += tagstart + _T("/i") + tagend;
+                    output += tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[7] + \
+                            (sel == 4 ? _T("\"") : _T("")) + tagend + curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
                 }
                 else
-                    output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                    output += curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
                 color=7;
                 bold=false;
                 italic=false;
@@ -247,62 +251,62 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
                     curword=curword.MakeLower();
                     break;
                 }
-                output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                output += curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
             }
             else {
                 if(!commenting&&!quoting) {
                     if(color!=-1)
-                        output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                        output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                     if(bold)
-                        output+=tagstart+"/b"+tagend;
+                        output += tagstart + _T("/b") +tagend;
                     if(italic)
-                        output+=tagstart+"/i"+tagend;
+                        output += tagstart + _T("/i") +tagend;
                     color=-1;
                 }
                 bold=false;
                 italic=false;
-                output+=curword+(dontadd?"":wxString::Format("%c",j00_n00b));
+                output += curword + (dontadd ? _T("") : wxString::Format(_T("%c"), j00_n00b));
             }
-            curword="";
+            curword = _T("");
             int mylen=output.Len();
             if(!commenting&&!quoting&&j00_n00b=='\'') {
                 commenting=true;
                 if(dotags) {
                     output=output.Left(mylen-1);
                     if(color!=-1)
-                        output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                        output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                     if(bold)
-                        output+=tagstart+"/b"+tagend;
+                        output += tagstart + _T("/b") + tagend;
                     if(italic)
-                        output+=tagstart+"/i"+tagend;
-                    output+=tagstart+"i"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[4]+ \
-                            (sel==4?"\"":"")+tagend;
-                    output+=j00_n00b;
+                        output += tagstart + _T("/i") + tagend;
+                    output += tagstart + _T("i") + tagend + tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[4] + \
+                            (sel == 4 ? _T("\"") : _T("")) + tagend;
+                    output += j00_n00b;
                 }
             }
-            else if((j00_n00b=='\n'||j00_n00b=='\r')&&commenting) {
+            else if((j00_n00b == '\n' || j00_n00b == '\r') && commenting) {
                 commenting=false;
                 color=-1;
                 bold=false;
                 italic=false;
                 if(dotags) {
                     output=output.Left(mylen-1);
-                    output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/i"+tagend;
-                    output+=j00_n00b;
+                    output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend + tagstart + _T("/i") + tagend;
+                    output += j00_n00b;
                 }
             }
             if(!commenting&&!quoting&&j00_n00b=='\"') {
                 if(dotags) {
                     output=output.Left(mylen-1);
                     if(color!=-1)
-                        output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                        output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                     if(bold)
-                        output+=tagstart+"/b"+tagend;
+                        output += tagstart + _T("/b") + tagend;
                     if(italic)
-                        output+=tagstart+"/i"+tagend;
-                    output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[6]+ \
-                            (sel==4?"\"":"")+tagend;
-                    output+=j00_n00b;
+                        output += tagstart + _T("/i") + tagend;
+                    output += tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[6] + \
+                            (sel == 4 ? _T("\"") : _T("")) + tagend;
+                    output += j00_n00b;
                 }
                 quoting=true;
             }
@@ -312,49 +316,56 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
                 bold=false;
                 italic=false;
                 if(dotags)
-                    output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                    output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
             }
-            if(!commenting&&!quoting&&j00_n00b=='#'&&(i==0||(output.Mid(output.Len()-2,1)=="\n"||output.Mid(output.Len()-2,1)=="\r"))) {
+            if(!commenting
+               && !quoting
+               && j00_n00b == '#'
+               && (i == 0 
+                   || (output.Mid(output.Len()-2,1) == _T("\n") 
+                   || output.Mid(output.Len()-2,1) == _T("\r") )
+                   )
+                ) {
                 output=output.Left(mylen-1);
                 if(color!=-1)
-                    output+=tagstart+(sel==4?"/span":"/color")+tagend;
+                    output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend;
                 if(bold)
-                    output+=tagstart+"/b"+tagend;
+                    output += tagstart + _T("/b") + tagend;
                 if(italic)
-                    output+=tagstart+"/i"+tagend;
+                    output += tagstart + _T("/i") + tagend;
                 color=-1;
                 bold=false;
                 italic=false;
                 if(dotags)
-                    output+=tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[8]+ \
-                            (sel==4?"\"":"")+tagend;
+                    output += tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[8] + \
+                            (sel == 4 ? _T("\"") : _T("")) + tagend;
                 output+=j00_n00b;
                 for(i++;guts.GetChar(i)!='\n'&&i<teh_len;i++) {
                     output+=guts.Mid(i,1);
                 }
                 output+='\n';
                 if(dotags)
-                    output << tagstart+(sel==4?"/span":"/color")+tagend << guts.GetChar(i);
+                    output << tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend << guts.GetChar(i);
             }
             else if(dotags&&!commenting&&!quoting&&j00_n00b=='#') {
-                output=output.Left(mylen-1);
-                output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[5]+ \
-                        (sel==4?"\"":"")+tagend;
-                output+=j00_n00b;
-                output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/b"+tagend;
+                output = output.Left(mylen-1);
+                output += tagstart + _T("b") + tagend + tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[5] + \
+                        (sel == 4 ? _T("\"") : _T("")) + tagend;
+                output += j00_n00b;
+                output += tagstart + (sel == 4 ? _T("/span") : _T("/color")) + tagend + tagstart + _T("/b") + tagend;
             }
             if(dotags&&((j00_n00b>39&&j00_n00b<46)||j00_n00b==47||
                         (j00_n00b>57&&j00_n00b<64)||j00_n00b==92||j00_n00b==94||
                         (j00_n00b>122&&j00_n00b<128))&&!commenting&&!quoting) {
                 output=output.Left(mylen-1);
-                output+=tagstart+"b"+tagend+tagstart+(sel==4?"span style=\"color:#":"color=#")+colours[5]+ \
-                        (sel==4?"\"":"")+tagend;
-                output+=j00_n00b;
-                output+=tagstart+(sel==4?"/span":"/color")+tagend+tagstart+"/b"+tagend;
+                output += tagstart + _T("b") + tagend + tagstart + (sel == 4 ? _T("span style=\"color:#") : _T("color=#")) + colours[5] + \
+                        (sel == 4 ? _T("\"") : _T("")) + tagend;
+                output += j00_n00b;
+                output += tagstart + (sel == 4 ? _T("/span"):_T("/color")) + tagend + tagstart + _T("/b") + tagend;
             }
         }
         if(i+1==real_len) {
-            guts+="\n";
+            guts += _T("\n");
             teh_len++;
             dontadd=true;
         }
@@ -372,16 +383,16 @@ void format::button_ok_VwXEvOnButtonClick(wxCommandEvent& event,int index) {
     }
     else {
         if(color!=-1)
-            output+=tagstart+(sel==4?"/span":"/color")+tagend;
+            output += tagstart + (sel == 4 ? _T("/span"):_T("/color")) + tagend;
         if(bold)
-            output+=tagstart+"/b"+tagend;
+            output += tagstart + _T("/b") + tagend;
         if(italic)
-            output+=tagstart+"/i"+tagend;
+            output += tagstart + _T("/i") + tagend;
         if     (sel==4)
-            output+="</pre></body></html>";
+            output += _T("</pre></body></html>");
         else if(sel==3)
-            output+="[/size][/quote]";
-        Parent->NewSTCPage("",true, 1);
+            output += _T("[/size][/quote]");
+        Parent->NewSTCPage( _T(""),true, 1);
         stc->SetText(output);
     }
 }
@@ -406,7 +417,7 @@ inline int format::isKeyword(wxString kw) {
 }
 
 void format::initkeywords() {
-    wxString curword="";
+    wxString curword = _T("");
     char j00_n00b;
     for(int i=0;i<4;i++) {
         keyw[i].Clear();
@@ -417,7 +428,7 @@ void format::initkeywords() {
                     j+1==(int)Parent->Keyword[i+1].Len()) {
                 if(curword.Trim(false).Trim(true).Len()>0)
                     keyw[i].Add(curword.Trim(false).Trim(true).MakeUpper());
-                curword="";
+                curword = _T("");
             }
         }
     }
@@ -427,7 +438,7 @@ inline bool format::isNumeric(wxString kw) {
     if(kw.Len()==0)
         return false;
     if(kw.GetChar(0)=='&') {
-        switch(kw.MakeLower().GetChar(1)) {
+        switch((char)kw.MakeLower().GetChar(1)) {
             case 'b':
             kw=kw.Mid(2);
             break;
@@ -454,7 +465,7 @@ inline bool format::isNumeric(wxString kw) {
 }
 
 inline wxString format::hex(wxColour clr) {
-    wxString hexs="0123456789abcdef";
+    wxString hexs = _T("0123456789abcdef");
     int r=clr.Red(),b=clr.Blue(),g=clr.Green();
     return hexs.Mid((r&0xF0)>>4,1)+hexs.Mid(r&0xF,1)+hexs.Mid((g&0xF0)>>4,1)+ \
            hexs.Mid(g&0xF,1)+hexs.Mid((b&0xF0)>>4,1)+hexs.Mid(b&0xF,1);

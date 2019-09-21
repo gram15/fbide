@@ -28,8 +28,8 @@
 #include "inc/format.h"
 
 void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
-    NewSTCPage("", true);
-    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    NewSTCPage(_T(""), true);
+    SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return;
 }
 
@@ -37,10 +37,10 @@ void MyFrame::OnNew (wxCommandEvent& WXUNUSED(event)) {
 
 void MyFrame::OnOpen (wxCommandEvent& WXUNUSED(event)) {
     wxFileDialog dlg (this,
-                      _T(Lang[186]),//Load File
+                      Lang[186],//Load File
                       _T(""),
                       _T(".bas"),
-                      _T(Lang[187]),//Types
+                      Lang[187],//Types
                       wxFILE_MUST_EXIST | wxMULTIPLE);
     if (dlg.ShowModal() != wxID_OK)
         return;
@@ -155,7 +155,7 @@ void MyFrame::OnCloseAll        ( ) {
         else
             CloseFile(0);
     }
-    SetTitle( "FBIde" );
+    SetTitle( _T("FBIde") );
     return;
 }
 
@@ -171,10 +171,10 @@ void MyFrame::OnCloseFile       ( ) {
     Buffer* buff = bufferList[index];
 
     if (buff->GetModified()) {
-        wxString message = wxString::Format(_(Lang[190]),
+        wxString message = wxString::Format(Lang[190],
                                             wxFileNameFromPath(buff->GetFileName()).c_str());
 
-        int closeDialog = wxMessageBox(message, _(Lang[192]), //"File Modified"
+        int closeDialog = wxMessageBox(message, Lang[192], //"File Modified"
                                        wxYES_NO | wxCANCEL | wxICON_EXCLAMATION, GetParent());
 
         if (closeDialog == wxYES)
@@ -187,9 +187,9 @@ void MyFrame::OnCloseFile       ( ) {
 
     CloseFile ( index );
     if(bufferList.GetBufferCount()>0)
-        SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+        SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     else
-        SetTitle("FBIde");
+        SetTitle(_T("FBIde"));
 }
 
 
@@ -214,8 +214,10 @@ void MyFrame::CloseFile          ( int index ) {
     FBNotebook->DeletePage(index);
     bufferList.RemoveBuffer(index);
     if (bufferList.GetBufferCount() == 0) {
-        m_TabStcSizer->Remove( FBNotebook );
-        m_TabStcSizer->Remove( stc );
+        //m_TabStcSizer->Remove( FBNotebook );
+        //m_TabStcSizer->Remove( stc );
+        m_TabStcSizer->Detach( FBNotebook );
+        m_TabStcSizer->Detach( stc );        
         delete stc;
         delete FBNotebook;
         FBCodePanel->SetSizer( NULL );
@@ -254,19 +256,19 @@ void MyFrame::OnNewWindow     (wxCommandEvent &WXUNUSED(event)) {
 
 
 bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
-    wxString FileName = (SaveAS) ? "" : buff->GetFileName();
+    wxString FileName = (SaveAS) ? _T("") : buff->GetFileName();
 
     int ft = buff->GetFileType();
 
     wxString Temp = (ft==0) ? Lang[193] : Lang[200];
     Temp <<  Lang[194];
 
-    if (FileName==""||FileName==FBUNNAMED) {
+    if (FileName==_T("")||FileName==FBUNNAMED) {
         wxFileDialog dlg (this,
-                          _T(Lang[195]),//Save file
+                          Lang[195],//Save file
                           _T(""),
-                          _T( (ft==0) ? ".bas" : ".html" ),
-                          _T( Temp ),
+                          ( (ft==0) ? _T(".bas") : _T(".html") ),
+                          Temp,
                           wxSAVE|wxOVERWRITE_PROMPT);
         if (dlg.ShowModal() != wxID_OK)
             return false;
@@ -281,7 +283,7 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
     }
 
     stc->SaveFile (FileName);
-    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
     return true;
 }
 
@@ -289,10 +291,10 @@ bool MyFrame::SaveFile (Buffer* buff, bool SaveAS) {
 
 void MyFrame::OnSessionLoad      ( wxCommandEvent& event ) {
     wxFileDialog dlg (this,
-                      _T(Lang[186]), //Load file
+                      Lang[186], //Load file
                       _T(""),
                       _T(".bas"),
-                      _T(Lang[198]), //FBIde Session
+                      Lang[198], //FBIde Session
                       wxFILE_MUST_EXIST );
     if (dlg.ShowModal() != wxID_OK)
         return;
@@ -314,12 +316,12 @@ void MyFrame::SessionLoad ( wxString File ) {
 
     Temp = TextFile[0];
     int ver = 1;
-    if( Temp.Trim( false ).Trim( true ).Lower() == "<fbide:session:version = \"0.2\"/>" )
+    if( Temp.Trim( false ).Trim( true ).Lower() == _T("<fbide:session:version = \"0.2\"/>") )
         ver = 2;
 
     for( unsigned int i = ver; i < TextFile.GetLineCount(); i++) {
         Temp = TextFile[i];
-        if( Temp != "" && ::wxFileExists( Temp ) ) {
+        if( Temp != _T("") && ::wxFileExists( Temp ) ) {
             result = bufferList.FileLoaded(Temp);
             if (result == -1) {
                 NewSTCPage(Temp, false);
@@ -353,7 +355,7 @@ void MyFrame::SessionLoad ( wxString File ) {
 
     TextFile.Close();
 
-    SetTitle( "FBIde - " + bufferList[FBNotebook->GetSelection()]->GetFileName() );
+    SetTitle( _T("FBIde - ") + bufferList[FBNotebook->GetSelection()]->GetFileName() );
 
     return;
 }
@@ -366,10 +368,10 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
     wxString FileName;
 
     wxFileDialog dlg (this,
-                      _T(Lang[199]),
+                      Lang[199],
                       _T(""),
                       _T(".fbs"),
-                      _T(Lang[198]),
+                      Lang[198],
                       wxSAVE|wxOVERWRITE_PROMPT);
     if (dlg.ShowModal() != wxID_OK)
         return;
@@ -389,7 +391,7 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
     bool header = true;
 
     int SelectedTab = FBNotebook->GetSelection();
-    TextFile.AddLine( "<fbide:session:version = \"0.2\"/>" );
+    TextFile.AddLine( _T("<fbide:session:version = \"0.2\"/>") );
     for (int i=0; i < FBNotebook->GetPageCount();i++ ) {
         buff = bufferList[i];
         if (buff->GetModified()) {
@@ -428,7 +430,7 @@ void MyFrame::OnSessionSave      ( wxCommandEvent& event ) {
                 SaveDocumentStatus( i );
             Temp << buff->GetLine();
             TextFile.AddLine( Temp );
-            Temp = "";
+            Temp = _T("");
             Temp << buff->GetCaretPos();
             TextFile.AddLine( Temp );
         }

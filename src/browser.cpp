@@ -53,7 +53,7 @@ SFBrowser::SFBrowser(   wxWindow* parent,
                         wxDefaultPosition, wxDefaultSize, wxCLIP_CHILDREN);
 
     SearchLabel=new wxStaticText(Panel,-1, wxT(""),wxPoint(5,7),wxSize(60,13),wxST_NO_AUTORESIZE);
-    SearchLabel->SetLabel(wxT(Parent->Lang[226])); //Search
+    SearchLabel->SetLabel(Parent->Lang[226]); //Search
 
     SearchBox=new wxTextCtrl(Panel, SearchBoxId,wxT(""),wxPoint(70,5),wxSize(220,21),wxTE_PROCESS_ENTER );
     wxBoxSizer * Sizer = new wxBoxSizer(wxVERTICAL);
@@ -84,15 +84,15 @@ SFBrowser::SFBrowser(   wxWindow* parent,
 
 
     wxListItem itemCol;
-    itemCol.SetText(_T(Parent->Lang[165]));
+    itemCol.SetText(Parent->Lang[165]);
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(0, itemCol);
 
-    itemCol.SetText(_T(Parent->Lang[227]));
+    itemCol.SetText(Parent->Lang[227]);
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(1, itemCol);
 
-    itemCol.SetText(_T(Parent->Lang[228]));
+    itemCol.SetText(Parent->Lang[228]);
     itemCol.SetAlign(wxLIST_FORMAT_LEFT);
     SFList->InsertColumn(2, itemCol);
 
@@ -136,12 +136,12 @@ void SFBrowser::Rebuild (  ) {
             fkw = stc->GetFirstKw( Temp );
             skw = stc->GetSecondKw( Temp );
 
-            if (fkw == "private"||fkw == "static") {
-                if (skw=="sub") {
+            if (fkw == _T("private") || fkw == _T("static")) {
+                if (skw == _T("sub")) {
                     type = false;
                     Add = true;
                 }
-                else if (skw =="function") {
+                else if (skw == _T("function")) {
                     type = true;
                     Add = true;
                 }
@@ -149,13 +149,13 @@ void SFBrowser::Rebuild (  ) {
                 Arg = Arg.Trim(false).Trim(true);
                 Arg = Arg.Mid(Arg.Find(' '));
             }
-            else if (fkw == "sub") {
+            else if (fkw == _T("sub")) {
                 type= false;
                 Add = true;
                 Arg = Temp.Mid(Temp.Find(' '));
                 Arg = Arg.Trim(false).Trim(true);
             }
-            else if (fkw == "function" && skw.Left(1)!="=") {
+            else if (fkw == _T("function") && skw.Left(1) != _T("=")) {
                 type= true;
                 Add = true;
                 Arg = Temp.Mid(Temp.Find(' '));
@@ -164,12 +164,12 @@ void SFBrowser::Rebuild (  ) {
 
             if (Add) {
                 Add = false;
-                Temp = "";
+                Temp = _T("");
                 if (type)
-                    Temp << "func";
+                    Temp << _T("func");
                 else
-                    Temp << "sub";
-                Temp  << " " << Arg;
+                    Temp << _T("sub");
+                Temp  << _T(" ") << Arg;
 
                 Original.Add(Temp);
                 OriginalArg.Add(Arg);
@@ -197,12 +197,12 @@ void SFBrowser::AddListItem ( int Linenr, bool Type, wxString Message ) {
     t.SetColumn( 1 );
     t.SetId( Itemcount );
     if( Type ) {
-        t.SetText( "Func" );
+        t.SetText( _T("Func") );
         t.SetTextColour( wxColour( 0, 128, 0) );
     }
     else  {
         t.SetTextColour(  wxColour( 0, 0, 128) );
-        t.SetText( "Sub" );
+        t.SetText( _T("Sub") );
     }
 
     SFList->SetItem( t );

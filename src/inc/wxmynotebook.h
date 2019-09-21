@@ -100,12 +100,12 @@ public:
     wxTabbedCtrl();
     wxTabbedCtrl(wxWindow *parent, wxWindowID id,
                  const wxPoint &position = wxDefaultPosition, const wxSize size = wxDefaultSize,
-                 long style = wxTB_DEFAULT_STYLE, const wxString &name = "TabbedCtrl") {
+                 long style = wxTB_DEFAULT_STYLE, const wxString &name = _T("TabbedCtrl")) {
         Create(parent, id, position, size, style, name);
     }
     void Create(wxWindow *parent, wxWindowID id,
                 const wxPoint &position = wxDefaultPosition, const wxSize &size = wxDefaultSize,
-                long style = wxTB_DEFAULT_STYLE, const wxString &name = "TabbedCtrl");
+                long style = wxTB_DEFAULT_STYLE, const wxString &name = _T("TabbedCtrl"));
 
     virtual ~wxTabbedCtrl() {}
 

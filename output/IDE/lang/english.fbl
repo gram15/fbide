@@ -243,7 +243,7 @@
 
 ;File stuff
 186=Load file
-187=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*|
+187=FBFiles (*.bas)|*.bas|FBHeader files(*.bi)|*.bi|HTML files (*.html)|*.html|All file(*)|*.*
 188=File \"
 189=\" has been modified. Save?
 190=The file '%s' has been modified.\nWould you like to save the changes?

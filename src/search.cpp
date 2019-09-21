@@ -37,7 +37,7 @@ void MyFrame::OnFind (wxCommandEvent& WXUNUSED(event)) {
     else
         FindData->SetFindString(GetTextUnderCursor());
 
-    FindDialog = new wxFindReplaceDialog(this, FindData, _(Lang[219]), 0); //Find text
+    FindDialog = new wxFindReplaceDialog(this, FindData, Lang[219], 0); //Find text
     FindDialog->Show();
     return;
 }
@@ -55,8 +55,7 @@ void MyFrame::OnReplace (wxCommandEvent& WXUNUSED(event)) {
     else
         ReplaceData->SetFindString(GetTextUnderCursor());
 
-    ReplaceDialog = new wxFindReplaceDialog(this, ReplaceData,
-                                            _(Lang[220]), wxFR_REPLACEDIALOG); //Replace text
+    ReplaceDialog = new wxFindReplaceDialog(this, ReplaceData, Lang[220], wxFR_REPLACEDIALOG); //Replace text
 
     ReplaceDialog->Show();
     return;
@@ -80,17 +79,17 @@ void MyFrame::OnFindAgain (wxCommandEvent& WXUNUSED(event)) {
 void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event)) {
     if (stc==0)
         return;
-    wxString lineString = wxGetTextFromUser(_(Lang[221]), _(Lang[222]), _(""), this);
+    wxString lineString = wxGetTextFromUser(Lang[221], Lang[222], _T(""), this);
     //Go To Line Number: \ Go To Line
 
     if (lineString.IsEmpty())
         return;
 
-    if (lineString.Contains(":")) {
+    if (lineString.Contains(_T(":"))) {
         wxString line, col;
         line = lineString.BeforeFirst(':');
         col = lineString.AfterFirst(':');
-        if ((line.IsNumber() || line == "e") && (col.IsNumber() || col == "e")) {
+        if ((line.IsNumber() || line == _T("e")) && (col.IsNumber() || col == _T("e"))) {
             long lineNumber, colNumber;
             if (line.IsNumber())
                 line.ToLong(&lineNumber);
@@ -117,7 +116,7 @@ void MyFrame::OnGotoLine (wxCommandEvent& WXUNUSED(event)) {
         }
     }
 
-    else if (lineString == "e")
+    else if (lineString == _T("e"))
         stc->GotoLine(stc->GetLineCount() - 1);
 
     else if (lineString.IsNumber()) {
@@ -290,7 +289,7 @@ bool MyFrame::FindOccurence(const wxString& findStr, int direc, int flags) {
             targetStart = stc->GetSelectionEnd();
 
         else if ((stc->GetSelectedText() == findStr) && (direc == 1))
-            targetStart = (stc->GetSelectionStart() <? stc->GetSelectionEnd()) - 1;
+            targetStart = (stc->GetSelectionStart() < stc->GetSelectionEnd()) - 1;
     }
 
     // If this is a case insensitive search

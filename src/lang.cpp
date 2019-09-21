@@ -28,21 +28,21 @@
 void MyFrame::OpenLangFile( wxString FileName ) {
 
     //First lets select the file we are going to use...
-    wxFFileInputStream FileINIIS( EditorPath + "IDE/lang/" + FileName + ".fbl" );
+    wxFFileInputStream FileINIIS( EditorPath + _T("IDE/lang/") + FileName + _T(".fbl") );
 
     //And then open it as an INI file
     wxFileConfig FileINI(FileINIIS);
 
     //Pathname to search...
-    FileINI.SetPath("/FBIde");
+    FileINI.SetPath( _T("/FBIde") );
 
     //And GO!
     wxString temp;
     for (int i=0; i < 245; i++) {
-        temp="";
+        temp = _T("");
         temp<<i;
         //Lang.Add(FileINI.Read(temp,""));
-        Lang.Add(FileINI.Read(temp,""));
+        Lang.Add(FileINI.Read(temp, _T("")));
     }
 
     Lang.Shrink();

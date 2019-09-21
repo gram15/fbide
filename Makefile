@@ -2,17 +2,17 @@
 # Makefile created by Dumbledore
 # modified by VonGodric
 
-CPP  = g++ -D__DEBUG__
+CPP  = g++ -D__DEBUG__ -DNO_GCC_PRAGMA
 CC   = gcc -D__DEBUG__
 WINDRES = 
 RES  = 
 OBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o obj/about.o obj/wxmynotebook.o $(RES)
 LINKOBJ  = obj/main.o obj/loadui.o obj/help.o obj/config.o obj/file.o obj/edit.o obj/search.o obj/view.o obj/fbedit.o obj/configdiag.o obj/lang.o obj/buffer.o obj/bufferlist.o obj/run.o obj/browser.o obj/format.o obj/about.o obj/wxmynotebook.o $(RES)
-LIBS =  `wx-config --libs` -lwx_gtk2_stc-2.6 -lpng
+LIBS =  `wx-config --libs` -L"/usr/lib/x86_64-linux-gnu" -lwx_gtk2u_stc-3.0 -lpng
 INCS =  -I"/usr/include" 
-CXXINCS =  -I"/usr/include/wx-2.6/wx/stc" 
+CXXINCS =  -I"/usr/include/wx-3.0/wx/stc"
 BIN  = output/fbide
-CXXFLAGS = $(CXXINCS) -O4 -g `wx-config --cxxflags`
+CXXFLAGS = $(CXXINCS) -O4 -g `wx-config --cxxflags` 
 CFLAGS = $(INCS) -fexpensive-optimizations -O3 -g
 RM = rm -f
 

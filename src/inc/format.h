@@ -60,7 +60,7 @@ protected:
     void bt17_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
     void bt16_VwXEvOnButtonClick(wxCommandEvent& event,int index=-1);
     wxString hex(wxColour clr);
-    bool format::isNumeric(wxString kw);
+    bool isNumeric(wxString kw);
     int isKeyword(wxString kw);
     DECLARE_EVENT_TABLE()
 #define VwX_INIT_OBJECTS_format

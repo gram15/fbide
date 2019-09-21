@@ -48,12 +48,18 @@
 
 
 #include "../../FBIde0.4_private.h"
-#define FBUNNAMED "Unnamed"
+#define FBUNNAMED _T("Unnamed")
 #define KWGROUPS        4
 #define mySTC_STYLE_BOLD  1
 #define mySTC_STYLE_ITALIC  2
 #define mySTC_STYLE_UNDERL  4
 #define mySTC_STYLE_HIDDEN  8
+
+// compatibility toward wx 2.6 2.8
+#define wxFILE_MUST_EXIST   wxFD_FILE_MUST_EXIST
+#define wxMULTIPLE          wxFD_MULTIPLE
+#define wxSAVE              wxFD_SAVE
+#define wxOVERWRITE_PROMPT  wxFD_OVERWRITE_PROMPT
 
 typedef unsigned int uint;
 

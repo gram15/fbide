@@ -48,7 +48,7 @@ BufferList::~BufferList() {
  * @return A pointer to the newly created buffer object.
  */
 Buffer* BufferList::AddBuffer(const wxString& highlighter) {
-    Buffer* buff = new Buffer("Untitled");
+    Buffer* buff = new Buffer(_T("Untitled"));
     buffers.Add(buff);
 
     return buff;

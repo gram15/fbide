@@ -32,7 +32,7 @@ public:
     BufferList();
     ~BufferList();
 
-    Buffer* AddBuffer(const wxString& highlighter = "Text");
+    Buffer* AddBuffer(const wxString& highlighter = _T("Text"));
     Buffer* AddFileBuffer(const wxString& fileName,
                           const wxString& highlighter);
 

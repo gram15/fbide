@@ -29,7 +29,7 @@
 
 class Buffer {
 public:
-    Buffer(const wxString& fileName = "Untitled");
+    Buffer(const wxString& fileName = _T("Untitled"));
 
     const wxDateTime& GetModificationTime();
     void SetModificationTime(const wxDateTime& modTime);

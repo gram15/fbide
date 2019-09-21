@@ -54,7 +54,7 @@ void MyFrame::AddListItem ( int Linenr, int ErrorNr, wxString FileName, wxString
     long tmp = FBConsole->InsertItem(Itemcount, lnr, 0);
     FBConsole->SetItemData(tmp, 0);
     FBConsole->SetItem(Itemcount, 1, FileName);
-    lnr = "";
+    lnr = _T("");
     if (ErrorNr!=-1)
         lnr << ErrorNr;
     FBConsole->SetItem(Itemcount, 2, lnr);
@@ -89,7 +89,7 @@ void MyFrame::OnGoToError ( wxListEvent& event ) {
 
 
 void MyFrame::GoToError ( int Linenr, wxString FileName ) {
-    if ( wxFileNameFromPath(FileName).Lower()!="fbidetemp.bas") {
+    if ( wxFileNameFromPath(FileName).Lower() != _T("fbidetemp.bas") ) {
         int result = bufferList.FileLoaded(FileName);
         if (result != -1) {
             if (FBNotebook->GetSelection()!=result) {
@@ -123,12 +123,12 @@ void MyFrame::MyFrame::OnConsoMouseleLeft ( wxListEvent& event ) {
 
 void MyFrame::CompilerLog () {
     //wxMessageBox( strCompilerOutput );
-    wxString strTitle( "Fbc output" );
+    wxString strTitle( _T("Fbc output") );
     wxDialog * dlg = new wxDialog( this, -1, strTitle,
                                    wxDefaultPosition, wxSize( 400, 200 ),
                                    wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxCLIP_CHILDREN | wxMAXIMIZE_BOX );
     wxBoxSizer * objSizer = new wxBoxSizer( wxVERTICAL );
-    wxTextCtrl * output = new wxTextCtrl( dlg, wxID_ANY, "",
+    wxTextCtrl * output = new wxTextCtrl( dlg, wxID_ANY, _T(""),
                                           wxDefaultPosition, wxDefaultSize,
                                           wxTE_MULTILINE | wxTE_READONLY | wxTE_BESTWRAP | wxTE_RICH2 );
     output->SetFont( wxFont( 10, wxFONTFAMILY_MODERN, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL ) );
@@ -139,31 +139,33 @@ void MyFrame::CompilerLog () {
     wxFont boldFont = myattr.GetFont();
     boldFont.SetWeight( wxFONTWEIGHT_BOLD );
     bool nesting=false;
-    wxString tag="";
+    wxString tag = _T("");
     for(int i=0;i<(int)strCompilerOutput.Count();i++) {
         for(int j=0;j<(int)strCompilerOutput[i].Len();j++) {
-            char thechar=(char)*strCompilerOutput[i].Mid(j,1);
+            wchar_t thechar = (wchar_t)*((const wchar_t *)strCompilerOutput[i].Mid(j,1));
+            // wchar_t * szbufferstring = (strCompilerOutput[i].Mid(j,1)).wchar_str();
+            // wchar_t thechar = szbufferstring[0];
             if(thechar=='['&&!nesting) {
                 nesting=true;
             }
             else if(thechar==']'&&nesting) {
                 nesting=false;
                 tag=tag.MakeLower();
-                if(tag=="bold")
+                if(tag == _T("bold") )
                     myattr.SetFont(boldFont);
-                else if(tag=="/bold")
+                else if(tag == _T("/bold") )
                     myattr.SetFont(defFont);
                 output->SetDefaultStyle(myattr);
-                tag="";
+                tag = _T("");
             }
             else if(nesting) {
-                tag+=thechar;
+                tag += thechar;
             }
-            else {
+            else {                
                 output->WriteText(thechar);
             }
         }
-        output->WriteText("\r\n");
+        output->WriteText(_T("\r\n"));
     }
     output->SetInsertionPoint( output->XYToPosition( 0, 0 ) );
 
@@ -182,11 +184,11 @@ void MyFrame::OnCompile (wxCommandEvent& WXUNUSED(event)) {
     if (Proceed()!=1)
         return;
     FBConsole->DeleteAllItems();
-    SetStatusText( "Compiling..." );
+    SetStatusText( _T("Compiling...") );
     if (Compile( FBNotebook->GetSelection() )==0)
-        SetStatusText( "Compilation Complete." );
+        SetStatusText( _T("Compilation Complete.") );
     else
-        SetStatusText( "Compilation Failed!" );
+        SetStatusText( _T("Compilation Failed!") );
     return;
 }
 
@@ -198,14 +200,14 @@ void MyFrame::OnCompileAndRun (wxCommandEvent& WXUNUSED(event)) {
     if (Proceed()!=1)
         return;
     FBConsole->DeleteAllItems();
-    SetStatusText( "Compiling..." );
+    SetStatusText( _T("Compiling...") );
     if (Compile( FBNotebook->GetSelection() )==0) {
-        SetStatusText( "Compilation Complete." );
+        SetStatusText( _T("Compilation Complete.") );
         wxString strFile = bufferList[ FBNotebook->GetSelection() ]->GetCompiledFile();
         Run( strFile );
     }
     else
-        SetStatusText( "Compilation Failed!" );
+        SetStatusText( _T("Compilation Failed!") );
 
     return;
 }
@@ -227,9 +229,9 @@ void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
     int major = 0, minor = 0;
     int result = wxGetOsVersion(&major, &minor);
     if (result==wxWINDOWS_NT)
-        wxExecute("cmd.exe");
+        wxExecute( _T("cmd.exe") );
     else if(result==wxWIN95)
-        wxExecute("command.com");
+        wxExecute( _T("command.com"));
 #else
 
     if( strTerminal.Len() )
@@ -240,9 +242,9 @@ void MyFrame::OnCmdPromt (wxCommandEvent& WXUNUSED(event)) {
 }
 
 void MyFrame::OnParameters (wxCommandEvent& WXUNUSED(event)) {
-    wxTextEntryDialog dialog(this, _T(Lang[177]), //"Parameters to pass to your program"
-                             _T(Lang[158]),
-                             _T(ParameterList),
+    wxTextEntryDialog dialog(this, Lang[177], //"Parameters to pass to your program"
+                             Lang[158],
+                             ParameterList,
                              wxOK | wxCANCEL);
 
     if (dialog.ShowModal() == wxID_OK) {
@@ -311,7 +313,7 @@ int MyFrame::Compile ( int index ) {
 
     // Log compiler output and input
     strCompilerOutput.Empty();
-    strCompilerOutput.Add("[bold]Command executed:[/bold]");
+    strCompilerOutput.Add( _T("[bold]Command executed:[/bold]") );
     strCompilerOutput.Add(strCompile);
 
     // If Active path is activated then set current working path
@@ -343,8 +345,8 @@ int MyFrame::Compile ( int index ) {
         WX_APPEND_ARRAY( arrOutput, arrErrOutput );
 
         // Putput logging:
-        strCompilerOutput.Add( "" );
-        strCompilerOutput.Add( "[bold]Compiler output:[/bold]" );
+        strCompilerOutput.Add( _T("") );
+        strCompilerOutput.Add( _T("[bold]Compiler output:[/bold]") );
 
         // Loop through arrOutput
         for ( unsigned int cnt = 0; cnt < arrOutput.Count(); cnt++ ) {
@@ -405,8 +407,8 @@ int MyFrame::Compile ( int index ) {
             }
             else {
                 // Replace all tabs.
-                arrOutput[cnt].Replace( "\t", "  " );
-                AddListItem(-1, -1, "", arrOutput[cnt]);
+                arrOutput[cnt].Replace( _T("\t"), _T("  ") );
+                AddListItem(-1, -1, _T(""), arrOutput[cnt]);
             }
         }
 
@@ -428,13 +430,13 @@ int MyFrame::Compile ( int index ) {
     }
 
     // Log
-    strCompilerOutput.Add( "" );
-    strCompilerOutput.Add( "[bold]Results:[/bold]" );
+    strCompilerOutput.Add( _T("") );
+    strCompilerOutput.Add( _T("[bold]Results:[/bold]") );
 
 
     // if there was an error ( fbc returns 1 ).
     if ( intCompileResult  ) {
-        strCompilerOutput.Add( "Compilation failed" );
+        strCompilerOutput.Add( _T("Compilation failed") );
         
         if( isFirstErrorFound ) {
             GoToError( intFirstErrorLine - 1, strFirstErrorFile );
@@ -444,42 +446,42 @@ int MyFrame::Compile ( int index ) {
         // Set newly compiled filename:
         // Note that under linux extension is missing, in windows
         // it's exe
-        if( objFile.GetExt().Lower() == "bas" || objFile.GetExt().Lower() == "bi" ) {
+        if( objFile.GetExt().Lower() == _T("bas") || objFile.GetExt().Lower() == _T("bi") ) {
 #ifdef __WXMSW__
-            objFile.SetExt( "exe" );
+            objFile.SetExt( _T("exe") );
 #else
 
-            objFile.SetExt( "" );
+            objFile.SetExt( _T("") );
 #endif
 
             bufferList[ index ]->SetCompiledFile( objFile.GetFullPath() );
         }
 
-        strCompilerOutput.Add( "Compilation successful" );
-        strCompilerOutput.Add( "Generated executable: " + objFile.GetFullPath() );
+        strCompilerOutput.Add( _T("Compilation successful") );
+        strCompilerOutput.Add( _T("Generated executable: ") + objFile.GetFullPath() );
     }
 
     wxString strTemp;
     // Log system, fbide and fbc version
-    strCompilerOutput.Add( "" );
-    strCompilerOutput.Add( "[bold]System:[/bold]" );
+    strCompilerOutput.Add( _T("") );
+    strCompilerOutput.Add( _T("[bold]System:[/bold]") );
 
-    strTemp = "";
-    strTemp << VER_MAJOR << "." << VER_MINOR << "." << VER_RELEASE;
-    strCompilerOutput.Add( "FBIde: " + strTemp );
+    strTemp = _T("");
+    strTemp << VER_MAJOR << _T(".") << VER_MINOR << _T(".") << VER_RELEASE;
+    strCompilerOutput.Add( _T("FBIde: ") + strTemp );
 
     arrOutput.Empty();
 #ifdef __WXMSW__
 
     wxFileName objFbcPath( CompilerPath );
-    wxExecute( "\"" + objFbcPath.GetFullPath() + "\" -version", arrOutput );
+    wxExecute( _T("\"") + objFbcPath.GetFullPath() + _T("\" -version"), arrOutput );
 #else
 
-    wxExecute( CompilerPath + " -version", arrOutput );
+    wxExecute( CompilerPath + _T(" -version"), arrOutput );
 #endif
 
-    strCompilerOutput.Add( "fbc:   " + arrOutput[0] );
-    strCompilerOutput.Add( "OS:    " + ::wxGetOsDescription() );
+    strCompilerOutput.Add( _T("fbc:   ") + arrOutput[0] );
+    strCompilerOutput.Add( _T("OS:    ") + ::wxGetOsDescription() );
 
     return intCompileResult;
 }
@@ -519,12 +521,12 @@ void MyFrame::Run ( wxFileName file ) {
 
 
     // Replace metatags
-    strCommand.Replace( "<param>",      ParameterList );
-    strCommand.Replace( "<file>",       file.GetFullPath()  );
-    strCommand.Replace( "<file_path>",  file.GetPath() );
-    strCommand.Replace( "<file_name>",  file.GetName() );
-    strCommand.Replace( "<file_ext>",   file.GetExt() );
-    strCommand.Replace( "<terminal>",   strTerminal );
+    strCommand.Replace( _T("<param>"),      ParameterList );
+    strCommand.Replace( _T("<file>"),       file.GetFullPath()  );
+    strCommand.Replace( _T("<file_path>"),  file.GetPath() );
+    strCommand.Replace( _T("<file_name>"),  file.GetName() );
+    strCommand.Replace( _T("<file_ext>"),   file.GetExt() );
+    strCommand.Replace( _T("<terminal>"),   strTerminal );
 
     // Create new process
     MyProcess * objProcess = new MyProcess(this, strCommand);
@@ -537,7 +539,7 @@ void MyFrame::Run ( wxFileName file ) {
     if ( !result ) {
         delete objProcess;
         ProcessIsRunning = false;
-        wxMessageBox ( Lang[182] + strCommand + "\"", Lang[179], wxICON_ERROR );
+        wxMessageBox ( Lang[182] + strCommand + _T("\""), Lang[179], wxICON_ERROR );
         return;
     }
 
@@ -580,33 +582,33 @@ void MyFrame::OnQuickRun (wxCommandEvent& WXUNUSED(event)) {
     wxString OldFileName = buff->GetFileName();
 
     // Get working directory
-    if ( OldFileName == "" || OldFileName == FBUNNAMED ) {
+    if ( OldFileName == _T("") || OldFileName == FBUNNAMED ) {
         CurFolder = ::wxPathOnly( EditorPath );
     }
     else {
         CurFolder = ::wxPathOnly( OldFileName );
     }
 
-    CurFolder << "/";
+    CurFolder << _T("/");
 
     // Set new temprary data
-    stc->SaveFile( CurFolder + "FBIDETEMP.bas" );
-    buff->SetFileName( CurFolder + "FBIDETEMP.bas" );
+    stc->SaveFile( CurFolder + _T("FBIDETEMP.bas") );
+    buff->SetFileName( CurFolder + _T("FBIDETEMP.bas") );
 
     // Set status
     FBConsole->DeleteAllItems();
-    SetStatusText( "Compiling..." );
+    SetStatusText( _T("Compiling...") );
 
     // Compile it
     if ( Compile( index ) == 0 ) {
-        SetStatusText( "Compilation Complete." );
+        SetStatusText( _T("Compilation Complete.") );
         Run( buff->GetCompiledFile() );
     }
     else {
-        SetStatusText( "Compilation Failed!" );
-        wxRemoveFile( CurFolder + "FBIDETEMP.bas" );
-        wxRemoveFile( CurFolder + "fbidetemp.asm" );
-        wxRemoveFile( CurFolder + "fbidetemp.o" );
+        SetStatusText( _T("Compilation Failed!") );
+        wxRemoveFile( CurFolder + _T("FBIDETEMP.bas") );
+        wxRemoveFile( CurFolder + _T("fbidetemp.asm") );
+        wxRemoveFile( CurFolder + _T("fbidetemp.o") );
     }
 
     // Restore original data
@@ -631,9 +633,9 @@ wxString MyFrame::GetCompileData ( int index ) {
     // Retreave file original name and validate it
     wxFileName objFilePath( bufferList[ index ]->GetFileName() );
     objFilePath.Normalize();
-    if( objFilePath.GetExt().Lower() != "bas" && objFilePath.GetExt().Lower() != "bi" &&
-            objFilePath.GetExt().Lower() != "rc" )
-        return "";
+    if( objFilePath.GetExt().Lower() != _T("bas") && objFilePath.GetExt().Lower() != _T("bi") &&
+            objFilePath.GetExt().Lower() != _T("rc") )
+        return _T("");
     wxString strReturn( CMDPrototype.Lower().Trim( true ).Trim( false ) );
 
 
@@ -645,16 +647,16 @@ wxString MyFrame::GetCompileData ( int index ) {
     ObjCompilerPath.Normalize();
     
     if( !ObjCompilerPath.FileExists() ) {
-        wxMessageBox( Lang[244], "FBC", wxICON_ERROR );
-        return "";
+        wxMessageBox( Lang[244], _T("FBC"), wxICON_ERROR );
+        return _T("");
     }
     
-    strReturn.Replace( "<fbc>", + ObjCompilerPath.GetFullPath() );
-    strReturn.Replace( "<filename>", + objFilePath.GetFullPath() );
+    strReturn.Replace( _T("<fbc>"), + ObjCompilerPath.GetFullPath() );
+    strReturn.Replace( _T("<filename>"), + objFilePath.GetFullPath() );
 #else
 
-    strReturn.Replace( "<fbc>", CompilerPath );
-    strReturn.Replace( "<filename>", objFilePath.GetFullPath() );
+    strReturn.Replace( _T("<fbc>"), CompilerPath );
+    strReturn.Replace( _T("<filename>"), objFilePath.GetFullPath() );
 #endif
     return strReturn;
 }
@@ -671,8 +673,16 @@ void MyProcess::OnTerminate( int pid, int status ) {
         wxMessageBox(Temp, m_parent->Lang[185]);
     }
     if (m_parent->IsTemp) {
-        wxRemoveFile(m_parent->CurFolder + "FBIDETEMP.bas");
-        wxRemoveFile(m_parent->CurFolder + "FBIDETEMP.exe");
+        wxRemoveFile(m_parent->CurFolder + _T("FBIDETEMP.bas"));        
+        #ifdef __linux__ 
+            //linux code goes here
+            wxRemoveFile(m_parent->CurFolder + _T("FBIDETEMP"));
+        #elif _WIN32
+            // windows code goes here
+            wxRemoveFile(m_parent->CurFolder + _T("FBIDETEMP.exe"));
+        #else
+            wxRemoveFile(m_parent->CurFolder + _T("FBIDETEMP"));
+        #endif
         m_parent->IsTemp=false;
     }
     m_parent->Raise();
