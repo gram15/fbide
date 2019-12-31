@@ -12,7 +12,7 @@ Ctrl+n		    - (where n is a number in range 0 to 9) selects given tab
 Ctrl+Shift+n	- Same as above only selects tabs between 10 to 19
 Ctrl+F4		    - Closes active tab
 Ctrl+Tab	    - Selects next tab
-Ctrl+Shift+Tab	- Selectsprevious tab
+Ctrl+Shift+Tab	- Selects previous tab
 
 
 Editing

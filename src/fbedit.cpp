@@ -56,7 +56,7 @@ FB_Edit::FB_Edit (MyFrame * ParentFrame, wxWindow *parentNotebook, wxWindowID id
 }
 
 
-void FB_Edit::LoadSTCSettings    (  ) {
+void FB_Edit::LoadSTCSettings() {
 
     CommonInfo * Prefs = &Parent->Prefs;
 
@@ -74,7 +74,7 @@ void FB_Edit::LoadSTCSettings    (  ) {
     SetIndentationGuides (Prefs->IndentGuide);
     SetEdgeMode (Prefs->LongLine ? wxSTC_EDGE_LINE: wxSTC_EDGE_NONE);
     SetViewWhiteSpace (Prefs->whiteSpace ? wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
-    CmdKeyClear (wxSTC_KEY_TAB, 0);
+    //CmdKeyClear (wxSTC_KEY_TAB, 0); // this remove action of tab key
     
     if ( !Parent->Prefs.BraceHighlight ) {
         if ( braceLoc != -1 ) {
@@ -338,18 +338,18 @@ inline bool FB_Edit::IsBrace(wxChar brace) {
 
 
 
-void FB_Edit::OnCharAdded    ( wxStyledTextEvent &event ) {
+void FB_Edit::OnCharAdded( wxStyledTextEvent &event ) {
 
     event.Skip();
     if (!Parent->Prefs.AutoIndent)
         return;
 
-    char        key     = event.GetKey();
+    char key = event.GetKey();
     if (key!='\r')
         return;
 
-    int         cLine   = GetCurrentLine();
-    int         lineInd = GetLineIndentation(cLine - 1);
+    int cLine   = GetCurrentLine();
+    int lineInd = GetLineIndentation(cLine - 1);
 
     IndentLine ( lineInd, cLine );
 
@@ -551,7 +551,7 @@ void FB_Edit::IndentLine ( int & lineInd, int cLine ) {
 }
 
 
-void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
+void FB_Edit::OnMarginClick( wxStyledTextEvent &event ) {
     if (event.GetMargin() == 2) {
         int lineClick = LineFromPosition (event.GetPosition());
         int levelClick = GetFoldLevel (lineClick);
@@ -562,7 +562,7 @@ void FB_Edit::OnMarginClick     ( wxStyledTextEvent &event ) {
 }
 
 
-void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
+void FB_Edit::OnKeyDown( wxKeyEvent &event ) {
     event.Skip();
     if (!event.ControlDown())
         return;
@@ -597,7 +597,7 @@ void FB_Edit::OnKeyDown          ( wxKeyEvent &event ) {
     return;
 }
 
-void FB_Edit::OnKeyUp            ( wxKeyEvent &event ) {
+void FB_Edit::OnKeyUp( wxKeyEvent &event ) {
     event.Skip();
     if (event.ControlDown())
         return;

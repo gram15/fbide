@@ -90,8 +90,10 @@ void MyFrame::OnSelectLine (wxCommandEvent& WXUNUSED(event)) {
 }
 
 void MyFrame::OnIndentInc (wxCommandEvent& WXUNUSED(event)) {
+    printf("MyFrame::OnIndentInc\n");
     if (stc==0)
         return;
+    printf("stc->CmdKeyExecute (wxSTC_CMD_TAB)\n");
     stc->CmdKeyExecute (wxSTC_CMD_TAB);
     return;
 }
